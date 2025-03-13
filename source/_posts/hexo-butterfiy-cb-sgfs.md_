@@ -1,0 +1,242 @@
+---
+title: 为你的博客添加一个时光飞逝的页面
+date: 2024-06-24 22:51:05
+color:
+
+top_img: https://s2.loli.net/2024/06/24/hVfA4KUwHTBb1zl.png
+cover: https://s2.loli.net/2024/06/24/2uXjkeD8hE71Irw.png
+categories: 
+- 教程
+- 博客
+tags:
+- 魔改
+- hexo
+- Butterfly
+---
+<meta name='description' content='在Butterfly主题的基础上添加一个时光飞逝的页面，显示现在的年度、月度、日度、小时的过度情况。（欢迎进站访问|´・ω・) ノ）'>
+
+## 前序
+忘了在哪看到的这个东西，总之看到了一次就忘不掉了
+然后就拿我那差的要命的技术写了个这
+
+~~屎山~~这个东西还没到这个程度
+
+{% note info modern %}
+建议你先将文章过一遍，这样可以更清楚的知道自己下一步要干什么。
+
+这东东貌似有小BUG
+{% endnote %}
+{% note info modern %}
+%ThemeSource%
+位于`~\themes\Butterfly\source\`
+%Source%
+位于`~\source\`
+%ThemeLayout%
+位于`~\themes\Butterfly\layout\`
+{% endnote %}
+## 预览
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Progress Tracker</title><link rel="stylesheet" href="/favi/qq.css"><div class="progress-container"><div class="progress-label">本年过了 <span id="year-progress">74.81801%</span></div><div class="progress-bar"><div class="progress-bar-inner" id="year-progress-bar" style="width: 74.818%;"></div></div></div><div class="progress-container"><div class="progress-label">本月过了 <span id="month-progress">99.44633%</span></div><div class="progress-bar"><div class="progress-bar-inner" id="month-progress-bar" style="width: 99.4463%;"></div></div></div><div class="progress-container"><div class="progress-label">本天过了 <span id="day-progress">83.38992%</span></div><div class="progress-bar"><div class="progress-bar-inner" id="day-progress-bar" style="width: 83.3899%;"></div></div></div><div class="progress-container"><div class="progress-label">本小时过了 <span id="hour-progress">1.35817%</span></div><div class="progress-bar"><div class="progress-bar-inner" id="hour-progress-bar" style="width: 1.35817%;"></div></div></div><div class="progress-container"><div class="progress-label">本分钟过了 <span id="minute-progress">80.00000%</span></div><div class="progress-bar"><div class="progress-bar-inner" id="minute-progress-bar" style="width: 80%;"></div></div></div><script src="/favi/qq.js"></script><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/admincmd-a/Time-flies/">查看代码</a>
+
+单独页面
+
+[https://blog.admincmd.xyz/favi/](https://blog.admincmd.xyz/url.html?url=https://blog.admincmd.xyz/favi/)
+
+Github 仓库
+[https://github.com/admincmd-a/Time-flies](https://blog.admincmd.xyz/url.html?url=https://github.com/admincmd-a/Time-flies)
+
+Gitee 页面
+[https://gitee.com/administrator-command-prompt/Time-flies](https://blog.admincmd.xyz/url.html?url=https://gitee.com/administrator-command-prompt/Time-flies)
+## 引入
+### 引入 JS
+以下文件放进`%ThemeSource%\js\time.js`
+```JS
+function updateProgressBars() {
+  const now = new Date();
+  // const yearProgress = (now.getTime() / new Date(now.getFullYear(), 0, 1).getTime()) * 100;
+  const yearStart = new Date(now.getFullYear(), 0, 1, 0, 0, 0).getTime();
+  const yearEnd = new Date(now.getFullYear() + 1, 0, 1, 0, 0, 0).getTime();
+  const yearProgress = ((now.getTime() - yearStart) / (yearEnd - yearStart)) * 100;
+  // 计算本月已过百分比
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0).getTime();
+  const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0).getTime();
+  const monthProgress = ((now.getTime() - monthStart) / (monthEnd - monthStart)) * 100;
+  
+  // 计算本天已过百分比
+  const dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).getTime();
+  const dayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0).getTime();
+  const dayProgress = ((now.getTime() - dayStart) / (dayEnd - dayStart)) * 100;
+  
+  // 计算已过小时百分比
+  const hourStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0).getTime();
+  const hourEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0).getTime();
+  const hourProgress = ((now.getTime() - hourStart) / (hourEnd - hourStart)) * 100;
+
+
+  const minuteProgress = (now.getSeconds() / 60) * 100;// 计算已过分钟百分比
+
+  document.getElementById('year-progress').textContent = yearProgress.toFixed(5) + '%';
+  document.getElementById('year-progress-bar').style.width = yearProgress.toFixed(5) + '%';// 宽度百分比
+
+  document.getElementById('month-progress').textContent = monthProgress.toFixed(5) + '%';
+  document.getElementById('month-progress-bar').style.width = monthProgress.toFixed(5) + '%';// 同上
+
+  document.getElementById('day-progress').textContent = dayProgress.toFixed(5) + '%';
+  document.getElementById('day-progress-bar').style.width = dayProgress.toFixed(5) + '%';
+
+  document.getElementById('hour-progress').textContent = hourProgress.toFixed(5) + '%';
+  document.getElementById('hour-progress-bar').style.width = hourProgress.toFixed(5) + '%';
+
+  document.getElementById('minute-progress').textContent = minuteProgress.toFixed(5) + '%';
+  document.getElementById('minute-progress-bar').style.width = minuteProgress.toFixed(5) + '%';
+
+}
+
+setInterval(updateProgressBars, 1000);//每秒更新一次
+```
+### 引入 CSS
+将下面的CSS丢到`%ThemeSource%\css\time.css`
+```CSS
+body 
+.progress-container {
+  margin-bottom: 10px;
+}
+.progress-label {
+  margin-bottom: 5px;
+}
+.progress-bar {
+  width: 100%;
+  background-color: #ddd;/*进度条背景色*/
+  border-radius: 5px;/*圆角*/
+  overflow: hidden;
+}
+.progress-bar-inner {
+  height: 15px;/*进度条高度*/
+  background-color: #4caf50;/*进度条颜色*/
+  text-align: center;
+  color: white;/*背景颜色*/
+  line-height: 20px;
+  transition: width 1.5s;/*一次到目标位置的速度*/
+}
+```
+
+## 添加
+
+自己看不过去了
+~~不想改了~~
+
+{% hideToggle 刚写好的样子 %}
+```HTML
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/time.css">
+</head>
+<body>
+    <div class="progress-container" id="time-flies">
+        <div class="progress-label">本年过了 <span id="year-progress">0.00000%</span></div>
+        <div class="progress-bar">
+            <div class="progress-bar-inner" id="year-progress-bar"></div>
+        </div>
+    </div>
+    <div class="progress-container">
+        <div class="progress-label">本月过了 <span id="month-progress">0.00000%</span></div>
+        <div class="progress-bar">
+            <div class="progress-bar-inner" id="month-progress-bar"></div>
+        </div>
+    </div>
+    <div class="progress-container">
+        <div class="progress-label">本天过了 <span id="day-progress">0.00000%</span></div>
+        <div class="progress-bar">
+            <div class="progress-bar-inner" id="day-progress-bar"></div>
+        </div>
+    </div>
+    <div class="progress-container">
+        <div class="progress-label">本小时过了 <span id="hour-progress">0.00000%</span></div>
+        <div class="progress-bar">
+            <div class="progress-bar-inner" id="hour-progress-bar"></div>
+        </div>
+    </div>
+    <div class="progress-container">
+        <div class="progress-label">本分钟过了 <span id="minute-progress">0.00000%</span></div>
+        <div class="progress-bar">
+            <div class="progress-bar-inner" id="minute-progress-bar"></div>
+        </div>
+    </div>
+    <script src="/js/time.js"></script>
+</body>
+</html>
+```
+{% endhideToggle %}
+### 单独页面
+创建`%ThemeLayout%\includes\page\time.pug`
+放入以下内容
+```PUG
+html
+  head
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(
+    href="/css/time.css" 
+    rel="stylesheet"
+    )
+  body
+    .progress-container
+      .progress-label 本年过了 
+        span#year-progress 0.00000%
+      .progress-bar
+        .progress-bar-inner#year-progress-bar
+    .progress-container
+      .progress-label 本月过了 
+        span#month-progress 0.00000%
+      .progress-bar
+        .progress-bar-inner#month-progress-bar
+    .progress-container
+      .progress-label 本天过了 
+        span#day-progress 0.00000%
+      .progress-bar
+        .progress-bar-inner#day-progress-bar
+    .progress-container
+      .progress-label 本小时过了 
+        span#hour-progress 0.00000%
+      .progress-bar
+        .progress-bar-inner#hour-progress-bar
+    .progress-container
+      .progress-label 本分钟过了 
+        span#minute-progress 0.00000%
+      .progress-bar
+        .progress-bar-inner#minute-progress-bar
+    script(src="/js/time.js")
+```
+创建`%ThemeLayout%\page.pug`
+放入以下内容
+```PUG
+extends includes/layout.pug
+
+......
+      when 'about'
+        include includes/page/about.pug
++      when 'time'
++        include includes/page/time.pug
+......
+
+    comments/index', {}, {cache: true})
+```
+{% note info modern %}
+插入 + 后面的内容即可，删除 + 号后无需添加空格
+{% endnote %}
+
+创建`%Source%\time\index.md`
+放入以下内容
+```md
+---
+title: 时光飞逝
+date: 2021-03-30 15:57:51
+aside: false
+top_img: false
+comments: false
+type: "time"
+---
+```
+
+hexo g + s 即可看到效果
+
+---

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="server">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/admicmd.github.io-master.zip!/" />
+      <root url="jar://$PROJECT_DIR$/hexo-theme-butterfly-dev.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

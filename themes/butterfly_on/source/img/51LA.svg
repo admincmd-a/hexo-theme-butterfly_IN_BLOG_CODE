@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="图层_1"
+   data-name="图层 1"
+   viewBox="0 0 160 40"
+   version="1.1"
+   sodipodi:docname="51LA.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview15"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="88.653512"
+     inkscape:cy="44.989669"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="图层_1" />
+  <defs
+     id="defs1">
+    <style
+       id="style1">.cls-1{stroke:#f2f2f2;}.cls-1,.cls-3{stroke-miterlimit:10;}.cls-2,.cls-3{fill:#fff;}.cls-3{stroke:#000;stroke-width:0.25px;}</style>
+  </defs>
+  <title
+     id="title1">travelling</title>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Layer 1" />
+  <rect
+     style="fill:#00ccff"
+     id="rect26"
+     width="159.89452"
+     height="39.863144"
+     x="0"
+     y="0.17677669"
+     rx="2"
+     ry="2" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;font-family:'HarmonyOS Sans Naskh Arabic';-inkscape-font-specification:'HarmonyOS Sans Naskh Arabic';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#00ccff"
+     x="9.3691645"
+     y="30.140427"
+     id="text26"><tspan
+       sodipodi:role="line"
+       id="tspan26"
+       x="9.3691645"
+       y="30.140427"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:32px;font-family:'Alimama ShuHeiTi';-inkscape-font-specification:'Alimama ShuHeiTi Bold';fill:#ffffff">51.LA</tspan></text>
+  <rect
+     style="fill:#00ccff;stroke-width:1.81853"
+     id="rect28"
+     width="5.0933833"
+     height="3.911108"
+     x="78.295502"
+     y="19.953669"
+     ry="0" />
+  <rect
+     style="fill:#00ccff"
+     id="rect29"
+     width="0.12153398"
+     height="0.066291258"
+     x="78.731918"
+     y="21.01433" />
+  <path
+     sodipodi:type="star"
+     style="fill:#00ccff"
+     id="path34"
+     inkscape:flatsided="true"
+     sodipodi:sides="3"
+     sodipodi:cx="78.748489"
+     sodipodi:cy="23.958767"
+     sodipodi:r1="3.0055134"
+     sodipodi:r2="1.5027568"
+     sodipodi:arg1="0.25835281"
+     sodipodi:arg2="1.3055504"
+     inkscape:rounded="0"
+     inkscape:randomized="0"
+     d="m 81.654256,24.726641 -5.023648,1.364657 1.329996,-5.032936 z"
+     inkscape:transform-center-x="-0.39394264"
+     inkscape:transform-center-y="-0.38393688"
+     transform="translate(0.36460193,-1.342398)" />
+  <path
+     sodipodi:type="star"
+     style="fill:#00ccff"
+     id="path35"
+     inkscape:flatsided="true"
+     sodipodi:sides="3"
+     sodipodi:cx="82.698348"
+     sodipodi:cy="22.340155"
+     sodipodi:r1="2.5553564"
+     sodipodi:r2="1.2776782"
+     sodipodi:arg1="-1.3106117"
+     sodipodi:arg2="-0.26341415"
+     inkscape:rounded="0"
+     inkscape:randomized="0"
+     d="m 83.355737,19.870805 1.152437,4.273339 -4.277039,-1.13863 z"
+     inkscape:transform-center-x="0.32869417"
+     inkscape:transform-center-y="-0.33267987" />
+  <rect
+     style="fill:#ffffff"
+     id="rect36"
+     width="50.602329"
+     height="21.743534"
+     x="102.83984"
+     y="7.9991455"
+     rx="10"
+     ry="10" />
+  <rect
+     style="fill:#ffffff"
+     id="rect37"
+     width="27.223612"
+     height="11.623068"
+     x="102.83984"
+     y="18.086679" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:'Alimama ShuHeiTi';-inkscape-font-specification:'Alimama ShuHeiTi Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#00ccff"
+     x="109.02704"
+     y="24.704542"
+     id="text37"><tspan
+       sodipodi:role="line"
+       id="tspan37"
+       x="109.02704"
+       y="24.704542"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:'Microsoft New Tai Lue';-inkscape-font-specification:'Microsoft New Tai Lue'">pro</tspan></text>
+</svg>

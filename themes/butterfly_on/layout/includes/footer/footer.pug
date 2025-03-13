@@ -1,0 +1,265 @@
+#footer-wrap
+  if theme.footer.owner.enable
+    - var now = new Date()
+    - var nowYear = now.getFullYear()
+    if theme.footer.owner.since && theme.footer.owner.since != nowYear
+      .copyright!= `&copy;${theme.footer.owner.since} - ${nowYear} By ${config.author}`
+    else
+      .copyright!= `&copy;${nowYear} By ${config.author}`
+  if theme.footer.copyright
+    .framework-info
+      //- 动态生成标签
+      each key in Object.keys(theme.footer.tage.item)
+        if theme.footer.tage.enable 
+          - var item = theme.footer.tage.item[key]
+          if item.html
+            //- 自定义 HTML 模式
+            != item.html
+            span.footer-separator |
+          else
+            //- 常规标签模式
+            if key && key.trim() !== ''
+              span= _p(key) + ' '
+            a(
+              href=item.url || 'javascript:void(0)'
+              title=item.title
+              target=item.target
+              rel=item.rel
+            )&attributes(item.attrs || {})
+              //- 图标和图片处理
+              if item.ico
+                i(class=item.ico)
+              if item.image
+                img(
+                  src=item.image
+                  alt=item.alt || ' '
+                  style=item.imageStyle
+                )&attributes(item.imgAttrs || {})
+              = item.text
+            //- 分隔符（最后一个标签不需要可以在此处理）
+            if key !== Object.keys(theme.footer.tage.item)[Object.keys(theme.footer.tage.item).length]
+              span.footer-separator |
+        else 
+          //- 无标签模式
+      if theme.footer.c51la.enable && theme.footer.c51la.ld != ``
+        br
+        //- 统计脚本
+        script#LA-DATA-WIDGET(
+          src=`https://v6-widget.51.la/v6/${theme.footer.c51la.id}/quote.js?${theme.footer.c51la.theme}`
+          charset="UTF-8"
+          crossorigin="anonymous"
+        )
+  if theme.footer.custom_text
+    .footer_custom_text!=`${theme.footer.custom_text}`
+
+
+  if theme.footer.time_line.enable
+    time-line
+      head
+        style.
+          
+      body
+        footer#footer
+          #workboard
+        script.
+          var grt = new Date('#{theme.footer.time_line.start_time}');
+          var dnum, hnum, mnum, snum, nowHour, t, n;
+
+          function updateTime() {
+            now = new Date();
+            nowHour = now.getHours();
+            var days = (now - grt) / 1000 / 60 / 60 / 24;
+            dnum = Math.floor(days);
+            var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+            hnum = Math.floor(hours);
+            hnum = String(hnum).padStart(2, '0');
+
+            var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+            mnum = Math.floor(minutes);
+            mnum = String(mnum).padStart(2, '0');
+
+            var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+            snum = Math.round(seconds);
+            snum = String(snum).padStart(2, '0');
+
+            t = Math.trunc(234e8 + (now - grt) / 1e3 * 17);
+            n = (t / 1496e5).toFixed(6);
+          }
+
+          function updateHtml() {
+            const footer = document.getElementById("footer");
+            if (!footer) return;
+
+            let currentTimeHtml = `
+              <div id="runtimeTextTip">
+                #{theme.footer.time_line.message_prev} ${dnum} #{theme.footer.time_line.message_next}
+                <span id='runtime'>${hnum} 小时 ${mnum} 分 ${snum} 秒</span>
+                <i class='haofont hao-icon-heartbeat' style='color:red'></i>
+                <br>
+                旅行者 1 号现在距离地球 ${t} 千米了，差不多是 ${n} 个地球到太阳的距离 (天文单位)
+              </div>`;
+
+            if (document.getElementById("workboard")) {
+              document.getElementById("workboard").innerHTML = currentTimeHtml;
+            }
+          }
+
+          setInterval(() => {
+            updateTime();
+            updateHtml();
+          }, 1000);
+
+
+//- head
+  meta(charset='UTF-8')
+  //- meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  //- style.
+    //- #footer {
+    //- color: white; /* 将文字颜色设为白色 */
+    //- text-align: center; /* 文字居中对齐 */
+    //- }
+//- body
+  //- #footer
+    //- | 本站艰难的运行了：
+    //- span#running-time
+  //- script.
+    //- function getRunningTime() {
+    //- const startDate = new Date('2024-02-01'); // 设置博客开始运行的日期
+    //- const currentDate = new Date();
+    //- const diff = currentDate.getTime() - startDate.getTime();
+    //- const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+    //- const remainingDays = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
+    //- const hours = currentDate.getHours();
+    //- const minutes = currentDate.getMinutes();
+    //- const seconds = currentDate.getSeconds();
+    //- let timeString = '';
+    //- if (years > 0) {
+    //- timeString += `${years} 年 `;
+    //- }
+    //- timeString += `${remainingDays} 日 ${hours} 时 ${minutes} 分 ${seconds} 秒 `;
+    //- return timeString;
+    //- }
+    //- function updateRunningTime() {
+    //- const runningTimeElement = document.getElementById('running-time');
+    //- runningTimeElement.textContent = getRunningTime();
+    //- }
+    //- window.onload = function() {
+    //- updateRunningTime();
+    //- setInterval(updateRunningTime, 1000);
+    //- };
+//- 
+//- html(lang='zh')
+  //- head
+    //- meta(charset='UTF-8')
+    //- meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  //- body
+    //- p#distance
+    //- script.
+      //- function calculateDistance() {
+      //- var currentDate = new Date();
+      //- var launchDate = new Date("1977-09-05");
+      //- var timeDifference = currentDate - launchDate;
+      //- var speedOfLight = 17;
+      //- var distance = (timeDifference / 1000) * speedOfLight;
+      //- document.getElementById("distance").innerText = "旅行者 1 号距离地球约：" + distance.toLocaleString() + " 千米";
+      //- }
+      //- setInterval(calculateDistance, 1000);
+
+
+//- 
+//- if theme.ICP.enable
+  //- .icp
+    //- a(href=theme.ICP.url)
+      //- if theme.ICP.icon
+        //- img.icp-icon(src=url_for(theme.ICP.icon))
+      //- span=theme.ICP.text
+//- if theme.NSP.enable
+  //- .icp
+    //- a(href=theme.NSP.url)
+      //- if theme.NSP.icon
+        //- img.icp-icon(src=url_for(theme.NSP.icon))
+      //- span=theme.NSP.text
+
+//- | --------------------------------------
+
+//- <footer>
+    //- <div class="footer-line">
+//- 
+    //- </div>
+//- </footer>
+
+//- #footer-wrap
+  //- #ft
+    //- .ft-item-1
+      //- .t-top
+        //- .t-t-l
+          //- p.ft-t.t-l-t 说点什么
+          //- .bg-ad
+            //- div
+              //- | 
+            //- .btn-xz-box
+              //- a.btn-xz(href='https://fe32.top/') 点击跳转到哪儿
+        //- .t-t-r
+          //- p.ft-t.t-l-t 修仙导航
+          //- ul.ft-links
+            //- li
+              //- a(href='https://fe32.top/articles/hexo1600/') 建站指南
+              //- a(href='https://fe32.top/nav.html') 网址导航
+            //- li
+              //- a(href='https://fe32.top/sponsorWall/') 来杯咖啡
+              //- a(href='https://fe32.top/comments/') 留点什么
+            //- li
+              //- a(href='https://fe32.top/about/') 关于博主
+              //- a(href='https://fe32.top/archives/') 文章归档
+            //- li
+              //- a(href='https://fe32.top/categories/') 文章分类
+              //- a(href='https://fe32.top/tags/') 文章标签
+            //- li
+              //- a(href='https://fe32.top/gallery/') 我的相册
+              //- a(href='https://fe32.top/bangumis/') 我的追番
+            //- li
+              //- a(href='https://fe32.top/specialEffects/') 一些特效
+              //- a(href='https://fe32.top/wallpaper/') 一些壁纸
+    //- .ft-item-2
+      //- p.ft-t 推荐友链
+      //- .ft-img-group
+        //- .img-group-item
+          //- a(href='https://fe32.top/')
+            //- img(src='https://bu.dusays.com/2022/05/02/626f92e193879.jpg' alt='')
+        //- .img-group-item
+          //- a(href='https://fe32.top/')
+            //- img(src='https://bu.dusays.com/2022/05/02/626f92e193879.jpg' alt='')
+        //- .img-group-item
+          //- a(href='https://fe32.top/')
+            //- img(src='https://bu.dusays.com/2022/05/02/626f92e193879.jpg' alt='')
+        //- .img-group-item
+          //- a(href='https://fe32.top/')
+            //- img(src='https://bu.dusays.com/2022/05/02/626f92e193879.jpg' alt='')
+        //- .img-group-item
+          //- a(href='https://fe32.top/')
+            //- img(src='https://bu.dusays.com/2022/05/02/626f92e193879.jpg' alt='')
+        //- .img-group-item
+          //- a(href='https://fe32.top/')
+            //- img(src='https://bu.dusays.com/2022/05/02/626f92e193879.jpg' alt='')
+        //- .img-group-item
+          //- a(href='https://fe32.top/')
+            //- img(src='https://bu.dusays.com/2022/05/02/626f92e193879.jpg' alt='')
+        //- .img-group-item
+          //- a(href='https://fe32.top/')
+            //- img(src='https://bu.dusays.com/2022/05/02/626f92e193879.jpg' alt='')
+  //- if theme.footer.owner.enable
+    //- - var now = new Date()
+    //- - var nowYear = now.getFullYear()
+    //- if theme.footer.owner.since && theme.footer.owner.since != nowYear
+      //- .copyright!= `&copy;${theme.footer.owner.since} - ${nowYear + ' '} <i id="heartbeat" class="fa fas fa-heartbeat"></i> ${config.author}`
+    //- else
+      //- .copyright!= `&copy;${nowYear + ' '} <i id="heartbeat" class="fa fas fa-heartbeat"></i> ${config.author}`
+  //- if theme.footer.copyright
+    //- .framework-info
+      //- span= _p('footer.framework') + ' '
+      //- a(href='https://hexo.io')= 'Hexo'
+      //- span.footer-separator |
+      //- span= _p('footer.theme') + ' '
+      //- a(href='https://github.com/jerryc127/hexo-theme-butterfly')= 'Butterfly'
+  //- if theme.footer.custom_text
+    //- .footer_custom_text!=`${theme.footer.custom_text}`

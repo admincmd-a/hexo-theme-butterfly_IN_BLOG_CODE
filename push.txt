@@ -1,0 +1,600 @@
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server/themes (master)
+$ hexo s
+
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server/themes (master)
+$ hexo
+INFO  Validating config
+INFO
+  ===================================================================
+      #####  #    # ##### ##### ###### #####  ###### #      #   #
+      #    # #    #   #     #   #      #    # #      #       # #
+      #####  #    #   #     #   #####  #    # #####  #        #
+      #    # #    #   #     #   #      #####  #      #        #
+      #    # #    #   #     #   #      #   #  #      #        #
+      #####   ####    #     #   ###### #    # #      ######   #
+                            4.13.0
+  ===================================================================
+Usage: hexo <command>
+
+Commands:
+  algolia   Index your posts on Algolia
+  clean     Remove generated files and cache.
+  config    Get or set configurations.
+  deploy    Deploy your website.
+  generate  Generate static files.
+  help      Get help on a command.
+  init      Create a new Hexo folder.
+  list      List the information of the site
+  migrate   Migrate your site from other system to Hexo.
+  new       Create a new post.
+  publish   Moves a draft post from _drafts to _posts folder.
+  render    Render files with renderer plugins.
+  server    Start the server.
+  version   Display version information.
+
+Global Options:
+  --config  Specify config file instead of using _config.yml
+  --cwd     Specify the CWD
+  --debug   Display all verbose messages in the terminal
+  --draft   Display draft posts
+  --safe    Disable all plugins and scripts
+  --silent  Hide output on console
+
+For more help, you can use 'hexo help [command]' for the detailed information
+or you can check the docs: https://hexo.io/docs/
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server/themes (master)
+$ hexo list
+INFO  Validating config
+INFO
+  ===================================================================
+      #####  #    # ##### ##### ###### #####  ###### #      #   #
+      #    # #    #   #     #   #      #    # #      #       # #
+      #####  #    #   #     #   #####  #    # #####  #        #
+      #    # #    #   #     #   #      #####  #      #        #
+      #    # #    #   #     #   #      #   #  #      #        #
+      #####   ####    #     #   ###### #    # #      ######   #
+                            4.13.0
+  ===================================================================
+Usage: hexo list <type>
+
+Description:
+List the information of the site.
+
+Arguments:
+  type  Available types: page, post, route, tag, category
+
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server/themes (master)
+$ hexo g --debug
+02:06:33.017 DEBUG Writing database to H:\server\db.json
+02:06:33.033 DEBUG Hexo version: 6.3.0
+02:06:33.034 DEBUG Working directory: H:\server\
+02:06:33.152 DEBUG Config loaded: H:\server\_config.yml
+02:06:33.154 INFO  Validating config
+02:06:34.955 DEBUG Plugin loaded: hexo-renderer-stylus
+02:06:34.955 DEBUG Plugin loaded: hexo-renderer-pug
+02:06:34.956 DEBUG Plugin loaded: hexo-algoliasearch
+02:06:34.956 DEBUG Plugin loaded: hexo-butterfly-artitalk
+02:06:34.957 DEBUG Plugin loaded: hexo-butterfly-clock-anzhiyu
+02:06:34.957 DEBUG Plugin loaded: hexo-butterfly-footer-beautify
+02:06:34.958 DEBUG Plugin loaded: hexo-deployer-git
+02:06:34.958 DEBUG Plugin loaded: hexo-filter-nofollow
+02:06:34.958 DEBUG Plugin loaded: hexo-generator-archive
+02:06:34.959 DEBUG Plugin loaded: hexo-generator-baidu-sitemap
+02:06:34.959 DEBUG Plugin loaded: hexo-generator-category
+02:06:34.959 DEBUG Plugin loaded: hexo-generator-feed
+02:06:34.960 DEBUG Plugin loaded: hexo-generator-index
+02:06:34.960 DEBUG Plugin loaded: hexo-generator-searchdb
+02:06:34.960 DEBUG Plugin loaded: hexo-generator-sitemap
+02:06:34.961 DEBUG Plugin loaded: hexo-generator-tag
+02:06:34.961 DEBUG Plugin loaded: hexo-memorial-day
+02:06:34.961 DEBUG Plugin loaded: hexo-next-artalk
+02:06:34.962 DEBUG Plugin loaded: hexo-renderer-ejs
+02:06:34.962 DEBUG Plugin loaded: hexo-renderer-marked
+02:06:34.963 DEBUG Plugin loaded: hexo-server
+02:06:34.963 DEBUG Plugin loaded: hexo-submit-urls-to-search-engine
+02:06:34.963 DEBUG Plugin loaded: hexo-wordcount
+02:06:35.169 DEBUG Script loaded: themes\butterfly_on\scripts\events\404.js
+02:06:35.170 DEBUG Script loaded: themes\butterfly_on\scripts\events\cdn.js
+02:06:35.170 DEBUG Script loaded: themes\butterfly_on\scripts\events\comment.js
+02:06:35.171 DEBUG Script loaded: themes\butterfly_on\scripts\events\init.js
+02:06:35.171 DEBUG Script loaded: themes\butterfly_on\scripts\events\merge_config.js
+02:06:35.171 DEBUG Script loaded: themes\butterfly_on\scripts\events\welcome.js
+02:06:35.172 DEBUG Script loaded: themes\butterfly_on\scripts\events\stylus.js
+02:06:35.172 DEBUG Script loaded: themes\butterfly_on\scripts\filters\post_lazyload.js
+02:06:35.172 DEBUG Script loaded: themes\butterfly_on\scripts\filters\random_cover.js
+02:06:35.173 DEBUG Script loaded: themes\butterfly_on\scripts\helpers\aside_archives.js
+02:06:35.173 DEBUG Script loaded: themes\butterfly_on\scripts\helpers\aside_categories.js
+02:06:35.173 DEBUG Script loaded: themes\butterfly_on\scripts\helpers\findArchiveLength.js
+02:06:35.174 DEBUG Script loaded: themes\butterfly_on\scripts\helpers\charts.js
+02:06:35.174 DEBUG Script loaded: themes\butterfly_on\scripts\helpers\inject_head_js.js
+02:06:35.174 DEBUG Script loaded: themes\butterfly_on\scripts\helpers\page.js
+02:06:35.175 DEBUG Script loaded: themes\butterfly_on\scripts\helpers\related_post.js
+02:06:35.175 DEBUG Script loaded: themes\butterfly_on\scripts\helpers\series.js
+02:06:35.175 DEBUG Script loaded: themes\butterfly_on\scripts\tag\button.js
+02:06:35.175 DEBUG Script loaded: themes\butterfly_on\scripts\tag\flink.js
+02:06:35.176 DEBUG Script loaded: themes\butterfly_on\scripts\tag\gallery.js
+02:06:35.176 DEBUG Script loaded: themes\butterfly_on\scripts\tag\hide.js
+02:06:35.176 DEBUG Script loaded: themes\butterfly_on\scripts\tag\inlineImg.js
+02:06:35.177 DEBUG Script loaded: themes\butterfly_on\scripts\tag\label.js
+02:06:35.179 DEBUG Script loaded: themes\butterfly_on\scripts\tag\mermaid.js
+02:06:35.180 DEBUG Script loaded: themes\butterfly_on\scripts\tag\note.js
+02:06:35.180 DEBUG Script loaded: themes\butterfly_on\scripts\tag\score.js
+02:06:35.180 DEBUG Script loaded: themes\butterfly_on\scripts\tag\series.js
+02:06:35.181 DEBUG Script loaded: themes\butterfly_on\scripts\tag\tabs.js
+02:06:35.181 DEBUG Script loaded: themes\butterfly_on\scripts\tag\timeline.js
+02:06:35.182 INFO
+  ===================================================================
+      #####  #    # ##### ##### ###### #####  ###### #      #   #
+      #    # #    #   #     #   #      #    # #      #       # #
+      #####  #    #   #     #   #####  #    # #####  #        #
+      #    # #    #   #     #   #      #####  #      #        #
+      #    # #    #   #     #   #      #   #  #      #        #
+      #####   ####    #     #   ###### #    # #      ######   #
+                            4.13.0
+  ===================================================================
+02:06:35.184 DEBUG Loading database.
+02:06:35.424 INFO  Start processing
+02:06:35.538 DEBUG Processed: pp.md
+02:06:35.539 DEBUG Processed: url.md
+02:06:35.539 DEBUG Processed: _data/bd_link.yml
+02:06:35.539 DEBUG Processed: _data/creativity.yml
+02:06:35.540 DEBUG Processed: _data/languages.yml
+02:06:35.540 DEBUG Processed: _data/link.yml
+02:06:35.540 DEBUG Processed: _data/reward.yml
+02:06:35.540 DEBUG Processed: _data/widget.yml
+02:06:35.541 DEBUG Processed: _posts/PowerShell-Del-WindowsApps .md
+02:06:35.541 DEBUG Processed: _posts/Setup-system-com-vm2dm.md
+02:06:35.541 DEBUG Processed: _posts/Windows-BOOTMGR(BIOS_EFI)-BCD-XG.md
+02:06:35.542 DEBUG Processed: _posts/Windows-File-scct.md
+02:06:35.542 DEBUG Processed: _posts/hello-world.md_
+02:06:35.542 DEBUG Processed: _posts/hexo-butterfiy-cb-sgfs.md
+02:06:35.542 DEBUG Processed: _posts/rcc-del-config.md
+02:06:35.543 DEBUG Processed: _posts/winsetup-Winpe_BIOS.md
+02:06:35.543 DEBUG Processed: _posts/winsetup-Winpe_EFI.md
+02:06:35.543 DEBUG Processed: _posts/关于把C盘弹出去的那些事.md
+02:06:35.543 DEBUG Processed: _posts/如何在winserver中卸载wind.md_
+02:06:35.544 DEBUG Processed: _posts/当你把电脑时间调至一万年？！.md
+02:06:35.544 DEBUG Processed: _posts/测试.md
+02:06:35.544 DEBUG Processed: _posts/计算机名：你是来找茬的吧.md
+02:06:35.545 DEBUG Processed: about/index.md
+02:06:35.545 DEBUG Processed: categories/index-1.md
+02:06:35.545 DEBUG Processed: categories/index.md
+02:06:35.545 DEBUG Processed: charts/index.md
+02:06:35.545 DEBUG Processed: css/0mh.css
+02:06:35.546 DEBUG Processed: css/admonition.css
+02:06:35.546 DEBUG Processed: css/color.css
+02:06:35.546 DEBUG Processed: css/custom.css
+02:06:35.547 DEBUG Processed: css/darktheme_modify.css
+02:06:35.547 DEBUG Processed: css/del.css
+02:06:35.547 DEBUG Processed: css/essay.css
+02:06:35.547 DEBUG Processed: css/index_.css
+02:06:35.548 DEBUG Processed: css/load.css
+02:06:35.548 DEBUG Processed: css/minimal.css
+02:06:35.548 DEBUG Processed: css/sett.css
+02:06:35.548 DEBUG Processed: css/winbox.min.css
+02:06:35.549 DEBUG Processed: favi/index.md
+02:06:35.549 DEBUG Processed: favi/qq.css
+02:06:35.549 DEBUG Processed: favi/qq.html
+02:06:35.549 DEBUG Processed: favi/showbb_in_index.css
+02:06:35.550 DEBUG Processed: favi/swiper-bundle.min.css
+02:06:35.550 DEBUG Processed: help/index.md
+02:06:35.550 DEBUG Processed: js/Meting.min.js
+02:06:35.550 DEBUG Processed: js/mcnn.js
+02:06:35.551 DEBUG Processed: js/meting.js
+02:06:35.551 DEBUG Processed: js/set.js
+02:06:35.551 DEBUG Processed: js/winbox.min.js
+02:06:35.551 DEBUG Processed: license/index.md
+02:06:35.552 DEBUG Processed: link/index.md
+02:06:35.552 DEBUG Processed: log/index.md
+02:06:35.552 DEBUG Processed: lyb_files/index.md
+02:06:35.552 DEBUG Processed: privacy/index.md
+02:06:35.553 DEBUG Processed: tags/index.md
+02:06:35.554 DEBUG Processed: BingSiteAuth.xml
+02:06:35.555 DEBUG Processed: favicon.ico
+02:06:35.555 DEBUG Processed: ware.png
+02:06:35.555 DEBUG Processed: font/ds-digi.woff2
+02:06:35.556 DEBUG Processed: img/3_0.png
+02:06:35.556 DEBUG Processed: img/404.gif
+02:06:35.557 DEBUG Processed: img/CC.png
+02:06:35.558 DEBUG Processed: img/R-C.bmp
+02:06:35.558 DEBUG Processed: img/R-C.png
+02:06:35.558 DEBUG Processed: img/b_02.jpg
+02:06:35.559 DEBUG Processed: img/banner.jpg
+02:06:35.559 DEBUG Processed: img/banner_1.jpg
+02:06:35.560 DEBUG Processed: img/banner_2.jpg
+02:06:35.560 DEBUG Processed: img/favicon.ico
+02:06:35.560 DEBUG Processed: img/logo-bit2.png
+02:06:35.561 DEBUG Processed: img/logo-bit3.png
+02:06:35.561 DEBUG Processed: img/logo.ico
+02:06:35.561 DEBUG Processed: img/logo.png
+02:06:35.562 DEBUG Processed: img/测试.png
+02:06:35.562 DEBUG Processed: img/icon/1708236706_589598_jjIy.webp
+02:06:35.563 DEBUG Processed: img/icon/about.ico
+02:06:35.563 DEBUG Processed: img/icon/c0cc63293f7fe7f4899efb0c3751dbc3.png
+02:06:35.563 DEBUG Processed: img/icon/font.ico
+02:06:35.564 DEBUG Processed: img/icon/g.ico
+02:06:35.564 DEBUG Processed: img/icon/g1.ico
+02:06:35.565 DEBUG Processed: img/icon/logo.png
+02:06:35.566 DEBUG Processed: img/icon/net.ico
+02:06:35.566 DEBUG Processed: img/icon/ohM48HlPfB6Q3LV.gif
+02:06:35.567 DEBUG Processed: img/icon/pc.ico
+02:06:35.567 DEBUG Processed: img/icon/pc1.ico
+02:06:35.568 DEBUG Processed: img/icon/twikoo-logo-home.png
+02:06:35.593 DEBUG Processed: favi/qq.js
+02:06:35.616 DEBUG Processed: source/CNAME
+02:06:35.617 DEBUG Processed: source/cnm.html
+02:06:35.617 DEBUG Processed: source/sy.html
+02:06:35.617 DEBUG Processed: source/css/icat.css
+02:06:35.618 DEBUG Processed: source/css/fps.css
+02:06:35.618 DEBUG Processed: source/css/index.styl
+02:06:35.619 DEBUG Processed: source/css/rightmenu.css
+02:06:35.619 DEBUG Processed: source/css/var.styl
+02:06:35.619 DEBUG Processed: source/img/404.jpg
+02:06:35.620 DEBUG Processed: source/img/favicon.png
+02:06:35.620 DEBUG Processed: source/img/friend_404.gif
+02:06:35.620 DEBUG Processed: source/js/aplay.js
+02:06:35.621 DEBUG Processed: source/js/aplayer.js
+02:06:35.621 DEBUG Processed: source/js/countup.js
+02:06:35.622 DEBUG Processed: source/js/day.js
+02:06:35.622 DEBUG Processed: source/js/di.js
+02:06:35.622 DEBUG Processed: source/js/explorer_stop.js
+02:06:35.623 DEBUG Processed: source/js/fps.js
+02:06:35.623 DEBUG Processed: source/js/index.js
+02:06:35.624 DEBUG Processed: source/js/jquery-3.7.1.min.js
+02:06:35.624 DEBUG Processed: source/js/lunar.js
+02:06:35.625 DEBUG Processed: source/js/main.js
+02:06:35.625 DEBUG Processed: source/js/sn.js
+02:06:35.625 DEBUG Processed: source/js/tw_cn.js
+02:06:35.626 DEBUG Processed: source/js/utils.js
+02:06:35.626 DEBUG Processed: source/js/search/algolia.js
+02:06:35.627 DEBUG Processed: source/js/search/local-search.js
+02:06:40.421 DEBUG Theme config loaded.
+02:06:40.422 DEBUG Processed: layout/archive.pug
+02:06:40.422 DEBUG Processed: layout/category.pug
+02:06:40.423 DEBUG Processed: layout/index.pug
+02:06:40.423 DEBUG Processed: layout/page.pug
+02:06:40.423 DEBUG Processed: layout/post.pug
+02:06:40.423 DEBUG Processed: layout/tag.pug
+02:06:40.424 DEBUG Processed: layout/includes/404 copy.pug
+02:06:40.424 DEBUG Processed: layout/includes/404.pug
+02:06:40.424 DEBUG Processed: layout/includes/additional-js.pug
+02:06:40.424 DEBUG Processed: layout/includes/aplayer.pug
+02:06:40.425 DEBUG Processed: layout/includes/footer.pug
+02:06:40.425 DEBUG Processed: layout/includes/head.pug
+02:06:40.425 DEBUG Processed: layout/includes/layout.pug
+02:06:40.425 DEBUG Processed: layout/includes/pagination.pug
+02:06:40.426 DEBUG Processed: layout/includes/rightmenu.pug
+02:06:40.426 DEBUG Processed: layout/includes/rightside.pug
+02:06:40.426 DEBUG Processed: layout/includes/sidebar.pug
+02:06:40.426 DEBUG Processed: layout/includes/head/Open_Graph.pug
+02:06:40.427 DEBUG Processed: layout/includes/head/analytics.pug
+02:06:40.427 DEBUG Processed: layout/includes/head/config.pug
+02:06:40.428 DEBUG Processed: layout/includes/head/config_site.pug
+02:06:40.428 DEBUG Processed: layout/includes/head/google_adsense.pug
+02:06:40.428 DEBUG Processed: layout/includes/head/preconnect.pug
+02:06:40.428 DEBUG Processed: layout/includes/head/pwa.pug
+02:06:40.429 DEBUG Processed: layout/includes/head/site_verification.pug
+02:06:40.429 DEBUG Processed: layout/includes/header/index.pug
+02:06:40.429 DEBUG Processed: layout/includes/header/menu_item.pug
+02:06:40.430 DEBUG Processed: layout/includes/header/nav.pug
+02:06:40.430 DEBUG Processed: layout/includes/header/post-info.pug
+02:06:40.430 DEBUG Processed: layout/includes/header/social.pug
+02:06:40.430 DEBUG Processed: layout/includes/loading/fullpage-loading.pug
+02:06:40.431 DEBUG Processed: layout/includes/loading/index.pug
+02:06:40.431 DEBUG Processed: layout/includes/loading/pace.pug
+02:06:40.431 DEBUG Processed: layout/includes/mixins/article-sort.pug
+02:06:40.432 DEBUG Processed: layout/includes/mixins/post-ui.pug
+02:06:40.432 DEBUG Processed: layout/includes/page/about.pug
+02:06:40.432 DEBUG Processed: layout/includes/page/categories.pug
+02:06:40.432 DEBUG Processed: layout/includes/page/default-page.pug
+02:06:40.433 DEBUG Processed: layout/includes/page/flink.pug
+02:06:40.433 DEBUG Processed: layout/includes/page/tags.pug
+02:06:40.434 DEBUG Processed: layout/includes/page/time-sg.pug
+02:06:40.434 DEBUG Processed: layout/includes/post/post-copyright.pug
+02:06:40.434 DEBUG Processed: layout/includes/post/reward.pug
+02:06:40.435 DEBUG Processed: layout/includes/page/url.pug
+02:06:40.435 DEBUG Processed: layout/includes/third-party/aplayer.pug
+02:06:40.435 DEBUG Processed: layout/includes/third-party/effect.pug
+02:06:40.436 DEBUG Processed: layout/includes/third-party/pangu.pug
+02:06:40.436 DEBUG Processed: layout/includes/third-party/pjax.pug
+02:06:40.437 DEBUG Processed: layout/includes/third-party/prismjs.pug
+02:06:40.437 DEBUG Processed: layout/includes/third-party/subtitle.pug
+02:06:40.438 DEBUG Processed: layout/includes/widget/card_ad.pug
+02:06:40.438 DEBUG Processed: layout/includes/widget/card_announcement.pug
+02:06:40.439 DEBUG Processed: layout/includes/widget/card_archives.pug
+02:06:40.439 DEBUG Processed: layout/includes/widget/card_author.pug
+02:06:40.440 DEBUG Processed: layout/includes/widget/card_bottom_self.pug
+02:06:40.440 DEBUG Processed: layout/includes/widget/card_categories.pug
+02:06:40.440 DEBUG Processed: layout/includes/widget/card_newest_comment.pug
+02:06:40.441 DEBUG Processed: layout/includes/widget/card_post_series.pug
+02:06:40.441 DEBUG Processed: layout/includes/widget/card_post_toc.pug
+02:06:40.441 DEBUG Processed: layout/includes/widget/card_recent_post.pug
+02:06:40.441 DEBUG Processed: layout/includes/widget/card_tags.pug
+02:06:40.442 DEBUG Processed: layout/includes/widget/card_top_self.pug
+02:06:40.442 DEBUG Processed: layout/includes/widget/card_webinfo.pug
+02:06:40.442 DEBUG Processed: layout/includes/widget/index.pug
+02:06:40.443 DEBUG Processed: source/css/_layout/aside.styl
+02:06:40.443 DEBUG Processed: source/css/_layout/chat.styl
+02:06:40.443 DEBUG Processed: source/css/_layout/comments.styl
+02:06:40.444 DEBUG Processed: source/css/_layout/footer.styl
+02:06:40.444 DEBUG Processed: source/css/_layout/loading.styl
+02:06:40.444 DEBUG Processed: source/css/_layout/head.styl
+02:06:40.445 DEBUG Processed: source/css/_layout/pagination.styl
+02:06:40.445 DEBUG Processed: source/css/_layout/post.styl
+02:06:40.445 DEBUG Processed: source/css/_layout/relatedposts.styl
+02:06:40.446 DEBUG Processed: source/css/_layout/reward.styl
+02:06:40.446 DEBUG Processed: source/css/_layout/rightside.styl
+02:06:40.446 DEBUG Processed: source/css/_layout/sidebar.styl
+02:06:40.446 DEBUG Processed: source/css/_layout/third-party.styl
+02:06:40.447 DEBUG Processed: layout/includes/third-party/abcjs/abcjs.pug
+02:06:40.447 DEBUG Processed: layout/includes/third-party/abcjs/index.pug
+02:06:40.447 DEBUG Processed: layout/includes/third-party/card-post-count/artalk.pug
+02:06:40.448 DEBUG Processed: layout/includes/third-party/card-post-count/disqus.pug
+02:06:40.448 DEBUG Processed: layout/includes/third-party/card-post-count/fb.pug
+02:06:40.448 DEBUG Processed: layout/includes/third-party/card-post-count/index.pug
+02:06:40.449 DEBUG Processed: layout/includes/third-party/card-post-count/remark42.pug
+02:06:40.449 DEBUG Processed: layout/includes/third-party/card-post-count/twikoo.pug
+02:06:40.449 DEBUG Processed: layout/includes/third-party/card-post-count/valine.pug
+02:06:40.450 DEBUG Processed: layout/includes/third-party/card-post-count/waline.pug
+02:06:40.450 DEBUG Processed: layout/includes/third-party/chat/chatra.pug
+02:06:40.451 DEBUG Processed: layout/includes/third-party/chat/crisp.pug
+02:06:40.451 DEBUG Processed: layout/includes/third-party/chat/daovoice.pug
+02:06:40.451 DEBUG Processed: layout/includes/third-party/chat/index.pug
+02:06:40.452 DEBUG Processed: layout/includes/third-party/chat/messenger.pug
+02:06:40.452 DEBUG Processed: layout/includes/third-party/chat/tidio.pug
+02:06:40.452 DEBUG Processed: layout/includes/third-party/comments/artalk.pug
+02:06:40.452 DEBUG Processed: layout/includes/third-party/comments/disqus.pug
+02:06:40.453 DEBUG Processed: layout/includes/third-party/comments/disqusjs.pug
+02:06:40.453 DEBUG Processed: layout/includes/third-party/comments/facebook_comments.pug
+02:06:40.454 DEBUG Processed: layout/includes/third-party/comments/giscus.pug
+02:06:40.454 DEBUG Processed: layout/includes/third-party/comments/gitalk.pug
+02:06:40.454 DEBUG Processed: layout/includes/third-party/comments/index.pug
+02:06:40.454 DEBUG Processed: layout/includes/third-party/comments/js.pug
+02:06:40.455 DEBUG Processed: layout/includes/third-party/comments/livere.pug
+02:06:40.455 DEBUG Processed: layout/includes/third-party/comments/remark42.pug
+02:06:40.455 DEBUG Processed: layout/includes/third-party/comments/twikoo.pug
+02:06:40.456 DEBUG Processed: layout/includes/third-party/comments/utterances.pug
+02:06:40.456 DEBUG Processed: layout/includes/third-party/comments/valine.pug
+02:06:40.457 DEBUG Processed: layout/includes/third-party/comments/waline.pug
+02:06:40.457 DEBUG Processed: layout/includes/third-party/math/index.pug
+02:06:40.457 DEBUG Processed: layout/includes/third-party/math/katex.pug
+02:06:40.457 DEBUG Processed: layout/includes/third-party/math/mathjax.pug
+02:06:40.458 DEBUG Processed: layout/includes/third-party/math/mermaid.pug
+02:06:40.458 DEBUG Processed: layout/includes/third-party/newest-comments/artalk.pug
+02:06:40.458 DEBUG Processed: layout/includes/third-party/newest-comments/disqus-comment.pug
+02:06:40.458 DEBUG Processed: layout/includes/third-party/newest-comments/github-issues.pug
+02:06:40.459 DEBUG Processed: layout/includes/third-party/newest-comments/index.pug
+02:06:40.459 DEBUG Processed: layout/includes/third-party/newest-comments/remark42.pug
+02:06:40.459 DEBUG Processed: layout/includes/third-party/newest-comments/twikoo-comment.pug
+02:06:40.460 DEBUG Processed: layout/includes/third-party/newest-comments/valine.pug
+02:06:40.460 DEBUG Processed: layout/includes/third-party/newest-comments/waline.pug
+02:06:40.460 DEBUG Processed: layout/includes/third-party/search/algolia.pug
+02:06:40.461 DEBUG Processed: layout/includes/third-party/search/docsearch.pug
+02:06:40.461 DEBUG Processed: layout/includes/third-party/search/index.pug
+02:06:40.461 DEBUG Processed: layout/includes/third-party/search/local-search.pug
+02:06:40.461 DEBUG Processed: layout/includes/third-party/share/addtoany.pug
+02:06:40.462 DEBUG Processed: layout/includes/third-party/share/index.pug
+02:06:40.462 DEBUG Processed: layout/includes/third-party/share/share-js.pug
+02:06:40.463 DEBUG Processed: languages/default.yml
+02:06:40.463 DEBUG Processed: languages/en.yml
+02:06:40.463 DEBUG Processed: languages/zh-CN.yml
+02:06:40.464 DEBUG Processed: languages/zh-TW.yml
+02:06:40.464 DEBUG Processed: _config.yml
+02:06:40.465 DEBUG Processed: source/js/rightmenu.js
+02:06:40.465 DEBUG Processed: source/js/txmap.js
+02:06:40.484 DEBUG Rendering post: H:\server\source\favi\qq.js
+02:06:40.522 DEBUG Generator: 404
+02:06:40.522 DEBUG Generator: asset
+02:06:40.523 DEBUG Generator: page
+02:06:40.524 DEBUG Generator: post
+02:06:40.533 DEBUG Generator: artitalk
+02:06:40.534 DEBUG Generator: archive
+02:06:40.536 DEBUG Generator: baidusitemap
+02:06:40.537 DEBUG Generator: category
+02:06:40.539 DEBUG Generator: atom
+02:06:40.575 DEBUG Generator: index
+02:06:40.576 DEBUG Generator: xml
+02:06:40.581 DEBUG Generator: sitemap
+02:06:40.610 DEBUG Generator: tag
+02:06:40.612 DEBUG Generator: cjh_url_generator
+02:06:40.612 INFO  Generating urls for last 7 posts
+02:06:40.613 INFO  Posts urls generated in submit_urls.txt
+https://blog.admincmd.xyz/post/f483a3a94892/index.html
+https://blog.admincmd.xyz/post/8cf1f32c4af1/index.html
+https://blog.admincmd.xyz/post/ca2d8449e095/index.html
+https://blog.admincmd.xyz/post/1b5d7e144ce7/index.html
+https://blog.admincmd.xyz/post/46e8c3d8a231/index.html
+https://blog.admincmd.xyz/post/cedfd1c6ff27/index.html
+https://blog.admincmd.xyz/post/19bd6d8ad52f/index.html
+02:06:40.641 INFO  Files loaded in 5.46 s
+02:06:40.659 INFO  Deleted: js/rightmenu.js
+02:06:40.659 INFO  Deleted: js/txmap.js
+02:06:40.717 DEBUG Rendering HTML page: 404.html
+02:06:40.761 DEBUG Rendering HTML page: pp.html
+02:06:40.804 DEBUG Rendering HTML page: url.html
+02:06:40.807 DEBUG Rendering HTML page: categories/index-1.html
+02:06:40.811 DEBUG Rendering HTML page: categories/index.html
+02:06:40.815 DEBUG Rendering HTML page: about/index.html
+02:06:40.817 DEBUG Rendering HTML page: charts/index.html
+02:06:40.824 DEBUG Rendering HTML page: favi/qq.html
+02:06:40.837 DEBUG Rendering HTML page: favi/index.html
+02:06:40.839 DEBUG Rendering HTML page: help/index.html
+02:06:40.880 DEBUG Rendering HTML page: license/index.html
+02:06:40.920 DEBUG Rendering HTML page: log/index.html
+02:06:40.925 DEBUG Rendering HTML page: link/index.html
+02:06:40.929 DEBUG Rendering HTML page: lyb_files/index.html
+02:06:40.932 DEBUG Rendering HTML page: privacy/index.html
+02:06:40.941 DEBUG Rendering HTML post: post/4faa9a27be97/index.html
+02:06:40.975 DEBUG Rendering HTML post: post/203b0283261c/index.html
+02:06:40.992 DEBUG Rendering HTML post: post/7e327e06498d/index.html
+02:06:40.997 DEBUG Rendering HTML page: tags/index.html
+02:06:41.001 DEBUG Rendering HTML post: post/f483a3a94892/index.html
+02:06:41.006 DEBUG Rendering HTML post: post/f0f10b70108c/index.html
+02:06:41.013 DEBUG Rendering HTML post: post/19bd6d8ad52f/index.html
+02:06:41.027 DEBUG Rendering HTML post: post/cedfd1c6ff27/index.html
+02:06:41.037 DEBUG Rendering HTML post: post/ca2d8449e095/index.html
+02:06:41.047 DEBUG Rendering HTML post: post/8cf1f32c4af1/index.html
+02:06:41.056 DEBUG Rendering HTML post: post/46e8c3d8a231/index.html
+02:06:41.062 DEBUG Rendering HTML archive: archives/index.html
+02:06:41.081 DEBUG Rendering HTML archive: archives/page/2/index.html
+02:06:41.085 DEBUG Rendering HTML post: post/1b5d7e144ce7/index.html
+02:06:41.089 DEBUG Rendering HTML post: post/d27b21b27a53/index.html
+02:06:41.110 DEBUG Rendering HTML archive: archives/2024/index.html
+02:06:41.118 DEBUG Rendering HTML archive: archives/2024/page/2/index.html
+02:06:41.123 DEBUG Rendering HTML archive: archives/2024/05/index.html
+02:06:41.126 DEBUG Rendering HTML archive: archives/2024/06/index.html
+02:06:41.129 DEBUG Rendering HTML archive: archives/2024/09/index.html
+02:06:41.132 DEBUG Rendering HTML archive: archives/2024/10/index.html
+02:06:41.136 DEBUG Rendering HTML category: categories/Windows/index.html
+02:06:41.155 DEBUG Rendering HTML category: categories/教程/index.html
+02:06:41.969 DEBUG Rendering HTML archive: archives/2024/12/index.html
+02:06:41.972 DEBUG Rendering HTML category: categories/魔改/index.html
+02:06:41.976 DEBUG Rendering HTML category: categories/玩转系统/index.html
+02:06:41.986 DEBUG Rendering HTML category: categories/玩转系统/文件/index.html
+02:06:41.990 DEBUG Rendering HTML category: categories/整改微机室/index.html
+02:06:41.993 DEBUG Rendering HTML index: index.html
+02:06:42.016 DEBUG Rendering HTML index: page/2/index.html
+02:06:42.020 DEBUG Rendering HTML category: categories/教程/Windows-安装/index.html
+02:06:42.025 DEBUG Rendering HTML category: categories/魔改/Windows-引导/index.html
+02:06:42.028 DEBUG Rendering HTML category: categories/教程/博客/index.html
+02:06:42.031 DEBUG Rendering HTML tag: tags/Windows/index.html
+02:06:42.053 DEBUG Rendering HTML tag: tags/VMware/index.html
+02:06:42.059 DEBUG Rendering HTML tag: tags/虚拟机/index.html
+02:06:42.062 DEBUG Rendering HTML tag: tags/Power-Shell/index.html
+02:06:42.065 DEBUG Rendering HTML tag: tags/WindowsApps/index.html
+02:06:42.069 DEBUG Rendering HTML tag: tags/Windows-安装/index.html
+02:06:42.072 DEBUG Rendering HTML tag: tags/安装系统/index.html
+02:06:42.075 DEBUG Rendering HTML tag: tags/物理机/index.html
+02:06:42.078 DEBUG Rendering HTML tag: tags/BOOTX64-EFI/index.html
+02:06:42.080 DEBUG Rendering HTML tag: tags/魔改/index.html
+02:06:42.084 DEBUG Rendering HTML tag: tags/EFI/index.html
+02:06:42.088 DEBUG Rendering HTML tag: tags/Windows-引导/index.html
+02:06:42.091 DEBUG Rendering HTML tag: tags/BCD/index.html
+02:06:42.094 DEBUG Rendering HTML tag: tags/BOOTMGR-EFI/index.html
+02:06:42.097 DEBUG Rendering HTML tag: tags/UEFI/index.html
+02:06:42.101 DEBUG Rendering HTML tag: tags/文件/index.html
+02:06:42.103 DEBUG Rendering HTML tag: tags/DESKTOP-INI/index.html
+02:06:42.106 DEBUG Rendering HTML tag: tags/hexo/index.html
+02:06:42.110 DEBUG Rendering HTML tag: tags/Butterfly/index.html
+02:06:42.113 DEBUG Rendering HTML tag: tags/锐捷云课堂/index.html
+02:06:42.116 DEBUG Rendering HTML tag: tags/Windows-欲安装环境/index.html
+02:06:42.121 DEBUG Rendering HTML tag: tags/BIOS/index.html
+02:06:42.127 DEBUG Rendering HTML tag: tags/tags/index.html
+02:06:42.132 DEBUG Rendering HTML tag: tags/windows/index.html
+02:06:42.135 DEBUG Rendering HTML tag: tags/胡改/index.html
+02:06:42.139 DEBUG Rendering HTML tag: tags/Legacy/index.html
+02:06:42.142 DEBUG Rendering HTML tag: tags/安装-Windows/index.html
+02:06:42.145 DEBUG Rendering HTML tag: tags/教程/index.html
+02:06:42.632 INFO  Generated: favi/qq.js
+02:06:42.641 INFO  Generated: sitemap.xml
+02:06:42.642 INFO  Generated: categories/index-1.html
+02:06:42.643 INFO  Generated: pp.html
+02:06:42.645 INFO  Generated: categories/index.html
+02:06:42.646 INFO  Generated: about/index.html
+02:06:42.646 INFO  Generated: charts/index.html
+02:06:42.646 INFO  Generated: 404.html
+02:06:42.646 INFO  Generated: favi/index.html
+02:06:42.647 INFO  Generated: link/index.html
+02:06:42.647 INFO  Generated: url.html
+02:06:42.647 INFO  Generated: log/index.html
+02:06:42.647 INFO  Generated: post/203b0283261c/index.html
+02:06:42.648 INFO  Generated: lyb_files/index.html
+02:06:42.648 INFO  Generated: tags/index.html
+02:06:42.648 INFO  Generated: post/4faa9a27be97/index.html
+02:06:42.649 INFO  Generated: post/7e327e06498d/index.html
+02:06:42.649 INFO  Generated: favi/qq.html
+02:06:42.649 INFO  Generated: post/f0f10b70108c/index.html
+02:06:42.649 INFO  Generated: privacy/index.html
+02:06:42.650 INFO  Generated: post/19bd6d8ad52f/index.html
+02:06:42.650 INFO  Generated: post/ca2d8449e095/index.html
+02:06:42.650 INFO  Generated: post/cedfd1c6ff27/index.html
+02:06:42.651 INFO  Generated: post/46e8c3d8a231/index.html
+02:06:42.651 INFO  Generated: post/8cf1f32c4af1/index.html
+02:06:42.651 INFO  Generated: archives/index.html
+02:06:42.651 INFO  Generated: post/f483a3a94892/index.html
+02:06:42.652 INFO  Generated: post/1b5d7e144ce7/index.html
+02:06:42.653 INFO  Generated: archives/2024/index.html
+02:06:42.653 INFO  Generated: archives/page/2/index.html
+02:06:42.654 INFO  Generated: archives/2024/06/index.html
+02:06:42.654 INFO  Generated: archives/2024/09/index.html
+02:06:42.655 INFO  Generated: archives/2024/10/index.html
+02:06:42.656 INFO  Generated: archives/2024/05/index.html
+02:06:42.656 INFO  Generated: categories/Windows/index.html
+02:06:42.657 INFO  Generated: categories/教程/index.html
+02:06:42.658 INFO  Generated: archives/2024/page/2/index.html
+02:06:42.658 INFO  Generated: license/index.html
+02:06:42.659 INFO  Generated: help/index.html
+02:06:42.659 INFO  Generated: post/d27b21b27a53/index.html
+02:06:42.660 INFO  Generated: categories/玩转系统/文件/index.html
+02:06:42.661 INFO  Generated: categories/整改微机室/index.html
+02:06:42.661 INFO  Generated: archives/2024/12/index.html
+02:06:42.661 INFO  Generated: index.html
+02:06:42.662 INFO  Generated: categories/魔改/index.html
+02:06:42.662 INFO  Generated: tags/VMware/index.html
+02:06:42.662 INFO  Generated: categories/教程/博客/index.html
+02:06:42.662 INFO  Generated: page/2/index.html
+02:06:42.663 INFO  Generated: categories/教程/Windows-安装/index.html
+02:06:42.663 INFO  Generated: categories/魔改/Windows-引导/index.html
+02:06:42.663 INFO  Generated: tags/虚拟机/index.html
+02:06:42.664 INFO  Generated: tags/Windows/index.html
+02:06:42.664 INFO  Generated: tags/Power-Shell/index.html
+02:06:42.664 INFO  Generated: tags/Windows-安装/index.html
+02:06:42.665 INFO  Generated: tags/安装系统/index.html
+02:06:42.665 INFO  Generated: tags/WindowsApps/index.html
+02:06:42.665 INFO  Generated: tags/物理机/index.html
+02:06:42.665 INFO  Generated: categories/玩转系统/index.html
+02:06:42.666 INFO  Generated: tags/BOOTX64-EFI/index.html
+02:06:42.666 INFO  Generated: tags/魔改/index.html
+02:06:42.666 INFO  Generated: tags/BCD/index.html
+02:06:42.666 INFO  Generated: tags/Windows-引导/index.html
+02:06:42.667 INFO  Generated: tags/EFI/index.html
+02:06:42.667 INFO  Generated: tags/UEFI/index.html
+02:06:42.667 INFO  Generated: tags/文件/index.html
+02:06:42.668 INFO  Generated: tags/BOOTMGR-EFI/index.html
+02:06:42.668 INFO  Generated: tags/DESKTOP-INI/index.html
+02:06:42.669 INFO  Generated: tags/锐捷云课堂/index.html
+02:06:42.669 INFO  Generated: tags/windows/index.html
+02:06:42.669 INFO  Generated: tags/Windows-欲安装环境/index.html
+02:06:42.670 INFO  Generated: tags/tags/index.html
+02:06:42.670 INFO  Generated: tags/hexo/index.html
+02:06:42.670 INFO  Generated: tags/胡改/index.html
+02:06:42.670 INFO  Generated: tags/Butterfly/index.html
+02:06:42.671 INFO  Generated: tags/Legacy/index.html
+02:06:42.671 INFO  Generated: tags/安装-Windows/index.html
+02:06:42.671 INFO  Generated: tags/教程/index.html
+02:06:42.671 INFO  Generated: tags/BIOS/index.html
+02:06:42.672 INFO  Generated: js/index.js
+02:06:42.673 INFO  79 files generated in 2.03 s
+02:06:42.702 DEBUG Database saved
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server/themes (master)
+$ cd ..
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server (master)
+$ cd public
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server/public (main|MERGING)
+$ git add *
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server/public (main|MERGING)
+$ git commit -m "AMLS"
+[main cc732c3] AMLS
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server/public (main)
+$ git push origin main
+Enumerating objects: 575, done.
+Counting objects: 100% (434/434), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (175/175), done.
+Writing objects: 100% (291/291), 171.78 KiB | 1.47 MiB/s, done.
+Total 291 (delta 150), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (150/150), completed with 48 local objects.
+To github.com:admincmd-a/github-blog.admincmd.xyz.git
+   fed85c9..cc732c3  main -> main
+
+Administrator@WIN-AJJOKRE2KTL MINGW64 /h/server/public (main)
+$

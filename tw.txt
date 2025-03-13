@@ -1,0 +1,3 @@
+mongodb+srv://User:<password>@cluster0.nqgopq9.mongodb.net/?retryWrites=true&w=majority
+
+mongodb+srv://User:XBa132435@cluster0.nqgopq9.mongodb.net/?retryWrites=true&w=majority

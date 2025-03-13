@@ -1,0 +1,333 @@
+/* Setting WinDiv Home --------------------------------------------*/
+span.config-title {
+    color: #10A7E8;
+    top: 7px;
+    left: 85px;
+    font-size:32px;
+    position:absolute;
+}
+
+html[data-theme="dark"] span.config-title {
+    color: #7AABEF;
+}
+
+span.config-2title {
+    color: #262D32;
+    top:49px;
+    left:85px;
+    font-size:16px;
+    position:absolute;
+}
+
+html[data-theme="dark"] span.config-2title {
+    color: #F8F2E6;
+}
+
+div.configWin {
+    position:fixed;
+    top:35%;
+    right:25%;
+    z-index:25;
+    border-width:2px;
+    border-color:#7F7E84;
+    border-style:solid;
+    background-color:#F8F3ED; /*背景色*/
+    width:50%;
+    border-radius: 20px; /*圆角*/
+    height: 35%;
+}
+
+html[data-theme="dark"] div.configWin {
+    border-color:#434446;
+    background-color:#36353B; /*背景色*/
+}
+
+
+div.configDiv {
+    position:absolute;
+    top: 20%;
+    left: 3%;
+    max-width: 95%;
+}
+
+a.config-bottom {
+    font-size:16px;
+    /* height:60px;
+    width:190px; */
+    color:#FFFFFF;
+    background-color:#10A7E8;
+    border-radius:10px;
+    /* text-align:center; */
+    line-height:30px;
+    /* display:block; */
+    margin:0 auto;
+    margin-top:20px;
+    line-height: 58px;
+}
+
+html[data-theme="dark"] a.config-bottom {
+    background-color:#3946AF;
+}
+
+a.configWinTopBtn {
+    font-size:25px;
+    background-color:#e0e0e0;
+    left: 1.75%;
+    top: 5%;
+    position:absolute;
+}
+
+html[data-theme="dark"] a.configWinTopBtn {
+    background-color:#56625E;
+}
+
+a.configWinCloseBtn {
+    font-size:25px;
+    background-color:#e0e0e0;
+    right: 20px;
+    top: 5%;
+    position:absolute;
+}
+
+html[data-theme="dark"] a.configWinCloseBtn {
+    background-color:#56625E;
+}
+
+@media screen and (max-width:768px) {
+    .configDiv {
+        width:100%!important;  /* 在屏幕宽度小于768px时宽度为100% */
+    }
+}
+
+
+a.config-bottom {
+    font-size:25px;
+    text-align: left;
+    border-radius: 12px;
+    color: #3A3539;
+    width: 120px;
+    height: 40px;
+    background-color: #10A7E8;
+    border-style:solid;
+    border-width:2px;
+    margin-top: 20px;
+}
+
+html[data-theme="dark"] a.config-bottom {
+    background-color:#3946AF;
+}
+
+a.config-bottom {
+    font-size:22px;
+    text-align:center;
+
+    border-radius: 12px;
+    color: #3A3539;
+    background-color: #10A7E8;
+    border-style:solid;
+    border-width:2px;
+
+    min-width: 180px;
+    min-height: 60px;
+
+    width: 180px;
+    height: 60px;
+
+    display: inline-block;
+}
+
+html[data-theme="dark"] a.config-bottom {
+    background-color:#3946AF;
+}
+
+a.config-font-butt /*om*/{
+    font-size:20px;
+    height:40px;
+    width:160px;
+    color:#FFFFFF;
+    background-color:#2F7AA1;
+    border-radius:10px;
+    /* text-align:center; */
+    line-height:30px;
+    /* display:block; */
+    margin:0 auto;
+    margin-top:20px;
+    line-height: 58px;
+}
+
+html[data-theme="dark"] a.config-font-butt {
+    background-color:#3946AF;
+}
+
+.h2 {
+    font-size: 26px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+a.config-bottom {
+    font-size:20px;
+    height:50px;
+    width:160px;
+    color:#FFFFFF;
+    background-color:#2F7AA1;
+    border-radius:10px;
+    /* text-align:center; */
+    line-height:30px;
+    /* display:block; */
+    margin:0 auto;
+    margin-top:20px;
+    line-height: 58px;
+}
+
+html[data-theme="dark"] a.config-bottom {
+    background-color:#3946AF;
+}
+
+.n.active::after {
+    content: '✓';
+}
+/*Setting WinDiv End --------------------------------------------*/
+
+
+/* 节日大窗口 Home -----------------------------------------------*/
+
+a.winbox-btn {
+    background-color: #10A7E8;
+    bottom:30px;
+    left:44%;
+}
+
+html[data-theme="dark"] a.winbox-btn {
+    background-color: #3946AF;
+}
+
+a.winbox-btn {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-right:  4%;
+  padding-left:  4%;
+}
+div#timeWin {
+    position:fixed;
+    top:35%;
+    right:25%;
+    z-index:25;
+    border-width:2px;
+    border-color:#7F7E84;
+    border-style:solid;
+    background-color:#F8F3ED; /*背景色*/
+    width:50%;
+    border-radius: 25px; /*圆角*/
+}
+
+html[data-theme="dark"] div#timeWin {
+    border-color:#434446;
+    background-color:#36353B; /*背景色*/
+}
+
+a.closeWinbox {
+    font-size:16px;
+    height:60px;
+    width:90px;
+    color:#FFFFFF;
+    background-color:#2F7AA1;
+    border-radius:10px;
+    text-align:center;
+    line-height:30px;
+    display:block;
+    margin:0 auto;
+    margin-top:20px;
+    line-height: 58px;
+}
+
+html[data-theme="dark"] a.closeWinbox {
+    background-color:#3946AF;
+}
+
+/* 节日大窗口 End -------------------------------------------------*/
+
+
+/* 原主题BUG修复 Home ---------------------------------------------*/
+
+div#rightside-config-show a i {
+    position:relative !important;
+    top: 9px !important;
+    /*
+    这里是原主题的BUG，a标签的i标签的从按钮中心向上偏移了9px，导致按钮的位置不准确(偏了个十万八千里)，
+    所以这里将i标签的top属性设置为9px，让它与按钮的中心对齐。
+    */
+}
+
+div#toggle-menu a.site-page { /* 移动端菜单按钮 */
+    position:relative !important;
+    top: 9px !important;
+}
+
+a[class="extend next"] {/* 主页右翻页按钮 */
+    position:relative !important;
+    top: -11px !important;
+}
+
+a[class="extend next"] i {/* 这里是里面的图标 */
+    position:relative !important;
+    top: 10px !important;
+}
+
+a[class="extend prev"] {/* 主页左翻页按钮 */
+    position:relative !important;
+    top: -11px !important;
+}
+
+a[class="extend prev"] i {
+    position:relative !important;
+    top: 10px !important;
+}
+
+footer img {
+    position:relative;
+    top:4px;
+}
+
+/* 原主题BUG修复 End ----------------------------------------------*/
+
+/* 底部时间计算 Home -*/
+
+#footer {
+    color: white; /* 将文字颜色设为白色 */
+    text-align: center; /* 文字居中对齐 */
+    margin-top: 0px; /* 顶部边距设为 0 */
+    font-size: 14px; /* 字体大小设为 14px */
+}
+.workSituationImg {
+    width: 0px;
+    height: 0px;
+}
+/* 底部时间计算 End -*/
+
+/* 时光飞逝 Home -*/
+body 
+.progress-container {
+  margin-bottom: 10px;
+}
+.progress-label {
+  margin-bottom: 5px;
+}
+.progress-bar {
+  width: 100%;
+  background-color: hsla(0, 0%, 31%, 0.24); /* 进度条背景色 */
+  border-radius: 5px;/*圆角*/
+  overflow: hidden;
+}
+.progress-bar-inner {
+  height: 15px;/*进度条高度*/
+  background-color: #4caf50;/*进度条颜色*/
+  text-align: center;
+  /* color: white;背景颜色 */
+  line-height: 20px;
+  transition: width 1.5s;/*一次到目标位置的速度*/
+}
+
+
+
+/* 时光飞逝 End -*/

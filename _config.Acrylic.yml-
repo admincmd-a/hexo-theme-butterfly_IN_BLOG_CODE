@@ -1,0 +1,1029 @@
+# 欢迎使用Acrylic主题!🎉
+# Welcome to use theme of Acrylic!🎉
+# 文档: https://Acrylic.zhheo.com/
+# dosc: https://Acrylic.zhheo.com/
+# 交流群: 649565726
+# -------------------------------------
+
+# 导航栏 (nav)
+# ------------------------------------
+nav:
+  left_groups:
+    enable: true
+    group:
+      - title: 博客
+        a_item:
+          - text: 主页
+            link: https://zhheo.com/
+            img: https://p.zhheo.com/20232e121c3fb2daa71897d26a515e030f49073402.png!cover_mini
+            class: out
+          - text: 博客
+            link: /
+            img: https://p.zhheo.com/20234681e06b8e086aa5b15481cb89fd38c7071002.png!cover_mini
+            class: out
+          - text: 图片博客
+            link: https://plog.zhheo.com/
+            img: https://p.zhheo.com/20236a16354d7c333cc7595efaee4b8c5667074602.png!cover_mini
+            class: out
+          - text: 开发博客
+            link: https://apps.zhheo.com/
+            img: https://p.zhheo.com/2023042bb31614949504f9ac59b134ce971d075802.png!cover_mini
+            class: out
+  logo: 
+    enable: true
+    class: i_class #i_class/text/img 
+    custom: heoicon icon-heologo #Heo/https://xxx.com/logo.png
+  fps_enable: true
+  menu:
+    文库:
+      文章列表: /archives/ || fas fa-box-archive
+      全部分类: /categories/ || fas fa-cube
+      全部标签: /tags/ || fas fa-tags
+      即刻短文: /essay/ || fas fa-bars-staggered
+    专栏:
+      设计报告: /tags/设计报告/ || fas fa-swatchbook
+      设计分享: /tags/Heocan/ || fas fa-object-group
+      设计工具: /tags/Sketch/ || fas fa-palette
+      视频混剪: /tags/混剪/ || fas fa-scissors
+    友链:
+      友链鱼塘: /fcircle/ || fas fa-fish-fins
+      友情链接: /link/ || fas fa-user-group
+      宝藏博主: javascript:travelling() || fas fa-bus
+    我的:
+      在线工具: /tlink/ || fas fa-screwdriver-wrench
+      电影推荐: /movies/ || fas fa-clapperboard
+      关于本站: /about/ || fas fa-sailboat
+  right_button:
+    travelling: true
+    random: true
+    console: true
+    totop: true
+# 中控台 (console)
+# --------------------------------------
+
+
+# Code Blocks (代碼相關)
+# --------------------------------------
+
+highlight_theme: darker #  darker / pale night / light / ocean / mac / mac light / false
+highlight_copy: true # copy button
+highlight_lang: true # show the code language
+highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
+highlight_height_limit: false # unit: px
+code_word_wrap: false
+
+# copy settings
+# copyright: Add the copyright information after copied content (複製的內容後面加上版權信息)
+copy:
+  enable: false
+  copyright:
+    enable: false
+    limit_count: 50
+
+# search (搜索)
+# see https://butterfly.js.org/posts/ceeb73f/#搜索系統
+# --------------------------------------
+
+# Algolia search
+algolia_search:
+  enable: false
+  hits:
+    per_page: 6
+
+# Local search
+local_search:
+  enable: false
+  preload: false
+  CDN:
+
+# Math (數學)
+# --------------------------------------
+# About the per_page
+# if you set it to true, it will load mathjax/katex script in each page (true 表示每一頁都加載js)
+# if you set it to false, it will load mathjax/katex script according to your setting (add the 'mathjax: true' in page's front-matter)
+# (false 需要時加載，須在使用的 Markdown Front-matter 加上 mathjax: true)
+
+# MathJax
+mathjax:
+  enable: false
+  per_page: false
+
+# KaTeX
+katex:
+  enable: false
+  per_page: false
+  hide_scrollbar: true
+
+# Image (圖片設置)
+# --------------------------------------
+
+# Favicon（网站图标）
+favicon: https://tucdn.wpon.cn/2023/02/10/a43d4d587028e.png
+
+# Avatar (头像)
+avatar:
+  img: https://p.zhheo.com/2023ab4befd994d9bc8e1e6a78027d517e21075402.png!cover
+  effect: false
+
+# about(关于页面)
+# --------------------------------------
+about:
+  reward: #关于打赏模块开启
+    enable: false
+  info:
+    right:
+      # - 🤖️ 数码爱好者
+      # - 🔍 分享与热心帮助
+      # - 🏠 智能家居小能手
+      # - 🔨 开发小萌新
+    left:
+      # - 专修交互设计 🤝
+      # - 脚踏实地行动派 🏃
+      # - 专攻各种困难 🧱
+      # - 人狠话不多 💢
+  job: #学生、独立开发者、博主
+  live: #中国，北京市
+  born: #1997
+  school: #大连工业大学
+  can: #产品设计
+  work: #UI/产品
+  character: #逻辑学家
+  character2: #INTP-T
+  personalities: #https://cdn.zhheo.com/public/svg/INTP-T.svg
+  selfie: #https://p.zhheo.com/202352d98ec86bef3388a0152b33cf9d06ad082002.png!cover
+  maxim1: #荆棘之路，
+  maxim2: #劈风斩浪。
+  tc1: #玄学流电脑疑难问题
+  tc2: #解决专家
+  tc3: #软件学习能力
+  tc4: #MAX
+  uid: #'UID:125766904'
+  fanjuname: #刺客伍六七
+  fanjulink: #'https://www.bilibili.com/bangumi/play/ss36594/?spm_id_from=333.999.0.0'
+  liketechnology: #数码科技
+  liketechnologyand: #手机、电脑软硬件
+  sllctitle: #为什么建站？
+  xllc: #创建这个站的时候，想要就是能够有一个自己能够积累知识、积累兴趣的地方。和他人分享，会让这些成为积累和沉淀。如果能够帮助到更多的人，帮助更多人解决问题，那一定是非常棒的事情。分享这件事我从很早就开始了，起初做的微信公众号，现在做的网站。因为我比较喜欢研究数码和软件，想要探究在互联网上的事物是如何被创造和发展。网络给我带来了非常多的知识和眼界，我也想力所能及的分享一些我生活的琐碎知识。与大多数垂直类的技术博客不同，这里的种类会非常的繁杂，有技能的教程干货、有生活上的吐槽和妙招、有话题上的思考和想法。一般我研究什么、发现了什么都会分享在这里。这些就是创造这个小站的本意，也是我分享生活的方式。有幸能和你相遇在这里，相信我们能共同留下一段美好记忆。
+  skills_list:
+    - name: Vue
+      color: "#b8f0ae"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/633001374747b.png
+    - name: React
+      color: "#222"
+      icon: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K
+    - name: Docker
+      color: "#57b6e6"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/63300647df7fa.png
+    - name: Photoshop
+      color: "#4082c3"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/63300647e1f10.png
+    - name: Node
+      color: "#333"
+      icon: https://npm.elemecdn.com/anzhiyu-blog@2.1.1/img/svg/node-logo.svg
+    - name: Webpack
+      color: "#2e3a41"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/26/6330ff27e5c9b.png
+    - name: Pinia
+      color: "#fff"
+      icon: https://npm.elemecdn.com/anzhiyu-blog@2.0.8/img/svg/pinia-logo.svg
+    - name: Python
+      color: "#fff"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/63300647dea51.png
+    - name: Vite
+      color: "#937df7"
+      icon: https://npm.elemecdn.com/anzhiyu-blog@2.0.8/img/svg/vite-logo.svg
+    - name: Flutter
+      color: "#4499e4"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/633004063ff15.png
+    - name: Java
+      color: "#fff"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/633005bf0fd1e.jpg
+    - name: CSS3
+      color: "#2c51db"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/633006cc55e07.png
+    - name: JS
+      color: "#f7cb4f"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/633006eee047b.png
+    - name: HTML
+      color: "#e9572b"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/633006f9ab27d.png
+    - name: Git
+      color: "#df5b40"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/633006e37c7fd.webp
+    - name: Apifox
+      color: "#e65164"
+      icon: https://img02.anzhiy.cn/adminuploads/1/2022/09/25/633007087a4dc.webp
+
+sidebars: 
+  href:
+    url1: https://zhheo.com/
+    url2: https://plog.zhheo.com/
+    url3: https://apps.zhheo.com/
+  img1: 
+  img2: 
+  img3: 
+  img4: 
+  ptn2: 主页
+  ptn1: 图片博客
+  ptn3: 开发博客
+
+# 下面的一个都别改
+disable_top_img: false
+index_img: false
+default_top_img: false
+archive_img: false
+tag_img: false
+tag_per_img: false
+category_img: false
+category_per_img: false
+
+cover:
+  # display the cover or not (是否顯示文章封面)
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+  # the position of cover in home page (封面顯示的位置)
+  # left/right/both
+  position: both
+  # When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)
+  default_cover:
+    # - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg
+
+# 即刻短文（默认关闭）
+bbTimeList:
+  enable: false
+
+# Replace Broken Images (替換無法顯示的圖片)
+error_img:
+  flink: https://acrylic.leonus.cn/i/2023/03/04/fnjj9d.png
+  post_page: https://acrylic.leonus.cn/i/2023/03/04/fnjj9d.png
+
+# A simple 404 page
+error_404:
+  enable: true
+  subtitle: '请尝试站内搜索寻找文章'
+  background: https://tucdn.wpon.cn/2023/02/09/5fe538725e242.gif
+
+post_meta:
+  page: # Home Page
+    date_type: created # created or updated or both 主頁文章日期是創建日或者更新日或都顯示
+    date_format: date # date/relative 顯示日期還是相對日期
+    categories: true # true or false 主頁是否顯示分類
+    tags: true # true or false 主頁是否顯示標籤
+    label: true # true or false 顯示描述性文字
+  post:
+    date_type: both # created or updated or both 文章頁日期是創建日或者更新日或都顯示
+    date_format: date # date/relative 顯示日期還是相對日期
+    categories: true # true or false 文章頁是否顯示分類
+    tags: true # true or false 文章頁是否顯示標籤
+    label: true # true or false 顯示描述性文字
+
+# wordcount (字數統計)
+# see https://butterfly.js.org/posts/ceeb73f/#字數統計
+wordcount:
+  enable: false
+  post_wordcount: true
+  min2read: true
+  total_wordcount: true
+
+# Display the article introduction on homepage
+# 1: description
+# 2: both (if the description exists, it will show description, or show the auto_excerpt)
+# 3: auto_excerpt (default)
+# false: do not show the article introduction
+index_post_content:
+  method: 3
+  length: 500 # if you set method to 2 or 3, the length need to config
+
+# anchor
+# when you scroll in post, the URL will update according to header id.
+anchor: false
+
+# Post
+# --------------------------------------
+
+# toc (目錄)
+toc:
+  post: true
+  page: false
+  number: true
+  expand: false
+  style_simple: false # for post
+
+post_copyright:
+  enable: true
+  decode: false
+  author_href:
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+# Post edit
+# Easily browse and edit blog source code online.
+post_edit:
+  enable: false
+  # url: https://github.com/user-name/repo-name/edit/branch-name/subdirectory-name/
+  # For example: https://github.com/jerryc127/butterfly.js.org/edit/main/source/
+  url:
+
+# Related Articles
+related_post:
+  enable: true
+  limit: 6 # Number of posts displayed
+  date_type: created # or created or updated 文章日期顯示創建日或者更新日
+
+# figcaption (圖片描述文字)
+photofigcaption: false
+
+# post_pagination (分頁)
+# value: 1 || 2 || false
+# 1: The 'next post' will link to old post
+# 2: The 'next post' will link to new post
+# false: disable pagination
+post_pagination: 1
+
+# Displays outdated notice for a post (文章過期提醒)
+noticeOutdate:
+  enable: false
+  style: flat # style: simple/flat
+  limit_day: 500 # When will it be shown
+  position: top # position: top/bottom
+  message_prev: It has been
+  message_next: days since the last update, the content of the article may be outdated.
+
+# ptool（文章底部工具）
+# --------------------------------------
+ptool:
+  enable: true
+
+# 打赏
+reward:
+  enable: true
+  QR_code:
+    - img: https://acrylic.leonus.cn/i/2023/02/19/ddz6gd.webp
+      link:
+      text: 微信
+    - img: https://acrylic.leonus.cn/i/2023/03/04/pmf2ec.webp
+      link:
+      text: 爱发电
+
+
+
+# Comments System
+# --------------------------------------
+
+comments:
+  # Up to two comments system, the first will be shown as default
+  # Choose: Waline/Twikoo/Artalk
+  use: Twikoo # Waline/Twikoo/Artalk
+  text: true # Display the comment name next to the button
+  # lazyload: The comment system will be load when comment element enters the browser's viewport.
+  # If you set it to true, the comment count will be invalid
+  lazyload: false
+  count: false # Display comment count in post's top_img
+  card_post_count: false # Display comment count in Home Page
+
+# waline - A simple comment system with backend support fork from Valine
+# https://waline.js.org/
+waline:
+  serverURL: # Waline server address url
+  bg: # waline background
+  pageview: false
+  option:
+
+# Twikoo
+# https://github.com/imaegoo/twikoo
+twikoo:
+  envId: https://photoimage.2lc.top
+  region:
+  visitor: false
+  option:
+
+# Artalk
+# https://artalk.js.org/guide/frontend/config.html
+artalk:
+  server:
+  site:
+  visitor: false
+  option:
+
+# Footer
+# --------------------------------------
+footer:
+  footer_icons:
+    enable: true
+    left:
+      - icon: fa-solid fa-compass
+        link: https://www.marcus233.top/
+        desrc: 个人主页
+        class: out
+      - icon: fa-brands fa-qq
+        link: https://res.abeim.cn/api/qq/?qq=3105950984
+        desrc: 联系QQ
+        class: out
+      - icon: fa-brands fa-weixin
+        link: /wechat/
+        desrc: 联系微信
+        class: in
+      - icon: fa-solid fa-envelope
+        link: mailto:marcus@marcus233.top
+        desrc: 发送邮件
+        class: out
+    right:
+      - icon: fa-brands fa-github
+        link: https://github.com/Marcusyyds
+        desrc: Github主页
+        class: out
+      - icon: fa-brands fa-bilibili
+        link: https://space.bilibili.com/1024450661
+        desrc: 哔哩哔哩主页
+        class: out
+      - icon: fa-solid fa-star
+        link: /stars/
+        desrc: 藏宝阁
+        class: in
+      - icon: fa-solid fa-comment
+        link: /message/
+        desrc: 留言
+        class: in
+  footer_logo:
+    enable: true
+    url: https://acrylic.leonus.cn/i/2023/03/05/vyviio.webp
+  footer_group:
+    enable: true
+    footer_group_link:
+      - group_title: 软件
+        footer_links: 
+          - text: 敲木鱼
+            link: /stars/
+            class: in
+          - text: 轻节食
+            link: /sentence/
+            class: in
+          - text: DelSpace3
+            link: /zone/
+            class: in
+          - text: 比例计
+            link: /fcircle/
+            class: in
+      - group_title: 产品
+        footer_links: 
+          - text: 设计报告
+            link: /about/
+            class: in
+          - text: 优质报告
+            link: /atom.xml
+            class: in
+      - group_title: 设计
+        footer_links: 
+          - text: Heocan
+            link: /categories/博客相关
+            class: in
+          - text: Sketch
+            link: /categories/生活点滴
+            class: in 
+          - text: 设计报告
+            link: /categories/资源分享
+            class: in
+          - text: Photoshop
+            link: /categories/学习笔记
+            class: in
+      - group_title: 开发
+        footer_links: 
+          - text: Hexo魔改
+            link: /categories/博客相关
+            class: in
+          - text: Swift开发
+            link: /categories/生活点滴
+            class: in 
+          - text: 网页前端
+            link: /categories/资源分享
+            class: in
+      - group_title: 生活
+        footer_links: 
+          - text: 音乐榜单
+            link: /music/
+            class: in
+          - text: 我的电影
+            link: /categories/生活点滴
+            class: in 
+          - text: 读书笔记
+            link: /categories/资源分享
+            class: in
+          - text: 视频剪辑
+            link: /categories/学习笔记
+            class: in
+      - group_title: 导航
+        footer_links: 
+          - text: 即刻短文
+            link: /categories/博客相关
+            class: in
+          - text: 在线工具
+            link: /categories/生活点滴
+            class: in 
+          - text: 友链文章
+            link: /categories/资源分享
+            class: in
+      - group_title: 服务
+        footer_links: 
+          - text: 51la统计
+            link: /categories/博客相关
+            class: in
+          - text: BlogFinder
+            link: /categories/生活点滴
+            class: in 
+          - text: 十年之约
+            link: /categories/资源分享
+            class: in
+      - group_title: 协议
+        footer_links: 
+          - text: 隐私协议
+            link: /categories/博客相关
+            class: in
+          - text: Cookies
+            link: /categories/生活点滴
+            class: in 
+          - text: 版权协议
+            link: /categories/资源分享
+            class: in
+  icp: 萌ICP备20231986号
+
+
+# hometop
+# --------------------------------------
+hometop:
+  enable: true
+  banner:
+    enable: true
+    class: creativity #people/creativity
+    title_up: 分享设计
+    title_dn: 与科技生活
+    tips: ZHHEO.COM
+  categoryGroup:
+    enable: true
+    category_list:
+      - name: 必看精选
+        path: /tags/必看/
+        shadow: var(--heo-shadow-blue)
+        class: bikan
+        icon: fas fa-dove
+      - name: 热门文章
+        path: /tags/热门/
+        shadow: var(--heo-shadow-red)
+        class: remen
+        icon: fas fa-burn
+      - name: 实用教程
+        path: /tags/教程/
+        shadow: var(--heo-shadow-green)
+        class: shiyong
+        icon: fas fa-book
+  topgroup:
+    enable: true
+    class: both #card/post/both
+    #如果为both则都填
+    #如果为card
+    card:
+      tips: 强势回归
+      title: Acrylic-Promote
+      bg: https://acrylic.leonus.cn/i/2023/03/04/ir6ary.webp
+      link: https://blog.zhheo.com/p/671f98c8.html
+      buttontext: 更多推荐
+      icon: fas fa-circle-plus
+    #如果为post
+    post:
+      class: 
+      number: 6
+
+# Analysis
+# --------------------------------------
+
+# Baidu Analytics
+# https://tongji.baidu.com/web/welcome/login
+baidu_analytics:
+
+# Google Analytics
+# https://analytics.google.com/analytics/web/
+google_analytics:
+
+# CNZZ Analytics
+# https://www.umeng.com/
+cnzz_analytics:
+
+# Cloudflare Analytics
+# https://www.cloudflare.com/zh-tw/web-analytics/
+cloudflare_analytics:
+
+# Microsoft Clarity
+# https://clarity.microsoft.com/
+microsoft_clarity:
+
+# Insert ads manually (手動插入廣告)
+# --------------------------------------
+# ad:
+#   index:
+#   aside:
+#   post:
+
+# Verification (站長驗證)
+# --------------------------------------
+
+site_verification:
+  # - name: google-site-verification
+  #   content: xxxxxx
+  # - name: baidu-site-verification
+  #   content: xxxxxxx
+
+# Beautify/Effect (美化/效果)
+# --------------------------------------
+
+# Theme color for customize
+# Notice: color value must in double quotes like "#000" or may cause error!
+
+theme_color:
+  enable: true
+  main: "#425AEF"
+#   paginator: "#00c4b6"
+  button_hover: "#425AEF"
+#   text_selection: "#00c4b6"
+  link_color: "#425AEF"
+#   meta_color: "#858585"
+#   hr_color: "#A4D8FA"
+#   code_foreground: "#F47466"
+#   code_background: "rgba(27, 31, 35, .05)"
+#   toc_color: "#00c4b6"
+#   blockquote_padding_color: "#49b1f5"
+#   blockquote_background_color: "#49b1f5"
+#   scrollbar_color: "#49b1f5"
+#   meta_theme_color_light: "ffffff"
+#   meta_theme_color_dark: "#0d0d0d"
+
+# The top_img settings of home page
+# default: top img - full screen, site info - middle (默認top_img全屏，site_info在中間)
+# The position of site info, eg: 300px/300em/300rem/10% (主頁標題距離頂部距離)
+index_site_info_top:
+# The height of top_img, eg: 300px/300em/300rem (主頁top_img高度)
+index_top_img_height:
+
+# The user interface setting of category and tag page (category和tag頁的UI設置)
+# index - same as Homepage UI (index 值代表 UI將與首頁的UI一樣)
+# default - same as archives UI 默認跟archives頁面UI一樣
+category_ui: # 留空或 index
+tag_ui: # 留空或 index
+
+# Website Background (設置網站背景)
+# can set it to color or image (可設置圖片 或者 顔色)
+# The formal of image: url(http://xxxxxx.com/xxx.jpg)
+background: false
+
+# the position of bottom right button/default unit: px (右下角按鈕距離底部的距離/默認單位為px)
+rightside-bottom:
+
+# Enter transitions (開啓網頁進入效果)
+enter_transitions: false
+
+
+# Default display mode (網站默認的顯示模式)
+# light (default) / dark
+display_mode: light
+
+# Beautify (美化頁面顯示)
+beautify:
+  enable: false
+  field: post # site/post
+  title-prefix-icon: # '\f0c1'
+  title-prefix-icon-color: # '#F47466'
+
+# Global font settings
+# Don't modify the following settings unless you know how they work (非必要不要修改)
+font:
+  global-font-size:
+  code-font-size:
+  font-family:
+  code-font-family:
+
+# Font settings for the site title and site subtitle
+# 左上角網站名字 主頁居中網站名字
+blog_title_font:
+  font_link:
+  font-family:
+
+# The setting of divider icon (水平分隔線圖標設置)
+hr_icon:
+  enable: true
+  icon: # the unicode value of Font Awesome icon, such as '\3423'
+  icon-top:
+
+# Loading Animation (加載動畫)
+preloader: true
+
+# aside (側邊欄)
+# --------------------------------------
+
+aside:
+  enable: true
+  hide: false
+  button: true
+  mobile: true # display on mobile
+  position: right # left or right
+  display:
+    archive: true
+    tag: true
+    category: true
+  card_author:
+    enable: true
+    description:
+    button:
+      enable: true
+      icon: fab fa-github
+      text: Follow Me
+      link: https://github.com/xxxxxx
+  card_weixin:
+    enable: true
+  card_announcement:
+    enable: false
+    content: This is my Blog
+  card_recent_post:
+    enable: false
+    limit: 5 # if set 0 will show all
+    sort: date # date or updated
+    sort_order: # Don't modify the setting unless you know how it works
+  card_categories:
+    enable: false
+    limit: 8 # if set 0 will show all
+    expand: none # none/true/false
+    sort_order: # Don't modify the setting unless you know how it works
+  card_tags:
+    enable: true
+    limit: 40 # if set 0 will show all
+    color: true
+    sort_order: # Don't modify the setting unless you know how it works
+  card_archives:
+    enable: false
+    type: monthly # yearly or monthly
+    format: MMMM YYYY # eg: YYYY年MM月
+    order: -1 # Sort of order. 1, asc for ascending; -1, desc for descending
+    limit: 8 # if set 0 will show all
+    sort_order: # Don't modify the setting unless you know how it works
+  card_webinfo:
+    enable: true
+    post_count: true
+    last_push_date: true
+    sort_order: # Don't modify the setting unless you know how it works
+
+# busuanzi count for PV / UV in site
+# 訪問人數
+busuanzi:
+  site_uv: true
+  site_pv: true
+  page_pv: true
+
+# Time difference between publish date and now (網頁運行時間)
+# Formal: Month/Day/Year Time or Year/Month/Day Time
+runtimeshow:
+  enable: true
+  publish_date:
+
+# Aside widget - Newest Comments
+newest_comments:
+  enable: true
+  sort_order: # Don't modify the setting unless you know how it works
+  limit: 6
+  storage: 10 # unit: mins, save data to localStorage
+  avatar: true
+
+# Bottom right button (右下角按鈕)
+# --------------------------------------
+
+# Conversion between Traditional and Simplified Chinese (簡繁轉換)
+translate:
+  enable: true
+  # The text of a button
+  default: 繁
+  # the language of website (1 - Traditional Chinese/ 2 - Simplified Chinese）
+  defaultEncoding: 2
+  # Time delay
+  translateDelay: 0
+  # The text of the button when the language is Simplified Chinese
+  msgToTraditionalChinese: '繁'
+  # The text of the button when the language is Traditional Chinese
+  msgToSimplifiedChinese: '簡'
+
+# Read Mode (閲讀模式)
+readmode: false
+
+# dark mode
+darkmode:
+  enable: true
+  # Toggle Button to switch dark/light mode
+  button: true
+  # Switch dark/light mode automatically (自動切換 dark mode和 light mode)
+  # autoChangeMode: 1  Following System Settings, if the system doesn't support dark mode, it will switch dark mode between 6 pm to 6 am
+  # autoChangeMode: 2  Switch dark mode between 6 pm to 6 am
+  # autoChangeMode: false
+  autoChangeMode: 1
+
+# Don't modify the following settings unless you know how they work (非必要請不要修改 )
+# Choose: readmode,translate,darkmode,hideAside,toc,chat,comment
+# Don't repeat 不要重複
+rightside_item_order:
+  enable: false
+  hide: # readmode,translate,darkmode,hideAside
+  show: # toc,chat,comment
+
+# Lightbox (圖片大圖查看模式)
+# --------------------------------------
+# You can only choose one, or neither (只能選擇一個 或者 兩個都不選)
+
+# medium-zoom
+# https://github.com/francoischalifour/medium-zoom
+medium_zoom: false
+
+# fancybox
+# http://fancyapps.com/fancybox/3/
+fancybox: true
+
+# Tag Plugins settings (標籤外掛)
+# --------------------------------------
+
+# mermaid
+# see https://github.com/mermaid-js/mermaid
+mermaid:
+  enable: false
+  # built-in themes: default/forest/dark/neutral
+  theme:
+    light: default
+    dark: dark
+
+# Note (Bootstrap Callout)
+note:
+  # Note tag style values:
+  #  - simple    bs-callout old alert style. Default.
+  #  - modern    bs-callout new (v2-v3) alert style.
+  #  - flat      flat callout style with background, like on Mozilla or StackOverflow.
+  #  - disabled  disable all CSS styles import of note tag.
+  style: flat
+  icons: true
+  border_radius: 3
+  # Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).
+  # Offset also applied to label tag variables. This option can work with disabled note tag.
+  light_bg_offset: 0
+
+# other
+# --------------------------------------
+
+# Pjax
+# It may contain bugs and unstable, give feedback when you find the bugs.
+# https://github.com/MoOx/pjax
+pjax:
+  enable: true
+  exclude:
+    # - xxxx
+    # - xxxx
+
+# Inject the css and script (aplayer/meting)
+aplayerInject:
+  enable: true
+  per_page: true
+
+# Snackbar (Toast Notification 彈窗)
+# https://github.com/polonel/SnackBar
+# position 彈窗位置
+# 可選 top-left / top-center / top-right / bottom-left / bottom-center / bottom-right
+snackbar:
+  enable: true
+  position: top-center
+  bg_light: '#49b1f5' # The background color of Toast Notification in light mode
+  bg_dark: '#1f1f1f' # The background color of Toast Notification in dark mode
+
+# https://instant.page/
+# prefetch (預加載)
+instantpage: true
+
+# https://github.com/vinta/pangu.js
+# Insert a space between Chinese character and English character (中英文之間添加空格)
+pangu:
+  enable: false
+  field: site # site/post
+
+# Lazyload (圖片懶加載)
+# https://github.com/verlok/vanilla-lazyload
+lazyload:
+  enable: false
+  field: site # site/post
+  placeholder:
+  blur: false
+
+# PWA
+# See https://github.com/JLHwung/hexo-offline
+# ---------------
+# pwa:
+#   enable: false
+#   manifest: /pwa/manifest.json
+#   apple_touch_icon: /pwa/apple-touch-icon.png
+#   favicon_32_32: /pwa/32.png
+#   favicon_16_16: /pwa/16.png
+#   mask_icon: /pwa/safari-pinned-tab.svg
+
+# Open graph meta tags
+# https://developers.facebook.com/docs/sharing/webmasters/
+Open_Graph_meta: true
+
+# Add the vendor prefixes to ensure compatibility
+css_prefix: true
+
+# Inject
+# Insert the code to head (before '</head>' tag) and the bottom (before '</body>' tag)
+# 插入代码到头部 </head> 之前 和 底部 </body> 之前
+inject:
+  head:
+    # - <link rel="stylesheet" href="/xxx.css">
+  bottom:
+    - <script type="text/javascript" src="https://cdn1.tianli0.top/npm/jquery@latest/dist/jquery.min.js"></script>
+    - <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    - <script src="/js/blogex.js"></script>
+    - <script src="/js/black.js"></script>
+    - <script src="/js/fps.js"></script>
+    - <script src="/js/xh.js"></script>
+    - <script src="/js/nav.js"></script>
+    - <script src="/js/bblist.js"></script>
+    - <script data-pjax src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/js/swiper.min.js"></script>
+    - <script async data-pjax src="/js/jkdw.js"></script>
+    - <script async data-pjax src="/js/waterfall.js"></script>
+    - <script src="/js/nav2.js"></script>
+    - <script src="/js/heo.js"></script>
+    - <script src="/js/hidescrollbar.js"></script>
+    - <script src="/js/rightmenu.js"></script>
+    - <script src="/js/sayhi.js"></script>
+    - <script async data-pjax src="/js/anzhiyu.js"></script>
+    - <script async data-pjax src="/js/anzhiyufunction.js"></script>
+    - <script async src="/js/anzhiyuOnlyOne.js"></script>
+    - <script src="/heo/random.js"></script>
+    
+
+# CDN
+# Don't modify the following settings unless you know how they work
+# 非必要請不要修改
+CDN:
+  # The CDN provider of internal scripts (主題內部 js 的 cdn 配置)
+  # option: local/jsdelivr/unpkg/cdnjs/custom
+  # Dev version can only choose. ( dev版的主題只能設置為 local )
+  internal_provider: local
+
+  # The CDN provider of third party scripts (第三方 js 的 cdn 配置)
+  # option: moezz/local/jsdelivr/unpkg/cdnjs/custom
+  # when set it to local, you need to install hexo-butterfly-extjs
+  third_party_provider: jsdelivr
+
+  # Add version number to CDN, true or false  
+  version: false
+
+  # Custom format
+  # For example: https://cdn.staticfile.org/${cdnjs_name}/${version}/${min_cdnjs_file}
+  custom_format:
+
+  option:
+    # main_css:
+    countup_js: /js/countup.js
+    # main:
+    # utils:
+    # translate:
+    # local_search:
+    # algolia_js:
+    # algolia_search_v4:
+    # instantsearch_v4:
+    # pjax:
+    # gitalk:
+    # gitalk_css:
+    # blueimp_md5:
+    # valine:
+    # disqusjs:
+    # disqusjs_css:
+    twikoo: https://cdn2.tianli0.top/gh/zhheo/twikoo@dev/dist/twikoo.all.min.js
+    # waline_js:
+    # waline_css:
+    # sharejs:
+    # sharejs_css:
+    # mathjax:
+    # katex:
+    # katex_copytex:
+    # mermaid:
+    # lazyload:
+    # instantpage:
+    # typed:
+    # pangu:
+    # fancybox_css_v4:
+    # fancybox_v4:
+    # medium_zoom:
+    # snackbar_css:
+    # snackbar:
+    # activate_power_mode:
+    # fontawesomeV6:
+    # flickr_justified_gallery_js:
+    # flickr_justified_gallery_css:
+    aplayer_css: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css
+    aplayer_js: https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js
+    meting_js: https://cdn1.tianli0.top/gh/hexo-theme-Acrylic/JS-Acrylic@main/Meting.js
+    # prismjs_js:
+    # prismjs_lineNumber_js:
+    # prismjs_autoloader:
+    # artalk_js:
+    # artalk_css:

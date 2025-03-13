@@ -1,0 +1,137 @@
+footer:
+  framework: 框架
+  theme: 主题
+  
+copy:
+  success: 朕宣谕，子剪贴板为我据也。
+  error: 剪贴板占领失败。
+  noSupport: 换个浏览器把，浏览器不支持
+
+page:
+  articles: 文章总览
+  tag: 标签
+  category: 分类
+  archives: 归档
+
+card_post_count: 条评论
+
+no_title: 无题
+
+post:
+  created: 发表于
+  updated: 更新于
+  wordcount: 字数总计
+  min2read: 阅读时长
+  min2read_unit: 分钟
+  page_pv: 阅读量
+  comments: 评论数
+  copyright:
+    author: 文章作者
+    link: 文章链接
+    copyright_notice: 版权声明
+    copyright_content: '本博客所有文章除特别声明外，均采用
+      <a href="%s" target="_blank">%s</a> 许可协议。转载请注明来自 <a href="%s" target="_blank">%s</a>！'
+  recommend: 相关推荐
+  edit: 编辑
+
+search:
+  title: 搜索
+  load_data: 数据库加载中...
+  algolia_search:
+    input_placeholder: 搜索文章
+    hits_empty: '找不到您查询的内容：${query}'
+    hits_stats: '找到 ${hits} 条结果，用时 ${time} 毫秒'
+
+  local_search:
+    input_placeholder: 搜索文章
+    hits_empty: '无法在文件 \search.xml 中查询到您想要的内容 ${query}。'
+    hits_stats: '成功在文件 \search.xml 中查询到您想要的 ${hits} 篇文章'
+
+pagination:
+  prev: 上一篇
+  next: 下一篇
+
+comment: 评论
+
+aside:
+  articles: 文章
+  tags: 标签
+  categories: 分类
+  card_announcement: 公告
+  card_categories: 分类
+  card_tags: 标签
+  card_archives: 归档
+  card_recent_post: 最新文章
+  card_webinfo:
+    headline: 本站信息板
+    article_name: 本站文章总计量
+    runtime:
+      name: 本站已运行时间
+      unit: 天
+    last_push_date:
+      name: 本站上次更新是
+    site_wordcount: 本站总计有字数
+    site_uv_name: 本站总计访客量
+    site_pv_name: 本站总计访问量
+  more_button: 查看更多
+  card_newest_comments:
+    headline: 最新评论
+    loading_text: 正在加载中...
+    error: 无法获取评论，原因未知。
+    zero: 冇(mao)得评论
+    image: 图片
+    link: 链接
+    code: 代码
+  card_toc: 目录
+  card_post_series: 系列文章
+
+date_suffix:
+  just: 刚刚
+  min: 分钟前
+  hour: 小时前
+  day: 天前
+  month: 个月前
+
+donate: 赞助
+share: 分享
+
+rightside:
+  readmode_title: 阅读模式
+  translate_title: 简繁转换
+  night_mode_title: 浅色和深色模式转换
+  back_to_top: 飞回顶部
+  toc: 目录
+  scroll_to_comment: 跳楼评论
+  setting: 选项
+  aside: 侧边栏是否显示
+  chat: 聊天
+  config: 设置
+
+rightmenu:
+  copy_select: 复制到剪贴板
+  search_in_baidu: 站外进行搜索
+  copy_link: 转到引用链接
+  paste_text: 从剪贴板粘贴
+  post_comment: 直接跳楼评论
+  copy_work_link: 复制本文地址
+  open_new_tab: 在新窗口打开
+
+
+
+
+copy_copyright:
+  author: 作者
+  link: 链接
+  source: 来源
+  info: 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+Snackbar:
+  chs_to_cht: 已切为繁体中文
+  cht_to_chs: 已切为简体中文
+  day_to_night: 已切为深色模式
+  night_to_day: 已切为浅色模式
+
+loading: 加加加载中...
+load_more: 加载更多
+
+error404: 页面没有找到

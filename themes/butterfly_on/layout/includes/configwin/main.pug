@@ -1,0 +1,211 @@
+if theme.configWin.enable 
+  div.configWin#configWin(style="display:none;")
+    span.config-title#config-title
+    span.config-2title#config-2title
+    a(class="configWinTopBtn",href="javascript:configWin.topWin()")
+      |   ←  
+    a(class="configWinCloseBtn",href="javascript:configWin.exit()")
+      |    X   
+    div.configDiv#configDiv
+      !=partial('includes/configwin/page',{}, {cache:true})
+    script(src="/js/sett.js") 
+  //-script.
+    // 史山一坨
+
+    const DEFAULT_FONT = "HYTMR";
+    const DEFAULT_THEME = "pink";
+    const DEFAULT_BLOG_THEME = "simple";
+    const config_MAIN_HTML = `
+    <a href="javascript:configWin.font()" class="config-bottom" id="config-dir">
+        <i class="fa-brands fa-itunes-note"></i>
+        <span>字体</span>
+    </a>
+    <span>    </span>
+    <!--<a href="javascript:configWin.aplayer()" class="config-bottom" id="config-dir-aplayer">
+        <i class="fa-brands fa-itunes-note"></i>
+        <span>APlayer</span>
+    </a>-->
+    <span>    </span>
+    <a href="javascript:configWin.user()" class="config-bottom" id="config-dir-user">
+        <i class="fa-solid fa-user"></i>
+        <span>自定义</span>
+    </a>
+    <span>    </span>
+    <a href="javascript:configWin.about()" class="config-bottom" id="config-dir">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>关于</span>
+    </a>
+    <span>    </span>
+    `;
+    const config_FONT_HTML = `
+                     <a class="config-font-butt" href="javascript:setFont(\'DDJB\');"        style="font-family:\'DDJB\';!important;color:#000000"                                                       >  钉钉进步体 </a>
+    <span>    </span><a class="config-font-butt" href="javascript:setFont(\'BWKS\');"        style="font-family:\'BWKS\';!important;color:#000000"                                                       > 方正北魏楷书_GBK </a>
+    <span>    </span><a class="config-font-butt" href="javascript:setFont(\'HMBO\');"        style="font-family:\'HMBO\';!important;color:#000000"                                                       > 鸿蒙黑体 </a>
+    <span>    </span><a class="config-font-butt" href="javascript:setFont(\'SHBO\');"        style="font-family:\'SHBO\';!important;color:#000000"                                                       > 思源黑体 </a>
+    <span>    </span><a class="config-font-butt" href="javascript:setFont(\'FZXS\');"        style="font-family:\'FZXS\';!important;color:#000000"                                                       > 方正像素体 </a>
+    <span>    </span><a class="config-font-butt" href="javascript:setFont(\'HMLI\');"        style="font-family:\'HMLI\';!important;color:#000000"                                                       > HarmonyOS Sans SC Light </a>
+    <span>    </span><a class="config-font-butt" href="javascript:setFont(\'HMME\');"        style="font-family:\'HMME\';!important;color:#000000"                                                       > HarmonyOS Sans SC Medium </a>
+    <span>    </span><a class="config-font-butt" href='javascript:setFont(\'Source Sans\');' style="font-family:\'Source Sans\';!important;color:#000000"                                                > 网站默认 </a>
+    <span>    </span><a class="config-font-butt" href='javascript:setFont(\'main\');'        style='font-family:-apple-system, IBM Plex Mono ,monosapce,\'微软雅黑\';!important;color:#000000'>系统默认 </a>
+
+    <div>
+        <p>
+        ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+        </p>
+    </div>
+    `;
+    const config_ABOUT_HTML = `
+    Hexo - Butterfly
+
+    网页控制面板
+    <a href="/about/">关于</a>
+    `;
+    const config_USER_HTML = `
+    <span class="h2">Cookis 与 localStorage</span>
+    <br />
+    <a id="config-bottom" href="javascript:clearCookies();">清除所有 Cookie 和 localStorage</a>
+    <div class="note warning modern">
+        <p>按下此按钮将清除您的自定义设置，并标记为新访客，并刷新页面。</p>
+    </div>
+    `;
+    const config_APLAYER_HTML = `
+    <label class="checkbox-container">
+            <input type="checkbox" id="customCheckbox">
+            <span class="checkmark" id="checkmark"></span>
+            自定义复选框
+        </label>
+    `
+
+    let DIV_HTML = ``;
+    // 样式常量提取
+    const BLUR_STYLE = "filter: blur(100px); pointer-events: none; opacity: 0.7;";
+    const RESET_STYLE = "filter: none; pointer-events: auto; opacity: 1;";
+
+
+
+    // 从localStorage中获取字体参数，若无则使用默认字体
+    document.getElementById("sett").style.display = "none";
+    document.getElementById("sett").innerHTML = `
+                    <div class="configtitle" id="configtitle">
+                        <span id="config-title" class="config-title">控制面板</span>
+                        <span id="config-2title" class="config-2title">调整网页的设置</span>
+                        <a class="exit" href="javascript:configWin.exit();">   X   </a>
+                        <a class="top" href="javascript:configWin.topWin();">  ←  <!--🔙--></a>
+                    </div>
+                    <div class="config-div" id="config-div">
+
+                    </div>
+                    `;
+    if (localStorage.getItem('font') !== null) {
+        setFont(localStorage.getItem('font'));
+    }
+
+
+    const configWin = {
+        // 属性定义
+        currentDir: "",  // 修复非法 this:dir 语法
+        title: "",
+        subtitle: "",
+
+
+        // 主路由方法
+        topWin() {  // 更符合驼峰命名规范
+            if (this.currentDir === config_MAIN_HTML) {
+                this.exit();
+            } else {
+                // 若后续有
+                switch (this.currentDir) {
+                    default:
+                        this.main();
+                        break;
+                }
+            }
+        },
+
+        // 退出逻辑
+        exit() {
+            document.getElementById("sett").style.display = "none";
+            document.getElementById("web").style = RESET_STYLE;  // 明确样式重置
+        },
+
+        // 主面板
+        main() {
+            this.setDiv(config_MAIN_HTML);
+            this.setTitle("控制面板", "调整网页的设置");
+        },
+
+        // 字体设置
+        font() {
+            this.setDiv(config_FONT_HTML);  // 统一使用this调用
+            this.setTitle("字体", "该设置即时生效，设置针对所有显示文本(代码块等特殊位置除外)。");
+        },
+        // APlayer设置
+        aplayer() {
+            this.setDiv(config_APLAYER_HTML);
+            this.setTitle("APlayer", "");
+
+        },
+
+        user() {
+            this.setDiv(config_USER_HTML);
+            this.setTitle("隐私设置管理", "管理您的 Cookie 和 localStorage。")
+        },
+
+        // 关于页面
+        about() {
+            this.setDiv(config_ABOUT_HTML);  // 修复 this.this 错误
+            this.setTitle("关于", "");
+        },
+
+        // 动态加载设置内容
+        setDiv(divHtml) {
+            if (isMobile()) {
+                Snackbar.show({
+                    text: '移动端暂不支持此功能。',
+                    pos: 'top-right',
+                    action: 2000,
+                });
+            } else {
+                const container = document.getElementById("config-div");
+                    container.innerHTML = divHtml;
+
+                    document.getElementById("sett").style.display = "block";
+                    document.getElementById("web").style = BLUR_STYLE;
+
+                    this.currentDir = divHtml;  // 属性名同步修改
+            }
+
+        },
+
+        // 设置标题
+        setTitle(title, subtitle) {
+            const titleEl = document.getElementById("config-title");
+            const subtitleEl = document.getElementById("config-2title");
+
+            titleEl.textContent = title;        // 修复错误的赋值方式
+            subtitleEl.textContent = subtitle;  // 使用textContent代替直接赋值
+
+            this.title = title;
+            this.subtitle = subtitle;
+        },
+    };
+
+    function clearCookies() {
+        var r = confirm("确定要清除所有 Cookie 和 localStorage 吗？\n\n 确定=清除 取消=取消");
+        if (r == true) {
+            localStorage.clear();
+            location.reload();
+            var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+            if (keys) {
+                for(var i = keys.length; i--;) {
+                    document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString();
+                }
+            }
+        } else {
+            Snackbar.show({
+                text: '操作已取消。',
+                pos: 'top-right',
+                action: 2000,
+            });
+        }
+    }

@@ -1,0 +1,9 @@
+extends includes/layout.pug
+
+block content
+  include ./includes/mixins/post-ui.pug
+  #recent-posts.recent-posts 
+    //- meta(name='description' content='这里是 管理员 - 命令提示符(Admincmd) 博客 的 主页，欢迎进站访问|´・ω・) ノ')
+    +postUI
+    include includes/pagination.pug
+    
