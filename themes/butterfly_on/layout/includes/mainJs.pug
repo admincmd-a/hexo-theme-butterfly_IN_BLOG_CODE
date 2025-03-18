@@ -1,0 +1,42 @@
+
+if true
+    script.
+        let referrer = document.referrer || '-';
+        let domain = referrer ? referrer.split("://")[1] : '-';
+        domain = domain ? domain.split("/")[0] : '-';
+
+        // 用于给用户配置切换使用
+        function lightUserPug() {
+            #{theme.lightDarkMode.light.js}
+        }
+        function darkUserPug() {
+            #{theme.lightDarkMode.dark.js}
+        }
+        setTimeout(function () { // 康康是不是来自其他网站
+            switch (domain) {
+                case 'www.travellings.cn':
+                    Snackbar.show({
+                        text: '欢迎来自开往的穿梭者！',
+                        pos: 'top-center',
+                    })
+                    break;
+                case '-':
+                    break;
+                default:
+                    console.warn('');
+                    if (domain === window.location.hostname) {
+                        break;
+                    }
+                    Snackbar.show({// 如果有
+                        text: `欢迎从来自 ${domain} 的访客访问本站！`,
+                        pos: 'top-center',
+                        actionText: "",
+                        onActionClick: function (element) {
+                            window.open("")
+                        },
+                    });
+                    break;
+            }
+        }, 2500)
+
+

@@ -1,16 +1,18 @@
+doctype html
+
 - var htmlClassHideAside = theme.aside.enable && theme.aside.hide ? 'hide-aside' : ''
 - page.aside = is_archive() ? theme.aside.display.archive: is_category() ? theme.aside.display.category : is_tag() ? theme.aside.display.tag : page.aside
 - var hideAside = !theme.aside.enable || page.aside === false ? 'hide-aside' : ''
 - var pageType = is_post() ? 'post' : 'page'
 
-doctype html
+
 html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside)
   head
     include ./head.pug
   body
     !=partial('includes/load',{}, {cache:true})
     //- 在设置等'窗口'打开时，对#WED进行操作即可,任何需要作为网页基本元素都需要放在#WED中
-    div(id="web" class="web")
+    div(id="page-main" class="page-main")
       if theme.preloader.enable
         !=partial('includes/loading/index', {}, {cache: true})
 
@@ -60,6 +62,7 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
     script(src="/js/LunarCalendar.js")
     script(src="/js/i.js")
 
+    !=partial('includes/mainJs',{}, {cache:true})
     include ./additional-js.pug
 
     !=partial('includes/configwin/main',{}, {cache:true})

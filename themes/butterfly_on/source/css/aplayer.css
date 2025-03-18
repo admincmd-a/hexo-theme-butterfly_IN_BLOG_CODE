@@ -191,21 +191,21 @@
   }
    
   /* Aplayer黑暗模式 */
-  [theme="dark"] 
+  [data-theme="dark"] 
   .aplayer {
     background: rgba(22, 22, 22, 0.6) !important;
     color: rgb(255, 255, 255);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
   }
    
-  [theme="dark"] 
+  [data-theme="dark"] 
   .aplayer.aplayer-fixed .aplayer-body {
     background: rgba(22, 22, 22, 0.6) !important;
     color: rgb(255, 255, 255);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
   }
    
-  [theme="dark"]
+  [data-theme="dark"]
     .aplayer
     .aplayer-info
     .aplayer-controller
@@ -215,28 +215,35 @@
     fill: #d4d4d4;
   }
    
-  [theme="dark"] 
+  [data-theme="dark"] 
   .aplayer .aplayer-list ol li:hover {
     background: var(--theme-color) !important;
   }
    
-  [theme="dark"] 
+  [data-theme="dark"] 
   .aplayer .aplayer-list ol li.aplayer-list-light {
     background: var(--theme-color) !important;
   }
    
-  [theme="dark"] 
+  [data-theme="dark"] 
   .aplayer .aplayer-info .aplayer-controller .aplayer-time {
     color: #d4d4d4;
   }
    
-  [theme="dark"] 
+  [data-theme="dark"] 
   .aplayer .aplayer-list ol li .aplayer-list-index {
     color: #d4d4d4;
   }
    
-  [theme="dark"] 
+  [data-theme="dark"] 
   .aplayer .aplayer-list ol li .aplayer-list-author {
     color: #d4d4d4;
   }
    
+
+/*  */
+
+/* APlayer 样式定义 */
+[data-theme="dark"] {
+  color: #fff;
+}

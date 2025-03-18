@@ -1,3 +1,311 @@
+/**
+ * Copyright (c) 2012 Admincmd(http://admincmd.xyz).
+
+                                Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "{}"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright {yyyy} {name of copyright owner}
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+Apache Lincese 2.0协议的英文原文
+
+********************************************************************************************************************
+
+    版权所有 (c) 2025 管理员 - 命令提示符(https://admincmd.xyz)
+
+                          Apache 许可证 2.0
+                         版本 2.0，2004年1月
+                    http://www.apache.org/licenses/
+
+    根据本许可证授予的权限仅限所有版权持有人明确授予的永久性、全球性、非独占性、免费、
+    免版税、不可撤销的版权许可和专利许可。您在使用、复制、修改、分发本作品或任何衍生作
+    品时，必须遵守本许可证的条款。
+
+    1. 定义
+        "许可证"指本文档第1至9章节的条款和条件。
+
+        "许可人"指提供本作品（无论以源代码或可执行形式）的任何版权持有人或由版权持有人授权
+        的实体。
+
+        "您"（或"您的"）指行使本许可证授予权限的个人或法律实体。
+
+        "源程序形式"指进行修改的首选形式，包括但不限于软件源代码、文档源文件和配置文件。
+
+        "目标代码形式"指通过对源程序形式进行机械转换或翻译生成的任何形式，包括但不限于编译
+        后的目标代码、生成的文档及转换为其他媒体类型的产物。
+
+        "衍生作品"指基于本作品或包含本作品全部或部分的任何作品，无论是源程序形式还是目标代
+        码形式。若作品包含可识别的本作品片段及修改内容，且在整体上构成原创性作品，则该作品
+        应被视为衍生作品。
+
+    2. 许可授予
+        2.1 版权许可
+            根据本许可证条款，每位许可人授予您非独占的、全球性的、免版税的版权许可：
+
+            复制、制作衍生作品、公开展示、公开执行、分许可和分发本作品的源程序形式；
+
+            在衍生作品中复制、公开展示、公开执行和分发您贡献的修改部分。
+
+        2.2 专利许可
+            每位许可人授予您非独占的、全球性的、免版税的专利许可，允许您制作、使用、销售、
+            许诺销售、进口及以其他方式转让本作品。该许可仅适用于许可人可授予的、因您行使本
+            许可证授予的版权许可权利而必然侵犯的专利权。
+
+        2.3 权利保留
+            未在本许可证中明确授予的权利均予保留。不得通过暗示、禁止反言或其他方式授予任何
+            知识产权许可。
+
+    3. 分发条件
+        您通过任何媒介分发本作品或其衍生作品时，必须满足以下条件：
+
+        3.1 源代码分发
+            若以源程序形式分发，必须：
+
+            随分发内容附上本许可证副本；
+
+            在修改文件中显著标注说明您修改过文件；
+
+            保留源程序形式中所有版权、专利、商标及归属声明。
+
+        3.2 目标代码分发
+            若以目标代码形式分发，必须：
+
+            在随附的文档或法律声明中提供本许可证副本；
+
+            在目标代码形式中保留所有版权、专利、商标及归属声明。
+
+        3.3 修改声明
+            您必须在衍生作品中添加显著声明，说明您修改了本作品，并注明修改日期。该声明必须
+            包含在源程序形式的文件头中，或通过其他合理方式（如生成日志）在目标代码形式中体
+            现。
+
+    4. 再许可
+        除非符合以下条件，您不得将本作品与受不同条款约束的其他材料合并，或通过其他方式创建
+        组合作品：
+
+        当您将本作品作为独立文件包含在组合作品中时，本作品的许可将按原样适用于该部分；
+
+        当本作品与其他材料结合形成衍生作品时，必须根据本许可证条款分发整个衍生作品。
+
+    5. 贡献提交
+        除非您明确声明，否则您向许可人提交的任何原创性修改（包括通过电子方式提交的代码、文
+        档等内容）均视为在本许可证条款下授权，且不附带任何附加条款或条件。
+
+    6. 商标
+        本许可证不授予使用许可人的商号、商标、服务标志或产品名称的权限，除非为描述作品来源
+        所需且符合合理使用惯例。
+
+    7. 免责声明
+        除非适用法律要求或书面同意，本作品按"原样"分发，不提供任何明示或默示的担保，包括但
+        不限于适销性、特定用途适用性及不侵权的担保。
+
+    8. 责任限制
+        在任何情况下，除非适用法律要求，许可人或版权持有人均不对因使用本作品而产生的任何直
+        接、间接、附带、特殊、惩罚性或后果性损害承担责任。
+
+    9. 接受条款
+        您通过行使本许可证授予的任何权利即视为接受并同意遵守本许可证条款。若您不同意本许可
+        证中的任何条款，则无权使用、复制、修改或分发本作品。
+
+警告：翻译仅供参考，不得作为本许可证的解释。本许可证的英文原文可在上文找到。
+*/
+
 // 主 JS 文件
 /*
 */
@@ -136,6 +444,7 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 
 // 邢昭博是个大傻逼，他居然把自己的名字写成了邢昭博，这简直就是个笑话。(AI 生成)
 
+document.getElementById("timeWin").style.display = "none";
 
 
 // 主循环模块 ----------------------------------------------------
@@ -161,7 +470,217 @@ function update() {
 }
 
 
-// 消息窗口 ----------------------------------------------------
+// API ----------------------------------------------------------
+
+/**
+* 判断是否是移动端
+* @return {boolean} true: 移动端 false: PC端
+*/
+function isMobile() {
+    if (window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+        return true; // 移动端
+    } else {
+        return false; // PC端
+    }
+}
+
+/**
+ * 更改主循环的间隔时间
+ * @param {number} ontimes 控制主循环的间隔时间，单位ms
+ */
+function setBarsTime(ontimes) { times = ontimes; }
+
+/**
+ * 检查是否是url
+ * @param {String} url 要判断的url
+ * @returns {boolean} true: 是url false: 不是url
+ */
+function isUrl(url) {
+    try {
+        new URL(url);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+
+/**
+ * 判断是否是调试模式
+ * @returns {boolean} true: 是调试模式 false: 不是调试模式
+ */
+function isDeBug() {
+    if (debug == true) {
+        console.log('调试模式已激活');
+        window.__DEBUG__ = true; // 暴露全局标志
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * 计算地球两经纬度之间的地面距离
+ * @param {number} e1 1 点经度
+ * @param {number} n1 1 点纬度
+ * @param {number} e2 2 点经度
+ * @param {number} n2 2 点纬度
+ * @returns 2 点之间的地面距离，单位 KM
+ */
+function getDistanceAMLS(e1, n1, e2, n2) {
+    const R = 6371
+    const { sin, cos, asin, PI, hypot } = Math
+    let getPoint = (e, n) => {
+        e *= PI / 180
+        n *= PI / 180
+        return { x: cos(n) * cos(e), y: cos(n) * sin(e), z: sin(n) }
+    }
+
+    let a = getPoint(e1, n1)
+    let b = getPoint(e2, n2)
+    let c = hypot(a.x - b.x, a.y - b.y, a.z - b.z)
+    let r = asin(c / 2) * 2 * R
+    return Math.round(r);
+}
+
+/**
+ * 设置字体
+ * @param {string} font 字体在 CSS 中的名称
+ * @returns 是否设置成功
+ * @example setFont('Arial'); // 设置字体为 Arial
+ */
+function setFont(font) {
+    try {
+        if (typeof font !== 'string' || font.trim() === '') {
+            console.error('无效的字体参数: ', font); // 错误处理
+            return false;
+        }
+        document.body.style.fontFamily = font; // 根据传入的font参数，动态修改body的字体样式
+        localStorage.setItem('font', font); // 将字体参数保存到localStorage
+        return true;
+    } catch (error) {
+        console.error('设置字体过程中出错:', error);
+        return false;
+    }
+}
+
+/**
+ * 对界面模糊化处理
+ */
+var pageBlur = {
+    /** 是否开启模糊 */
+    is: false,
+    get blur() {
+        return this.is;
+    },
+    set blur(value) {
+        this.is = value;
+    },
+    /** 修改对象的 ID */
+    byId: 'page-main',
+    /** 修改对象的 class */
+    byClass: 'page-main',
+
+    /** 元素DOM预制定 */
+    id_dom: document.getElementById(this.byId),
+    /** 元素DOM预制定 */
+    class_dom: document.getElementsByClassName(this.byClass),
+
+    /** 模糊度 */
+    px: 100,
+
+    /**
+     * 开启模糊
+     * @returns {boolean} 是否开启成功
+     * @function pageBlur.setFalse 关闭模糊
+     * @function pageBlur.setSwitch 切换模糊状态
+     */
+    setTrue() {
+        try {
+            this.id_dom.style.filter = `blur(${this.px})`;
+            this.id_dom.style.pointerEvents = "none";
+            this.id_dom.style.opacity = "0.7";
+
+            this.class_dom.style.filter = `blur(${this.px})`;
+            this.class_dom.style.pointerEvents = "none";
+            this.class_dom.style.opacity = "0.7";
+
+            this.Blur = true;
+            return true;
+        } catch (error) {
+            console.warn('开启模糊失败:', error);
+            return false;
+        }
+    },
+
+    /**
+     * 关闭模糊效果
+     * @returns {boolean} 是否成功关闭模糊
+     * @function pageBlur.setTrue 开启模糊
+     * @function pageBlur.setSwitch 切换模糊状态
+     */
+    setFalse() {
+        try {
+            this.id_dom.style.filter = "blur(0px)";
+            this.id_dom.style.pointerEvents = "auto";
+            this.id_dom.style.opacity = "1";
+    
+            this.class_dom.style.filter = "blur(0px)";
+            this.class_dom.style.pointerEvents = "auto";
+            this.class_dom.style.opacity = "1";
+
+            this.Blur = false;
+            return true;
+        } catch (error) {
+            console.warn('关闭模糊失败:', error);
+            return false;
+        }
+    },
+
+    /**
+     * 切换模糊状态
+     * @returns {null}
+     * @function pageBlur.setTrue 开启模糊
+     * @function pageBlur.setFalse 关闭模糊
+     */
+    setSwitch() {
+        if (this.Blur) 
+            this.pageBlurFalse();
+        else 
+            this.pageBlurTrue();
+        
+    },
+
+    /**
+     * 设置模糊的DOM id
+     * @param {string} id 元素id
+     */
+    setConfigId(id) {
+        this.byId = id;
+        this.id_dom = document.getElementById(this.byId);
+    },
+
+    /**
+     * 设置模糊的DOM class
+     * @param {string} class_name 元素class 
+     */
+    setConfigClass(class_name) {
+        this.byClass = class_name;
+        this.class_dom = document.getElementsByClassName(this.byClass);
+    },
+
+    /**
+     * 设置并调整模糊度
+     * @param {number} px 模糊度
+     */
+    setConfigPx(px) {
+        this.px = px;
+    }
+    
+}
+
+
+// 消息窗口 
 
 /**
  * 消息窗口对象
@@ -193,7 +712,9 @@ var messageWin = {
             try {
                 if (xh) {
                     // 模糊其他
-                    document.getElementById("web").style = "filter: blur(100px);pointer-events: none;opacity: 0.7;";
+
+                    pageBlur.setTrue(); // 开启模糊
+
                     // 定义模糊和禁用的类 全局模糊和禁用
                 }
                 document.getElementById("timeWin").style.display = "";
@@ -217,7 +738,7 @@ var messageWin = {
      */
     close() {
         document.getElementById("timeWin").style.display = "none";
-        document.getElementById("web").style = "";// 取消模糊
+        pageBlur.setFalse(); // 关闭模糊
         clearTimeout(messageWin.DKtime);
     }
 };
@@ -331,6 +852,7 @@ try {
     }
 
     if (DText == "0") {// 其他不弹窗的情况放在这里
+        document.getElementById("timeWin").style.display = "none";
         // 如果没有匹配的节日，直接返回
     } else {
         console.log(DText);
@@ -597,49 +1119,42 @@ if (sessionStorage.getItem("popCookieWindow") != "0") {
 sessionStorage.setItem("popCookieWindow", "0");
 
 
-let referrer = document.referrer || ' ? ? ? ';
-let domain = referrer ? referrer.split("://")[1] : ' ? ? ? ';
-domain = domain ? domain.split("/")[0] : ' ? ? ? ';
-setTimeout(function () { // 康康是不是来自其他网站
-    switch (domain) {
-        case 'www.travellings.cn':
-            Snackbar.show({
-                text: '欢迎来自开往的穿梭者！',
-                pos: 'top-center',
-            })
-            break;
-        case 'blog.admincmd.xyz':
-            console.log('由本站主站站点访问')
-            break;
-        case 'netlify-blog.admincmd.xyz':
-            console.log('由本站镜像站点访问')
-            break;
-        case 'cf-blog.admincmd.xyz':
-            console.log('由本站镜像站点访问')
-            break;
-        case ' ? ? ? ':
-            console.log("无效")
-            domain = pos;// 若来源为空，则使用定位信息
-
-            // Snackbar.show({
-            //     text: `欢迎从来自 ${domain} 的访客访问本站！`,
-            //     pos: 'top-center',
-            //     actionText: "",
-            // });
-            break;
-        default:
-            console.warn('');
-            Snackbar.show({// 如果有
-                text: `欢迎从来自 ${domain} 的访客访问本站！`,
-                pos: 'top-center',
-                actionText: "",
-                onActionClick: function (element) {
-                    window.open("")
-                },
-            });
-            break;
-    }
-}, 2500)
+// let referrer = document.referrer || ' ? ? ? ';
+// let domain = referrer ? referrer.split("://")[1] : ' ? ? ? ';
+// domain = domain ? domain.split("/")[0] : ' ? ? ? ';
+// setTimeout(function () { // 康康是不是来自其他网站
+//     switch (domain) {
+//         case 'www.travellings.cn':
+//             Snackbar.show({
+//                 text: '欢迎来自开往的穿梭者！',
+//                 pos: 'top-center',
+//             })
+//             break;
+//         case 'blog.admincmd.xyz':
+//             console.log('由本站主站站点访问');
+//             break;
+//         case 'netlify-blog.admincmd.xyz':
+//             console.log('由本站镜像站点访问');
+//             break;
+//         case 'cf-blog.admincmd.xyz':
+//             console.log('由本站镜像站点访问');
+//             break;
+//         case ' ? ? ? ':
+//             console.log("无效")
+//             break;
+//         default:
+//             console.warn('');
+//             Snackbar.show({// 如果有
+//                 text: `欢迎从来自 ${domain} 的访客访问本站！`,
+//                 pos: 'top-center',
+//                 actionText: "",
+//                 onActionClick: function (element) {
+//                     window.open("")
+//                 },
+//             });
+//             break;
+//     }
+// }, 2500)
 
 //自带上文浏览器提示
 
@@ -734,11 +1249,11 @@ if (sessionStorage.getItem("ActivateMode") == "1") { // 向下兼容
 
 if (sessionStorage.getItem("ActivateMode") == "dark") DarkMode(); else LigheMode();// 取coockie,判断明亮/暗黑模式
 
-function SwitchActivateLightMode() {
+function activateLightMode() {
     sessionStorage.setItem("ActivateMode", "light"); //写个Cook
     LigheMode();
 }
-function SwichActivateDarkMode() {
+function activateDarkMode() {
     sessionStorage.setItem("ActivateMode", "dark");
     DarkMode();
     // 同上
@@ -747,19 +1262,44 @@ function SwichActivateDarkMode() {
 
 // ---------------------
 
-function LigheMode() {
-    activateLightMode();//调用调整至明亮模式
-    document.getElementById("travellings-logo").src = "/img/travelling_b.svg";
-    // 暗黑模式
+function LigheMode() { // 暗黑模式
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+    lightUserPug();
     // 将需要调整的元素修改代码扔在这里
 }
 
-function DarkMode() {
-    activateDarkMode();
+function DarkMode() { // 调整至明亮模式
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
     // 将需要调整的元素修改代码扔在这里
-    // 调整至明亮模式
-    document.getElementById("travellings-logo").src = "/img/travelling_w.svg";
-    
+    darkUserPug();
+}
+
+function switchLightDarkMode(ahh) { // 切换模式
+    if (sessionStorage.getItem("ActivateMode") == "light") {
+        sessionStorage.setItem("ActivateMode", "dark");
+        DarkMode();
+    } else if (sessionStorage.getItem("ActivateMode") == "dark") {
+        sessionStorage.setItem("ActivateMode", "light");
+        LigheMode();
+    } else if (sessionStorage.getItem("ActivateMode" == null) || sessionStorage.getItem("ActivateMode") == "auto") {
+        sessionStorage.setItem("ActivateMode", "auto");
+        if (now.getHours() < 6) {
+            // 白天
+            sessionStorage.setItem("ActivateMode", "dark");
+            LigheMode();
+        } else {
+            sessionStorage.setItem("ActivateMode", "light");
+            DarkMode();
+        }
+    } else {
+        return ahh;
+    }
 }
 
 // End ---------------------------------------------------------------------------------------------
@@ -1106,96 +1646,3 @@ function updateDisplay(period, progress, decimalPlaces) {
     document.getElementsByClassName(`${period}-progress-bar`).style.width = progress.toFixed(decimalPlaces) + '%';
 }
 
-// API ----------------------------------------------------------
-
-/**
-* 判断是否是移动端
-* @return {boolean} true: 移动端 false: PC端
-*/
-function isMobile() {
-    if (window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
-        return true; // 移动端
-    } else {
-        return false; // PC端
-    }
-}
-
-/**
- * 更改主循环的间隔时间
- * @param {number} ontimes 控制主循环的间隔时间，单位ms
- */
-function setBarsTime(ontimes) { times = ontimes; }
-
-/**
- * 检查是否是url
- * @param {String} url 要判断的url
- * @returns {boolean} true: 是url false: 不是url
- */
-function isUrl(url) {
-    try {
-        new URL(url);
-        return true;
-    } catch {
-        return false;
-    }
-}
-
-
-/**
- * 判断是否是调试模式
- * @returns {boolean} true: 是调试模式 false: 不是调试模式
- */
-function isDeBug() {
-    if (debug == true) {
-        console.log('调试模式已激活');
-        window.__DEBUG__ = true; // 暴露全局标志
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/**
- * 计算地球两经纬度之间的地面距离
- * @param {number} e1 1 点经度
- * @param {number} n1 1 点纬度
- * @param {number} e2 2 点经度
- * @param {number} n2 2 点纬度
- * @returns 2 点之间的地面距离，单位 KM
- */
-function getDistanceAMLS(e1, n1, e2, n2) {
-    const R = 6371
-    const { sin, cos, asin, PI, hypot } = Math
-    let getPoint = (e, n) => {
-        e *= PI / 180
-        n *= PI / 180
-        return { x: cos(n) * cos(e), y: cos(n) * sin(e), z: sin(n) }
-    }
-
-    let a = getPoint(e1, n1)
-    let b = getPoint(e2, n2)
-    let c = hypot(a.x - b.x, a.y - b.y, a.z - b.z)
-    let r = asin(c / 2) * 2 * R
-    return Math.round(r);
-}
-
-/**
- * 设置字体
- * @param {string} font 字体在 CSS 中的名称
- * @returns 是否设置成功
- * @example setFont('Arial'); // 设置字体为 Arial
- */
-function setFont(font) {
-    try {
-        if (typeof font !== 'string' || font.trim() === '') {
-            console.error('无效的字体参数: ', font); // 错误处理
-            return false;
-        }
-        document.body.style.fontFamily = font; // 根据传入的font参数，动态修改body的字体样式
-        localStorage.setItem('font', font); // 将字体参数保存到localStorage
-        return true;
-    } catch (error) {
-        console.error('设置字体过程中出错:', error);
-        return false;
-    }
-}
