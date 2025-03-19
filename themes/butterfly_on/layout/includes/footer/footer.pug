@@ -46,7 +46,6 @@
         //- 统计脚本
         script#LA-DATA-WIDGET(
           src=`https://v6-widget.51.la/v6/${theme.footer.c51la.id}/quote.js?${theme.footer.c51la.theme}`
-          charset="UTF-8"
           crossorigin="anonymous"
         )
   if theme.footer.custom_text
@@ -55,59 +54,45 @@
 
   if theme.footer.time_line.enable
     time-line
-      head
-        style.
-          
-      body
-        footer#footer
-          #workboard
-        script.
-          var grt = new Date('#{theme.footer.time_line.start_time}');
-          var dnum, hnum, mnum, snum, nowHour, t, n;
-
-          function updateTime() {
-            now = new Date();
-            nowHour = now.getHours();
-            var days = (now - grt) / 1000 / 60 / 60 / 24;
-            dnum = Math.floor(days);
-            var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
-            hnum = Math.floor(hours);
-            hnum = String(hnum).padStart(2, '0');
-
-            var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
-            mnum = Math.floor(minutes);
-            mnum = String(mnum).padStart(2, '0');
-
-            var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
-            snum = Math.round(seconds);
-            snum = String(snum).padStart(2, '0');
-
-            t = Math.trunc(234e8 + (now - grt) / 1e3 * 17);
-            n = (t / 1496e5).toFixed(6);
+      script.
+        var grt = new Date('#{theme.footer.time_line.start_time}');
+        var dnum, hnum, mnum, snum, nowHour, t, n;
+        function updateTime() {
+          now = new Date();
+          nowHour = now.getHours();
+          var days = (now - grt) / 1000 / 60 / 60 / 24;
+          dnum = Math.floor(days);
+          var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+          hnum = Math.floor(hours);
+          hnum = String(hnum).padStart(2, '0');
+          var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+          mnum = Math.floor(minutes);
+          mnum = String(mnum).padStart(2, '0');
+          var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+          snum = Math.round(seconds);
+          snum = String(snum).padStart(2, '0');
+          t = Math.trunc(234e8 + (now - grt) / 1e3 * 17);
+          n = (t / 1496e5).toFixed(6);
+        }
+        function updateHtml() {
+          const footer = document.getElementById("footer");
+          if (!footer) return;
+          let currentTimeHtml = `
+            <div id="runtimeTextTip">
+              #{theme.footer.time_line.message_prev} ${dnum} #{theme.footer.time_line.message_next}
+              <span id='runtime'>${hnum} 小时 ${mnum} 分 ${snum} 秒</span>
+              <i class='haofont hao-icon-heartbeat' style='color:red'></i>
+              <br>
+              旅行者 1 号现在距离地球 ${t} 千米了，差不多是 ${n} 个地球到太阳的距离 (天文单位)
+            </div>`;
+          if (document.getElementById("workboard")) {
+            document.getElementById("workboard").innerHTML = currentTimeHtml;
           }
-
-          function updateHtml() {
-            const footer = document.getElementById("footer");
-            if (!footer) return;
-
-            let currentTimeHtml = `
-              <div id="runtimeTextTip">
-                #{theme.footer.time_line.message_prev} ${dnum} #{theme.footer.time_line.message_next}
-                <span id='runtime'>${hnum} 小时 ${mnum} 分 ${snum} 秒</span>
-                <i class='haofont hao-icon-heartbeat' style='color:red'></i>
-                <br>
-                旅行者 1 号现在距离地球 ${t} 千米了，差不多是 ${n} 个地球到太阳的距离 (天文单位)
-              </div>`;
-
-            if (document.getElementById("workboard")) {
-              document.getElementById("workboard").innerHTML = currentTimeHtml;
-            }
-          }
-
-          setInterval(() => {
-            updateTime();
-            updateHtml();
-          }, 1000);
+        }
+        setInterval(() => {
+          updateTime();
+          updateHtml();
+        }, 1000);
 
 
 //- head

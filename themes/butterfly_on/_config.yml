@@ -272,7 +272,7 @@ footer:
   c51la:
     enable: true # 是否启用页脚51LA统计脚本链接
     id: 3IbL4ePOvrsha6YV # 51LA统计脚本ID
-    theme: "theme=#1690FF,#333333,#000000,#333333,#FFFFFF,#B4B4B4,12&f=12"
+    theme: "theme='#1690FF,#333333,#000000,#333333,#FFFFFF,#B4B4B4',12&f=12"
   time_line:
     enable: true # 是否启用页脚时间线
     start_time: 02/01/2024 00:00:00 # 设置网站上线时间 月/日/年 时:分:秒
@@ -295,7 +295,7 @@ footer:
         </a>
         <span>    </span>
         <a href='https://travel.moe/go.html?travel=on' target='_blank' rel='noopener' title='异次元之旅'>
-          <img id='travel-text' style='position:relative;top:4px' src='https://travel.moe/images/icon/icon64.png' alt='异次元之旅' width='16' height='16'>
+          <img id='travel-img' style='position:relative;top:4px' src='https://travel.moe/images/icon/icon64.png' alt='异次元之旅' width='16' height='16'>
           <span id='travel-text'>异次元之旅</span>
         </a>
         "
@@ -1477,14 +1477,7 @@ css_prefix: true
 # 插入代码到头部 </head> 之前 和 底部 </body> 之前
 inject:
   head:
-    - <link rel="canonical">
     - <link rel="stylesheet" href="/css/main.css">
-    - <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-    - <script>LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>
-    - <script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
-    - <script>
-    -  new LingQue.Monitor().init({id:"3IbLHrZmKVcxsyEK"});
-    - </script>
     - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4566880_3uw9ugioauy.css">
     - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4566880_uof1d4gulr.css">
     - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4566880_x25bxa7why9.css">
@@ -1517,8 +1510,12 @@ inject:
     - <script src="/favi/qq.js"></script>
     - <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    - <script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script>
+    - <script id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    - <script>LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>
     - <script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
+    - <script>
+    -  new LingQue.Monitor().init({id:"3IbLHrZmKVcxsyEK"});
+    - </script>
     - <script> LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>
     - <script>new LingQue.Monitor().init({id:"3IbL4ePOvrsha6YV",sendSuspicious:true});</script>
 
