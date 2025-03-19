@@ -360,8 +360,7 @@ aplayerDIV:
   lrcType: 3 # 歌词类型
   theme: "#F57F17" # 主题色
   # 音乐设置表，具体请参考 https://aplayer.js.org/#/home
-  audio: " 
-  [{
+  audio: " [{
         name: '勾指起誓',
         artist: '洛天依 / ilem',
         url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/%E5%8B%BE%E6%8C%87%E8%B5%B7%E8%AA%93.mp3',
@@ -516,8 +515,7 @@ aplayerDIV:
        artist: '星ノ谷梓羽',
        url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.3/星ノ谷梓羽 - 「カルバノグの兎」Theme 3.mp3',
        cover: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.3/星ノ谷梓羽 - 「カルバノグの兎」Theme 3.jpg',
-    },]
-  "
+    },]"
   config: # 此项将覆盖以上的配置,将直接写入到 aplayer 的实例中，自带 container: document.getElementById('aplayer'),fixed: true,
     # 具体请参考 https://aplayer.js.org/#/home
 
