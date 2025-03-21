@@ -1,5 +1,5 @@
 /* Setting WinDiv Home --------------------------------------------*/
-span.config-title {
+html[data-theme="light"] span.config-title {
     color: #10A7E8;
     top: 7px;
     left: 85px;
@@ -11,7 +11,7 @@ html[data-theme="dark"] span.config-title {
     color: #7AABEF;
 }
 
-span.config-2title {
+html[data-theme="light"] span.config-2title {
     color: #262D32;
     top:49px;
     left:85px;
@@ -23,7 +23,7 @@ html[data-theme="dark"] span.config-2title {
     color: #F8F2E6;
 }
 
-div.configWin {
+html[data-theme="light"] div.configWin {
     position:fixed;
     top:35%;
     right:25%;
@@ -43,14 +43,14 @@ html[data-theme="dark"] div.configWin {
 }
 
 
-div.configDiv {
+html[data-theme="light"] div.configDiv {
     position:absolute;
     top: 20%;
     left: 3%;
     max-width: 95%;
 }
 
-a.config-bottom {
+html[data-theme="light"] a.config-bottom {
     font-size:16px;
     /* height:60px;
     width:190px; */
@@ -81,7 +81,7 @@ html[data-theme="dark"] a.configWinTopBtn {
     background-color:#56625E;
 }
 
-a.configWinCloseBtn {
+html[data-theme="light"] a.configWinCloseBtn {
     font-size:25px;
     background-color:#e0e0e0;
     right: 20px;
@@ -94,13 +94,13 @@ html[data-theme="dark"] a.configWinCloseBtn {
 }
 
 @media screen and (max-width:768px) {
-    .configDiv {
+    html[data-theme="light"] .configDiv {
         width:100%!important;  /* 在屏幕宽度小于768px时宽度为100% */
     }
 }
 
 
-a.config-bottom {
+html[data-theme="light"] a.config-bottom {
     font-size:25px;
     text-align: left;
     border-radius: 12px;
@@ -117,7 +117,7 @@ html[data-theme="dark"] a.config-bottom {
     background-color:#3946AF;
 }
 
-a.config-bottom {
+html[data-theme="light"] a.config-bottom {
     font-size:22px;
     text-align:center;
 
@@ -140,7 +140,7 @@ html[data-theme="dark"] a.config-bottom {
     background-color:#3946AF;
 }
 
-a.config-font-butt /*om*/{
+html[data-theme="light"] a.config-font-butt /*om*/{
     font-size:20px;
     height:40px;
     width:160px;
@@ -159,13 +159,13 @@ html[data-theme="dark"] a.config-font-butt {
     background-color:#3946AF;
 }
 
-.h2 {
+html[data-theme="light"] span.h2 {
     font-size: 26px;
     margin-top: 20px;
     margin-bottom: 10px;
 }
 
-a.config-bottom {
+html[data-theme="light"] a.config-bottom {
     font-size:20px;
     height:50px;
     width:160px;
@@ -192,7 +192,7 @@ html[data-theme="dark"] a.config-bottom {
 
 /* 节日大窗口 Home -----------------------------------------------*/
 
-a.winbox-btn {
+html[data-theme="light"] a.winbox-btn {
     background-color: #10A7E8;
     bottom:30px;
     left:44%;
@@ -202,13 +202,13 @@ html[data-theme="dark"] a.winbox-btn {
     background-color: #3946AF;
 }
 
-a.winbox-btn {
+html[data-theme="light"] a.winbox-btn {
   padding-top: 2%;
   padding-bottom: 2%;
   padding-right:  4%;
   padding-left:  4%;
 }
-div#timeWin {
+html[data-theme="light"] div#timeWin {
     position:fixed;
     top:35%;
     right:25%;
@@ -226,7 +226,7 @@ html[data-theme="dark"] div#timeWin {
     background-color:#36353B; /*背景色*/
 }
 
-a.closeWinbox {
+html[data-theme="light"] a.closeWinbox {
     font-size:16px;
     height:60px;
     width:90px;
@@ -327,7 +327,5 @@ body
   line-height: 20px;
   transition: width 1.5s;/*一次到目标位置的速度*/
 }
-
-
 
 /* 时光飞逝 End -*/

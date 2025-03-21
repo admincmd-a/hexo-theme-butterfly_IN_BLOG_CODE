@@ -8,7 +8,9 @@ doctype html
 
 html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside)
   head
+
     include ./head.pug
+    !=partial('includes/other_head',{}, {cache:true})
   body
     !=partial('includes/load',{}, {cache:true})
     //- 在设置等'窗口'打开时，对#WED进行操作即可,任何需要作为网页基本元素都需要放在#WED中
@@ -55,7 +57,7 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
     div(id="sett" class="sett" style="display:none")
     !=partial('includes/rightmenu',{}, {cache:true})
     !=partial('includes/aaa',{}, {cache:true})
-    !=partial('includes/other',{}, {cache:true})
+    !=partial('includes/other_boby',{}, {cache:true})
     !=partial('/includes/welcomemap',{}, {cache:true})
     !=partial('includes/aplayer',{}, {cache:true})
 
