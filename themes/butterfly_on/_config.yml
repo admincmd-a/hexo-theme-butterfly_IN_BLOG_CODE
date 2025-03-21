@@ -272,7 +272,7 @@ footer:
   c51la:
     enable: true # 是否启用页脚51LA统计脚本链接
     id: 3IbL4ePOvrsha6YV # 51LA统计脚本ID
-    theme: "theme='#1690FF,#333333,#000000,#333333,#FFFFFF,#B4B4B4',12&f=12"
+    theme: 
   time_line:
     enable: true # 是否启用页脚时间线
     start_time: 02/01/2024 00:00:00 # 设置网站上线时间 月/日/年 时:分:秒
@@ -354,14 +354,40 @@ footer:
 aplayerDIV: 
   enable: true # 注：这是吸底播放器
   # 自定义 JS 加载
-  js: "/js/aplayer.js"
+  js: 
   # 自定义 CSS
-  css: "/css/aplayer.css"
+  css: 
   lrcType: 3 # 歌词类型
   theme: "#F57F17" # 主题色
   # 音乐设置表，具体请参考 https://aplayer.js.org/#/home
-  audio: " 
-  [{
+  audio: 
+    - item:
+        name: '勾指起誓'
+        artist: '洛天依 / ilem'
+        url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/%E5%8B%BE%E6%8C%87%E8%B5%B7%E8%AA%93.mp3',
+        cover: 'https://npm.elemecdn.com/musiccdn-ariasaka/pic/%E5%8B%BE%E6%8C%87%E8%B5%B7%E8%AA%93.jpg',
+        lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/%E5%8B%BE%E6%8C%87%E8%B5%B7%E8%AA%93.lrc',
+        theme: '#F57F17'
+    - item:
+        name: '霜雪千年（Cover 洛天依 / 乐正绫）'
+        artist: '双笙（陈元汐） / 封茗囧菌'
+        url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/%E9%9C%9C%E9%9B%AA%E5%8D%83%E5%B9%B4%EF%BC%88Cover%20%E6%B4%9B%E5%A4%A9%E4%BE%9D%20%20%E4%B9%90%E6%AD%A3%E7%BB%AB%EF%BC%89.mp3'
+        cover: 'https://npm.elemecdn.com/musiccdn-ariasaka/pic/%E9%9C%9C%E9%9B%AA%E5%8D%83%E5%B9%B4%EF%BC%88Cover%20%E6%B4%9B%E5%A4%A9%E4%BE%9D%20%20%E4%B9%90%E6%AD%A3%E7%BB%AB%EF%BC%89.jpg'
+        lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/%E9%9C%9C%E9%9B%AA%E5%8D%83%E5%B9%B4%EF%BC%88Cover%20%E6%B4%9B%E5%A4%A9%E4%BE%9D%20%20%E4%B9%90%E6%AD%A3%E7%BB%AB%EF%BC%89.lrc'
+    - item:
+        name: '灯火里的中国 (舒楠监制 官方正式版)'
+        artist: '张也 / 周深'
+        url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/%E7%81%AF%E7%81%AB%E9%87%8C%E7%9A%84%E4%B8%AD%E5%9B%BD%20%28%E8%88%92%E6%A5%A0%E7%9B%91%E5%88%B6%20%E5%AE%98%E6%96%B9%E6%AD%A3%E5%BC%8F%E7%89%88%29.mp3'
+        cover: 'https://npm.elemecdn.com/musiccdn-ariasaka/pic/%E7%81%AF%E7%81%AB%E9%87%8C%E7%9A%84%E4%B8%AD%E5%9B%BD%20%28%E8%88%92%E6%A5%A0%E7%9B%91%E5%88%B6%20%E5%AE%98%E6%96%B9%E6%AD%A3%E5%BC%8F%E7%89%88%29.jpg'
+        lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/%E7%81%AF%E7%81%AB%E9%87%8C%E7%9A%84%E4%B8%AD%E5%9B%BD%20%28%E8%88%92%E6%A5%A0%E7%9B%91%E5%88%B6%20%E5%AE%98%E6%96%B9%E6%AD%A3%E5%BC%8F%E7%89%88%29.lrc'
+    - item:
+        name: '大哉乾元'
+        artist: '洛天依'
+        url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.1/obj_wo3DlMOGwrbDjj7DisKw_33433723342_df03_6e55_fab3_130a2d9f4c6d5d4a3c37b90b98aea4a6.mp3'
+        cover: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.5/大哉乾元.jpg'
+        lrc: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.2/obj_wo3DlMOGwrbDjj7DisKw_33433723342_df03_6e55_fab3_130a2d9f4c6d5d4a3c37b90b98aea4a6.lrc'
+  " 
+  {
         name: '勾指起誓',
         artist: '洛天依 / ilem',
         url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/%E5%8B%BE%E6%8C%87%E8%B5%B7%E8%AA%93.mp3',
@@ -516,7 +542,7 @@ aplayerDIV:
        artist: '星ノ谷梓羽',
        url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.3/星ノ谷梓羽 - 「カルバノグの兎」Theme 3.mp3',
        cover: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.3/星ノ谷梓羽 - 「カルバノグの兎」Theme 3.jpg',
-    },]
+    },
   "
   config: # 此项将覆盖以上的配置,将直接写入到 aplayer 的实例中，自带 container: document.getElementById('aplayer'),fixed: true,
     # 具体请参考 https://aplayer.js.org/#/home
@@ -1484,14 +1510,10 @@ inject:
     - <link rel="stylesheet" href="/css/icat.css">
     - <link rel="stylesheet" href="/css/custom.css">
 
-
-    - <link rel="stylesheet" href="/css/del.css">
-
-    - <link rel="stylesheet" href="/css/rightmenu.css"> # 右键菜单样式
     - <link rel="stylesheet" href="/css/color.css">
     - <style id="settingStyle"></style>
     - <style id="css"></style>
-    - <style id="themeColor"></style>
+    - <style id="themeColor"></style>  
     - <link rel="stylesheet" href="/css/sett.css">
     - <!-- Clarity tracking code for https://blog.admincmd.xyz/ --><script>    (function(c,l,a,r,i,t,y){        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);    })(window, document, "clarity", "script", "o9t7maiihp");</script>
     # - <link rel="stylesheet" href="/xxx.css">
@@ -1503,7 +1525,6 @@ inject:
     - <script src="https://unpkg.com/docute@3.4.12/dist/docute.js"></script>
     
     - <script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script>
-    - <script src="/css/custom.css"></script>
     - <script src="/js/sn.js"></script>
     - <script type="text/javascript" src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>
     - <script type="text/javascript" src="https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>

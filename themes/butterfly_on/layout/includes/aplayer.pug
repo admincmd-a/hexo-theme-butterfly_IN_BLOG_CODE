@@ -1,17 +1,17 @@
 if theme.aplayerDIV.enable
   div(id="player")
     
-    if theme.aplayerDIV.css 
-      link(href=theme.aplayerDIV.css rel="stylesheet")
-    else
-      link(href=theme.aplayerDIV.css rel="stylesheet")
-  
     div(id="aplayer")
 
     if theme.aplayerDIV.js 
       script(src=theme.aplayerDIV.js)
     else
+      script(src="/js/aplayer.js")
+
+    if theme.aplayerDIV.css 
       link(href=theme.aplayerDIV.css rel="stylesheet")
+    else
+      link(href="/css/aplayer.css" rel="stylesheet")
 
     if !theme.aplayerDIV.config
       script.
@@ -20,7 +20,7 @@ if theme.aplayerDIV.enable
               theme: '#{theme.aplayerDIV.theme}',
               fixed: true,
               lrcType: #{theme.aplayerDIV.lrcType},
-              audio:  #{theme.aplayerDIV.audio},
+              audio:  [#{theme.aplayerDIV.audio}],
           });
     else
       script.
