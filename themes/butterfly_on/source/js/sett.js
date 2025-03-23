@@ -440,6 +440,10 @@ var configWin = {
         document.getElementById("web").style = RESET_STYLE;  // 明确样式重置
     },
 
+    pageDiv(ID) {
+        (document.getElementById('configwin_page')).getElementById(ID);
+
+    },
     // 主面板
     main() {
         this.setDiv(config_MAIN_HTML);

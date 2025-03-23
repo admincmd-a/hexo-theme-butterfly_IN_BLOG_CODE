@@ -259,31 +259,6 @@ div#rightside-config-show a i {
     */
 }
 
-div#toggle-menu a.site-page { /* 移动端菜单按钮 */
-    position:relative !important;
-    top: 9px !important;
-}
-
-a[class="extend next"] {/* 主页右翻页按钮 */
-    position:relative !important;
-    top: -11px !important;
-}
-
-a[class="extend next"] i {/* 这里是里面的图标 */
-    position:relative !important;
-    top: 10px !important;
-}
-
-a[class="extend prev"] {/* 主页左翻页按钮 */
-    position:relative !important;
-    top: -11px !important;
-}
-
-a[class="extend prev"] i {
-    position:relative !important;
-    top: 10px !important;
-}
-
 footer img {
     position:relative;
     top:4px;

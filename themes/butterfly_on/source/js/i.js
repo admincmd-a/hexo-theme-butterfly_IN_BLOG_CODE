@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 Admincmd(http://admincmd.xyz).
+ * Copyright (c) 2025 Admincmd(http://admincmd.xyz).
 
                                 Apache License
                            Version 2.0, January 2004
@@ -203,7 +203,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-Apache Lincese 2.0协议的英文原文
+Apache Lincese 2.0 协议英文原文
 
 ********************************************************************************************************************
 
@@ -333,7 +333,7 @@ var lunarDateChinese = `${lunarDate.lunarYear}年${lunarDate.lunarMonthName}${lu
 var lunarDateChineseNY = `${lunarDate.lunarMonthName}${lunarDate.lunarDayName}`;
 
 const FOOTER = document.getElementById("footer");
-const WORKBOARD = document.getElementById("workboard")
+const WORKBOARD = document.getElementById("workboard");
 
 var PROGRESS_BAR = document.getElementById('year-progress-bar');
 var currentTimeHtml = "";
@@ -442,32 +442,7 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 引用数据类型（对象类型）：对象(Object)、数组(Array)、函数(Function)，还有两个特殊的对象：正则（RegExp）和日期（Date）
 */
 
-// xubuhao是个大傻逼，他居然把自己的名字写成了xubuhao，这简直就是个笑话。(AI 生成)
-
-document.getElementById("timeWin").style.display = "none";
-
-
-// 主循环模块 ----------------------------------------------------
-
-/**
- * 主循环执行函数
- */
-function update() {
-    if (PROGRESS_BAR) {// 判断是否存在进度条元素, 防止重复执行，免得tm控制台里全是报错
-        updateProgressBars(); // 每ms更新一次
-    }
-
-
-    /**
-     * 下面是处理流程
-     */
-    {
-        if (timer === 0) {
-            setInterval(update, times)
-        }
-        timer++; // 计时器
-    }
-}
+// tushengxi是个大傻逼，他居然把自己的名字写成了tushengxi，这简直就是个笑话。(AI 生成)
 
 
 // API ----------------------------------------------------------
@@ -488,7 +463,10 @@ function isMobile() {
  * 更改主循环的间隔时间
  * @param {number} ontimes 控制主循环的间隔时间，单位ms
  */
-function setBarsTime(ontimes) { times = ontimes; }
+function setBarsTime(ontimes) { 
+    times = ontimes; 
+
+}
 
 /**
  * 检查是否是url
@@ -525,7 +503,7 @@ function isDeBug() {
  * @param {number} n1 1 点纬度
  * @param {number} e2 2 点经度
  * @param {number} n2 2 点纬度
- * @returns 2 点之间的地面距离，单位 KM
+ * @returns 2 点之间的地面直线距离，单位 KM
  */
 function getDistanceAMLS(e1, n1, e2, n2) {
     const R = 6371
@@ -544,7 +522,7 @@ function getDistanceAMLS(e1, n1, e2, n2) {
 }
 
 /**
- * 设置字体
+ * 设置全局字体
  * @param {string} font 字体在 CSS 中的名称
  * @returns 是否设置成功
  * @example setFont('Arial'); // 设置字体为 Arial
@@ -577,6 +555,7 @@ var pageBlur = {
         this.is = value;
     },
     /** 修改对象的 ID */
+    /** 修改对象的 ID */
     byId: 'page-main',
     /** 修改对象的 class */
     byClass: 'page-main',
@@ -587,7 +566,15 @@ var pageBlur = {
     class_dom: document.getElementsByClassName(this.byClass),
 
     /** 模糊度 */
-    px: 100,
+    px: 20,
+
+    /**
+     * 更新
+     */
+    topWin() {
+        this.id_dom = document.getElementById(this.id_dom);
+        this.class_dom = document.getElementsByClassName(this.class_dom);
+    },
 
     /**
      * 开启模糊
@@ -597,13 +584,9 @@ var pageBlur = {
      */
     setTrue() {
         try {
-            this.id_dom.style.filter = `blur(${this.px})`;
-            this.id_dom.style.pointerEvents = "none";
-            this.id_dom.style.opacity = "0.7";
 
-            this.class_dom.style.filter = `blur(${this.px})`;
-            this.class_dom.style.pointerEvents = "none";
-            this.class_dom.style.opacity = "0.7";
+            document.getElementById(this.byId).style = `filter: blur(${this.px}px); pointerEvents: none; opacity: 0.7`;
+            document.getElementsByClassName(this.byClass).style = `filter: blur(${this.px}px); pointerEvents: none; opacity: 0.7`;
 
             this.Blur = true;
             return true;
@@ -621,13 +604,8 @@ var pageBlur = {
      */
     setFalse() {
         try {
-            this.id_dom.style.filter = "blur(0px)";
-            this.id_dom.style.pointerEvents = "auto";
-            this.id_dom.style.opacity = "1";
-    
-            this.class_dom.style.filter = "blur(0px)";
-            this.class_dom.style.pointerEvents = "auto";
-            this.class_dom.style.opacity = "1";
+            document.getElementById(this.byId).style = `filter: blur(0px); pointerEvents: auto; opacity: 0`;
+            document.getElementsByClassName(this.byClass).style.style = `filter: blur(0px); pointerEvents: auto; opacity: 0`;
 
             this.Blur = false;
             return true;
@@ -644,11 +622,7 @@ var pageBlur = {
      * @function pageBlur.setFalse 关闭模糊
      */
     setSwitch() {
-        if (this.Blur) 
-            this.pageBlurFalse();
-        else 
-            this.pageBlurTrue();
-        
+        if (this.Blur) this.setFalse(); else this.setTrue();
     },
 
     /**
@@ -686,8 +660,7 @@ var pageBlur = {
  * 消息窗口对象
  */
 var messageWin = {
-    /** 定时器标识 */
-    DKtime: null,
+    DKtimeId: null,
 
     /**
      * 打开消息窗口
@@ -695,7 +668,7 @@ var messageWin = {
      * @param {string} content 下附文本
      * @param {boolean} xh 是否将背景高斯模糊
      * @param {number} DKtime 显示超时时间，单位ms
-     * @return {boolean} true -- 已成功打开 false -- 移动端，将打开Snackbar提示
+     * @return {boolean} true = 已成功打开 false = 移动端，将打开Snackbar提示
      */
     show(title, content, DKtime, xh) {
         if (isMobile()) {
@@ -706,18 +679,12 @@ var messageWin = {
                 actionTextColor: '#fff',
             });
         } else {
-            if (DKtime == 0 || DKtime == undefined || DKtime == null) {
-                DKtime = setTimeout(messageWin.close(), DKtime);
+            if (!(DKtime === 0 || DKtime === undefined || DKtime === null)) {
+                this.DKtimeId = setTimeout(messageWin.close(), DKtime);
             }
             try {
-                if (xh) {
-                    // 模糊其他
-
-                    pageBlur.setTrue(); // 开启模糊
-
-                    // 定义模糊和禁用的类 全局模糊和禁用
-                }
-                document.getElementById("timeWin").style.display = "";
+                if (xh) {pageBlur.setTrue(); /* 开启模糊 */}
+                document.getElementById("timeWin").style.display = null;
                 document.getElementById("timeWin").innerHTML =
                 `
                 <p style="font-size:30px;color:#2F7AA1;text-align: center;">${title}</p>
@@ -742,6 +709,34 @@ var messageWin = {
         clearTimeout(messageWin.DKtime);
     }
 };
+
+
+document.getElementById("timeWin").style.display = "none";
+
+pageBlur.topWin();
+
+
+// 主循环模块 ----------------------------------------------------
+
+/**
+ * 主循环执行函数
+ */
+function update() {
+    if (PROGRESS_BAR) {// 判断是否存在进度条元素, 防止重复执行，免得tm控制台里全是报错
+        updateProgressBars(); // 每ms更新一次
+    }
+
+
+    /**
+     * 下面是处理流程
+     */
+    {
+        if (timer === 0) {
+            setInterval(update, times)
+        }
+        timer++; // 计时器
+    }
+}
 
 
 // 欢迎语，cookie 提醒 --------------------------------------------

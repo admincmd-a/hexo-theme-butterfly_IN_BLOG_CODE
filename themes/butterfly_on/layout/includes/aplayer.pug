@@ -460,9 +460,3 @@ if theme.aplayerDIV.enable
          audio: APlayerAudio,
         });
       document.getElementById('aplayer') = ap;
-      ap.on('error', (err) => {
-        console.error('APlayer错误:', err);
-      });
-      ap.on('lrcshow', () => {
-        console.log('歌词已显示');
-      });
