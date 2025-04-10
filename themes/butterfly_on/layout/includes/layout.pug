@@ -51,6 +51,7 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
 
       include ./rightside.pug
       
+    !=partial('includes/mainJs',{}, {cache:true})
       
     if page.type !== '404'
 
@@ -64,7 +65,7 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
     script(src="/js/LunarCalendar.js")
     script(src="/js/i.js")
 
-    !=partial('includes/mainJs',{}, {cache:true})
+    
     include ./additional-js.pug
 
     !=partial('includes/configwin/main',{}, {cache:true})
