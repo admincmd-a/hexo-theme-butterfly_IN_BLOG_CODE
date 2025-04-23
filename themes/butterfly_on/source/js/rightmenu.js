@@ -68,13 +68,11 @@
     rmf.switchDarkMode = function () { // 切换暗黑模式，执行位置
         const nowMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
         if (nowMode === 'light') {
-            SwichActivateDarkMode()
+            activateDarkMode()
             saveToLocal.set('theme', 'dark', 2)
-            GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
         } else {
-            SwitchActivateLightMode()
+            activateLightMode()
             saveToLocal.set('theme', 'light', 2)
-            GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
         }
         // handle some cases
         typeof utterancesTheme === 'function' && utterancesTheme()

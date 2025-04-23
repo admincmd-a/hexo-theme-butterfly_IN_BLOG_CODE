@@ -140,6 +140,21 @@ html[data-theme="dark"] a.config-bottom {
     background-color:#3946AF;
 }
 
+a.config-font-butt /*om*/{
+    font-size:20px;
+    height:40px;
+    width:160px;
+    color:#FFFFFF;
+    background-color:#2F7AA1;
+    border-radius:10px;
+    /* text-align:center; */
+    line-height:30px;
+    /* display:block; */
+    margin:0 auto;
+    margin-top:20px;
+    line-height: 58px;
+}
+
 html[data-theme="light"] a.config-font-butt /*om*/{
     font-size:20px;
     height:40px;
@@ -159,18 +174,17 @@ html[data-theme="dark"] a.config-font-butt {
     background-color:#3946AF;
 }
 
-html[data-theme="light"] span.h2 {
+span.h2 {
     font-size: 26px;
     margin-top: 20px;
     margin-bottom: 10px;
 }
 
-html[data-theme="light"] a.config-bottom {
+a.config-bottom {
     font-size:20px;
     height:50px;
     width:160px;
     color:#FFFFFF;
-    background-color:#2F7AA1;
     border-radius:10px;
     /* text-align:center; */
     line-height:30px;
@@ -178,6 +192,10 @@ html[data-theme="light"] a.config-bottom {
     margin:0 auto;
     margin-top:20px;
     line-height: 58px;
+}
+
+html[data-theme="light"] a.config-bottom {
+    background-color:#2F7AA1;
 }
 
 html[data-theme="dark"] a.config-bottom {
@@ -192,33 +210,38 @@ html[data-theme="dark"] a.config-bottom {
 
 /* 节日大窗口 Home -----------------------------------------------*/
 
-html[data-theme="light"] a.winbox-btn {
-    background-color: #10A7E8;
+a.winbox-btn {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right:  4%;
+    padding-left:  4%;
     bottom:30px;
     left:44%;
+}
+
+html[data-theme="light"] a.winbox-btn {
+    background-color: #10A7E8;
+
 }
 
 html[data-theme="dark"] a.winbox-btn {
     background-color: #3946AF;
 }
 
-html[data-theme="light"] a.winbox-btn {
-  padding-top: 2%;
-  padding-bottom: 2%;
-  padding-right:  4%;
-  padding-left:  4%;
-}
-html[data-theme="light"] div#timeWin {
+div#timeWin {
     position:fixed;
     top:35%;
     right:25%;
     z-index:25;
     border-width:2px;
-    border-color:#7F7E84;
     border-style:solid;
-    background-color:#F8F3ED; /*背景色*/
     width:50%;
     border-radius: 25px; /*圆角*/
+}
+
+html[data-theme="light"] div#timeWin {
+    background-color:#F8F3ED; /*背景色*/
+    border-color:#7F7E84;
 }
 
 html[data-theme="dark"] div#timeWin {
@@ -226,12 +249,33 @@ html[data-theme="dark"] div#timeWin {
     background-color:#36353B; /*背景色*/
 }
 
-html[data-theme="light"] a.closeWinbox {
+p.messageWin-title#messageWin-title {
+    font-size: 30px;
+    text-align: center;
+}
+
+html[data-theme="light"] p.messageWin-title#messageWin-title {
+    color: #2F7AA1;
+}
+
+html[data-theme="dark"] p.messageWin-title#messageWin-title {
+    color: #2F7AA1;
+}
+
+
+p.messageWin-text#messageWin-text {
+    color: #003152;
+    font-size: 16px;
+    text-align: center;
+}
+
+html[data-theme="da"]
+
+a.messageWin-closeWin {
     font-size:16px;
     height:60px;
     width:90px;
     color:#FFFFFF;
-    background-color:#2F7AA1;
     border-radius:10px;
     text-align:center;
     line-height:30px;
@@ -241,7 +285,11 @@ html[data-theme="light"] a.closeWinbox {
     line-height: 58px;
 }
 
-html[data-theme="dark"] a.closeWinbox {
+html[data-theme="light"] a.messageWin-closeWin {
+    background-color:#2F7AA1;    
+}
+
+html[data-theme="dark"] a.messageWin-closeWin {
     background-color:#3946AF;
 }
 
@@ -249,15 +297,6 @@ html[data-theme="dark"] a.closeWinbox {
 
 
 /* 原主题BUG修复 Home ---------------------------------------------*/
-
-div#rightside-config-show a i {
-    position:relative !important;
-    top: 9px !important;
-    /*
-    这里是原主题的BUG，a标签的i标签的从按钮中心向上偏移了9px，导致按钮的位置不准确(偏了个十万八千里)，
-    所以这里将i标签的top属性设置为9px，让它与按钮的中心对齐。
-    */
-}
 
 footer img {
     position:relative;
@@ -303,4 +342,4 @@ body
   transition: width 1.5s;/*一次到目标位置的速度*/
 }
 
-/* 时光飞逝 End -*/
+/* 时光飞逝 End -*/4

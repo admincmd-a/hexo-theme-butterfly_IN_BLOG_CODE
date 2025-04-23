@@ -563,11 +563,9 @@ document.addEventListener('DOMContentLoaded', function () {
     darkmode: () => { // switch between light and dark mode
       const willChangeMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
       if (willChangeMode === 'dark') {
-        SwichActivateDarkMode()
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
+        activateDarkMode()
       } else {
-        SwitchActivateLightMode()
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
+        activateLightMode()
       }
       saveToLocal.set('theme', willChangeMode, 2)
       handleThemeChange(willChangeMode)

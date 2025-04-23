@@ -350,6 +350,9 @@ const phrases = [
 
 ];
 
+const DATA_THEME_MODE_ITEM = "ActivateMode";
+const CURRENT_URL = window.location.href;
+
 var DText = "0";
 var Text = "---";
 var timeChange;// 欢迎语
@@ -446,101 +449,6 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 
 
 // API ----------------------------------------------------------
-
-/**
-* 判断是否是移动端
-* @return {boolean} true: 移动端 false: PC端
-*/
-function isMobile() {
-    if (window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
-        return true; // 移动端
-    } else {
-        return false; // PC端
-    }
-}
-
-/**
- * 更改主循环的间隔时间
- * @param {number} ontimes 控制主循环的间隔时间，单位ms
- */
-function setBarsTime(ontimes) { 
-    times = ontimes; 
-
-}
-
-/**
- * 检查是否是url
- * @param {String} url 要判断的url
- * @returns {boolean} true: 是url false: 不是url
- */
-function isUrl(url) {
-    try {
-        new URL(url);
-        return true;
-    } catch {
-        return false;
-    }
-}
-
-
-/**
- * 判断是否是调试模式
- * @returns {boolean} true: 是调试模式 false: 不是调试模式
- */
-function isDeBug() {
-    if (debug == true) {
-        console.log('调试模式已激活');
-        window.__DEBUG__ = true; // 暴露全局标志
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/**
- * 计算地球两经纬度之间的地面距离
- * @param {number} e1 1 点经度
- * @param {number} n1 1 点纬度
- * @param {number} e2 2 点经度
- * @param {number} n2 2 点纬度
- * @returns 2 点之间的地面直线距离，单位 KM
- */
-function getDistanceAMLS(e1, n1, e2, n2) {
-    const R = 6371
-    const { sin, cos, asin, PI, hypot } = Math
-    let getPoint = (e, n) => {
-        e *= PI / 180
-        n *= PI / 180
-        return { x: cos(n) * cos(e), y: cos(n) * sin(e), z: sin(n) }
-    }
-
-    let a = getPoint(e1, n1)
-    let b = getPoint(e2, n2)
-    let c = hypot(a.x - b.x, a.y - b.y, a.z - b.z)
-    let r = asin(c / 2) * 2 * R
-    return Math.round(r);
-}
-
-/**
- * 设置全局字体
- * @param {string} font 字体在 CSS 中的名称
- * @returns 是否设置成功
- * @example setFont('Arial'); // 设置字体为 Arial
- */
-function setFont(font) {
-    try {
-        if (typeof font !== 'string' || font.trim() === '') {
-            console.error('无效的字体参数: ', font); // 错误处理
-            return false;
-        }
-        document.body.style.fontFamily = font; // 根据传入的font参数，动态修改body的字体样式
-        localStorage.setItem('font', font); // 将字体参数保存到localStorage
-        return true;
-    } catch (error) {
-        console.error('设置字体过程中出错:', error);
-        return false;
-    }
-}
 
 /**
  * 对界面模糊化处理
@@ -687,10 +595,10 @@ var messageWin = {
                 document.getElementById("timeWin").style.display = null;
                 document.getElementById("timeWin").innerHTML =
                 `
-                <p style="font-size:30px;color:#2F7AA1;text-align: center;">${title}</p>
-                <p style="font-size:16px;color:#003152;text-align: center;">${content}</p>
+                <p id="messageWin-title" class="messageWin-title">${title}</p>
+                <p id="messageWin-text" class="messageWin-text">${content}</p>
                 <br />
-                <a class="closeWinbox" href="javascript:messageWin.close()" id="closeWin">关闭</a>
+                <a class="messageWin-closeWin" href="javascript:messageWin.close()" id="messageWin-closeWin">关闭</a>
                 <br />
 
                 `;
@@ -710,6 +618,121 @@ var messageWin = {
     }
 };
 
+/**
+* 判断是否是移动端
+* @return {boolean} true: 移动端 false: PC端
+*/
+function isMobile() {
+    if (window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+        return true; // 移动端
+    } else {
+        return false; // PC端
+    }
+}
+
+/**
+ * 更改主循环的间隔时间
+ * @param {number} ontimes 控制主循环的间隔时间，单位ms
+ */
+function setBarsTime(ontimes) { 
+    times = ontimes; 
+
+}
+
+/**
+ * 检查是否是url
+ * @param {String} url 要判断的url
+ * @returns {boolean} true: 是url false: 不是url
+ */
+function isUrl(url) {
+    try {
+        new URL(url);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+
+/**
+ * 判断是否是调试模式
+ * @returns {boolean} true: 是调试模式 false: 不是调试模式
+ */
+function isDeBug() {
+    if (debug == true) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * 计算地球两经纬度之间的地面距离
+ * @param {number} e1 1 点经度
+ * @param {number} n1 1 点纬度
+ * @param {number} e2 2 点经度
+ * @param {number} n2 2 点纬度
+ * @returns 2 点之间的地面直线距离，单位 KM
+ */
+function getDistanceAMLS(e1, n1, e2, n2) {
+    const R = 6371
+    const { sin, cos, asin, PI, hypot } = Math
+    let getPoint = (e, n) => {
+        e *= PI / 180
+        n *= PI / 180
+        return { x: cos(n) * cos(e), y: cos(n) * sin(e), z: sin(n) }
+    }
+
+    let a = getPoint(e1, n1)
+    let b = getPoint(e2, n2)
+    let c = hypot(a.x - b.x, a.y - b.y, a.z - b.z)
+    let r = asin(c / 2) * 2 * R
+    return Math.round(r);
+}
+
+/**
+ * 设置全局字体
+ * @param {string} font 字体在 CSS 中的名称
+ * @returns 是否设置成功
+ * @example setFont('Arial'); // 设置字体为 Arial
+ */
+function setFont(font) {
+    try {
+        if (typeof font !== 'string' || font.trim() === '') {
+            console.error('无效的字体参数: ', font); // 错误处理
+            return false;
+        }
+        document.body.style.fontFamily = font; // 根据传入的font参数，动态修改body的字体样式
+        localStorage.setItem('font', font); // 将字体参数保存到localStorage
+        return true;
+    } catch (error) {
+        console.error('设置字体过程中出错:', error);
+        return false;
+    }
+}
+
+/**
+ * 清除 Cookies、localStorage，显示确认按钮。
+ */
+function clearCookies() {
+    var r = confirm("确定要清除所有 Cookie 和 localStorage 吗？\n\n 确定=清除 取消=取消");
+    if (r == true) {
+        localStorage.clear();
+        location.reload();
+        var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+        if (keys) {
+            for(var i = keys.length; i--;) {
+                document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString();
+            }
+        }
+    } else {
+        Snackbar.show({
+            text: '操作已取消。',
+            pos: 'top-right',
+            action: 2000,
+        });
+    }
+}
 
 document.getElementById("timeWin").style.display = "none";
 
@@ -1183,6 +1206,7 @@ function browserVersion() {
         if (userAgent.split('OPR/')[1].split('.')[0] < 80) {
             browserTC()
         }
+
     } else if (isChrome) {
         if (userAgent.split('Chrome/')[1].split('.')[0] < 90) {
             browserTC()
@@ -1223,78 +1247,89 @@ if (getCookie('browsertc') != 1) {
 // 2024-12-28 解决了首次访问时,没有coockie时导致if执行失败,导致部分图片没有切换.
 // 2025-02-21 现在没有Cookie时，会根据时间自动切换模式。
 // 2025-03-04 de了会导致一直是白天模式bug。
+// 2025-04-15 修复逻辑问题
 
-if (sessionStorage.getItem("ActivateMode") == "1") { // 向下兼容
-    sessionStorage.setItem("ActivateMode", "dark");
-} else if (sessionStorage.getItem("ActivateMode") == "0") {
-    sessionStorage.setItem("ActivateMode", "light");
-} else if (sessionStorage.getItem("ActivateMode" == null) || sessionStorage.getItem("ActivateMode") == "auto") {
-    sessionStorage.setItem("ActivateMode", "auto");
+if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "1") { // 向下兼容
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
+} else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "0") {
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
+} else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM == null) || sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "auto") {
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "auto");
     if (now.getHours() < 6) {
         // 白天
-        sessionStorage.setItem("ActivateMode", "dark");
+        sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
         LigheMode();
     } else {
-        sessionStorage.setItem("ActivateMode", "light");
+        sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
         DarkMode();
     }
 } else {}
 //页面加载后调用
 //检查cook，并判断是否为暗黑模式
 
-if (sessionStorage.getItem("ActivateMode") == "dark") DarkMode(); else LigheMode();// 取coockie,判断明亮/暗黑模式
+if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "dark") DarkMode(); else LigheMode();// 取cookie,判断明亮/暗黑模式
 
 function activateLightMode() {
-    sessionStorage.setItem("ActivateMode", "light"); //写个Cook
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light"); //写个Cookie
     LigheMode();
 }
 function activateDarkMode() {
-    sessionStorage.setItem("ActivateMode", "dark");
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
     DarkMode();
     // 同上
     // 调整至暗黑模式
 }
 
+
 // ---------------------
 
 function LigheMode() { // 暗黑模式
     document.documentElement.setAttribute('data-theme', 'light')
-    if (document.querySelector('meta[name="theme-color"]') !== null) {
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-    }
+    // if (document.querySelector('meta[name="theme-color"]') !== null) {
+    //   document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    // }
     lightUserPug();
     // 将需要调整的元素修改代码扔在这里
+    GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
 }
 
 function DarkMode() { // 调整至明亮模式
     document.documentElement.setAttribute('data-theme', 'dark')
-    if (document.querySelector('meta[name="theme-color"]') !== null) {
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-    }
+    // if (document.querySelector('meta[name="theme-color"]') !== null) {
+    //   document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    // }
     // 将需要调整的元素修改代码扔在这里
     darkUserPug();
+    GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
 }
 
-function switchLightDarkMode(ahh) { // 切换模式
-    if (sessionStorage.getItem("ActivateMode") == "light") {
-        sessionStorage.setItem("ActivateMode", "dark");
-        DarkMode();
-    } else if (sessionStorage.getItem("ActivateMode") == "dark") {
-        sessionStorage.setItem("ActivateMode", "light");
-        LigheMode();
-    } else if (sessionStorage.getItem("ActivateMode" == null) || sessionStorage.getItem("ActivateMode") == "auto") {
-        sessionStorage.setItem("ActivateMode", "auto");
-        if (now.getHours() < 6) {
-            // 白天
-            sessionStorage.setItem("ActivateMode", "dark");
-            LigheMode();
-        } else {
-            sessionStorage.setItem("ActivateMode", "light");
+function switchDataThemeMode() { // 切换模式
+    if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "auto") {
+        if (document.documentElement.getAttribute("data-theme") == "light") {
             DarkMode();
+        } else {
+            LigheMode();
         }
+        return;
     } else {
-        return ahh;
+        if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "light") {
+            sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
+            DarkMode();
+        } else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "dark") {
+            sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
+            LigheMode();
+        } else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == null) {
+            sessionStorage.setItem(DATA_THEME_MODE_ITEM, "auto");
+            if (now.getHours() < 6) {
+                LigheMode();
+            } else {
+                DarkMode();
+            }
+        } else {
+            return;
+        }
     }
+    
 }
 
 // End ---------------------------------------------------------------------------------------------
@@ -1640,4 +1675,6 @@ function updateDisplay(period, progress, decimalPlaces) {
     document.getElementsByClassName(`${period}-progress`).textContent = progress.toFixed(decimalPlaces) + '%';
     document.getElementsByClassName(`${period}-progress-bar`).style.width = progress.toFixed(decimalPlaces) + '%';
 }
+
+
 

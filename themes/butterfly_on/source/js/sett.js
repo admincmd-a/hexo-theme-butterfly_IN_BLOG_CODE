@@ -437,7 +437,7 @@ var configWin = {
     // 退出逻辑
     exit() {
         document.getElementById("configWin").style.display = "none";
-        document.getElementById("web").style = RESET_STYLE;  // 明确样式重置
+        pageBlur.setFalse();
     },
 
     pageDiv(ID) {
@@ -475,6 +475,8 @@ var configWin = {
 
     // 动态加载设置内容
     setDiv(divHtml) {
+        return;
+
         if (isMobile()) {
             Snackbar.show({
                 text: '移动端暂不支持此功能。',
@@ -483,12 +485,13 @@ var configWin = {
             });
         } else {
             const container = document.getElementById("configDiv");
-                container.innerHTML = divHtml;
-                
-                document.getElementById("configWin").style.display = "block";
-                document.getElementById("web").style = BLUR_STYLE;
-                
-                this.currentDir = divHtml;  // 属性名同步修改
+            container.innerHTML = divHtml;
+            
+            document.getElementById("configWin").style.display = "block";
+            if (pageBlur) {
+                pageBlur.setTrue();
+            }
+            this.currentDir = divHtml;  // 属性名同步修改
         }
         
     },
@@ -506,25 +509,7 @@ var configWin = {
     },
 };
 
-function clearCookies() {
-    var r = confirm("确定要清除所有 Cookie 和 localStorage 吗？\n\n 确定=清除 取消=取消");
-    if (r == true) {
-        localStorage.clear();
-        location.reload();
-        var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
-        if (keys) {
-            for(var i = keys.length; i--;) {
-                document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString();
-            }
-        }
-    } else {
-        Snackbar.show({
-            text: '操作已取消。',
-            pos: 'top-right',
-            action: 2000,
-        });
-    }
-}
+
 
 
 
