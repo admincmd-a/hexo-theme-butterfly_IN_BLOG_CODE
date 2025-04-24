@@ -351,6 +351,7 @@ const phrases = [
 ];
 
 const DATA_THEME_MODE_ITEM = "ActivateMode";
+const DATA_THEME_MODE_ITEM_OBJ = sessionStorage.getItem(DATA_THEME_MODE_ITEM) ;
 const CURRENT_URL = window.location.href;
 
 var DText = "0";
@@ -1249,11 +1250,11 @@ if (getCookie('browsertc') != 1) {
 // 2025-03-04 de了会导致一直是白天模式bug。
 // 2025-04-15 修复逻辑问题
 
-if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "1") { // 向下兼容
+if (DATA_THEME_MODE_ITEM_OBJ == "1") { // 向下兼容
     sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
-} else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "0") {
+} else if (DATA_THEME_MODE_ITEM_OBJ == "0") {
     sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
-} else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM == null) || sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "auto") {
+} else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM == null) || DATA_THEME_MODE_ITEM_OBJ == "auto") {
     sessionStorage.setItem(DATA_THEME_MODE_ITEM, "auto");
     if (now.getHours() < 6) {
         // 白天
@@ -1267,7 +1268,7 @@ if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "1") { // 向下兼容
 //页面加载后调用
 //检查cook，并判断是否为暗黑模式
 
-if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "dark") DarkMode(); else LigheMode();// 取cookie,判断明亮/暗黑模式
+if (DATA_THEME_MODE_ITEM_OBJ == "dark") DarkMode(); else LigheMode();// 取cookie,判断明亮/暗黑模式
 
 function activateLightMode() {
     sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light"); //写个Cookie
@@ -1304,7 +1305,7 @@ function DarkMode() { // 调整至明亮模式
 }
 
 function switchDataThemeMode() { // 切换模式
-    if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "auto") {
+    if (DATA_THEME_MODE_ITEM_OBJ == "auto") {
         if (document.documentElement.getAttribute("data-theme") == "light") {
             DarkMode();
         } else {
@@ -1312,13 +1313,13 @@ function switchDataThemeMode() { // 切换模式
         }
         return;
     } else {
-        if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "light") {
+        if (DATA_THEME_MODE_ITEM_OBJ == "light") {
             sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
             DarkMode();
-        } else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == "dark") {
+        } else if (DATA_THEME_MODE_ITEM_OBJ == "dark") {
             sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
             LigheMode();
-        } else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM) == null) {
+        } else if (DATA_THEME_MODE_ITEM_OBJ == null) {
             sessionStorage.setItem(DATA_THEME_MODE_ITEM, "auto");
             if (now.getHours() < 6) {
                 LigheMode();
