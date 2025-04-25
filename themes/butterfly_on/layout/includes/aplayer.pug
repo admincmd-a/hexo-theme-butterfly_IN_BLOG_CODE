@@ -19,7 +19,7 @@ if theme.aplayerDIV.enable
               container: document.getElementById('aplayer'),
               theme: '#{theme.aplayerDIV.theme}',
               fixed: true,
-              lrcType: #{theme.aplayerDIV.lrcType},
+              lrcType: #{theme.aplayerDIV.lrcType || 3},
               audio:  [#{theme.aplayerDIV.audio}],
           });
     else

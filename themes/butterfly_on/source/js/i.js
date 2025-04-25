@@ -339,6 +339,7 @@ var PROGRESS_BAR = document.getElementById('year-progress-bar');
 var currentTimeHtml = "";
 var img = "";
 var description = "";
+var PAGE_MAIN_ID = "page-main";
 
 
 // 定义一个文本型数组——用于湖人
@@ -351,7 +352,7 @@ const phrases = [
 ];
 
 const DATA_THEME_MODE_ITEM = "ActivateMode";
-const DATA_THEME_MODE_ITEM_OBJ = sessionStorage.getItem(DATA_THEME_MODE_ITEM) ;
+const DATA_THEME_MODE_ITEM_OBJECT = sessionStorage.getItem(DATA_THEME_MODE_ITEM) ;
 const CURRENT_URL = window.location.href;
 
 var DText = "0";
@@ -637,7 +638,6 @@ function isMobile() {
  */
 function setBarsTime(ontimes) { 
     times = ontimes; 
-
 }
 
 /**

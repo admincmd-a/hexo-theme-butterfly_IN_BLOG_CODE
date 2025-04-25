@@ -12,5 +12,9 @@ if hexo-config('css_prefix')
 @import '_mode/*'
 @import '_custom/**/*.css'
 
+if hexo-config('aplayerDIV.enable')
+  @import '_aplayer/aplayer.css'
+  @import '_aplayer/dark-theme.styl'
+
 // search
 @import '_search/index'

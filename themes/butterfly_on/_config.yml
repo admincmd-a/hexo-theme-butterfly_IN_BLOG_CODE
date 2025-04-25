@@ -1,3 +1,5 @@
+enable: true
+
 # Navigation bar settings (導航欄設置)
 # see https://butterfly.js.org/posts/4aa8abbe/##導航欄設置-Navigation-bar-settings
 # --------------------------------------
@@ -10,7 +12,7 @@ nav:
 # Menu 菜单
 menu:
   enable: true # 启用菜单
-  search_placement: right # left / right 定义搜索按钮位置,最右侧或最左侧,注：此项的关闭属性由搜索配置决定(即关闭所有搜索配置)
+  search_placement: right # [ left | right ] 定义搜索按钮位置,最右侧或最左侧,注：此项的关闭属性由搜索配置决定(即关闭所有搜索配置)
   item:
     主页: / || fas fa-home
     转到||fas fa-arrow-right:
@@ -356,7 +358,7 @@ aplayerDIV:
   js: 
   # 自定义 CSS
   css: 
-  lrcType: 3 # 歌词取值类型 [ 1 | 2 | 3 ]
+  lrcType: 3 # 歌词取值类型 [ 1 | 2 | 3 ],若空 为 3
   theme: "#F57F17" # 主题色
   # 音乐设置表，具体请参考 https://aplayer.js.org/#/home
   # 应为 JS 对象参数内容
@@ -533,6 +535,21 @@ configWin:
   enable: true
   rightside: true
   rightmenu: true
+
+# 颜色设置
+# ------------------------------
+color:
+  main:
+  rheme:
+    blue:
+      light:
+        main:
+        2main:
+        choose:
+      dark:
+        main:
+        2main:
+        choose:
 
 
 # 右键菜单
@@ -746,14 +763,11 @@ welcomemap:
 # -------------------------------------
 lightDarkMode:
   light: # 亮色主题
-    js: "
-    document.getElementById('travellings-logo').src = '/img/travelling_b.svg';
-    "
+    js: "document.getElementById('travellings-logo').src = '/img/travelling_b.svg';"
   dark: # 暗色主题
     js: "
     document.getElementById('travellings-logo').src = '/img/travelling_w.svg';
     "
-
 
 
 
