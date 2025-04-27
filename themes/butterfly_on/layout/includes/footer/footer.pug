@@ -54,10 +54,19 @@
 
   if theme.footer.time_line.enable
     time-line
+      //-【【航天史填词】东方红的心脏【乐正绫x洛天依】】 【精准空降到 00:00】 
+      .workboard#workboard
+      .runtimeLXZ1#runtimeLXZ1
+        //-【茫茫星海中，旅行者一号与人类文明《百分之一的长旅》【航天史填词】（历史替歌投稿祭）】 【精准空降到 00:01】
       script.
+        var ct = 0;
+        var rzRunTimr = "LXZ";
         var grt = new Date('#{theme.footer.time_line.start_time}');
         var dnum, hnum, mnum, snum, nowHour, t, n;
-        function updateTime() {
+        var qTime;
+        var stopTime;
+        function updateFooterTime() {
+          ct++;
           now = new Date();
           nowHour = now.getHours();
           var days = (now - grt) / 1000 / 60 / 60 / 24;
@@ -71,27 +80,74 @@
           var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
           snum = Math.round(seconds);
           snum = String(snum).padStart(2, '0');
-          t = Math.trunc(234e8 + (now - grt) / 1e3 * 17);
-          n = (t / 1496e5).toFixed(6);
+          tLXZ = Math.trunc(234e8 + (now - grt) / 1e3 * 17);
+          nLXZ = (tLXZ / 1496e5).toFixed(6);
+
+          const launchDate = new Date(Date.UTC(1970, 3, 24, 21, 53, 0));  // 4月24日
+          const stopDate = new Date(Date.UTC(1970, 4, 14, 0, 0, 0));    // 5月14日
+
+          // 计算时间差（单位：毫秒）
+          const qTimeDiff = now.getTime() - launchDate.getTime();
+          const stopTimeDiff = now.getTime() - stopDate.getTime();
+
+          // 转换为天数（向下取整）
+          qTime = Math.floor(qTimeDiff / (1000));
+          stopTime = Math.floor((qTimeDiff / (1000)) - 28 * 60 * 60 * 24);//Math.floor(stopTimeDiff / (1000 * 60 * 60 * 24));
+
+          if (ct % 5 == 0) {
+            if (rzRunTimr == "LXZ") {
+              rzRunTimr = "DFH";
+            } else if (rzRunTimr = "DFH") {
+              rzRunTimr = "LXZ";
+            } else {}
+          }
+
         }
-        function updateHtml() {
+        function updateFooterHtml() {
           const footer = document.getElementById("footer");
+
           if (!footer) return;
           let currentTimeHtml = `
-            <div id="runtimeTextTip">
+            
+            <span id="runtimeDiv">
               #{theme.footer.time_line.message_prev} ${dnum} #{theme.footer.time_line.message_next}
               <span id='runtime'>${hnum} 小时 ${mnum} 分 ${snum} 秒</span>
-              <i class='haofont hao-icon-heartbeat' style='color:red'></i>
-              <br>
-              旅行者 1 号现在距离地球 ${t} 千米了，差不多是 ${n} 个地球到太阳的距离 (天文单位)
-            </div>`;
+            </span>
+            <!--<i class='haofont hao-icon-heartbeat' style='color:red'></i>-->
+            <br />`;
           if (document.getElementById("workboard")) {
-            document.getElementById("workboard").innerHTML = currentTimeHtml;
+              document.getElementById("workboard").innerHTML = currentTimeHtml;
           }
+          if (rzRunTimr == "LXZ") {
+            let currentTimeHtmlLXZ = `
+            <a title="【茫茫星海中，旅行者一号与人类文明《百分之一的长旅》【航天史填词】（历史替歌投稿祭）】" href="/url.html?url=https://www.bilibili.com/video/BV12N4y1f7QT/?t=1&yes=true" target="_blank" rel="noopener">
+              <span>
+                旅行者 1 号现在距离地球 ${tLXZ} 千米了，差不多是 ${nLXZ} 个地球到太阳的距离 (天文单位)
+              </span>
+            </a>
+            `;
+            if (document.getElementById("runtimeLXZ1")) {
+              document.getElementById("runtimeLXZ1").innerHTML = currentTimeHtmlLXZ;
+            }
+          } else if (rzRunTimr == "DFH") {
+            let currentTimeHtmlDFH = `
+            <a title="【【航天史填词】东方红的心脏【乐正绫x洛天依】】" href="/url.html?url=https://www.bilibili.com/video/BV129mGY3Efe/?t=1&yes=true" target="_blank" rel="noopener">
+              <span>
+                东方红 1 号现在在轨稳定飞行，距离她从地面起飞已经过去 ${qTime} 秒了，距离她最后一次在宇宙中高歌东方红已经过去 ${stopTime} 秒了。
+              </span>
+            </a>
+            `;
+            if (document.getElementById("runtimeLXZ1")) {
+              document.getElementById("runtimeLXZ1").innerHTML = currentTimeHtmlDFH;
+            }
+          } else {}
+            
+          
+          
         }
         setInterval(() => {
-          updateTime();
-          updateHtml();
+          updateFooterTime();
+          updateFooterHtml();
         }, 1000);
 
 

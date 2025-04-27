@@ -138,3 +138,6 @@ load_more: 加载更多
 error404: 页面没有找到
 
 is300: "   "
+
+enable_false: "主题输出已被禁用。要启用输出，请将主题配置文件 '_config.yml' 中的配置键 'enable' 修改为 'true' ，然后重新生成文件。"
+close: 关闭

@@ -1,20 +1,23 @@
-if hexo-config('css_prefix')
-  @import 'nib'
+if hexo=config('enable')
+  @import '_variables'
 
-@import '_third-party/normalize.min.css'
-// project
-@import 'var'
-@import '_global/*'
-@import '_highlight/highlight'
-@import '_page/*'
-@import '_layout/*'
-@import '_tags/*'
-@import '_mode/*'
-@import '_custom/**/*.css'
-
-if hexo-config('aplayerDIV.enable')
-  @import '_aplayer/aplayer.css'
-  @import '_aplayer/dark-theme.styl'
-
-// search
-@import '_search/index'
+  if hexo-config('css_prefix')
+    @import 'nib'
+    
+  @import '_third-party/normalize.min.css'
+  // project
+  // @import 'var'
+  @import '_global/*'
+  @import '_highlight/highlight'
+  @import '_page/*'
+  @import '_layout/*'
+  @import '_tags/*'
+  @import '_mode/*'
+  @import '_custom/**/*.css'
+  
+  if hexo-config('aplayerDIV.enable')
+    @import '_aplayer/aplayer.css'
+    @import '_aplayer/dark-theme.styl'
+    
+  // search
+  @import '_search/index'

@@ -9,9 +9,10 @@ hexo.extend.helper.register('inject_head_js', function () {
   const { darkmode, aside } = this.theme
   const start = darkmode.start || 6
   const end = darkmode.end || 18
-  const { theme_color } = hexo.theme.config
-  const themeColorLight = (theme_color && theme_color.enable && theme_color.meta_theme_color_light) || '#ffffff'
-  const themeColorDark = (theme_color && theme_color.enable && theme_color.meta_theme_color_dark) || '#0d0d0d'
+  const { color } = hexo.theme.config
+  const themeColor = (color && color.enable && color.main) || 'null'
+  const themeColorLight = (color && color.enable && color.theme[themeColor].light.mate) || '#ffffff'
+  const themeColorDark = (color && color.enable && color.theme[themeColor].dark.mate) || '#0d0d0d'
 
   const createLocalStore = () => {
     return `

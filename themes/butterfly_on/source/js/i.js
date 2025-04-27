@@ -451,6 +451,7 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 
 
 // API ----------------------------------------------------------
+// JS 文件内需要公共调用的东西
 
 /**
  * 对界面模糊化处理
@@ -571,6 +572,8 @@ var pageBlur = {
  */
 var messageWin = {
     DKtimeId: null,
+    id: "messageWin",
+    class: "messageWin",
 
     /**
      * 打开消息窗口
@@ -589,13 +592,13 @@ var messageWin = {
                 actionTextColor: '#fff',
             });
         } else {
-            if (!(DKtime === 0 || DKtime === undefined || DKtime === null)) {
+            if (!(DKtime === 0 || undefined || null)) {
                 this.DKtimeId = setTimeout(messageWin.close(), DKtime);
             }
             try {
                 if (xh) {pageBlur.setTrue(); /* 开启模糊 */}
-                document.getElementById("timeWin").style.display = null;
-                document.getElementById("timeWin").innerHTML =
+                document.getElementById(this.id).style.display = null;
+                document.getElementById(this.id).innerHTML =
                 `
                 <p id="messageWin-title" class="messageWin-title">${title}</p>
                 <p id="messageWin-text" class="messageWin-text">${content}</p>
@@ -616,9 +619,125 @@ var messageWin = {
     close() {
         document.getElementById("timeWin").style.display = "none";
         pageBlur.setFalse(); // 关闭模糊
-        clearTimeout(messageWin.DKtime);
+        clearTimeout(messageWin.DKtimeId);
     }
 };
+
+// 明亮/暗黑模式切换
+// -------------------------------------------------------------------------
+// 2024-12-28 解决了首次访问时,没有coockie时导致if执行失败,导致部分图片没有切换.
+// 2025-02-21 现在没有Cookie时，会根据时间自动切换模式。
+// 2025-03-04 de了会导致一直是白天模式bug。
+// 2025-04-15 修复逻辑问题,统一将Cookies更换为sessionStorage
+// 2025-04-26 
+
+var lightDarkMode = {};
+
+lightDarkMode.Mode = "light";
+
+
+if (DATA_THEME_MODE_ITEM_OBJECT == "1") { // 向下兼容
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
+} else if (DATA_THEME_MODE_ITEM_OBJECT == "0") {
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
+} else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM == null) || DATA_THEME_MODE_ITEM_OBJECT == "auto") {
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "auto");
+    if (now.getHours() < 6) {
+        // 白天
+        sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
+        LigheMode();
+    } else {
+        sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
+        DarkMode();
+    }
+} else {}
+//页面加载后调用
+//检查cook，并判断是否为暗黑模式
+
+if (DATA_THEME_MODE_ITEM_OBJECT == "dark") DarkMode(); else LigheMode();// 取cookie,判断明亮/暗黑模式
+if (DATA_THEME_MODE_ITEM_OBJECT == "auto") {
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "auto");
+    if (now.getHours() < 6) {
+        // 白天
+        sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
+        LigheMode();
+    } else {
+        sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
+        DarkMode();
+    }
+}
+// ---------------------
+
+function LigheMode() { // 暗黑模式
+    document.documentElement.setAttribute('data-theme', 'light')
+    // if (document.querySelector('meta[name="theme-color"]') !== null) {
+    //   document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    // }
+    try {
+        lightUserPug();
+    } catch (error) {
+        console.error("用户自定义切换 JavaScript 代码出现错误：",error)
+    }
+    // 将需要调整的元素修改代码扔在这里
+    GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
+}
+
+function DarkMode() { // 调整至明亮模式
+    document.documentElement.setAttribute('data-theme', 'dark')
+    // if (document.querySelector('meta[name="theme-color"]') !== null) {
+    //   document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    // }
+    // 将需要调整的元素修改代码扔在这里
+    try {
+        darkUserPug();
+    } catch (error) {
+        console.error("用户自定义切换 JavaScript 代码出现错误：",error)
+    }
+    GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
+}
+
+function switchDataThemeMode() { // 切换模式
+    if (DATA_THEME_MODE_ITEM_OBJECT == "auto") {
+        if (document.documentElement.getAttribute("data-theme") == "light") {
+            DarkMode();
+        } else {
+            LigheMode();
+        }
+        return;
+    } else {
+        if (DATA_THEME_MODE_ITEM_OBJECT == "light") {
+            sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
+            DarkMode();
+        } else if (DATA_THEME_MODE_ITEM_OBJECT == "dark") {
+            sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
+            LigheMode();
+        } else if (DATA_THEME_MODE_ITEM_OBJECT == null) {
+            sessionStorage.setItem(DATA_THEME_MODE_ITEM, "auto");
+            if (now.getHours() < 6) {
+                LigheMode();
+            } else {
+                DarkMode();
+            }
+        } else {
+            return;
+        }
+    }
+    
+}
+
+function activateLightMode() {
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light"); //写个Cookie
+    LigheMode();
+}
+function activateDarkMode() {
+    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
+    DarkMode();
+    // 同上
+    // 调整至暗黑模式
+}
+
+// End ---------------------------------------------------------------------------------------------
+
 
 /**
 * 判断是否是移动端
@@ -734,6 +853,8 @@ function clearCookies() {
         });
     }
 }
+
+
 
 document.getElementById("timeWin").style.display = "none";
 
@@ -1239,102 +1360,6 @@ if (getCookie('browsertc') != 1) {
 
 // 
 
-
-
-
-
-// 明亮/暗黑模式切换
-// -------------------------------------------------------------------------
-// 2024-12-28 解决了首次访问时,没有coockie时导致if执行失败,导致部分图片没有切换.
-// 2025-02-21 现在没有Cookie时，会根据时间自动切换模式。
-// 2025-03-04 de了会导致一直是白天模式bug。
-// 2025-04-15 修复逻辑问题
-
-if (DATA_THEME_MODE_ITEM_OBJ == "1") { // 向下兼容
-    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
-} else if (DATA_THEME_MODE_ITEM_OBJ == "0") {
-    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
-} else if (sessionStorage.getItem(DATA_THEME_MODE_ITEM == null) || DATA_THEME_MODE_ITEM_OBJ == "auto") {
-    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "auto");
-    if (now.getHours() < 6) {
-        // 白天
-        sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
-        LigheMode();
-    } else {
-        sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
-        DarkMode();
-    }
-} else {}
-//页面加载后调用
-//检查cook，并判断是否为暗黑模式
-
-if (DATA_THEME_MODE_ITEM_OBJ == "dark") DarkMode(); else LigheMode();// 取cookie,判断明亮/暗黑模式
-
-function activateLightMode() {
-    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light"); //写个Cookie
-    LigheMode();
-}
-function activateDarkMode() {
-    sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
-    DarkMode();
-    // 同上
-    // 调整至暗黑模式
-}
-
-
-// ---------------------
-
-function LigheMode() { // 暗黑模式
-    document.documentElement.setAttribute('data-theme', 'light')
-    // if (document.querySelector('meta[name="theme-color"]') !== null) {
-    //   document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-    // }
-    lightUserPug();
-    // 将需要调整的元素修改代码扔在这里
-    GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
-}
-
-function DarkMode() { // 调整至明亮模式
-    document.documentElement.setAttribute('data-theme', 'dark')
-    // if (document.querySelector('meta[name="theme-color"]') !== null) {
-    //   document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-    // }
-    // 将需要调整的元素修改代码扔在这里
-    darkUserPug();
-    GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
-}
-
-function switchDataThemeMode() { // 切换模式
-    if (DATA_THEME_MODE_ITEM_OBJ == "auto") {
-        if (document.documentElement.getAttribute("data-theme") == "light") {
-            DarkMode();
-        } else {
-            LigheMode();
-        }
-        return;
-    } else {
-        if (DATA_THEME_MODE_ITEM_OBJ == "light") {
-            sessionStorage.setItem(DATA_THEME_MODE_ITEM, "dark");
-            DarkMode();
-        } else if (DATA_THEME_MODE_ITEM_OBJ == "dark") {
-            sessionStorage.setItem(DATA_THEME_MODE_ITEM, "light");
-            LigheMode();
-        } else if (DATA_THEME_MODE_ITEM_OBJ == null) {
-            sessionStorage.setItem(DATA_THEME_MODE_ITEM, "auto");
-            if (now.getHours() < 6) {
-                LigheMode();
-            } else {
-                DarkMode();
-            }
-        } else {
-            return;
-        }
-    }
-    
-}
-
-// End ---------------------------------------------------------------------------------------------
-
 function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个链接,用于随便转转模块
     // 解决了原有 HTML 无法后退的问题
     fetch('/sitemap.txt')
@@ -1463,7 +1488,7 @@ function playDFH() {
 
         let audioCtx;
         try {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            audioCtx = new (window.AudioContext || window.AudioContext)();
         } catch (e) {
             console.error('无法创建 AudioContext', e);
             return;
@@ -1534,7 +1559,7 @@ function playDFH() {
 
 
 function playMUS(frequency) {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    window.AudioContext = window.AudioContext || window.AudioContext;
     var audioCtx = new AudioContext();
     var oscillator = audioCtx.createOscillator();
     var gainNode = audioCtx.createGain();

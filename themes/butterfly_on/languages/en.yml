@@ -121,3 +121,5 @@ loading: Loading...
 load_more: Load More
 
 error404: Page Not Found
+
+enable_false: "The output of the theme has been disabled. To enable the output, please change the configuration key 'enable' in the theme configuration file '_config.yml' to 'true', and then regenerate the file."

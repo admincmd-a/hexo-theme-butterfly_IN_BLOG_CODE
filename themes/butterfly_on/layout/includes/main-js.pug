@@ -6,10 +6,10 @@ if true
         domain = domain ? domain.split("/")[0] : '-';
 
         // 用于给用户配置切换使用
-        function lightUserPug() {
+        function _lightUserPug() {
             #{theme.lightDarkMode.light.js}
         }
-        function darkUserPug() {
+        function _darkUserPug() {
             #{theme.lightDarkMode.dark.js}
         }
         setTimeout(function () { // 康康是不是来自其他网站
@@ -23,7 +23,6 @@ if true
                 case '-':
                     break;
                 default:
-                    console.warn('');
                     if (domain === window.location.hostname) {
                         break;
                     }
