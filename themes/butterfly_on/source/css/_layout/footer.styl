@@ -1,17 +1,21 @@
 #footer
   position: relative
-  background-color: unquote(hexo-config('color.theme.' + (hexo-config('color.theme.main') || 'blue') + '.light.main.main') || '#e100ff')  background-attachment: scroll
+  // background-color: $color-theme-light-main
+  background-attachment: scroll
   background-position: bottom
   background-size: cover
 
-  if hexo-config('footer_bg') != false && hexo-config('mask.footer')
+  if false/*hexo-config('footer.enable') != false && hexo-config('mask.footer')*/
     &:before
       position: absolute
       width: 100%
       height: 100%
       background-color: var(--mark-bg)
       content: ''
-
+html[data-theme="dark"] #footer
+  background-color: $color-theme-dark-main
+html[data-theme="light"] #footer
+  background-color: $color-theme-light-main
 #footer-wrap
   position: relative
   padding: 40px 20px

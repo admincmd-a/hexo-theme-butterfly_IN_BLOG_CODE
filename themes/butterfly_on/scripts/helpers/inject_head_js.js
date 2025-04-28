@@ -10,7 +10,7 @@ hexo.extend.helper.register('inject_head_js', function () {
   const start = darkmode.start || 6
   const end = darkmode.end || 18
   const { color } = hexo.theme.config
-  const themeColor = (color && color.enable && color.main) || 'null'
+  const themeColor = (color && color.enable && color.mode) || 'null'
   const themeColorLight = (color && color.enable && color.theme[themeColor].light.mate) || '#ffffff'
   const themeColorDark = (color && color.enable && color.theme[themeColor].dark.mate) || '#0d0d0d'
 

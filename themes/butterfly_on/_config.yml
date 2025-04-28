@@ -595,18 +595,18 @@ color:
           main:
         
       dark:
-        main: 
-          main: "#16a3d1"
-          2main: "#2a68bc"
-          mate: "#ffffff"
-          text: "#0d0d0d"
-          selection: "#00c4b6"
-          background: "#f7f4ed"
-          2background: "#d7cfc2"
-          contrast: "#12090e"
-          2contrast: "#fbfcfe"
-          hover: "#f9ce6c"
-          choose: "#83be52"
+         
+        main: "#032258"
+        2main: "#2a68bc"
+        mate: "#ffffff"
+        text: "#0d0d0d"
+        selection: "#00c4b6"
+        background: "#f7f4ed"
+        2background: "#d7cfc2"
+        contrast: "#12090e"
+        2contrast: "#fbfcfe"
+        hover: "#f9ce6c"
+        choose: "#83be52"
         scrollbar: "#3dcefd"
         post:
           code:

@@ -83,8 +83,8 @@
           tLXZ = Math.trunc(234e8 + (now - grt) / 1e3 * 17);
           nLXZ = (tLXZ / 1496e5).toFixed(6);
 
-          const launchDate = new Date(Date.UTC(1970, 3, 24, 21, 53, 0));  // 4月24日
-          const stopDate = new Date(Date.UTC(1970, 4, 14, 0, 0, 0));    // 5月14日
+          const launchDate = new Date(Date.UTC(1970, 3, 24, 21, 53, 24));  // 4月24日
+          const stopDate = new Date(Date.UTC(1970, 4, 14, 3, 0, 0));    // 5月14日
 
           // 计算时间差（单位：毫秒）
           const qTimeDiff = now.getTime() - launchDate.getTime();

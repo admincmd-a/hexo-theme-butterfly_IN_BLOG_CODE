@@ -3,6 +3,10 @@
    颜色常量体系
    ======================== */
 
+un-hexo-config(config) {
+    return unquote(hexo-config(config))
+}
+
 // 功能色系
 // ----------------------------------------
 $color-null = '#e100ff'
@@ -60,9 +64,6 @@ get-theme-color(type = 'primary') {
   return colors[type]
 }
 
-un-hexo-config(config) {
-    return unquote(hexo-config(config))
-}
 
 // color
 $bright-blue = #49B1F5
