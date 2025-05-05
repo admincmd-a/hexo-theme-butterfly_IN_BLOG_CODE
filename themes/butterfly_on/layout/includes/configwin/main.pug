@@ -1,5 +1,5 @@
 if theme.configWin.enable 
-  div.configWin#configWin(style="display:none;")
+  .configWin#configWin(style="display:none;")
     span.config-title#config-title
     span.config-2title#config-2title
     a(class="configWinTopBtn",href="javascript:configWin.topWin()")
@@ -7,7 +7,7 @@ if theme.configWin.enable
     a(class="configWinCloseBtn",href="javascript:configWin.exit()")
       |    X   
     div.configDiv#configDiv
-      !=partial('includes/configwin/page',{}, {cache:true})
+      include ./page
     script(src="/js/sett.js") 
   //-script.
     // 史山一坨

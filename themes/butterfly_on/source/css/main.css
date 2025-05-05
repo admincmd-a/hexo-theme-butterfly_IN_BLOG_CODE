@@ -1,40 +1,49 @@
 /* Setting WinDiv Home --------------------------------------------*/
-html[data-theme="light"] span.config-title {
-    color: #10A7E8;
+span.config-title {
     top: 7px;
     left: 85px;
     font-size:32px;
     position:absolute;
 }
 
+html[data-theme="light"] span.config-title {
+    color: #10A7E8;
+}
+
 html[data-theme="dark"] span.config-title {
     color: #7AABEF;
 }
 
-html[data-theme="light"] span.config-2title {
-    color: #262D32;
+span.config-2title {
     top:49px;
     left:85px;
     font-size:16px;
     position:absolute;
 }
 
+html[data-theme="light"] span.config-2title {
+    color: #262D32;
+}
+
 html[data-theme="dark"] span.config-2title {
     color: #F8F2E6;
 }
 
-html[data-theme="light"] div.configWin {
+div.configWin {
     position:fixed;
     top:35%;
     right:25%;
     z-index:25;
     border-width:2px;
-    border-color:#7F7E84;
     border-style:solid;
-    background-color:#F8F3ED; /*背景色*/
     width:50%;
     border-radius: 20px; /*圆角*/
     height: 35%;
+}
+
+html[data-theme="light"] div.configWin {
+    border-color:#7F7E84;
+    background-color:#F8F3ED; /*背景色*/
 }
 
 html[data-theme="dark"] div.configWin {
@@ -43,26 +52,27 @@ html[data-theme="dark"] div.configWin {
 }
 
 
-html[data-theme="light"] div.configDiv {
+div.configDiv {
     position:absolute;
     top: 20%;
     left: 3%;
     max-width: 95%;
 }
 
-html[data-theme="light"] a.config-bottom {
-    font-size:16px;
-    /* height:60px;
-    width:190px; */
-    color:#FFFFFF;
-    background-color:#10A7E8;
+a.config-bottom {
+
+
     border-radius:10px;
-    /* text-align:center; */
     line-height:30px;
-    /* display:block; */
     margin:0 auto;
     margin-top:20px;
     line-height: 58px;
+    font-size:16px;
+}
+
+html[data-theme="light"] a.config-bottom {
+    color:#FFFFFF;
+    background-color:#10A7E8;
 }
 
 html[data-theme="dark"] a.config-bottom {
@@ -81,7 +91,7 @@ html[data-theme="dark"] a.configWinTopBtn {
     background-color:#56625E;
 }
 
-html[data-theme="light"] a.configWinCloseBtn {
+a.configWinCloseBtn {
     font-size:25px;
     background-color:#e0e0e0;
     right: 20px;
@@ -99,8 +109,7 @@ html[data-theme="dark"] a.configWinCloseBtn {
     }
 }
 
-
-html[data-theme="light"] a.config-bottom {
+a.config-bottom {
     font-size:25px;
     text-align: left;
     border-radius: 12px;
@@ -117,7 +126,7 @@ html[data-theme="dark"] a.config-bottom {
     background-color:#3946AF;
 }
 
-html[data-theme="light"] a.config-bottom {
+a.config-bottom {
     font-size:22px;
     text-align:center;
 
@@ -136,7 +145,7 @@ html[data-theme="light"] a.config-bottom {
     display: inline-block;
 }
 
-html[data-theme="dark"] a.config-bottom {
+a.config-bottom {
     background-color:#3946AF;
 }
 
@@ -156,18 +165,8 @@ a.config-font-butt /*om*/{
 }
 
 html[data-theme="light"] a.config-font-butt /*om*/{
-    font-size:20px;
-    height:40px;
-    width:160px;
     color:#FFFFFF;
     background-color:#2F7AA1;
-    border-radius:10px;
-    /* text-align:center; */
-    line-height:30px;
-    /* display:block; */
-    margin:0 auto;
-    margin-top:20px;
-    line-height: 58px;
 }
 
 html[data-theme="dark"] a.config-font-butt {
@@ -228,7 +227,7 @@ html[data-theme="dark"] a.winbox-btn {
     background-color: #3946AF;
 }
 
-div#timeWin {
+div#messageWin {
     position:fixed;
     top:35%;
     right:25%;
@@ -239,12 +238,12 @@ div#timeWin {
     border-radius: 25px; /*圆角*/
 }
 
-html[data-theme="light"] div#timeWin {
+html[data-theme="light"] div#messageWin {
     background-color:#F8F3ED; /*背景色*/
     border-color:#7F7E84;
 }
 
-html[data-theme="dark"] div#timeWin {
+html[data-theme="dark"] div#messageWin {
     border-color:#434446;
     background-color:#36353B; /*背景色*/
 }
@@ -269,7 +268,7 @@ p.messageWin-text#messageWin-text {
     text-align: center;
 }
 
-html[data-theme="da"]
+/* html[data-theme="dark"] */
 
 a.messageWin-closeWin {
     font-size:16px;
@@ -342,4 +341,4 @@ body
   transition: width 1.5s;/*一次到目标位置的速度*/
 }
 
-/* 时光飞逝 End -*/4
+/* 时光飞逝 End -*/

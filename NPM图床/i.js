@@ -1174,7 +1174,7 @@ function setFont(font, enableReturn = false) {
  * 清除 Cookies、localStorage，显示确认按钮。
  * @returns {boolean} 是否清除成功
  */
-function clearCookies(enableReturn = false) {
+function clearCookies() {
     if (confirm("确定要清除所有 Cookie 和 localStorage 吗？\n\n 确定=清除 取消=取消")) {
         try {
             localStorage.clear();
@@ -1185,9 +1185,9 @@ function clearCookies(enableReturn = false) {
                     document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString();
                 }
             }
-            if (enableReturn) return true;
+            return true;
         } catch (error) {
-            if (enableReturn) return setErrorCode(0x00001, `清除 Cookie 失败: ${error}`,1);
+            return setErrorCode(0x00001, `清除 Cookie 失败: ${error}`,1);
         }
     } else {
         Snackbar.show({
@@ -1195,7 +1195,7 @@ function clearCookies(enableReturn = false) {
             pos: 'top-right',
             action: 2000,
         });
-        if (enableReturn) return false;
+        return false;
     }
 }
 

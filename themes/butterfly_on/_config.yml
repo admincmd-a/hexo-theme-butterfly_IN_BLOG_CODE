@@ -1,6 +1,6 @@
 # 主开关
 # --------------------------------------
-enable: true
+enable: true # [ true | false ]
 
 # Navigation bar settings (導航欄設置)
 # see https://butterfly.js.org/posts/4aa8abbe/##導航欄設置-Navigation-bar-settings
@@ -202,9 +202,9 @@ toc:
   post: true
   page: true
   number: true
-  expand: false
+  expand: true
   style_simple: false # for post
-  scroll_percent: false
+  scroll_percent: true
 
 post_copyright:
   enable: true
@@ -1414,7 +1414,7 @@ preloader:
   # 2. pace (progress bar)
   source: 2
   # pace theme (see https://codebyzach.github.io/pace/)
-  pace_css_url: /css/load.css
+  pace_css_url: 
 
 # wordcount (字數統計)
 # see https://butterfly.js.org/posts/ceeb73f/#字數統計

@@ -1,4 +1,4 @@
-if hexo=config('enable')
+if hexo-config('enable')
   @import '_variables'
 
   if hexo-config('css_prefix')
@@ -16,8 +16,9 @@ if hexo=config('enable')
   @import '_custom/**/*.css'
   
   if hexo-config('aplayerDIV.enable')
-    @import '_aplayer/aplayer.css'
-    @import '_aplayer/dark-theme.styl'
+    if !hexo-config('aplayerDIV.css')
+      @import '_aplayer/aplayer.css'
+      @import '_aplayer/dark-theme.styl'
     
   // search
   @import '_search/index'
