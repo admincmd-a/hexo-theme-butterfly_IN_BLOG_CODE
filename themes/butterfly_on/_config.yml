@@ -336,6 +336,9 @@ footer:
           <a href="https://www.travellings.cn/go.html" target="_blank" rel="noopener" title="开往-友链接力">
             <img id="travellings-logo" style="position:relative;top:4px" src="" alt="开往-友链接力" width="74" height="18">
           </a>'
+      admin:
+        url: https://github.com/jerryc127/hexo-theme-butterfly/issues
+        text: "https://admincmd.xyz/"
     
 
     #key:           # 前缀文字（留空则无前缀）

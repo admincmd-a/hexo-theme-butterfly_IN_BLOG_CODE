@@ -34,6 +34,9 @@ if theme.right_menu.enable
            a.rightMenu-item(href='javascript:rmf.paste()')
                i.fa.fa-copy
                span=__('rightmenu.paste_text')
+           a.rightMenu-item#menu-s(href="javascript:setCopyText(getSelectedText());")
+              i.fa.fa-link
+              span='转到引用链接'
        .rightMenu-group.rightMenu-line.hide#menu-post
            a.rightMenu-item(href="#post-comment")
                i.fas.fa-comment
@@ -48,9 +51,11 @@ if theme.right_menu.enable
            a.rightMenu-item(href="javascript:rmf.openWithNewTab()")
                i.fa.fa-window-restore
                span=__('rightmenu.open_new_tab')
+           //- a.rightMenu-item#menu-toos(href="javascript:rmf.open()")
            a.rightMenu-item#menu-toos(href="javascript:rmf.open()")
                i.fa.fa-link
                span='转到引用链接'
+           
            a.rightMenu-item(href="javascript:rmf.copyLink()")
                i.fa.fa-copy
                span='复制引用链接'

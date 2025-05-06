@@ -1,311 +1,25 @@
 /**
- * Copyright (c) 2025 Admincmd(http://admincmd.xyz).
-
-                                Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
-
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
-
-   1. Definitions.
-
-      "License" shall mean the terms and conditions for use, reproduction,
-      and distribution as defined by Sections 1 through 9 of this document.
-
-      "Licensor" shall mean the copyright owner or entity authorized by
-      the copyright owner that is granting the License.
-
-      "Legal Entity" shall mean the union of the acting entity and all
-      other entities that control, are controlled by, or are under common
-      control with that entity. For the purposes of this definition,
-      "control" means (i) the power, direct or indirect, to cause the
-      direction or management of such entity, whether by contract or
-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
-      outstanding shares, or (iii) beneficial ownership of such entity.
-
-      "You" (or "Your") shall mean an individual or Legal Entity
-      exercising permissions granted by this License.
-
-      "Source" form shall mean the preferred form for making modifications,
-      including but not limited to software source code, documentation
-      source, and configuration files.
-
-      "Object" form shall mean any form resulting from mechanical
-      transformation or translation of a Source form, including but
-      not limited to compiled object code, generated documentation,
-      and conversions to other media types.
-
-      "Work" shall mean the work of authorship, whether in Source or
-      Object form, made available under the License, as indicated by a
-      copyright notice that is included in or attached to the work
-      (an example is provided in the Appendix below).
-
-      "Derivative Works" shall mean any work, whether in Source or Object
-      form, that is based on (or derived from) the Work and for which the
-      editorial revisions, annotations, elaborations, or other modifications
-      represent, as a whole, an original work of authorship. For the purposes
-      of this License, Derivative Works shall not include works that remain
-      separable from, or merely link (or bind by name) to the interfaces of,
-      the Work and Derivative Works thereof.
-
-      "Contribution" shall mean any work of authorship, including
-      the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is intentionally
-      submitted to Licensor for inclusion in the Work by the copyright owner
-      or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, "submitted"
-      means any form of electronic, verbal, or written communication sent
-      to the Licensor or its representatives, including but not limited to
-      communication on electronic mailing lists, source code control systems,
-      and issue tracking systems that are managed by, or on behalf of, the
-      Licensor for the purpose of discussing and improving the Work, but
-      excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
-
-      "Contributor" shall mean Licensor and any individual or Legal Entity
-      on behalf of whom a Contribution has been received by Licensor and
-      subsequently incorporated within the Work.
-
-   2. Grant of Copyright License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      copyright license to reproduce, prepare Derivative Works of,
-      publicly display, publicly perform, sublicense, and distribute the
-      Work and such Derivative Works in Source or Object form.
-
-   3. Grant of Patent License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      (except as stated in this section) patent license to make, have made,
-      use, offer to sell, sell, import, and otherwise transfer the Work,
-      where such license applies only to those patent claims licensable
-      by such Contributor that are necessarily infringed by their
-      Contribution(s) alone or by combination of their Contribution(s)
-      with the Work to which such Contribution(s) was submitted. If You
-      institute patent litigation against any entity (including a
-      cross-claim or counterclaim in a lawsuit) alleging that the Work
-      or a Contribution incorporated within the Work constitutes direct
-      or contributory patent infringement, then any patent licenses
-      granted to You under this License for that Work shall terminate
-      as of the date such litigation is filed.
-
-   4. Redistribution. You may reproduce and distribute copies of the
-      Work or Derivative Works thereof in any medium, with or without
-      modifications, and in Source or Object form, provided that You
-      meet the following conditions:
-
-      (a) You must give any other recipients of the Work or
-          Derivative Works a copy of this License; and
-
-      (b) You must cause any modified files to carry prominent notices
-          stating that You changed the files; and
-
-      (c) You must retain, in the Source form of any Derivative Works
-          that You distribute, all copyright, patent, trademark, and
-          attribution notices from the Source form of the Work,
-          excluding those notices that do not pertain to any part of
-          the Derivative Works; and
-
-      (d) If the Work includes a "NOTICE" text file as part of its
-          distribution, then any Derivative Works that You distribute must
-          include a readable copy of the attribution notices contained
-          within such NOTICE file, excluding those notices that do not
-          pertain to any part of the Derivative Works, in at least one
-          of the following places: within a NOTICE text file distributed
-          as part of the Derivative Works; within the Source form or
-          documentation, if provided along with the Derivative Works; or,
-          within a display generated by the Derivative Works, if and
-          wherever such third-party notices normally appear. The contents
-          of the NOTICE file are for informational purposes only and
-          do not modify the License. You may add Your own attribution
-          notices within Derivative Works that You distribute, alongside
-          or as an addendum to the NOTICE text from the Work, provided
-          that such additional attribution notices cannot be construed
-          as modifying the License.
-
-      You may add Your own copyright statement to Your modifications and
-      may provide additional or different license terms and conditions
-      for use, reproduction, or distribution of Your modifications, or
-      for any such Derivative Works as a whole, provided Your use,
-      reproduction, and distribution of the Work otherwise complies with
-      the conditions stated in this License.
-
-   5. Submission of Contributions. Unless You explicitly state otherwise,
-      any Contribution intentionally submitted for inclusion in the Work
-      by You to the Licensor shall be under the terms and conditions of
-      this License, without any additional terms or conditions.
-      Notwithstanding the above, nothing herein shall supersede or modify
-      the terms of any separate license agreement you may have executed
-      with Licensor regarding such Contributions.
-
-   6. Trademarks. This License does not grant permission to use the trade
-      names, trademarks, service marks, or product names of the Licensor,
-      except as required for reasonable and customary use in describing the
-      origin of the Work and reproducing the content of the NOTICE file.
-
-   7. Disclaimer of Warranty. Unless required by applicable law or
-      agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-      implied, including, without limitation, any warranties or conditions
-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-      PARTICULAR PURPOSE. You are solely responsible for determining the
-      appropriateness of using or redistributing the Work and assume any
-      risks associated with Your exercise of permissions under this License.
-
-   8. Limitation of Liability. In no event and under no legal theory,
-      whether in tort (including negligence), contract, or otherwise,
-      unless required by applicable law (such as deliberate and grossly
-      negligent acts) or agreed to in writing, shall any Contributor be
-      liable to You for damages, including any direct, indirect, special,
-      incidental, or consequential damages of any character arising as a
-      result of this License or out of the use or inability to use the
-      Work (including but not limited to damages for loss of goodwill,
-      work stoppage, computer failure or malfunction, or any and all
-      other commercial damages or losses), even if such Contributor
-      has been advised of the possibility of such damages.
-
-   9. Accepting Warranty or Additional Liability. While redistributing
-      the Work or Derivative Works thereof, You may choose to offer,
-      and charge a fee for, acceptance of support, warranty, indemnity,
-      or other liability obligations and/or rights consistent with this
-      License. However, in accepting such obligations, You may act only
-      on Your own behalf and on Your sole responsibility, not on behalf
-      of any other Contributor, and only if You agree to indemnify,
-      defend, and hold each Contributor harmless for any liability
-      incurred by, or claims asserted against, such Contributor by reason
-      of your accepting any such warranty or additional liability.
-
-   END OF TERMS AND CONDITIONS
-
-   APPENDIX: How to apply the Apache License to your work.
-
-      To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets "{}"
-      replaced with your own identifying information. (Don't include
-      the brackets!)  The text should be enclosed in the appropriate
-      comment syntax for the file format. We also recommend that a
-      file or class name and description of purpose be included on the
-      same "printed page" as the copyright notice for easier
-      identification within third-party archives.
-
-   Copyright 2025  Admincmd 管理员 - 命令提示符(https://admincmd.xyz)
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-Apache Lincese 2.0 协议英文原文
-
-警告：翻译仅供参考，不可视为原文本的替代。
-WARNING: These are some translated version of (and not the substitute for) the original text.
-********************************************************************************************************************
-
-    版权所有 (c) 2025 管理员 - 命令提示符(https://admincmd.xyz)
-
-                          Apache 许可证 2.0
-                         版本 2.0，2004年1月
-                    http://www.apache.org/licenses/
-
-    根据本许可证授予的权限仅限所有版权持有人明确授予的永久性、全球性、非独占性、免费、
-    免版税、不可撤销的版权许可和专利许可。您在使用、复制、修改、分发本作品或任何衍生作
-    品时，必须遵守本许可证的条款。
-
-    1. 定义
-        "许可证"指本文档第1至9章节的条款和条件。
-
-        "许可人"指提供本作品（无论以源代码或可执行形式）的任何版权持有人或由版权持有人授权
-        的实体。
-
-        "您"（或"您的"）指行使本许可证授予权限的个人或法律实体。
-
-        "源程序形式"指进行修改的首选形式，包括但不限于软件源代码、文档源文件和配置文件。
-
-        "目标代码形式"指通过对源程序形式进行机械转换或翻译生成的任何形式，包括但不限于编译
-        后的目标代码、生成的文档及转换为其他媒体类型的产物。
-
-        "衍生作品"指基于本作品或包含本作品全部或部分的任何作品，无论是源程序形式还是目标代
-        码形式。若作品包含可识别的本作品片段及修改内容，且在整体上构成原创性作品，则该作品
-        应被视为衍生作品。
-
-    2. 许可授予
-        2.1 版权许可
-            根据本许可证条款，每位许可人授予您非独占的、全球性的、免版税的版权许可：
-
-            复制、制作衍生作品、公开展示、公开执行、分许可和分发本作品的源程序形式；
-
-            在衍生作品中复制、公开展示、公开执行和分发您贡献的修改部分。
-
-        2.2 专利许可
-            每位许可人授予您非独占的、全球性的、免版税的专利许可，允许您制作、使用、销售、
-            许诺销售、进口及以其他方式转让本作品。该许可仅适用于许可人可授予的、因您行使本
-            许可证授予的版权许可权利而必然侵犯的专利权。
-
-        2.3 权利保留
-            未在本许可证中明确授予的权利均予保留。不得通过暗示、禁止反言或其他方式授予任何
-            知识产权许可。
-
-    3. 分发条件
-        您通过任何媒介分发本作品或其衍生作品时，必须满足以下条件：
-
-        3.1 源代码分发
-            若以源程序形式分发，必须：
-
-            随分发内容附上本许可证副本；
-
-            在修改文件中显著标注说明您修改过文件；
-
-            保留源程序形式中所有版权、专利、商标及归属声明。
-
-        3.2 目标代码分发
-            若以目标代码形式分发，必须：
-
-            在随附的文档或法律声明中提供本许可证副本；
-
-            在目标代码形式中保留所有版权、专利、商标及归属声明。
-
-        3.3 修改声明
-            您必须在衍生作品中添加显著声明，说明您修改了本作品，并注明修改日期。该声明必须
-            包含在源程序形式的文件头中，或通过其他合理方式（如生成日志）在目标代码形式中体
-            现。
-
-    4. 再许可
-        除非符合以下条件，您不得将本作品与受不同条款约束的其他材料合并，或通过其他方式创建
-        组合作品：
-
-        当您将本作品作为独立文件包含在组合作品中时，本作品的许可将按原样适用于该部分；
-
-        当本作品与其他材料结合形成衍生作品时，必须根据本许可证条款分发整个衍生作品。
-
-    5. 贡献提交
-        除非您明确声明，否则您向许可人提交的任何原创性修改（包括通过电子方式提交的代码、文
-        档等内容）均视为在本许可证条款下授权，且不附带任何附加条款或条件。
-
-    6. 商标
-        本许可证不授予使用许可人的商号、商标、服务标志或产品名称的权限，除非为描述作品来源
-        所需且符合合理使用惯例。
-
-    7. 免责声明
-        除非适用法律要求或书面同意，本作品按"原样"分发，不提供任何明示或默示的担保，包括但
-        不限于适销性、特定用途适用性及不侵权的担保。
-
-    8. 责任限制
-        在任何情况下，除非适用法律要求，许可人或版权持有人均不对因使用本作品而产生的任何直
-        接、间接、附带、特殊、惩罚性或后果性损害承担责任。
-
-    9. 接受条款
-        您通过行使本许可证授予的任何权利即视为接受并同意遵守本许可证条款。若您不同意本许可
-        证中的任何条款，则无权使用、复制、修改或分发本作品。
-
-
+MIT License
+
+Copyright (c) 2025 AdminCmd
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 // 主 JS 文件
@@ -313,7 +27,7 @@ WARNING: These are some translated version of (and not the substitute for) the o
 */
 // debugger;
 
-const debug = false//isDeBug(); // 开启调试模式
+const debug = true//isDeBug(); // 开启调试模式
 
 
 
@@ -461,6 +175,7 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 const errorCodes = (() => {
     let errorCode = 0x00000;
     let errorMsg = "";
+    let errors = {};
 
     const ERROR_TYPES = {
         SILENT: 0x0,// 静默
@@ -514,19 +229,36 @@ const errorCodes = (() => {
          * 设置错误码和信息
          * @param {number} code 错误码
          * @param {string} message 错误信息
-         * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link ERROR_TYPES} 常量
-         * @returns {false} 返回 false，它可以这样写
+         * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量
+         * @param {boolean} returnID 是否返回错误ID
+         * @returns {false | string} 返回 false，若 {@link returnID} 为true,则返回错误ID
          * @example } catch (e) {return errorCodes.setErrorCode(code, message, );} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
          * @function {@link errorCodes.getErrorCode} 获取错误码和信息
          * @function {@link errorCodes.clearError} 清除错误信息
          */
-        setErrorCode: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN) => {
+        setErrorCode: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false) => {
             try {
+                let errorID;
+                if (crypto) {
+                    errorID = crypto.randomUUID();
+                } else {
+                    errorID = Date.now().toString(36) 
+                      + Math.random().toString(36).slice(2, 10) 
+                      + performance.now().toString(36).replace('.','');
+                }
+
                 validateParams(code, message, warn);
                 
                 errorCode = code;
                 errorMsg = message;
-                
+
+                errors[errorID] = {
+                    code: code,
+                    message: message,
+                    warn: warn,
+                    time: new Date().toLocaleString(),
+                };
+
                 const fullMessage = `ERROR: ${message}(${formatErrorCode(code)})`;
                 
                 // 开发环境调试
@@ -550,22 +282,26 @@ const errorCodes = (() => {
                 
                 }
 
-                return false;
+                if (returnID) {
+                    return errorID;
+                }
             } catch (e) {
                 console.error('错误处理失败:', e);
-                return false;
             }
+            return false;
         },
 
         /**
          * 取得错误码和信息
+         * @param {string} id 错误ID
          * @returns {object} 错误码和信息对象
          * @function {@link errorCodes.setErrorCode} 设置错误码和信息
          * @function {@link errorCodes.clearError} 清除错误信息
          */
-        getErrorCode: () => ({
-            code: errorCode,
-            message: errorMsg
+        getErrorCode: (id) => ({
+            code: errors[id].code,
+            message: errors[id].message,
+            time: errors[id].time,
         }),
 
         /**
@@ -579,8 +315,9 @@ const errorCodes = (() => {
             errorMsg = "未知错误";
         },
 
-        // 暴露类型常量
+        // 暴露常量
         ERROR_TYPES,
+        errors,
     };
 })();
 
@@ -945,10 +682,7 @@ const lightDarkTheme = (() => {
         }
     };
 })();
-(() => {
-    // 初始化主题
-    lightDarkTheme.refreshTheme();
-})();
+
 
 function activateLightMode() {
     lightDarkTheme.setTheme(DATA_THEME_LIGHT, true);
@@ -1199,9 +933,36 @@ function clearCookies(enableReturn = false) {
     }
 }
 
+/**
+ * 取到当前页面的被选中文本
+ * @returns {string | null} 当前选中的文本
+ */
+function getSelectedText() {
+    if (window.getSelection) {
+        var selection = window.getSelection().toString();
+        if (selection === '') {
+            return null;
+        }
+        return selection;
+    } else if (document.selection) { // IE < 9
+        var range = document.selection.createRange();
+        if (range.text.trim() === '') {
+            return null;
+        }
+        return document.selection.createRange().text.trim();
+    }
+    return null;
+}
 
-pageBlur.topWin();
+function setCopyText(copyText) {
+    navigator.clipboard.writeText(copyText);
+}
 
+(() => {
+    // 初始化主题
+    lightDarkTheme.refreshTheme();
+    pageBlur.topWin();
+})();
 
 // 主循环模块 ----------------------------------------------------
 

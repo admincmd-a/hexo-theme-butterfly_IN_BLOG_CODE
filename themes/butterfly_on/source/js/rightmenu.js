@@ -174,13 +174,14 @@
             if (el.tagName == 'A') {
                 $('#menu-to').show()
                 rmf.open = function () {
-                    if (el.href.indexOf("http://") == -1 && el.href.indexOf("https://") == -1 || el.href.indexOf("blog.admincmd.xyz") != -1) {
-                        pjax.loadUrl(el.href)
-                    }
-                    else {
-                        location.href = el.href
-                    }
-                }
+                    window.open(getSelectedText());
+                    // if (el.href.indexOf("http://") == -1 && el.href.indexOf("https://") == -1 || el.href.indexOf("blog.admincmd.xyz") != -1) {
+                    //     pjax.loadUrl(el.href);
+                    // }
+                    // else {
+                    //     location.href = el.href
+                    // }
+                };
                 rmf.openWithNewTab = function () {
                     window.open(el.href);
                     // window.location.reload();
