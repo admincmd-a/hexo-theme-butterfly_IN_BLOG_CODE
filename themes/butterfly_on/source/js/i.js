@@ -173,9 +173,9 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 // JS 文件内需要公共调用的东西
 
 const errorCodes = (() => {
-    let errorCode = 0x00000;
-    let errorMsg = "";
-    let errors = {};
+    // let errorCode = 0x00000;
+    // let errorMsg = "";
+    let errors = null;
 
     const ERROR_TYPES = {
         SILENT: 0x0,// 静默
@@ -248,9 +248,6 @@ const errorCodes = (() => {
                 }
 
                 validateParams(code, message, warn);
-                
-                errorCode = code;
-                errorMsg = message;
 
                 errors[errorID] = {
                     code: code,
@@ -262,18 +259,16 @@ const errorCodes = (() => {
                 const fullMessage = `ERROR: ${message}(${formatErrorCode(code)})`;
                 
                 // 开发环境调试
-                if (isDebug()) {
-                    console.error(fullMessage);
-                    debugger;
-                }
-
+                console.error(fullMessage);
+                debugger;
+                
                 switch (warn) {
                     case ERROR_TYPES.WARN:
                         showToast(fullMessage);
                         break;
                     case ERROR_TYPES.FATAL:
                         sessionStorage.setItem("refresh", JSON.stringify({
-                            error: { code, message }
+                            error: errors,
                         }));
                         window.location.reload();
                         break;
@@ -311,8 +306,10 @@ const errorCodes = (() => {
          * @function {@link errorCodes.getErrorCode} 取得错误码和信息
          */
         clearError: () => {
-            errorCode = 0x00000;
-            errorMsg = "未知错误";
+            errors = null;
+
+            // errorCode = 0x00000;
+            // errorMsg = "未知错误";
         },
 
         // 暴露常量
