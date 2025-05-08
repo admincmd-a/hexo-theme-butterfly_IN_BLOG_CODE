@@ -27,6 +27,7 @@ SOFTWARE.
 */
 // debugger;
 
+(function(){
 const debug = true//isDeBug(); // 开启调试模式
 
 
@@ -55,8 +56,8 @@ var currentTimeHtml = "";
 var img = "";
 var description = "";
 var PAGE_MAIN_ID = "page-main";
-var errorCode = undefined;
-var errorMsg = "";
+// var errorCode = undefined;
+// var errorMsg = "";
 
 
 
@@ -275,7 +276,7 @@ const errorCodes = (() => {
                     default:
                         break;
                 
-                }
+                };
 
                 if (returnID) {
                     return errorID;
@@ -1837,4 +1838,4 @@ function updateDisplay(period, progress, decimalPlaces) {
 }
 
 
-
+})();

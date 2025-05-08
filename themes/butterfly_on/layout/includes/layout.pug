@@ -8,7 +8,6 @@ if theme.enable
   doctype html
   html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside color-theme=theme.color.main)
     head
-
       include ./head.pug
       !=partial('includes/other_head',{}, {cache:true})
     body
@@ -36,13 +35,13 @@ if theme.enable
                 if theme.aside.enable && page.aside !== false
                   include widget/index.pug
 
-        - var back_ground = theme.footer.background
-        if (theme.footer.enable)
-          footer#footer()
-            !=partial('includes/footer/footer', {}, {cache: true})
-        //- - var back_ground = isImgOrUrl(theme.footer.back_ground.img) ? `background-image: url('${url_for(footerBg)}')` : `background: ${back_ground.color}`
-        //- footer#footer(style=isImgOrUrl(theme.footer.background.img) ? `background-image: url('${url_for(back_ground.image)}')` : `background: ${back_ground.color}`)
-        //-   !=partial('includes/footer/footer', {}, {cache: true})
+          - var back_ground = theme.footer.background
+          if (theme.footer.enable)
+            footer#footer.footer()
+              !=partial('includes/footer/footer', {}, {cache: true})
+          //- - var back_ground = isImgOrUrl(theme.footer.back_ground.img) ? `background-image: url('${url_for(footerBg)}')` : `background: ${back_ground.color}`
+          //- footer#footer(style=isImgOrUrl(theme.footer.background.img) ? `background-image: url('${url_for(back_ground.image)}')` : `background: ${back_ground.color}`)
+          //-   !=partial('includes/footer/footer', {}, {cache: true})
 
 
 
@@ -58,7 +57,7 @@ if theme.enable
       !=partial('includes/rightmenu',{}, {cache:true})
       !=partial('includes/aaa',{}, {cache:true})
       !=partial('includes/other_boby',{}, {cache:true})
-      !=partial('/includes/welcomemap',{}, {cache:true})
+      !=partial('includes/welcomemap',{}, {cache:true})
       !=partial('includes/aplayer',{}, {cache:true})
 
       script(src="/js/LunarCalendar.js")

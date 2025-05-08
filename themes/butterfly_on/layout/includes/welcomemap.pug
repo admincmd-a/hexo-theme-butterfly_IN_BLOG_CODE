@@ -3,7 +3,7 @@
 - const timeChange_enable = false;
 - const apiUrl = null;
 
-if theme.welcomemap.enabled
+if theme.welcomemap.enable
 
   //- if theme.welcomemap.ip_enable
   //-   //- 检查是否开启IP定位显示
@@ -53,9 +53,9 @@ if theme.welcomemap.enabled
     let ass = visitor_address;
     let locationData = ipLoacation.ad_info;
 
-    #{theme.welcomemap.welcome_posdesc}
+    //- #{theme.welcomemap.welcome_posdesc}
 
-    /*
+    
     //根据国家、省份、城市信息自定义欢迎语
     //海外地区不支持省份及城市信息
     switch (ipLoacation.result.ad_info.nation) {
@@ -85,7 +85,7 @@ if theme.welcomemap.enabled
             // 译文：时间过得飞快。
             break;
         case '澳大利亚':
-            posdesc = 'Let's go to the Great Barrier Reef together!';
+            posdesc = 'Let\'s go to the Great Barrier Reef together!';
             // 译文：让我们一起去大堡礁吧！
             break;
         case '加拿大':
@@ -232,7 +232,7 @@ if theme.welcomemap.enabled
         default:
             posdesc = '带我去你的国家逛逛吧。';
             break;
-    }*/
+    }
     //判断时间
 
     if (now.getHours() >= 5 && now.getHours() < 11) timeChange = '<span>上午好</span>，一日之计在于晨';
