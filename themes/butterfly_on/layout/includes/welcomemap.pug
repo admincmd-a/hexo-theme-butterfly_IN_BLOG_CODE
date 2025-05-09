@@ -1,24 +1,24 @@
-- const ip_enable = false;
-- const dist_enable = false;
-- const timeChange_enable = false;
-- const apiUrl = null;
+- var ip_enable = false;
+- var dist_enable = false;
+- var timeChange_enable = false;
+- var apiUrl = null;
 
 if theme.welcomemap.enable
 
-  //- if theme.welcomemap.ip_enable
-  //-   //- 检查是否开启IP定位显示
-  //-   - ip_enable = true
-  //- if theme.welcomemap.dist_enable 
-  //-   //- 检查是否开启距离显示
-  //-   - dist_enable = true
-  //- if theme.welcomemap.timeChange
-  //-   //- 检查是否开启适时语显示
-  //-   - timeChange_enable = true
+  if theme.welcomemap.ip_enable
+    //- 检查是否开启IP定位显示
+    - ip_enable = true
+  if theme.welcomemap.dist_enable 
+    //- 检查是否开启距离显示
+    - dist_enable = true
+  if theme.welcomemap.timeChange
+    //- 检查是否开启适时语显示
+    - timeChange_enable = true
   if theme.welcomemap.api.qq
     apiUrl = "https://apis.map.qq.com/ws/location/v1/ip?key=${txkey}&output=jsonp";
 
     
-  script.
+//-   script.
     const txkey = "#{theme.welcomemap.apikey}";
     const zz_longitude = "#{theme.welcomemap.longitude}";
     const zz_latitude = "#{theme.welcomemap.latitude}";
@@ -69,7 +69,7 @@ if theme.welcomemap.enable
             // ？？？？？？
             break;
         case '英国':
-            posdesc = 'I'd like to ride the London Eye with you at night.';
+            posdesc = 'I\'d like to ride the London Eye with you at night.';
             // 译文：想同你一起夜乘伦敦眼。
             break;
         case '俄罗斯':
@@ -234,7 +234,7 @@ if theme.welcomemap.enable
             break;
     }
     //判断时间
-
+    
     if (now.getHours() >= 5 && now.getHours() < 11) timeChange = '<span>上午好</span>，一日之计在于晨';
     else if (now.getHours() >= 1 && now.getHours() < 13) timeChange = '<span>中午好</span>，开——饭——了——';
     else if (now.getHours() >= 13 && now.getHours() < 15) timeChange = '<span>下午好</span>，懒懒地睡个午觉吧！';
