@@ -397,6 +397,14 @@ aplayerDIV:
         lrc: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.2/obj_wo3DlMOGwrbDjj7DisKw_33433723342_df03_6e55_fab3_130a2d9f4c6d5d4a3c37b90b98aea4a6.lrc',
     },
     {
+        name: '东方红的心脏',
+        artist: '洛天依 / 乐正绫 / 炙弹冰',
+        url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.mp3',
+        cover: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.jpg',
+        lrc: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.lrc',
+        theme: '#F57F17'
+    },
+    {
         name: '我的祖国',
         artist: '郭兰英',
         url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.4/我的祖国.mp3',
@@ -465,13 +473,6 @@ aplayerDIV:
         url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/%E5%90%9B%E3%81%AB%E5%98%98.mp3',
         cover: 'https://npm.elemecdn.com/musiccdn-ariasaka/pic/%E5%90%9B%E3%81%AB%E5%98%98.jpg',
         lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/%E5%90%9B%E3%81%AB%E5%98%98.lrc',
-    },
-    {
-        name: '溯 (Reverse)',
-        artist: 'CORSAK胡梦周 / 马吟吟',
-        url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/%E6%BA%AF%20%28Reverse%29.mp3',
-        cover: 'https://npm.elemecdn.com/musiccdn-ariasaka/pic/%E6%BA%AF%20%28Reverse%29.jpg',
-        lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/%E6%BA%AF%20%28Reverse%29.lrc',
     },
     {
         name: '群青',
@@ -1865,3 +1866,6 @@ CDN:
 # nofollow:
 #   enable: true
 #   field: site
+
+
+# 和风天气API 凭据 4HKR2FCN7F
