@@ -409,13 +409,9 @@ aplayerDIV:
     {
         name: '东方红的心脏',
         artist: '洛天依 / 乐正绫 / 炙弹冰',
-        url:   'http://127.2.2.2:12345/2-%E3%80%90%E8%88%AA%E5%A4%A9%E5%8F%B2%E5%A1%AB%E8%AF%8D%E3%80%91%E4%B8%9C%E6%96%B9%E7%BA%A2%E7%9A%84%E5%BF%83%E8%84%8F%E3%80%90%E4%B9%90%E6%AD%A3%E7%BB%ABx%E6%B4%9B%E5%A4%A9%E4%BE%9D%E3%80%91-1080P%20%E9%AB%98%E6%B8%85-AVC.mp3',
-        cover: 'http://127.2.2.2:12345/2-%E3%80%90%E8%88%AA%E5%A4%A9%E5%8F%B2%E5%A1%AB%E8%AF%8D%E3%80%91%E4%B8%9C%E6%96%B9%E7%BA%A2%E7%9A%84%E5%BF%83%E8%84%8F%E3%80%90%E4%B9%90%E6%AD%A3%E7%BB%ABx%E6%B4%9B%E5%A4%A9%E4%BE%9D%E3%80%91-1080P%20%E9%AB%98%E6%B8%85-AVC_.jpg',
-        lrc:   '/2-%E3%80%90%E8%88%AA%E5%A4%A9%E5%8F%B2%E5%A1%AB%E8%AF%8D%E3%80%91%E4%B8%9C%E6%96%B9%E7%BA%A2%E7%9A%84%E5%BF%83%E8%84%8F%E3%80%90%E4%B9%90%E6%AD%A3%E7%BB%ABx%E6%B4%9B%E5%A4%A9%E4%BE%9D%E3%80%91-1080P%20%E9%AB%98%E6%B8%85-AVC.lrc',
-        /* url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.mp3',
+        url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.mp3',
         cover: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.jpg',
         lrc: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.lrc',
-        */
         theme: '#e2e2e2',
     },
     {

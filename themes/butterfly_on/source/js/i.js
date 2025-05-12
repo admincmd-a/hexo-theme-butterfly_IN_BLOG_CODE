@@ -1229,7 +1229,7 @@ if (ipLoacation == undefined) {
     // 使用 ipLocation
 }
 
-sleep(1100); // 等待数据加载完成
+sleep(2200); // 等待数据加载完成
 // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
 
 let dist = getDistanceAMLS(114.305000, 30.592800, ipLoacation.result.location.lng, ipLoacation.result.location.lat)
@@ -1237,7 +1237,7 @@ let pos = ipLoacation.result.ad_info.nation;
 let ip = ipLoacation.result.ip;
 let ipDZ;
 let posdesc;//要显示的信息
-let ass = null;
+let ass = "小伙伴";
 
 //根据国家、省份、城市信息自定义欢迎语
 //海外地区不支持省份及城市信息
@@ -1783,7 +1783,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
-// APlayer 播放器 --------------------------------------------
 
 
 
