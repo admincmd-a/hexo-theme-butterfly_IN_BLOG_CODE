@@ -5,47 +5,57 @@ enable: true # [ true | false ]
 # Navigation bar settings (導航欄設置)
 # see https://butterfly.js.org/posts/4aa8abbe/##導航欄設置-Navigation-bar-settings
 # --------------------------------------
-
 nav:
+  enable: true # [ true | false ]
   logo: # image
   display_title: true
   fixed: false # fixed navigation bar
 
-# Menu 菜单
-menu:
-  enable: true # 启用菜单
-  search_placement: right # [ left | right ] 定义搜索按钮位置,最右侧或最左侧,注：此项的关闭属性由搜索配置决定(即关闭所有搜索配置)
-  item:
-    主页: / || fas fa-home
-    转到||fas fa-arrow-right:
-      归档: /archives/ || fas fa-archive
-      标签: /tags/ || fas fa-tags
-      分类: /categories/ || fas fa-folder-open
-      链接: /bd_link/ || fas fa-link
-      关于: /about/ || fa-solid fa-circle-info
-      日志: /log/ || fa-solid fa-list
-      友链: /link/ || fas fa-solid fa-user-group
-    资源||fas fa-images:
-      图片: /zy/ || fas fa-images
-      # 网站: /zy/www/ || fa-solid fa-globe
-      # 软件与实用工具: /zy/app/ || fa-regular fa-window-restore
-    留言板: /lyb_files/ || fas fa-comment
-    开往: https://www.travellings.cn/go.html || fas fa-subway
+  # Menu 菜单
+  menu:
+    enable: true # 启用菜单
+    item:
+      主页: / || fas fa-home
+      转到||fas fa-arrow-right:
+        归档: /archives/ || fas fa-archive
+        标签: /tags/ || fas fa-tags
+        分类: /categories/ || fas fa-folder-open
+        链接: /bd_link/ || fas fa-link
+        关于: /about/ || fa-solid fa-circle-info
+        日志: /log/ || fa-solid fa-list
+        友链: /link/ || fas fa-solid fa-user-group
+      资源||fas fa-images:
+        图片: /zy/ || fas fa-images
+        # 网站: /zy/www/ || fa-solid fa-globe
+        # 软件与实用工具: /zy/app/ || fa-regular fa-window-restore
+      留言板: /lyb_files/ || fas fa-comment
 
-    杂项||fas fa-ellipsis-h:
-      随便看看: javascript:justLookAround(); || fa-brands fa-stack-overflow
-      太公钓鱼: /cnm.html || fas fa-fish
-      # 测试页面: /favi/time.html || fa-solid fa-code
-      # ATOM: /atom.xml || fa-solid fa-rss
-      RSS: /atom.xml || fa-solid fa-rss
-      # 时光飞逝: /favi/ || fa-solid fa-clock
-      声明 & Cookies: /license/ || fas fa-solid fa-file-contract
-      隐私政策: /privacy/ || fas fa-solid fa-user-secret
-      # 线路总览: /server/ || fas fa-link
-      # 服务器监视器: http://status.admincmd.xyz/ || fa-solid fa-chart-line
-      设置: javascript:configWin.main(); || fa-solid fa-cog
-    
 
+      杂项||fas fa-ellipsis-h:
+        随便看看: javascript:justLookAround(); || fa-brands fa-stack-overflow
+        太公钓鱼: /cnm.html || fas fa-fish
+        # 测试页面: /favi/time.html || fa-solid fa-code
+        # ATOM: /atom.xml || fa-solid fa-rss
+        RSS: /atom.xml || fa-solid fa-rss
+        # 时光飞逝: /favi/ || fa-solid fa-clock
+        声明 & Cookies: /license/ || fas fa-solid fa-file-contract
+        隐私政策: /privacy/ || fas fa-solid fa-user-secret
+        # 线路总览: /server/ || fas fa-link
+        # 服务器监视器: http://status.admincmd.xyz/ || fa-solid fa-chart-line
+        设置: javascript:configWin.main(); || fa-solid fa-cog
+      "": https://www.travellings.cn/go.html || fas fa-subway
+      "||fas fa-magnifying-glass": SEARCH_BUTTON
+
+      # 定义：
+      # 无子菜单项目
+      # [1]: [2] || [3]
+      # 有子菜单项目
+      # [1]||[3]: 
+      #    [4]
+      # 专用项目
+      # [1]||[3]: [5]
+      # 1=> 菜单名称 2=> 地址 3=> 图标 4=> 子菜单 5=> 专用语句
+      # 专用语句：SEARCH_BUTTON
 
 #  链接||fas fa-link: 
 #    BiliBili: https://space.bilibili.com/518747636 || fa-solid fa-code #|| fas fa-music
@@ -260,15 +270,14 @@ noticeOutdate:
 footer:
   enable: true
   # 页脚背景，允许为以下属性:
-  # false : 取颜色值
   # URL : 图片 URL
   background:
     img:
-    color: '#49b1f5'
   owner:
     enable: true
     since: 2022 #版权日期
-  custom_text: ""
+  custom_text: "
+    "
   # <font style="font-size:16px"><img style="width:32px;height:32px;margin-bottom:-8px" src="/img/ICP.png" /> <a href="https://icp.gov.moe/">萌ICP备 20231986号</a> # <a href="https://icp.gov.moe" target="_blank"><span style="color:#FFFFFF">萌</span><span style="color:#FFFFF">I</span><span style="color:#FFFFF">C</span><span style="color:#FFFFF">P</span><span style="color:#FFFFF">备</span> </a><a href="https://icp.gov.moe/?keyword=20231986" target="_blank"> <span style="color:#FFFFF">20</span><span style="color:#FFFFF">20</span><span style="color:#FFFFF">19</span><span style="color:#FFFFF">86</span><span style="color:#FFFFF">号</span></a></font>    </div>   
   # ^^^页脚自定义 HTML
   copyright: true # Copyright of theme and framework
@@ -337,6 +346,7 @@ footer:
             <img id="travellings-logo" style="position:relative;top:4px" src="" alt="开往-友链接力" width="74" height="18">
           </a>'
       admin:
+        ico: fas fa-home
         url: https://github.com/jerryc127/hexo-theme-butterfly/issues
         text: "https://admincmd.xyz/"
     
@@ -399,10 +409,14 @@ aplayerDIV:
     {
         name: '东方红的心脏',
         artist: '洛天依 / 乐正绫 / 炙弹冰',
-        url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.mp3',
+        url:   'http://127.2.2.2:12345/2-%E3%80%90%E8%88%AA%E5%A4%A9%E5%8F%B2%E5%A1%AB%E8%AF%8D%E3%80%91%E4%B8%9C%E6%96%B9%E7%BA%A2%E7%9A%84%E5%BF%83%E8%84%8F%E3%80%90%E4%B9%90%E6%AD%A3%E7%BB%ABx%E6%B4%9B%E5%A4%A9%E4%BE%9D%E3%80%91-1080P%20%E9%AB%98%E6%B8%85-AVC.mp3',
+        cover: 'http://127.2.2.2:12345/2-%E3%80%90%E8%88%AA%E5%A4%A9%E5%8F%B2%E5%A1%AB%E8%AF%8D%E3%80%91%E4%B8%9C%E6%96%B9%E7%BA%A2%E7%9A%84%E5%BF%83%E8%84%8F%E3%80%90%E4%B9%90%E6%AD%A3%E7%BB%ABx%E6%B4%9B%E5%A4%A9%E4%BE%9D%E3%80%91-1080P%20%E9%AB%98%E6%B8%85-AVC_.jpg',
+        lrc:   '/2-%E3%80%90%E8%88%AA%E5%A4%A9%E5%8F%B2%E5%A1%AB%E8%AF%8D%E3%80%91%E4%B8%9C%E6%96%B9%E7%BA%A2%E7%9A%84%E5%BF%83%E8%84%8F%E3%80%90%E4%B9%90%E6%AD%A3%E7%BB%ABx%E6%B4%9B%E5%A4%A9%E4%BE%9D%E3%80%91-1080P%20%E9%AB%98%E6%B8%85-AVC.lrc',
+        /* url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.mp3',
         cover: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.jpg',
         lrc: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.lrc',
-        theme: '#F57F17'
+        */
+        theme: '#e2e2e2',
     },
     {
         name: '我的祖国',
@@ -1577,7 +1591,6 @@ inject:
     - <script src="https://unpkg.com/docute@3.4.12/dist/docute.js"></script>
     
     - <script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script>
-    - <script src="/js/sn.js"></script>
     # - <script type="text/javascript" src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>
     - <script type="text/javascript" src="https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
     - <script src="/favi/qq.js"></script>

@@ -1,13 +1,14 @@
+//- 供吸底播放器使用
 if theme.aplayerDIV.enable
-  div(id="player")
-    
-    div(id="aplayer")
+  #player
+    #aplayer
 
     if theme.aplayerDIV.js 
       script(src=theme.aplayerDIV.js)
     else
       script(src="/js/aplayer.js")
 
+    //- 主题配色在 index.styl 中 /_aplayer/dark.styl 设置
     if theme.aplayerDIV.css 
       link(href=theme.aplayerDIV.css rel="stylesheet")
     else

@@ -26,19 +26,40 @@ SOFTWARE.
 /*
 */
 // debugger;
+const LICENSE = () => `
+MIT License
 
-(function(){
-const debug = true//isDeBug(); // 开启调试模式
+Copyright (c) 2025 AdminCmd
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.`
+
+const debug = false//isDeBug(); // 开启调试模式
 
 
 
 var now = new Date();// 获取当前日期、时间
-var year = now.getFullYear();
-var month = now.getMonth() + 1; // 月份从0开始，需加1
-var day = now.getDate(); // 使用getDate获取当前日期
-var md = `${month}-${day}`; // 使用模板字符串
+var nowYear = now.getFullYear();
+var nowMonth = now.getMonth() + 1; // 月份从0开始，需加1
+var nowDay = now.getDate(); // 使用getDate获取当前日期
+var nowMonthDay = `${nowMonth}-${nowDay}`; // 使用模板字符串
 // 检查今日是否已经弹窗
-var todayKey = `${year}-${month}-${day}`;
+var todayKey = `${nowYear}-${nowMonth}-${nowDay}`;
 var hasShownToday = localStorage.getItem(todayKey);
 var today = now;
 // 获取今天的农历日期
@@ -67,8 +88,8 @@ const phrases = [
     "最新消息：美国灭国了。",
     "突发新闻：日本岛沉没了！",
     "非常抱歉，因为不可控原因，博客将于明天停止运营，感谢您的陪伴，再见",
+    "((?) => ?)",
 ];
-
 
 const CURRENT_URL = window.location.href;
 
@@ -79,8 +100,6 @@ var timeChange;// 欢迎语
 var times = 100;// 主循环间隔时间
 var timer = 0;// 主循环计数器
 
-// 设置主循环模块
-update();
 
 // 往控制台里写点东西
 console.log('Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,Hello,');
@@ -165,6 +184,8 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 值类型(基本类型)：字符串（String）、数字(Number)、布尔(Boolean)、空（Null）、未定义（Undefined）、Symbol。
 
 引用数据类型（对象类型）：对象(Object)、数组(Array)、函数(Function)，还有两个特殊的对象：正则（RegExp）和日期（Date）
+
+
 */
 
 // 许是个大傻逼，他居然把自己的名字写成了tushengxi，这简直就是个笑话。(AI 生成)
@@ -173,7 +194,7 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 //  ----------------------------------------------------------
 // JS 文件内需要公共调用的东西
 
-const errorCodes = (() => {
+const errorCodes = ((oldErrorCodes) => {
     // let errorCode = 0x00000;
     // let errorMsg = "";
     let errors = null;
@@ -199,9 +220,9 @@ const errorCodes = (() => {
         if (typeof code !== 'number') {
             throw new TypeError(ERROR_CODE_MSG.errorCodeNotNumber);
         }
-        if (typeof message !== 'string') {
-            throw new TypeError(ERROR_CODE_MSG.errorMsgNotString);
-        }
+        // if (typeof message !== 'string') {
+        //     throw new TypeError(ERROR_CODE_MSG.errorMsgNotString);
+        // }
         if (!Object.values(ERROR_TYPES).includes(warn)) {
             throw new RangeError(ERROR_CODE_MSG.errorTypeNotValid);
         }
@@ -225,19 +246,22 @@ const errorCodes = (() => {
         return '0x' + code.toString(16).toUpperCase().padStart(5, '0');
     };
 
+    // 初始化
+    errors = oldErrorCodes;
+
     return {
         /**
-         * 设置错误码和信息
+         * 记录一个新的错误码和信息
          * @param {number} code 错误码
-         * @param {string} message 错误信息
+         * @param {any} message 错误信息
          * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量
          * @param {boolean} returnID 是否返回错误ID
          * @returns {false | string} 返回 false，若 {@link returnID} 为true,则返回错误ID
-         * @example } catch (e) {return errorCodes.setErrorCode(code, message, );} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
+         * @example } catch (e) {return errorCodes.setErrorCode(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
          * @function {@link errorCodes.getErrorCode} 获取错误码和信息
          * @function {@link errorCodes.clearError} 清除错误信息
          */
-        setErrorCode: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false) => {
+        setNewErrorCode: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false) => {
             try {
                 let errorID;
                 if (crypto) {
@@ -257,14 +281,16 @@ const errorCodes = (() => {
                     time: new Date().toLocaleString(),
                 };
 
-                const fullMessage = `ERROR: ${message}(${formatErrorCode(code)})`;
+                const fullMessage = `ERROR: (${formatErrorCode(code)}) 错误 => `;
                 
-                // 开发环境调试
-                console.error(fullMessage);
-                debugger;
+                console.error(fullMessage, message); // 抛出错误
+                debugger; // 尝试暂停程序
                 
                 switch (warn) {
                     case ERROR_TYPES.WARN:
+                        showToast(fullMessage);
+                        break;
+                    case ERROR_TYPES.ERROR:
                         showToast(fullMessage);
                         break;
                     case ERROR_TYPES.FATAL:
@@ -275,12 +301,9 @@ const errorCodes = (() => {
                         break;
                     default:
                         break;
-                
                 };
 
-                if (returnID) {
-                    return errorID;
-                }
+                if (returnID) return errorID;
             } catch (e) {
                 console.error('错误处理失败:', e);
             }
@@ -291,7 +314,7 @@ const errorCodes = (() => {
          * 取得错误码和信息
          * @param {string} id 错误ID
          * @returns {object} 错误码和信息对象
-         * @function {@link errorCodes.setErrorCode} 设置错误码和信息
+         * @function {@link errorCodes.setNewErrorCode} 设置错误码和信息
          * @function {@link errorCodes.clearError} 清除错误信息
          */
         getErrorCode: (id) => ({
@@ -301,23 +324,30 @@ const errorCodes = (() => {
         }),
 
         /**
+         * 返回所有已被记录的错误码和信息
+         * @returns {object}
+         */
+        getAllErrorCodes: () => errors,
+
+        /**
          * 清除错误信息
          * @returns {null}
-         * @function {@link errorCodes.setErrorCode} 设置错误码和信息
+         * @function {@link errorCodes.setNewErrorCode} 设置错误码和信息
          * @function {@link errorCodes.getErrorCode} 取得错误码和信息
          */
         clearError: () => {
             errors = null;
-
-            // errorCode = 0x00000;
-            // errorMsg = "未知错误";
         },
 
         // 暴露常量
         ERROR_TYPES,
         errors,
     };
-})();
+})((() => {
+    if (sessionStorage.getItem("refresh")) return sessionStorage.getItem("refresh") // 尝试恢复上次的错误信息
+    return {}; // 否则返回空对象
+}));
+
 
 
 /**
@@ -383,13 +413,12 @@ var pageBlur = {
     setFalse() {
         try {
             document.getElementById(this.byId).style = ``;
-            document.getElementsByClassName(this.byClass).style.style = ``;
+            document.getElementsByClassName(this.byClass).style = ``;
 
             this.Blur = false;
             return true;
         } catch (error) {
-            console.warn('关闭模糊失败:', error);
-            return false;
+            return errorCodes.setNewErrorCode(0x00001, "关闭模糊失败", errorCodes.ERROR_TYPES.SILENT, false);
         }
     },
 
@@ -437,8 +466,8 @@ var pageBlur = {
 /**
  * 消息窗口对象
  */
-var messageWin = {
-    DKtimeId: null,
+const msgWin = {
+    timeOutId: null,
     id: "messageWin",
     class: "messageWin",
 
@@ -450,7 +479,7 @@ var messageWin = {
      * @param {number} timeOut 显示超时时间，单位ms
      * @return {boolean} true = 已成功打开 false = 移动端，将打开Snackbar提示
      */
-    show(title, content, timeOut, vague) {
+    show(title, content, timeOut = null, vague = true) {
         if (isMobile()) {
             Snackbar.show({
                 text: content,
@@ -462,7 +491,7 @@ var messageWin = {
         } else {
             if (!(timeOut === false || 0 || undefined || null)) {
                 // 设置超时时间，逾期退出
-                this.DKtimeId = setTimeout(messageWin.close(), timeOut);
+                this.timeOutId = setTimeout(msgWin.close(), timeOut);
             }
             try {
                 if (vague) {pageBlur.setTrue(); /* 开启模糊 */ }
@@ -472,13 +501,12 @@ var messageWin = {
                 <p id="messageWin-title" class="messageWin-title">${title}</p>
                 <p id="messageWin-text" class="messageWin-text">${content}</p>
                 <br />
-                <a class="messageWin-closeWin" href="javascript:messageWin.close()" id="messageWin-closeWin">关闭</a>
+                <a class="messageWin-closeWin" href="javascript:msgWin.close()" id="messageWin-closeWin">关闭</a>
                 <br />
 
                 `;
             } catch (error) {
-                console.error('打开消息窗口时发生错误:', error);
-                return false;
+                return errorCodes.setNewErrorCode(0x00002, `打开消息窗口失败：${error}`, errorCodes.ERROR_TYPES.ERROR, false);
             }
         }
     },
@@ -489,7 +517,7 @@ var messageWin = {
     close() {
         window.document.getElementById(this.id).style.display = "none";
         pageBlur.setFalse(); // 关闭模糊
-        if (this.DKtimeId !== null) clearTimeout(this.DKtimeId);// 注销定时器
+        if (this.timeOutId !== null) clearTimeout(this.timeOutId);// 注销定时器
         return;
     },
 
@@ -510,9 +538,7 @@ var messageWin = {
         return;
     },
 };
-(() => {
-    messageWin.initialize();
-})();
+
 
 // 明亮/暗黑模式切换
 // -------------------------------------------------------------------------
@@ -581,7 +607,7 @@ const lightDarkTheme = (() => {
         try {
             _lightUserPug();
         } catch (error) {
-            return errorCodes.setErrorCode(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
+            return errorCodes.setNewErrorCode(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
         }
         if (enableSnackbar) {
             GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day);
@@ -599,7 +625,7 @@ const lightDarkTheme = (() => {
         try {
             _darkUserPug();
         } catch (error) {
-            return errorCodes.setErrorCode(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
+            return errorCodes.setNewErrorCode(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
         }
         if (enableSnackbar) {
             GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night);
@@ -631,7 +657,7 @@ const lightDarkTheme = (() => {
             sessionStorage.setItem(DATA_LIGHT_DARK_THEME_ITEM.STORAGE_KEY, value);
             return true;
         } catch (error) {
-            return errorCodes.setErrorCode(0x00001, `写入本地存储失败：${error}`, errorCodes.ERROR_TYPES.ERROR);
+            return errorCodes.setNewErrorCode(0x00001, `写入本地存储失败：${error}`, errorCodes.ERROR_TYPES.ERROR);
         }
     };
 
@@ -665,7 +691,7 @@ const lightDarkTheme = (() => {
             } else if (newTheme === DATA_LIGHT_DARK_THEME_ITEM.AUTO) {
                 autoTheme(enableSnackbar);
             } else {
-                return errorCodes.setErrorCode(0x00002, `无效的主题：${newTheme}`, errorCodes.ERROR_TYPES.ERROR);
+                return errorCodes.setNewErrorCode(0x00002, `无效的主题：${newTheme}`, errorCodes.ERROR_TYPES.ERROR);
             }
             return true;
         },
@@ -677,11 +703,14 @@ const lightDarkTheme = (() => {
         toggleTheme: (enableSnackbar = true) => {
             if (isBoolean(enableSnackbar)) enableSnackbar = true;
             switchTheme(enableSnackbar);
-        }
+        },
+
+        // 暴露常量
+        DATA_LIGHT_DARK_THEME_ITEM,
     };
 })();
 
-
+// 向下兼容
 function activateLightMode() {
     lightDarkTheme.setTheme(DATA_THEME_LIGHT, true);
 }
@@ -850,11 +879,7 @@ function isBoolean(value) {
  * @returns {boolean} true: 是调试模式 false: 不是调试模式
  */
 function isDebug() {
-    if (debug == true) {
-        return true;
-    } else {
-        return false;
-    }
+    return debug;
 }
 
 /**
@@ -904,6 +929,7 @@ function setFont(font, enableReturn = false) {
 
 /**
  * 清除 Cookies、localStorage，显示确认按钮。
+ * @param {boolean} enableReturn 是否返回清除结果
  * @returns {boolean} 是否清除成功
  */
 function clearCookies(enableReturn = false) {
@@ -952,14 +978,71 @@ function getSelectedText() {
     return null;
 }
 
+/**
+ * 将指定的文本复制到剪贴板
+ * @param {string} copyText 欲写入剪贴板的文本
+ */
 function setCopyText(copyText) {
     navigator.clipboard.writeText(copyText);
 }
 
+/**
+ * 休眠线程
+ * @param {number} ms 休眠时间，单位 ms
+ * @returns 等他返回了程序不就继续了吗
+ */
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * 随机跳转
+ */
+function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个链接,用于随便转转模块
+    // 解决了原有 HTML 无法后退的问题
+    fetch('/sitemap.txt')
+        /*
+        格式：
+        单行一个URL，一行一个，不允许有空行
+        如：
+        https://example.com/page1
+        https://example.com/page2
+        https://example.com/page3
+        */
+        .then(response => {
+            if (!response.ok) {
+                Snackbar.show({
+                    text: '；；；；；；；；；；；；；；；；；；；；；；！',
+                    pos: 'top-right',
+                    showAction: false
+                });
+            }
+            return response.text(); // 修正为 response
+        })
+        .then(data => {
+            const lines = data.split('\n'); // 将文件内容按行拆分
+            const randomIndex = Math.floor(Math.random() * lines.length); // 随机生成索引
+            const randomLine = lines[randomIndex].trim(); // 获取随机行并去除多余空格
+
+            if (randomLine) {
+                window.location.href = randomLine; // 跳转到随机选择的链接
+            } else {
+                justLookAround(); // 再次尝试
+            }
+        })
+        .catch(error => {
+            errorCodes.setNewErrorCode(0x00001, `读取 sitemap.txt 失败: ${error}`, errorCodes.ERROR_TYPES.SILENT);
+            window.location.href = '/'
+        });
+
+}
+
 (() => {
     // 初始化主题
+    updateVar();
     lightDarkTheme.refreshTheme();
     pageBlur.topWin();
+    msgWin.initialize();
 })();
 
 // 主循环模块 ----------------------------------------------------
@@ -967,7 +1050,7 @@ function setCopyText(copyText) {
 /**
  * 主循环执行函数
  */
-function update() {
+function updateVar() {
     if (PROGRESS_BAR) {// 判断是否存在进度条元素, 防止重复执行，免得tm控制台里全是报错
         updateProgressBars();
     }
@@ -977,7 +1060,7 @@ function update() {
      * 下面是处理流程
      */  
     if (timer === 0) {
-        setInterval(times, 0, update)
+        setInterval(times, 0, updateVar)
     }
     timer++; // 计时器
     
@@ -990,29 +1073,29 @@ function timeWindow() {
     
     console.log("农历日期:", lunarDateChinese);
     try {
-        switch (md) { // 公历判断
+        switch (nowMonthDay) { // 公历判断
             // 纪念日 --------------
             case "7-7":
-                timeWinDivTitleText = `今天是 1937 年 7 月 7 日卢沟桥事变 ${year - 1937} 周年纪念日！`
+                timeWinDivTitleText = `今天是 1937 年 7 月 7 日卢沟桥事变 ${nowYear - 1937} 周年纪念日！`
                 timeWinDivText = "勿忘国耻，振兴中华。"
                 break;
             case "9-18":
-                timeWinDivTitleText = `今天是 1931 年 9 月 18 日九一八事变 ${year - 1931} 周年纪念日！`
+                timeWinDivTitleText = `今天是 1931 年 9 月 18 日九一八事变 ${nowYear - 1931} 周年纪念日！`
                 timeWinDivText = "勿忘国耻，振兴中华。"
                 break;
             case "12-13":
                 document.getElementsByTagName("html")[0].setAttribute("style", "filter: grayscale(100%);");
                 timeWinDivTitleText = "请起立默哀 30 秒";
-                timeWinDivText = `勿忘国耻，振兴中华！\n <br /> 今天是南京大屠杀 ${year - 1937} 年纪念日、国家公祭日 \n <br /> 为在南京大屠杀中被杀害的平民默哀，铭记历史，珍视和平，绝不让这样的悲剧再次发生。`;
+                timeWinDivText = `勿忘国耻，振兴中华！\n <br /> 今天是南京大屠杀 ${nowYear - 1937} 年纪念日、国家公祭日 \n <br /> 为在南京大屠杀中被杀害的平民默哀，铭记历史，珍视和平，绝不让这样的悲剧再次发生。`;
                 break;
             // 节假日 --------------
             case "1-1":
                 timeWinDivTitleText = "元旦快乐";
-                timeWinDivText = `新年快乐！\n <br /> ${year} 年的进度条开始了！`;
+                timeWinDivText = `新年快乐！\n <br /> ${nowYear} 年的进度条开始了！`;
                 break;
             case "12-31":
                 timeWinDivTitleText = "元旦快乐";
-                timeWinDivText = `新年快乐！\n <br /> ${year + 1} 年的进度条马上就要开始了！<br />
+                timeWinDivText = `新年快乐！\n <br /> ${nowYear + 1} 年的进度条马上就要开始了！<br />
                 <!--<audio controls>
                   <source src="file:///H:/%E5%9B%BD%E6%A0%87/img/%E5%9B%BE%E6%81%92%E5%AE%87%E6%95%B0%E5%AD%97%E7%94%9F%E5%91%BD%E5%A4%87%E4%BB%BD.mp3" type="audio/mpeg">
                 </audio>-->`;
@@ -1044,15 +1127,15 @@ function timeWindow() {
                 timeWinDivText = "";
                 break;
             case "7-1":
-                timeWinDivTitleText = `中国共产党 ${year - 1921} 岁生日快乐`;
+                timeWinDivTitleText = `中国共产党 ${nowYear - 1921} 岁生日快乐`;
                 timeWinDivText = "今天时建党节。"
                 break;
             case "10-1", "10-2", "10-3", "10-4", "10-5", "10-6", "10-7":
-                timeWinDivTitleText = `中华人民共和国 ${year - 1949} 岁生日快乐！`
+                timeWinDivTitleText = `中华人民共和国 ${nowYear - 1949} 岁生日快乐！`
                 timeWinDivText = ``
                 break;
             case "8-15"://81-5
-                timeWinDivTitleText = `日本鬼子已宣布无条件投降 ${year - 1945} 年了！`
+                timeWinDivTitleText = `日本鬼子已宣布无条件投降 ${nowYear - 1945} 年了！`
                 timeWinDivText = "历史老师：标志着二战结束。"
                 break;
             default:
@@ -1094,7 +1177,7 @@ function timeWindow() {
     
         if (timeWinDivTitleText == "0") {// 其他不弹窗的情况放在这里
             // 如果没有匹配的节日，直接返回
-            messageWin.close();
+            msgWin.close();
             return void 0;
         } else {
             console.log(timeWinDivTitleText);
@@ -1107,13 +1190,13 @@ function timeWindow() {
                     duration: 10000,
                 });
             } else {
-                messageWin.show(timeWinDivTitleText, timeWinDivText, true, 10000);
+                msgWin.show(timeWinDivTitleText, timeWinDivText, true, 10000);
             }
         }
         // 设置今天已显示
         localStorage.setItem('shown', todayKey);
     } catch (error) {
-        return errorCodes.setErrorCode(0x00001, `创建节日窗口时出错:: ${error}`,1);
+        return errorCodes.setNewErrorCode(0x00001, `创建节日窗口时出错:: ${error}`,1);
     }
     return true;
 }
@@ -1146,13 +1229,15 @@ if (ipLoacation == undefined) {
     // 使用 ipLocation
 }
 
+sleep(1100); // 等待数据加载完成
+// 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
 
 let dist = getDistanceAMLS(114.305000, 30.592800, ipLoacation.result.location.lng, ipLoacation.result.location.lat)
 let pos = ipLoacation.result.ad_info.nation;
 let ip = ipLoacation.result.ip;
 let ipDZ;
 let posdesc;//要显示的信息
-let ass = visitor_address;
+let ass = null;
 
 //根据国家、省份、城市信息自定义欢迎语
 //海外地区不支持省份及城市信息
@@ -1344,7 +1429,7 @@ else timeChange = "都几点了，还在熬夜？";
 const welcomeInfoElement = document.getElementById("welcome-info");
 if (!welcomeInfoElement) { }
 
-if (zz_city == ipLoacation.result.ad_info.city) ass = zz_address_lx; // 检查是否为配置中指定的位置，如果是，则替换默认的"小伙伴"
+// if (zz_city == ipLoacation.result.ad_info.city) ass = "老乡"; // 检查是否为配置中指定的位置，如果是，则替换默认的"小伙伴"
 
 //自定义文本需要放的位置
 welcomeInfoElement.innerHTML = `欢迎来自<span>${pos}</span>的${ass}，${timeChange}<br />你距我约有<span>${dist}</span>公里，${posdesc}，您的 IP 地址是 ${ip}`;
@@ -1496,53 +1581,7 @@ if (getCookie('browsertc') != 1) {
 
 // 
 
-function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个链接,用于随便转转模块
-    // 解决了原有 HTML 无法后退的问题
-    fetch('/sitemap.txt')
-        /*
-        格式：
-        单行一个URL，一行一个，不允许有空行
-        如：
-        https://example.com/page1
-        https://example.com/page2
-        https://example.com/page3
-        */
-        .then(response => {
-            if (!response.ok) {
-                Snackbar.show({
-                    text: '；；；；；；；；；；；；；；；；；；；；；；！',
-                    pos: 'top-right',
-                    showAction: false
-                });
-            }
-            return response.text(); // 修正为 response
-        })
-        .then(data => {
-            const lines = data.split('\n'); // 将文件内容按行拆分
-            const randomIndex = Math.floor(Math.random() * lines.length); // 随机生成索引
-            const randomLine = lines[randomIndex].trim(); // 获取随机行并去除多余空格
 
-            if (randomLine) {
-                window.location.href = randomLine; // 跳转到随机选择的链接
-            } else {
-                console.error('随机行为空，无法跳转。');
-                Snackbar.show({
-                    text: '跳转时出错: 1',
-                    pos: 'top-right',
-                    showAction: false
-                });
-            }
-        })
-        .catch(error => {
-            console.error('读取 sitemap.txt 失败:', error);
-            Snackbar.show({
-                text: '跳转时出错: 2 \n' + error,
-                pos: 'top-right',
-                showAction: false
-            });
-        });
-
-}
 
 
 window.addEventListener("load", function () {
@@ -1837,6 +1876,3 @@ function updateDisplay(period, progress, decimalPlaces) {
     document.getElementsByClassName(`${period}-progress`).textContent = progress.toFixed(decimalPlaces) + '%';
     document.getElementsByClassName(`${period}-progress-bar`).style.width = progress.toFixed(decimalPlaces) + '%';
 }
-
-
-})();

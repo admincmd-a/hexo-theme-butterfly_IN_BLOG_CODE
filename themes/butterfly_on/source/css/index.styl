@@ -1,5 +1,6 @@
 if hexo-config('enable')
   @import 'variables'
+  @import 'main'
 
   if hexo-config('css_prefix')
     @import 'nib'
@@ -16,7 +17,7 @@ if hexo-config('enable')
   @import '_custom/**/*.css'
   
   if hexo-config('aplayerDIV.enable')
-    @import '_aplayer/*'
+    // @import '_aplayer/*'
     
   // search
   @import '_search/index'

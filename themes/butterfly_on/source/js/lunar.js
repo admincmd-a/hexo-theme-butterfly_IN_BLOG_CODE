@@ -835,239 +835,120 @@ var lunarInfo = [0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 
     leap = leapMonth(i) // 闰哪个月
 
     var isLeap = false
-
    
-
     // 效验闰月
-
     for (i = 1; i < 13 && offset > 0; i++) {
-
       // 闰月
-
       if (leap > 0 && i === (leap + 1) && isLeap === false) {
-
         --i
-
-        isLeap = true; temp = leapDays(year) // 计算农历闰月天数
-
+        isLeap = true; temp = leapDays(year) // 计算农历闰月天
       } else {
-
         temp = monthDays(year, i)// 计算农历普通月天数
-
       }
-
       // 解除闰月
-
       if (isLeap === true && i === (leap + 1)) { isLeap = false }
-
       offset -= temp
-
     }
-
     // 闰月导致数组下标重叠取反
-
     if (offset === 0 && leap > 0 && i === leap + 1) {
-
       if (isLeap) {
-
         isLeap = false
-
       } else {
-
         isLeap = true; --i
-
       }
-
     }
-
     if (offset < 0) {
-
       offset += temp; --i
-
     }
-
     // 农历月
-
     var month = i
-
     // 农历日
-
     var day = offset + 1
-
     // 天干地支处理
-
     var sm = m - 1
-
     var gzY = toGanZhiYear(year)
-
    
-
     // 当月的两个节气
-
     // bugfix-2017-7-24 11:03:38 use lunar Year Param `y` Not `year`
-
     var firstNode = getTerm(y, (m * 2 - 1)) // 返回当月「节」为几日开始
-
     var secondNode = getTerm(y, (m * 2)) // 返回当月「节」为几日开始
-
-   
-
     // 依据12节气修正干支月
-
     var gzM = toGanZhi((y - 1900) * 12 + m + 11)
-
     if (d >= firstNode) {
-
       gzM = toGanZhi((y - 1900) * 12 + m + 12)
-
     }
-
     // 传入的日期的节气与否
-
     var isTerm = false
-
     var Term = null
-
     if (firstNode === d) {
-
       isTerm = true
-
       Term = solarTerm[m * 2 - 2]
-
     }
-
     if (secondNode === d) {
-
       isTerm = true
-
       Term = solarTerm[m * 2 - 1]
-
     }
-
     // 日柱 当月一日与 1900/1/1 相差天数
-
     var dayCyclical = Date.UTC(y, sm, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10
-
     var gzD = toGanZhi(dayCyclical + d - 1)
-
     // 该日期所属的星座
-
     var astro = toAstro(m, d)
-
     return {'lYear': year, 'lMonth': month, 'lDay': day, 'Animal': getAnimal(year), 'IMonthCn': (isLeap ? '\u95f0' : '') + toChinaMonth(month), 'IDayCn': toChinaDay(day), 'cYear': y, 'cMonth': m, 'cDay': d, 'gzYear': gzY, 'gzMonth': gzM, 'gzDay': gzD, 'isToday': isToday, 'isLeap': isLeap, 'nWeek': nWeek, 'ncWeek': '\u661f\u671f' + cWeek, 'isTerm': isTerm, 'Term': Term, 'astro': astro}
-
   }
-
    
-
   
-
     var calendarFormatter= {
-
       // 传入阳历年月日获得详细的公历、农历object信息 <=>JSON
-
       solar2lunar:function(y, m, d){ // 参数区间1900.1.31~2100.12.31
-
         return solar2lunar(y, m, d)
-
       },
-
       /**
-
       * 传入农历年月日以及传入的月份是否闰月获得详细的公历、农历object信息 <=>JSON
-
       * @param y  lunar year
-
       * @param m  lunar month
-
       * @param d  lunar day
-
       * @param isLeapMonth  lunar month is leap or not.[如果是农历闰月第四个参数赋值true即可]
-
       * @return JSON object
-
       * @eg:console.log(calendar.lunar2solar(1987,9,10));
-
       */
-
       lunar2solar: function (y, m, d, isLeapMonth) { // 参数区间1900.1.31~2100.12.1
-
         isLeapMonth = !!isLeapMonth
-
         if (isLeapMonth && (leapMonth !== m)) { return -1 }// 传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同
-
         if (y === 2100 && m === 12 && d > 1 || y === 1900 && m === 1 && d < 31) { return -1 } // 超出了最大极限值
-
         var day = monthDays(y, m)
-
         var _day = day
-
         // bugFix 2016-9-25
-
         // if month is leap, _day use leapDays method
-
         if (isLeapMonth) {
-
           _day = leapDays(y, m)
-
         }
-
         if (y < 1900 || y > 2100 || d > _day) { return -1 }// 参数合法性效验
-
-   
-
         // 计算农历的时间差
-
         var offset = 0
-
         for (var i = 1900; i < y; i++) {
-
           offset += lYearDays(i)
-
         }
-
         var leap = 0
-
         var isAdd = false
-
         for (i = 1; i < m; i++) {
-
           leap = leapMonth(y)
-
           if (!isAdd) { // 处理闰月
-
             if (leap <= i && leap > 0) {
-
               offset += leapDays(y); isAdd = true
-
             }
-
           }
-
           offset += monthDays(y, i)
-
         }
-
         // 转换闰月农历 需补充该年闰月的前一个月的时差
-
         if (isLeapMonth) { offset += day }
-
         // 1900年农历正月一日的公历时间为1900年1月30日0时0分0秒(该时间也是本农历的最开始起始点)
-
         var stmap = Date.UTC(1900, 1, 30, 0, 0, 0)
-
         var calObj = new Date((offset + d - 31) * 86400000 + stmap)
-
         var cY = calObj.getUTCFullYear()
-
         var cM = calObj.getUTCMonth() + 1
-
         var cD = calObj.getUTCDate()
-
         return solar2lunar(cY, cM, cD)
-
       }
-
     }
   /*
   版权声明：本文为CSDN博主「AILIHEIHEI」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
