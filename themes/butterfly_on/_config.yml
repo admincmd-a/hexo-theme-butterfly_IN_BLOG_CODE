@@ -1225,7 +1225,7 @@ google_analytics:
 
 # Cloudflare Analytics
 # https://www.cloudflare.com/zh-tw/web-analytics/
-cloudflare_analytics: 2a7a83f3929841a7b9b10884fe9425a8
+cloudflare_analytics: # 2a7a83f3929841a7b9b10884fe9425a8
 
 # Microsoft Clarity
 # https://clarity.microsoft.com/
