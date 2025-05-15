@@ -1600,7 +1600,7 @@ inject:
     - </script>
     - <script> LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>
     - <script>new LingQue.Monitor().init({id:"3IbL4ePOvrsha6YV",sendSuspicious:true});</script>
-
+    # - <script scr="/xxx.js"></script>
     
 
 # CDN

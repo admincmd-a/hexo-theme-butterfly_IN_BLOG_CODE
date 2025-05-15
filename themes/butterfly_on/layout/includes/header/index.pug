@@ -38,7 +38,6 @@ header#page-header(class=`${isHomeClass+isFixedClass}` style=bg_img)
     else if is_home() 
       #site-info
         h1#site-title=config.title
-        //-h1#site-title= '管理员 - 命令提示符'
         if theme.subtitle.enable
           - var loadSubJs = true
           #site-subtitle
