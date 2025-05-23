@@ -410,7 +410,7 @@ aplayerDIV:
         name: '东方红的心脏',
         artist: '洛天依 / 乐正绫 / 炙弹冰',
         url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.mp3',
-        cover: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.jpg',
+        cover: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.png',
         lrc: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.7/东方红的心脏.lrc',
         theme: '#e2e2e2',
     },

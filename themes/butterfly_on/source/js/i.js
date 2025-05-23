@@ -47,7 +47,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.`
+SOFTWARE.`;
 
 const debug = false//isDeBug(); // 开启调试模式
 
@@ -194,7 +194,7 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 //  ----------------------------------------------------------
 // JS 文件内需要公共调用的东西
 
-const errorCodes = ((oldErrorCodes) => {
+const errorCodes = ((oldErrorCodes = null) => {
     // let errorCode = 0x00000;
     // let errorMsg = "";
     let errors = null;
@@ -204,6 +204,10 @@ const errorCodes = ((oldErrorCodes) => {
         WARN: 0x1,// 警告
         ERROR: 0x2,// 错误
         FATAL: 0x3,// 致命错误
+    };
+
+    const DATA_TYPE = {
+        STAORAGE: 'refresh',
     };
 
     const ERROR_CODE_MSG_ZH_CN = {
@@ -247,6 +251,9 @@ const errorCodes = ((oldErrorCodes) => {
     };
 
     // 初始化
+    if (oldErrorCodes) {
+        oldErrorCodes = sessionStorage.getItem()
+    }
     errors = oldErrorCodes;
 
     return {
@@ -294,7 +301,7 @@ const errorCodes = ((oldErrorCodes) => {
                         showToast(fullMessage);
                         break;
                     case ERROR_TYPES.FATAL:
-                        sessionStorage.setItem("refresh", JSON.stringify({
+                        sessionStorage.setItem(DATA_TYPE.STAORAGE, JSON.stringify({
                             error: errors,
                         }));
                         window.location.reload();
@@ -341,11 +348,15 @@ const errorCodes = ((oldErrorCodes) => {
 
         // 暴露常量
         ERROR_TYPES,
+        DATA_TYPE,
         errors,
     };
 })((() => {
-    if (sessionStorage.getItem("refresh")) return sessionStorage.getItem("refresh") // 尝试恢复上次的错误信息
-    return {}; // 否则返回空对象
+    if (sessionStorage.getItem(errorCodes.DATA_TYPE.STAORAGE)) {
+        errorCodes(errorCodes.DATA_TYPE);
+     // 尝试恢复上次的错误信息
+    }
+        return {}; // 否则返回空对象
 }));
 
 
