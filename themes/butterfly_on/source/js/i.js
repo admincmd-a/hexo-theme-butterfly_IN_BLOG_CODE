@@ -252,7 +252,7 @@ const errorCodes = ((oldErrorCodes = null) => {
 
     // 初始化
     if (oldErrorCodes) {
-        oldErrorCodes = sessionStorage.getItem()
+        oldErrorCodes = sessionStorage.getItem(errorCodes.DATA_TYPE.STAORAGE)
     }
     errors = oldErrorCodes;
 
@@ -261,8 +261,8 @@ const errorCodes = ((oldErrorCodes = null) => {
          * 记录一个新的错误码和信息
          * @param {number} code 错误码
          * @param {any} message 错误信息
-         * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量
-         * @param {boolean} returnID 是否返回错误ID
+         * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量,注：0x3 时会引发页面重载。
+         * @param {boolean} returnID 是否返回错误ID，缺省值为 false
          * @returns {false | string} 返回 false，若 {@link returnID} 为true,则返回错误ID
          * @example } catch (e) {return errorCodes.setErrorCode(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
          * @function {@link errorCodes.getErrorCode} 获取错误码和信息
