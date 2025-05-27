@@ -268,7 +268,7 @@ const errorCodes = ((oldErrorCodes = null) => {
          * @function {@link errorCodes.getErrorCode} 获取错误码和信息
          * @function {@link errorCodes.clearError} 清除错误信息
          */
-        setNewErrorCode: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false) => {
+        addError: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false) => {
             try {
                 let errorID;
                 if (crypto) {
@@ -304,7 +304,7 @@ const errorCodes = ((oldErrorCodes = null) => {
                         sessionStorage.setItem(DATA_TYPE.STAORAGE, JSON.stringify({
                             error: errors,
                         }));
-                        window.location.reload();
+                        window.location.reload(); // 重载界面
                         break;
                     default:
                         break;
@@ -321,7 +321,7 @@ const errorCodes = ((oldErrorCodes = null) => {
          * 取得错误码和信息
          * @param {string} id 错误ID
          * @returns {object} 错误码和信息对象
-         * @function {@link errorCodes.setNewErrorCode} 设置错误码和信息
+         * @function {@link errorCodes.addError} 设置错误码和信息
          * @function {@link errorCodes.clearError} 清除错误信息
          */
         getErrorCode: (id) => ({
@@ -339,7 +339,7 @@ const errorCodes = ((oldErrorCodes = null) => {
         /**
          * 清除错误信息
          * @returns {null}
-         * @function {@link errorCodes.setNewErrorCode} 设置错误码和信息
+         * @function {@link errorCodes.addError} 设置错误码和信息
          * @function {@link errorCodes.getErrorCode} 取得错误码和信息
          */
         clearError: () => {
@@ -356,7 +356,7 @@ const errorCodes = ((oldErrorCodes = null) => {
         errorCodes(errorCodes.DATA_TYPE);
      // 尝试恢复上次的错误信息
     }
-        return {}; // 否则返回空对象
+    return {}; // 否则返回空对象
 }));
 
 
@@ -429,7 +429,7 @@ var pageBlur = {
             this.Blur = false;
             return true;
         } catch (error) {
-            return errorCodes.setNewErrorCode(0x00001, "关闭模糊失败", errorCodes.ERROR_TYPES.SILENT, false);
+            return errorCodes.addError(0x00001, "关闭模糊失败", errorCodes.ERROR_TYPES.SILENT, false);
         }
     },
 
@@ -517,7 +517,7 @@ const msgWin = {
 
                 `;
             } catch (error) {
-                return errorCodes.setNewErrorCode(0x00002, `打开消息窗口失败：${error}`, errorCodes.ERROR_TYPES.ERROR, false);
+                return errorCodes.addError(0x00002, `打开消息窗口失败：${error}`, errorCodes.ERROR_TYPES.ERROR, false);
             }
         }
     },
@@ -561,24 +561,24 @@ const msgWin = {
 // 2025-05-04 重写了切换逻辑
 
 const lightDarkTheme = (() => {
-    const DATA_LIGHT_DARK_THEME_ITEM = {
+    const DATA_TYPE = {
         LIGHT: "light",
         DARK: "dark",
         AUTO: "auto",
-        HTML: "data-theme",
+        HTML_KEY: "data-theme",
         STORAGE_KEY: "lightDarkTheme"
     };
 
-    let theme = DATA_LIGHT_DARK_THEME_ITEM.AUTO; // [ light | dark | auto ]
+    let theme = DATA_TYPE.AUTO; // [ light | dark | auto ]
 
     // 初始化主题
     const initializeTheme = () => {
-        const storedTheme = sessionStorage.getItem(DATA_LIGHT_DARK_THEME_ITEM.STORAGE_KEY);
+        const storedTheme = sessionStorage.getItem(DATA_TYPE.STORAGE_KEY);
         if (storedTheme) {
             theme = storedTheme;
             lightDarkTheme.setTheme(storedTheme, false);
         } else {
-            theme = DATA_LIGHT_DARK_THEME_ITEM.AUTO;
+            theme = DATA_TYPE.AUTO;
             autoTheme(false);
         }
     };
@@ -589,17 +589,17 @@ const lightDarkTheme = (() => {
      * @param {boolean} enableSnackbar 是否显示切换提示，缺省值为 true
      */
     const switchTheme = (enableSnackbar = true) => {
-        if (theme === DATA_LIGHT_DARK_THEME_ITEM.AUTO) {
-            const currentTheme = document.documentElement.getAttribute(DATA_LIGHT_DARK_THEME_ITEM.HTML);
-            if (currentTheme === DATA_LIGHT_DARK_THEME_ITEM.DARK) {
+        if (theme === DATA_TYPE.AUTO) {
+            const currentTheme = document.documentElement.getAttribute(DATA_TYPE.HTML_KEY);
+            if (currentTheme === DATA_TYPE.DARK) {
                 lightTheme(enableSnackbar);
             } else {
                 darkTheme(enableSnackbar);
             }
         } else {
-            if (theme === DATA_LIGHT_DARK_THEME_ITEM.DARK) {
+            if (theme === DATA_TYPE.DARK) {
                 lightTheme(enableSnackbar);
-            } else if (theme === DATA_LIGHT_DARK_THEME_ITEM.LIGHT) {
+            } else if (theme === DATA_TYPE.LIGHT) {
                 darkTheme(enableSnackbar);
             } else {
                 autoTheme(enableSnackbar);
@@ -612,13 +612,13 @@ const lightDarkTheme = (() => {
      * @param {boolean} enableSnackbar 
      */
     const lightTheme = (enableSnackbar = true) => {
-        theme = DATA_LIGHT_DARK_THEME_ITEM.LIGHT;
-        document.documentElement.setAttribute(DATA_LIGHT_DARK_THEME_ITEM.HTML, DATA_LIGHT_DARK_THEME_ITEM.LIGHT);
-        _setStorageItem(DATA_LIGHT_DARK_THEME_ITEM.LIGHT);
+        theme = DATA_TYPE.LIGHT;
+        document.documentElement.setAttribute(DATA_TYPE.HTML_KEY, DATA_TYPE.LIGHT);
+        _setStorageItem(DATA_TYPE.LIGHT);
         try {
             _lightUserPug();
         } catch (error) {
-            return errorCodes.setNewErrorCode(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
+            return errorCodes.addError(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
         }
         if (enableSnackbar) {
             GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day);
@@ -630,13 +630,13 @@ const lightDarkTheme = (() => {
      * @param {boolean} enableSnackbar  是否显示切换提示，缺省值为 true
      */
     const darkTheme = (enableSnackbar = true) => {
-        theme = DATA_LIGHT_DARK_THEME_ITEM.DARK;
-        document.documentElement.setAttribute(DATA_LIGHT_DARK_THEME_ITEM.HTML, DATA_LIGHT_DARK_THEME_ITEM.DARK);
-        _setStorageItem(DATA_LIGHT_DARK_THEME_ITEM.DARK);
+        theme = DATA_TYPE.DARK;
+        document.documentElement.setAttribute(DATA_TYPE.HTML_KEY, DATA_TYPE.DARK);
+        _setStorageItem(DATA_TYPE.DARK);
         try {
             _darkUserPug();
         } catch (error) {
-            return errorCodes.setNewErrorCode(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
+            return errorCodes.addError(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
         }
         if (enableSnackbar) {
             GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night);
@@ -665,10 +665,10 @@ const lightDarkTheme = (() => {
      */
     const _setStorageItem = (value) => {
         try {
-            sessionStorage.setItem(DATA_LIGHT_DARK_THEME_ITEM.STORAGE_KEY, value);
+            sessionStorage.setItem(DATA_TYPE.STORAGE_KEY, value);
             return true;
         } catch (error) {
-            return errorCodes.setNewErrorCode(0x00001, `写入本地存储失败：${error}`, errorCodes.ERROR_TYPES.ERROR);
+            return errorCodes.addError(0x00001, `写入本地存储失败：${error}`, errorCodes.ERROR_TYPES.ERROR);
         }
     };
 
@@ -683,10 +683,7 @@ const lightDarkTheme = (() => {
          * 刷新主题设置，其实就是重新读取本地存储的主题设置
          * 保持没有通知
          */
-        refreshTheme: () => {
-            initializeTheme();
-            //switchTheme(false);
-        },
+        refreshTheme: () => initializeTheme(),
 
         /**
          * 设置主题
@@ -695,14 +692,14 @@ const lightDarkTheme = (() => {
          * @returns {boolean} 是否成功设置
          */
         setTheme: (newTheme, enableSnackbar = true) => {
-            if (newTheme === DATA_LIGHT_DARK_THEME_ITEM.LIGHT) {
+            if (newTheme === DATA_TYPE.LIGHT) {
                 lightTheme(enableSnackbar);
-            } else if (newTheme === DATA_LIGHT_DARK_THEME_ITEM.DARK) {
+            } else if (newTheme === DATA_TYPE.DARK) {
                 darkTheme(enableSnackbar);
-            } else if (newTheme === DATA_LIGHT_DARK_THEME_ITEM.AUTO) {
+            } else if (newTheme === DATA_TYPE.AUTO) {
                 autoTheme(enableSnackbar);
             } else {
-                return errorCodes.setNewErrorCode(0x00002, `无效的主题：${newTheme}`, errorCodes.ERROR_TYPES.ERROR);
+                return errorCodes.addError(0x00002, `无效的主题：${newTheme}`, errorCodes.ERROR_TYPES.ERROR);
             }
             return true;
         },
@@ -717,7 +714,7 @@ const lightDarkTheme = (() => {
         },
 
         // 暴露常量
-        DATA_LIGHT_DARK_THEME_ITEM,
+        DATA_LIGHT_DARK_THEME_ITEM: DATA_TYPE,
     };
 })();
 
@@ -902,7 +899,7 @@ function isDebug() {
  * @returns 2 点之间的地面直线距离，单位 KM
  */
 function getDistanceAMLS(e1, n1, e2, n2) {
-    const R = 6371
+    const R = 6371 // km 地球半径
     const { sin, cos, asin, PI, hypot } = Math
     let getPoint = (e, n) => {
         e *= PI / 180
@@ -920,6 +917,7 @@ function getDistanceAMLS(e1, n1, e2, n2) {
 /**
  * 设置全局字体
  * @param {string} font 字体在 CSS 中的名称
+ * @param {enable} enableReturn 返回值？
  * @returns 是否设置成功
  * @example setFont('Arial'); // 设置字体为 Arial
  */
@@ -1042,7 +1040,7 @@ function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个
             }
         })
         .catch(error => {
-            errorCodes.setNewErrorCode(0x00001, `读取 sitemap.txt 失败: ${error}`, errorCodes.ERROR_TYPES.SILENT);
+            errorCodes.addError(0x00001, `读取 sitemap.txt 失败: ${error}`, errorCodes.ERROR_TYPES.SILENT);
             window.location.href = '/'
         });
 
@@ -1207,7 +1205,7 @@ function timeWindow() {
         // 设置今天已显示
         localStorage.setItem('shown', todayKey);
     } catch (error) {
-        return errorCodes.setNewErrorCode(0x00001, `创建节日窗口时出错:: ${error}`,1);
+        return errorCodes.addError(0x00001, `创建节日窗口时出错:: ${error}`,1);
     }
     return true;
 }
@@ -1250,6 +1248,35 @@ let ipDZ;
 let posdesc;//要显示的信息
 let ass = "小伙伴";
 
+let data_scb = {
+    日本: {
+        content: "よろしく、一緒に桜を見に行きますか？",
+    },
+    美国: {
+        connect: "Make America Great Again!",
+    },
+    英国: {
+        content:"",
+    },
+    中国: {
+        北京: {
+            municipalities: true,
+            content: "",
+        },
+        天津市: {
+            municipalities: true,
+            content: "",
+        },
+        江苏省: {
+            南京市: {
+                content: "",
+            },
+            苏州市: {
+                
+            }
+        }
+    }
+};
 //根据国家、省份、城市信息自定义欢迎语
 //海外地区不支持省份及城市信息
 switch (ipLoacation.result.ad_info.nation) {
