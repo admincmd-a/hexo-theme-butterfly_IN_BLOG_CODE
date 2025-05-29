@@ -252,7 +252,7 @@ const errorCodes = ((oldErrorCodes = null) => {
 
     // 初始化
     if (oldErrorCodes) {
-        oldErrorCodes = sessionStorage.getItem(errorCodes.DATA_TYPE.STAORAGE)
+        oldErrorCodes = sessionStorage.getItem(DATA_TYPE.STAORAGE)
     }
     errors = oldErrorCodes;
 
@@ -1237,8 +1237,12 @@ if (ipLoacation == undefined) {
 } else {
     // 使用 ipLocation
 }
-
-sleep(2200); // 等待数据加载完成
+while (!ipLoacation.result) {
+    sleep(100);
+    if (ipLoacation.result) { // 当请求返回时t   
+        break;
+    }
+}
 // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
 
 let dist = getDistanceAMLS(114.305000, 30.592800, ipLoacation.result.location.lng, ipLoacation.result.location.lat)
@@ -1249,15 +1253,9 @@ let posdesc;//要显示的信息
 let ass = "小伙伴";
 
 let data_scb = {
-    日本: {
-        content: "よろしく、一緒に桜を見に行きますか？",
-    },
-    美国: {
-        connect: "Make America Great Again!",
-    },
-    英国: {
-        content:"",
-    },
+    日本: "よろしく、一緒に桜を見に行きますか？",
+    美国: "Make America Great Again!",
+    英国: "",
     中国: {
         北京: {
             municipalities: true,
@@ -1268,12 +1266,23 @@ let data_scb = {
             content: "",
         },
         江苏省: {
-            南京市: {
-                content: "",
+            南京市: "",
+            苏州市: "",
+            default: "",
+        },
+        山东省: "",
+        湖北省: {
+            武汉市: {
+                汉阳区: "",
+                江夏区: "",
+                default: "",
             },
-            苏州市: {
-                
-            }
+            咸宁市: "",
+            default: "",
+        },
+        香港特别行政区: {
+            specialAdministrariveRegion: true,
+            content: "",
         }
     }
 };
