@@ -1237,12 +1237,14 @@ if (ipLoacation == undefined) {
 } else {
     // 使用 ipLocation
 }
-while (!ipLoacation.result) {
-    sleep(100);
-    if (ipLoacation.result) { // 当请求返回时t   
-        break;
+
+for (let i = 0; let = 50; i++) {
+    if (ipLoacation.result) {
+        break; // 跳出循环
     }
+    sleep(100);
 }
+
 // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
 
 let dist = getDistanceAMLS(114.305000, 30.592800, ipLoacation.result.location.lng, ipLoacation.result.location.lat)
@@ -1252,40 +1254,38 @@ let ipDZ;
 let posdesc;//要显示的信息
 let ass = "小伙伴";
 
-let data_scb = {
+const data_scb = {
     日本: "よろしく、一緒に桜を見に行きますか？",
     美国: "Make America Great Again!",
     英国: "",
     中国: {
-        北京: {
-            municipalities: true,
-            content: "",
-        },
-        天津市: {
-            municipalities: true,
-            content: "",
-        },
+        北京: { municipalities: true, content: "欢迎来到首都" },
+        天津市: { municipalities: true, content: "津门故里" },
         江苏省: {
-            南京市: "",
-            苏州市: "",
-            default: "",
+            南京市: "六朝古都",
+            苏州市: "东方威尼斯",
+            default: "江南水乡"
         },
-        山东省: "",
+        山东省: "齐鲁大地",
         湖北省: {
             武汉市: {
-                汉阳区: "",
-                江夏区: "",
-                default: "",
+                汉阳区: "知音故里",
+                江夏区: "楚天首县",
+                default: "九省通衢"
             },
-            咸宁市: "",
-            default: "",
+            咸宁市: "桂花之乡",
+            default: "荆楚门户"
         },
         香港特别行政区: {
-            specialAdministrariveRegion: true,
-            content: "",
+            specialAdministrativeRegion: true,
+            content: "东方之珠"
         }
     }
 };
+
+
+// 当没有精确匹配时
+
 //根据国家、省份、城市信息自定义欢迎语
 //海外地区不支持省份及城市信息
 switch (ipLoacation.result.ad_info.nation) {
