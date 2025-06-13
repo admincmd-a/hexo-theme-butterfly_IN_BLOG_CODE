@@ -1258,14 +1258,16 @@ async function displayWelcomeMessage(ipLoacation) {
     const data_scb = {
         日本: "よろしく、一緒に桜を見に行きますか？",
         美国: "Make America Great Again!",
-        英国: "",
+        英国: "I'd like to ride the London Eye with you at night.",
+
         中国: {
-            北京市: { municipalities: true, content: "欢迎来到首都" },
-            天津市: { municipalities: true, content: "津门故里" },
+            北京市: {municipalities: true, content: "北——京——欢迎您~~~" },
+            天津市: {municipalities: true, content: "讲段相声吧。" },
+            重庆市: "高德地图:已到达重庆，下面切换百度地图导航。百度地图：已到达重庆，下面切换高德地图导航。",
             江苏省: {
-                南京市: "六朝古都",
+                南京市: "欢迎来自安徽省南京市的小伙伴",
                 苏州市: "东方威尼斯",
-                default: "江南水乡"
+                default: "散装的必须是散装的"
             },
             山东省: "齐鲁大地",
             湖北省: {
@@ -1277,10 +1279,7 @@ async function displayWelcomeMessage(ipLoacation) {
                 咸宁市: "桂花之乡",
                 default: "荆楚门户"
             },
-            香港特别行政区: {
-                specialAdministrativeRegion: true,
-                content: "东方之珠"
-            }
+            香港特别行政区: {specialAdministrativeRegion: true,content: "东方之珠"}
         }
     };
 
@@ -1299,10 +1298,13 @@ async function displayWelcomeMessage(ipLoacation) {
                         posdesc = data_scb[pos][province].content;
                     } else { // 一般省份
                         if (data_scb[pos][province][city]) {
-                            if (data_scb[pos][province]) {
-                                
+                            if (data_scb[pos][province][district]) {
+                                if (data_scb[pos][province][city][district]) {
+                                    
+                                }
+                            } else {
+                                posdesc = data_scb[pos][province][city].default;
                             }
-                            posdesc = data_scb[pos][province][city];
                         } else {
                             posdesc = data_scb[pos][province].default;
                         }
