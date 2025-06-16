@@ -53,15 +53,22 @@ const debug = false//isDeBug(); // 开启调试模式
 
 
 
-var now = new Date();// 获取当前日期、时间
-var nowYear = now.getFullYear();
-var nowMonth = now.getMonth() + 1; // 月份从0开始，需加1
-var nowDay = now.getDate(); // 使用getDate获取当前日期
-var nowMonthDay = `${nowMonth}-${nowDay}`; // 使用模板字符串
+var nowTime = new Date();// 获取当前日期、时间
+var now = {
+    year: nowTime.getFullYear(),
+    month: nowTime.getMonth() + 1,
+    day: nowTime.getDate(),
+    hour: nowTime.getHours(),
+    minute: nowTime.getMinutes(),
+    second: nowTime.getSeconds(),
+
+    monthDay: `${this.month}-${this.day}`,
+}
+var nowMonthDay = `${now.month}-${now.day}`;// 使用模板字符串
 // 检查今日是否已经弹窗
-var todayKey = `${nowYear}-${nowMonth}-${nowDay}`;
+var todayKey = `${now.year}-${now.month}-${now.day}`;
 var hasShownToday = localStorage.getItem(todayKey);
-var today = now;
+var today = nowTime;
 // 获取今天的农历日期
 var lunarDate = LunarCalendar.solarToLunar(today.getFullYear(), today.getMonth() + 1, today.getDate());
 var nowZhData = `${today.getMonth() + 1}-${today.getDate()}`// 换为农历
@@ -197,7 +204,13 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 const errorCodes = ((oldErrorCodes = null) => {
     // let errorCode = 0x00000;
     // let errorMsg = "";
-    let errors = null;
+    let errors = {
+        0x0000000: {
+            errorCode: 0x0000000,
+            message: "成功",
+            warn: 0x0,
+        }
+    };
 
     const ERROR_TYPES = {
         SILENT: 0x0,// 静默
@@ -253,8 +266,9 @@ const errorCodes = ((oldErrorCodes = null) => {
     // 初始化
     if (oldErrorCodes) {
         oldErrorCodes = sessionStorage.getItem(DATA_TYPE.STAORAGE)
-    }
-    errors = oldErrorCodes;
+    } if (oldErrorCodes) {
+        errors = oldErrorCodes; 
+    } else {}
 
     return {
         /**
@@ -329,6 +343,24 @@ const errorCodes = ((oldErrorCodes = null) => {
             message: errors[id].message,
             time: errors[id].time,
         }),
+
+        /**
+         * 根据错误码获取错误信息
+         * @param {number} errorCode 错误码
+         * @returns {object} 错误码和信息对象
+         * @function {@link errorCodes.addError} 设置错误码和信息
+         * @function {@link errorCodes.clearError} 清除错误信息
+         */
+        getErrors: (errorCode) => {
+            let data = errors.replace(/[\r\n]/g, '').split(',');
+            let result = ({
+                data
+            });
+            if (errors[data].code === errorCode) {
+                result.data[data] = errors[data];
+            }
+            return result;
+        },
 
         /**
          * 返回所有已被记录的错误码和信息
@@ -618,7 +650,7 @@ const lightDarkTheme = (() => {
         try {
             _lightUserPug();
         } catch (error) {
-            return errorCodes.addError(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
+            return errorCodes.addError(0x00023, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
         }
         if (enableSnackbar) {
             GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day);
@@ -636,7 +668,7 @@ const lightDarkTheme = (() => {
         try {
             _darkUserPug();
         } catch (error) {
-            return errorCodes.addError(0x00003, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
+            return errorCodes.addError(0x00023, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
         }
         if (enableSnackbar) {
             GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night);
@@ -875,7 +907,7 @@ function isUrl(url) {
 
 /**
  * 检查一个指定的对象是否为布尔值
- * @param {*} value 要检查的值
+ * @param {any} value 要检查的值
  * @returns 是否为布尔值
  */
 function isBoolean(value) {
@@ -968,7 +1000,7 @@ function clearCookies(enableReturn = false) {
 
 /**
  * 取到当前页面的被选中文本
- * @returns {string | null} 当前选中的文本
+ * @returns { string | null } 当前选中的文本
  */
 function getSelectedText() {
     if (window.getSelection) {
@@ -1076,112 +1108,193 @@ function updateVar() {
 }
 
 
+
 function timeWindow() {
     // 欢迎语，cookie 提醒 --------------------------------------------
     // 首次访问，弹出Cookie提醒    
 
     console.log("农历日期:", lunarDateChinese);
     try {
-        switch (nowMonthDay) { // 公历判断
-            // 纪念日 --------------
-            case "7-7":
-                timeWinDivTitleText = `今天是 1937 年 7 月 7 日卢沟桥事变 ${nowYear - 1937} 周年纪念日！`
-                timeWinDivText = "勿忘国耻，振兴中华。"
-                break;
-            case "9-18":
-                timeWinDivTitleText = `今天是 1931 年 9 月 18 日九一八事变 ${nowYear - 1931} 周年纪念日！`
-                timeWinDivText = "勿忘国耻，振兴中华。"
-                break;
-            case "12-13":
-                document.getElementsByTagName("html")[0].setAttribute("style", "filter: grayscale(100%);");
-                timeWinDivTitleText = "请起立默哀 30 秒";
-                timeWinDivText = `勿忘国耻，振兴中华！\n <br /> 今天是南京大屠杀 ${nowYear - 1937} 年纪念日、国家公祭日 \n <br /> 为在南京大屠杀中被杀害的平民默哀，铭记历史，珍视和平，绝不让这样的悲剧再次发生。`;
-                break;
-            // 节假日 --------------
-            case "1-1":
-                timeWinDivTitleText = "元旦快乐";
-                timeWinDivText = `新年快乐！\n <br /> ${nowYear} 年的进度条开始了！`;
-                break;
-            case "12-31":
-                timeWinDivTitleText = "元旦快乐";
-                timeWinDivText = `新年快乐！\n <br /> ${nowYear + 1} 年的进度条马上就要开始了！<br />
-                <!--<audio controls>
-                  <source src="file:///H:/%E5%9B%BD%E6%A0%87/img/%E5%9B%BE%E6%81%92%E5%AE%87%E6%95%B0%E5%AD%97%E7%94%9F%E5%91%BD%E5%A4%87%E4%BB%BD.mp3" type="audio/mpeg">
-                </audio>-->`;
-                break;
-            case "3-8":
-                timeWinDivTitleText = "妇女节";
-                timeWinDivText = "各位女神们，妇女节快乐！";
-                break;
-            case "4-1":
-                // 随机抽取一句
-                const randomIndex = Math.floor(Math.random() * phrases.length);
-                timeWinDivTitleText = phrases[randomIndex];
-                timeWinDivText = "今天是愚人节，祝祝祝祝祝 UP 生日快乐！";
-                break;
-            case "4-5":
-                timeWinDivTitleText = "清明安康"
-                timeWinDivText = ""
-                break;
-            case "5-1":
-                timeWinDivTitleText = "劳动节快乐！"
-                timeWinDivText = "为各行各业的辛勤工作劳动人民致敬！"
-                break;
-            case "5-4":
-                timeWinDivTitleText = "五四青年节";
-                timeWinDivText = "为百年前那些有思想政治觉悟，追求无产阶级、共产主义、马克思主义的青年们致敬！";
-                break;
-            case "6-1":
-                timeWinDivTitleText = "各位小朋友们，儿童节快乐！";
-                timeWinDivText = "";
-                break;
-            case "7-1":
-                timeWinDivTitleText = `中国共产党 ${nowYear - 1921} 岁生日快乐`;
-                timeWinDivText = "今天时建党节。"
-                break;
-            case "10-1", "10-2", "10-3", "10-4", "10-5", "10-6", "10-7":
-                timeWinDivTitleText = `中华人民共和国 ${nowYear - 1949} 岁生日快乐！`
-                timeWinDivText = ``
-                break;
-            case "8-15"://81-5
-                timeWinDivTitleText = `日本鬼子已宣布无条件投降 ${nowYear - 1945} 年了！`
-                timeWinDivText = "历史老师：标志着二战结束。"
-                break;
-            default:
-                break;
-        }
-        switch (lunarDateChineseNY) { // 农历判断
-            case "腊月廿九", "腊月三十":// 偶尔除夕会在腊月廿九，所以也要做判断,反正也隔不了几天
-                timeWinDivTitleText = `${lunarDate.getYear() + 1} 年新年快乐！`
-                timeWinDivText = ``
-                break;
-            case "正月初一", "正月初二", "正月初三", "正月初四", "正月初五", "正月初六":
-                timeWinDivTitleText = `${lunarDate.getYear()} 新年快乐！`
-                timeWinDivText = ``
-                break;
-            case "正月十五":
-                timeWinDivTitleText = `元宵节快乐！`
-                timeWinDivText = `您吃汤圆了吗？`
-                break;
-            case "五月初五":
-                timeWinDivTitleText = `端午节快乐！`
-                timeWinDivText = `您吃粽子了吗？`
-                break;
-            case "八月十五":
-                timeWinDivTitleText = `中秋节快乐！`
-                timeWinDivText = `您吃月饼了吗？<br /><del>这是啥怪味月饼那......难吃</del>`
-                break;
-            case "九月初五":
-                timeWinDivTitleText = `重阳节快乐！`
-                timeWinDivText = ``
-                break;
-            default:
-                break;
-        } // 农历判断
+        /**
+         * {
+         *  sun <= 阳历
+         *  moon <= 农历
+         *  {
+         *      month: 1-12} <= 月份
+         *      {
+         *          day: 1-31} <= 日期
+         *          {
+         *              title: 标题
+         *              text: 内容
+         *          }
+         *      }
+         * }
+         */
+        const TIME_WINDOW_CONSOLE = {
+            sun: {
+                "7-7": {
+                    title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
+                    text: "勿忘国耻，振兴中华"
+                },
+                "9-18": {
+                    title: `今天是 1931 年 9 月 18 日九一八事变 ${now.year - 1931} 周年纪念日！`,
+                    text: "勿忘国耻，振兴中华"
+                },
+                "12-13": {
+                    title: "对所有在南京大屠杀中被无辜杀害的同胞表示深切哀悼！",
+                    text: `勿忘国耻，振兴中华！\n <br /> 今天是南京大屠杀 ${now.year - 1937} 年纪念日、国家公祭日 \n <br /> 为在南京大屠杀中被杀害的平民默哀，铭记历史，珍视和平，绝不让这样的悲剧再次发生。`
+                },
+                "1-1": {
+                    title: "元旦快乐",
+                    text: `新年快乐！\n <br /> ${now.year} 年的进度条开始了！`
+                },
+                "12-31": {
+                    title: "元旦快乐",
+                    text: `新年快乐！\n <br /> ${now.year + 1} 年的进度条马上就要开始了！<br />`
+                },
+                "3-8": {
+                    title: "妇女节",
+                    text: "各位女神们，妇女节快乐！"
+                },
+                "4-1": {
+                    title: "愚人节",
+                    title: [
+                        "<span>！！！Minecraft 免费了 ！！！</span><br /><br /><img scr=\"/img/mcmfl.jpeg\" clsss=\"img-fluid\" alt=\"Minecraft 免费了\"></img>",
+                        "最新消息：美国灭国了。",
+                        "突发新闻：日本岛沉没了！",
+                        "非常抱歉，因为不可控原因，博客将于明天停止运营，感谢您的陪伴，再见",
+                        "(? => ?)();",
+                    ],
+                    text: "今天是愚人节，祝祝祝祝祝 UP 生日快乐！"
+                },
+                "4-5": {
+                    title: "清明安康。",
+                    text: ""
+                },
+                "5-1": {
+                    title: "劳动节快乐！",
+                    text: "为各行各业的辛勤工作劳动人民致敬！"
+                },
+                "5-4": {
+                    title: "五四青年节",
+                    text: "为百年前那些有思想政治觉悟，追求无产阶级、共产主义、马克思主义的青年们致敬！"
+                },
+                "6-1": {
+                    title: "各位小朋友们，儿童节快乐！",
+                    text: ""
+                },
+                "7-1": {
+                    title: `中国共产党 ${now.year - 1921} 岁生日快乐`,
+                    text: "今天时建党节。"
+                },
+                "8-15": {
+                    title: `日本鬼子已宣布无条件投降 ${now.year - 1945} 年了！`,
+                    text: "历史老师：标志着二战结束。"
+                },
+                "10-1": {
+                    title: `中华人民共和国 ${now.year - 1949} 岁生日快乐！`,
+                    text: "祝祖国母亲生日快乐！"
+                },
+                "10-2": "10-1",
+                "10-3": "10-1",
+                "10-4": "10-1",
+                "10-5": "10-1",
+                "10-6": "10-1",
+                "10-7": "10-1",
 
-        if (isDebug()) {
-            timeWinDivTitleText = `调试模式`
-            timeWinDivText = `管他，祝今天代码不出Error！`
+                "6-15": {
+                    title: [
+                        "sssssssss",
+                        "w335325325432"
+                    ],
+                    text: [
+                        "seeqeee    p[08937525235",
+                        "8675gd5u56658656480-9i-"
+                    ]
+                }
+            },
+            moon: {
+                "腊月廿九": {
+                    title: `${lunarDate.lunarYear + 1} 年新年快乐！`,
+                    text: ""
+                },
+                "腊月三十": "腊月廿九",
+                "正月初一": {
+                    title: `${lunarDate.lunarYear} 新年快乐！`,
+                    text: ""
+                },
+                "正月初二": "正月初一",
+                "正月初三": "正月初一",
+                "正月初四": "正月初一",
+                "正月初五": "正月初一",
+                "正月初六": "正月初一",
+                "正月十五": {
+                    title: "元宵节快乐！",
+                    text: "您吃汤圆了吗?"
+                },
+                "五月初五": {
+                    title: "端午节快乐！",
+                    text: "您吃粽子了吗?"
+                },
+                "八月十五": {
+                    title: "中秋节快乐！",
+                    text: "您吃月饼了吗? <br /><del>这是什么怪味月饼那!?</del>"
+                },
+                "九月初五": {
+                    title: "重阳安康",
+                    text: ""
+                }
+            },
+        };
+
+        // 修复节日判断逻辑
+        if (TIME_WINDOW_CONSOLE.sun[nowMonthDay]) {
+            let entry = TIME_WINDOW_CONSOLE.sun[nowMonthDay];
+            let depth = 0;
+
+            // 递归解析引用直到找到对象或达到最大深度
+            while (typeof entry === 'string' && depth < 5) {
+                entry = TIME_WINDOW_CONSOLE.sun[entry];
+                depth++;
+            }
+
+            console.log(typeof entry.title);
+            console.log(typeof entry.text);
+
+            if (typeof entry === 'object') {
+                timeWinDivTitleText = entry.title;
+                timeWinDivText = entry.text;
+            } if (typeof entry.title === 'Array []') {
+                const randomIndex = Math.floor(Math.random() * entry.length);
+                timeWinDivTitleText = entry[randomIndex];
+                timeWinDivText = entry.text;
+            } if (typeof entry.text === 'Array []') {
+                const randomIndex = Math.floor(Math.random() * entry.length);
+                timeWinDivTitleText = entry.title;
+                timeWinDivText = entry[randomIndex];
+            }
+        } else if (TIME_WINDOW_CONSOLE.moon[lunarDateChineseNY]) {
+            let entry = TIME_WINDOW_CONSOLE.moon[lunarDateChineseNY];
+            let depth = 0;
+
+            // 递归解析引用直到找到对象或达到最大深度
+            while (typeof entry === 'string' && depth < 5) {
+                entry = TIME_WINDOW_CONSOLE.moon[entry];
+                depth++;
+            }
+
+            if (typeof entry === 'object') {
+                timeWinDivTitleText = entry.title;
+                timeWinDivText = entry.text;
+            } if (typeof entry.title === 'string[]') {
+                const randomIndex = Math.floor(Math.random() * entry.length);
+                timeWinDivTitleText = entry[randomIndex];
+                timeWinDivText = entry.text;
+            } if (typeof entry.text === 'string[]') {
+                const randomIndex = Math.floor(Math.random() * entry.length);
+                timeWinDivTitleText = entry.title;
+                timeWinDivText = entry[randomIndex];
+            }
         }
 
         if (timeWinDivTitleText == "0") {// 其他不弹窗的情况放在这里
@@ -1191,16 +1304,7 @@ function timeWindow() {
         } else {
             console.log(timeWinDivTitleText);
             console.log(timeWinDivText);
-            if (isMobile()) {
-                // 判断是否是移动端,弹消息框,若为PC端则弹窗
-                Snackbar.show({
-                    text: `${timeWinDivTitleText}<br /><br />${timeWinDivText}`,
-                    actionText: "",
-                    duration: 10000,
-                });
-            } else {
-                msgWin.show(timeWinDivTitleText, timeWinDivText, true, 10000);
-            }
+            msgWin.show(timeWinDivTitleText, timeWinDivText, true, 10000);
         }
         // 设置今天已显示
         localStorage.setItem('shown', todayKey);
@@ -1259,19 +1363,40 @@ async function displayWelcomeMessage(ipLoacation) {
         日本: "よろしく、一緒に桜を見に行きますか？",
         美国: "Make America Great Again!",
         英国: "I'd like to ride the London Eye with you at night.",
-
+        俄罗斯: "До дна эту водку!",
+        法国: "C'est La Vie",
+        德国: "Die Zeit verging im Fluge.",
+        澳大利亚: "Let's go to the Great Barrier Reef together!",
+        加拿大: "Prenez une feuille de carte et vous la donnez.",
+        南极洲: "南极洲的风很大，你一定记得要带伞！",
         中国: {
+            connectProvincesCities: true,
             北京市: {municipalities: true, content: "北——京——欢迎您~~~" },
             天津市: {municipalities: true, content: "讲段相声吧。" },
             重庆市: "高德地图:已到达重庆，下面切换百度地图导航。百度地图：已到达重庆，下面切换高德地图导航。",
+            河北省: "山势巍巍成壁垒，天下雄关。铁马金戈由此向，无限江山。",
+            山西省: "展开坐具长三尺，已占山河五百余。",
+            内蒙古自治区: "天苍苍，野茫茫，风吹草低见牛羊。",
+            辽宁省: "我想吃烤鸡架！",
+            吉林省: "状元阁就是东北烧烤之王。",
+            黑龙江省: "哈尔滨红肠,东北饺子",
+            上海市: {
+                municipalities: true,
+                content: "众所周知，中国只有 3 个城市。"
+            },
             江苏省: {
                 南京市: "欢迎来自安徽省南京市的小伙伴",
                 苏州市: "东方威尼斯",
                 default: "散装的必须是散装的"
             },
-            山东省: "齐鲁大地",
+            浙江省: "东风渐绿西湖柳，雁已还人未南归。",
+            安徽省: "蚌埠住了，芜湖起飞。",
+            福建省: "井邑白云间，岩城远带山。",
+            江西省: "落霞与孤鹜齐飞，秋水共长天一色。",
+            山东省: "遥望齐州九点烟，一泓海水杯中泻。",
             湖北省: {
                 武汉市: {
+                    authorLocations: true,
                     汉阳区: "知音故里",
                     江夏区: "楚天首县",
                     default: "九省通衢"
@@ -1279,55 +1404,87 @@ async function displayWelcomeMessage(ipLoacation) {
                 咸宁市: "桂花之乡",
                 default: "荆楚门户"
             },
-            香港特别行政区: {specialAdministrativeRegion: true,content: "东方之珠"}
-        }
+            河南省: "74751，长沙斯塔克。",
+            广东省: "老板来两斤福建人。",
+            广西壮族自治区: "桂林山水甲天下。",
+            海南省: "朝观日出逐白浪，夕看云起收霞光。",
+            四川省: "康康川妹子。",
+            贵州省: "茅台，学生，再塞200。",
+            云南省: "玉龙飞舞云缠绕，万仞冰川直耸天。",
+            西藏自治区: "躺在茫茫草原上，仰望蓝天。",
+            陕西省: "来份臊子面加馍。",
+            甘肃省: "羌笛何须怨杨柳，春风不度玉门关。",
+            青海省: "牛肉干和老酸奶都好好吃。",
+            宁夏回族自治区: "大漠孤烟直，长河落日圆。",
+            新疆维吾尔自治区: "驼铃古道丝绸路，胡马犹闻唐汉风。",
+            台湾省: "我在这头，大陆在那头。",
+            香港特别行政区: "永定贼有残留地鬼嚎，迎击光非岁玉。",
+            澳门特别行政区: "性感荷官，在线发牌。",
+            香港特别行政区: {specialAdministrativeRegion: true,content: "东方之珠"},
+            default: "社会主义大法好!"
+        },
+        default: "带我去你的国家看看吧。"
     };
 
     // 根据国家、省份、城市信息自定义欢迎语
     // 海外地区不支持省份及城市信息
     if (data_scb[pos]) {
         if (typeof data_scb[pos] === 'object') { // 检查是否位于国外
-            let province = ipLoacation.result.ad_info.province.replace(/市$/, ''); // 去掉市字
-            let city = ipLoacation.result.ad_info.city.replace(/市$/, ''); // 去掉市字
-            let district = ipLoacation.result.ad_info.district;
-            if (data_scb[pos][province]) { // 省份信息
-                if (typeof data_scb[pos][province] === 'object') {
-                    if (data_scb[pos].specialAdministrativeRegion) { // 特别行政区
-                        posdesc = data_scb[pos].content;
-                    } else if (data_scb[pos][province].municipalities) { // 直辖市
-                        posdesc = data_scb[pos][province].content;
-                    } else { // 一般省份
-                        if (data_scb[pos][province][city]) {
-                            if (data_scb[pos][province][district]) {
-                                if (data_scb[pos][province][city][district]) {
-                                    
+            if (data_scb[pos].content) {
+                connectProvincesCities
+                posdesc = data_scb[pos].content;
+            } else {
+                let province = ipLoacation.result.ad_info.province.replace(/市$/, ''); // 去掉市字
+                let city = ipLoacation.result.ad_info.city.replace(/市$/, ''); // 去掉市字
+                let district = ipLoacation.result.ad_info.district;
+                if (data_scb[pos][province]) { // 省份信息
+                    if (typeof data_scb[pos][province] === 'object') {
+                        if (data_scb[pos][province].specialAdministrativeRegion) { // 特别行政区
+                            posdesc = data_scb[pos][province].content;
+                        } else if (data_scb[pos][province].municipalities) { // 直辖市
+                            posdesc = data_scb[pos][province].content;
+                        } else { // 一般省份
+                            if (data_scb[pos][province][city]) {
+                                if (data_scb[pos][province][district]) {
+                                    if (data_scb[pos][province][city][district]) {
+                                        posdesc = data_scb[pos][province][city][district];
+                                    } else {
+                                        posdesc = data_scb[pos][province][city].default;
+                                    } if (typeof entry === 'object' && data_scb[pos][province][city][district].authorLocations === true) {
+                                        ass = "老乡";
+                                    }
+                                } else {
+                                    posdesc = data_scb[pos][province][city].default;
+                                } if (typeof entry === 'object' && [pos][province][city].authorLocations === true) {
+                                    ass = "老乡";
                                 }
                             } else {
-                                posdesc = data_scb[pos][province][city].default;
+                                posdesc = data_scb[pos][province].default;
+                            } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
+                                ass = "老乡";
                             }
-                        } else {
-                            posdesc = data_scb[pos][province].default;
                         }
+                    } else {
+                        posdesc = data_scb[pos][province];
+                    } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
+                        ass = "老乡";
                     }
                 } else {
-                    posdesc = data_scb[pos][province];
+                    posdesc = data_scb[pos].default; // 省份信息不存在，使用默认信息
+                } if (data_scb[pos].connectProvincesCities) { // 连接省份和城市信息
+                    pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city;
+                } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
+                    ass = "老乡";
                 }
-            } else {
-                posdesc = data_scb[pos].default;
             }
         } else {
             posdesc = data_scb[pos];
-        }
-
-        if (pos === "中国") {
-            pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city;
+        } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
+            ass = "老乡";
         }
     } else {
-        posdesc = "带我去你的国家逛逛吧。";
+        posdesc = data_scb.default;
     }
-
-    // 检查是否为配置中指定的位置，如果是，则替换默认的"小伙伴"
-    if (ipLoacation.result.ad_info.city === "武汉市") ass = "老乡";
 
     //判断时间
     const now = new Date();

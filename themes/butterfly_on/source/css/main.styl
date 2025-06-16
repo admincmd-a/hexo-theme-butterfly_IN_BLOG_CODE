@@ -1,3 +1,5 @@
+@import 'variables.styl'
+
 /* Setting WinDiv Home --------------------------------------------*/
 span.config-title {
     top: 7px;
@@ -7,7 +9,7 @@ span.config-title {
 }
 
 html[data-theme="light"] span.config-title {
-    color: #10A7E8;
+    color: $color-theme-light-maib;
 }
 
 html[data-theme="dark"] span.config-title {
@@ -32,13 +34,13 @@ html[data-theme="dark"] span.config-2title {
 div.configWin {
     position:fixed;
     top:35%;
-    right:25%;
+    right:15%;
     z-index:25;
     border-width:2px;
     border-style:solid;
-    width:50%;
+    width:60%;
     border-radius: 20px; /*圆角*/
-    height: 35%;
+    height: 45%;
 }
 
 html[data-theme="light"] div.configWin {
@@ -266,6 +268,10 @@ p.messageWin-text#messageWin-text {
     color: #003152;
     font-size: 16px;
     text-align: center;
+}
+
+html[data-theme="dark"] p.messageWin-text#messageWin-text {
+    color: #F8F2E6;
 }
 
 /* html[data-theme="dark"] */
