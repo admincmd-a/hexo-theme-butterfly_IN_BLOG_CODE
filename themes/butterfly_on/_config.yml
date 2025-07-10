@@ -345,11 +345,6 @@ footer:
           <a href="https://www.travellings.cn/go.html" target="_blank" rel="noopener" title="开往-友链接力">
             <img id="travellings-logo" style="position:relative;top:4px" src="" alt="开往-友链接力" width="74" height="18">
           </a>'
-      admin:
-        ico: fas fa-home
-        url: https://github.com/jerryc127/hexo-theme-butterfly/issues
-        text: "https://admincmd.xyz/"
-    
 
     #key:           # 前缀文字（留空则无前缀）
     #  url:         # 链接地址
@@ -483,6 +478,20 @@ aplayerDIV:
         url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/%E5%90%9B%E3%81%AB%E5%98%98.mp3',
         cover: 'https://npm.elemecdn.com/musiccdn-ariasaka/pic/%E5%90%9B%E3%81%AB%E5%98%98.jpg',
         lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/%E5%90%9B%E3%81%AB%E5%98%98.lrc',
+    },
+    {
+        name: 'only my railgun',
+        artist: 'fripSide',
+        url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/only%20my%20railgun.mp3',
+        cover: 'https://npm.elemecdn.com/musiccdn-ariasaka/pic/only%20my%20railgun.jpg',
+        lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/only%20my%20railgun.lrc',
+    },
+    {
+        name: 'Lemon',
+        artist: '是Wei呀',
+        url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/Lemon.mp3',
+        cover: 'https://npm.elemecdn.com/musiccdn-ariasaka/pic/Lemon.jpg',
+        lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/Lemon.lrc',
     },
     {
         name: '群青',
@@ -656,12 +665,13 @@ welcomemap:
   api:
     qq:
       key: ET6BZ-DDXEN-JRBFT-SZEUP-WBLXS-V7FGJ # 腾讯key
+    api_url:
 
-  zz_longitude: 114.305000 # UP所在经度
-  zz_latitude: 30.592800 # UP所在纬度
-  zz_city: 武汉 # UP所在城市
-  zz_address_lx: 老乡
-  zz_address: 小伙伴
+  author_longitude: 114.305000 # UP所在经度
+  author_latitude: 30.592800 # UP所在纬度
+  author_city: 武汉 # UP所在城市
+  author_address: 老乡
+  default_address: 小伙伴
   ip: 
     enable: true # 是否显示访客IP
   dist: # 是否显示访客地址
@@ -680,7 +690,7 @@ welcomemap:
         美国: `Make America Great Again!`,
         英国: `I'd like to ride the London Eye with you at night.`,
         俄罗斯: `До дна эту водку!`,
-        法国: `C/'est La Vie`,
+        法国: `C'est La Vie`,
         德国: `Die Zeit verging im Fluge.`,
         澳大利亚: `Let's go to the Great Barrier Reef together!`,
         加拿大: `Prenez une feuille de carte et vous la donnez.`,
@@ -742,20 +752,19 @@ welcomemap:
         default: `带我去你的国家看看吧。`
     }"
     # 国家选择器
-    default_user: 小伙伴
-    author_locations_user: 老乡
-    error_msg: 你好呀，欢迎来看我的博客！
+    error_meesage: 你好呀，欢迎来看我的博客！
     
     # 访客位置描述
-    # 允许的参数 -> ${pos}, ${ass}, ${timeChange}, ${dist}, ${posdesc}, ${ip}
-    message: "欢迎来自<span> ${pos} </span>的 ${ass}，${timeChange}<br />你距我约有<span> ${dist} </span>公里，${posdesc}，你的 IP 地址是 ${ip}"
+    # 允许的参数 -> ${pos}, ${address}, ${timeChange}, ${dist}, ${posdesc}, ${ip}
+    message: "欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}"
 
 
-# 白天模式和黑夜模式切换时的JS脚本
+# 白天模式和黑夜模式切换时的 JavaScript 脚本
 # -------------------------------------
 # 它将在切换和初始化时执行
 # 若你想在切换时执行一些操作，请在这里写下
 # 若不起效果，请在网页控制台中运行 
+# @code {errors.getErrors(0x01010)} (LIGHT) 或 @code {errors.getErrors(0x01011)} (DARK)
 lightDarkMode:
   light: # 亮色主题
     js: "document.getElementById('travellings-logo').src = '/img/travelling_b.svg';
@@ -792,7 +801,7 @@ aside:
     # 头像下的按钮
   card_announcement: 
     enable: true
-    content: 
+    content: 没有公告，特此公告。
   # 公告内容
   card_recent_post: 
     enable: true
@@ -1041,7 +1050,7 @@ facebook_comments:
 # Twikoo
 # https://github.com/imaegoo/twikoo
 twikoo: 
-  envId: https://twikoo.admincmd.xyz/.netlify/functions/twikoo #https://twiook-vercel.vercel.app/ #https://rebo-jcjuikf5u-admincmd-a.vercel.app/ #https://cheery-creponne-9b9740.netlify.app
+  envId: https://twikoo.admincmd.xyz/ #https://twiook-vercel.vercel.app/ #https://rebo-jcjuikf5u-admincmd-a.vercel.app/ #https://cheery-creponne-9b9740.netlify.app
   region: ap-shanghai
   visitor: false
   option:

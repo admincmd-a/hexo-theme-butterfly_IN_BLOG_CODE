@@ -201,16 +201,12 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 //  ----------------------------------------------------------
 // JS 文件内需要公共调用的东西
 
-const errorCodes = ((oldErrorCodes = null) => {
+const errorCodesFunc = (
+    (oldErrorCodes = null) => 
+        {
     // let errorCode = 0x00000;
     // let errorMsg = "";
-    let errors = {
-        0x0000000: {
-            errorCode: 0x0000000,
-            message: "成功",
-            warn: 0x0,
-        }
-    };
+    let errors = {};
 
     const ERROR_TYPES = {
         SILENT: 0x0,// 静默
@@ -232,6 +228,7 @@ const errorCodes = ((oldErrorCodes = null) => {
 
     const ERROR_CODE_MSG = ERROR_CODE_MSG_ZH_CN;
 
+    if (sessionStorage.getItem(DATA_TYPE.STAORAGE)) {oldErrorCodes = sessionStorage.getItem(DATA_TYPE.STAORAGE);}
     // 参数校验函数
     const validateParams = (code, message, warn) => {
         if (typeof code !== 'number') {
@@ -278,7 +275,7 @@ const errorCodes = ((oldErrorCodes = null) => {
          * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量,注：0x3 时会引发页面重载。
          * @param {boolean} returnID 是否返回错误ID，缺省值为 false
          * @returns {false | string} 返回 false，若 {@link returnID} 为true,则返回错误ID
-         * @example } catch (e) {return errorCodes.setErrorCode(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
+         * @example } catch (message) {return errorCodes.setErrorCode(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
          * @function {@link errorCodes.getErrorCode} 获取错误码和信息
          * @function {@link errorCodes.clearError} 清除错误信息
          */
@@ -302,7 +299,7 @@ const errorCodes = ((oldErrorCodes = null) => {
                     time: new Date().toLocaleString(),
                 };
 
-                const fullMessage = `ERROR: (${formatErrorCode(code)}) 错误 => `;
+                const fullMessage = `运行时出错: (${formatErrorCode(code)})`;
 
                 console.error(fullMessage, message); // 抛出错误
                 debugger; // 尝试暂停程序
@@ -345,22 +342,33 @@ const errorCodes = ((oldErrorCodes = null) => {
         }),
 
         /**
-         * 根据错误码获取错误信息
+         * 通过 错误码 取到错误信息
          * @param {number} errorCode 错误码
          * @returns {object} 错误码和信息对象
          * @function {@link errorCodes.addError} 设置错误码和信息
          * @function {@link errorCodes.clearError} 清除错误信息
          */
         getErrors: (errorCode) => {
-            let data = errors.replace(/[\r\n]/g, '').split(',');
-            let result = ({
-                data
-            });
-            if (errors[data].code === errorCode) {
-                result.data[data] = errors[data];
+            let result = {
+                message: "让我康康有神马错误 (　o=^•ェ•)o　┏━┓",
+                code: 201,
+                items: {}
+            };
+            for (let errorID in errors) {
+                if (errors[errorID].code === errorCode) {
+                    result.items[errorID] = errors[errorID];
+                    if (result.code === 201) {
+                        result.code = 200;
+                    }
+                }
+            } if (result.code === 201) {
+                result.message = "啥也木有 (　o=^•ェ•)o　┏━┓";
+                result.code = 201;
+                return result;
             }
             return result;
         },
+        
 
         /**
          * 返回所有已被记录的错误码和信息
@@ -379,17 +387,14 @@ const errorCodes = ((oldErrorCodes = null) => {
         },
 
         // 暴露常量
-        ERROR_TYPES,
-        DATA_TYPE,
-        errors,
+        ERROR_TYPES: ERROR_TYPES,
+        DATA_TYPE: DATA_TYPE,
+        errors: errors
     };
-})((() => {
-    if (sessionStorage.getItem(errorCodes.DATA_TYPE.STAORAGE)) {
-        errorCodes(errorCodes.DATA_TYPE);
-        // 尝试恢复上次的错误信息
-    }
-    return {}; // 否则返回空对象
-}));
+});
+
+const errorCodes = errorCodesFunc(null);
+console.log(errorCodes.ERROR_TYPES.ERROR)
 
 
 
@@ -500,7 +505,6 @@ var pageBlur = {
     setConfigPx(px) {
         this.px = px;
     }
-
 }
 
 
@@ -537,16 +541,14 @@ const msgWin = {
                 this.timeOutId = setTimeout(msgWin.close(), timeOut);
             }
             try {
-                if (vague) { pageBlur.setTrue(); /* 开启模糊 */ }
+                if (vague) pageBlur.setTrue(); /* 开启模糊 */ 
                 document.getElementById(this.id).style.display = null;
-                document.getElementById(this.id).innerHTML =
-                    `
+                document.getElementById(this.id).innerHTML = `
                 <p id="messageWin-title" class="messageWin-title">${title}</p>
                 <p id="messageWin-text" class="messageWin-text">${content}</p>
                 <br />
                 <a class="messageWin-closeWin" href="javascript:msgWin.close()" id="messageWin-closeWin">关闭</a>
                 <br />
-
                 `;
             } catch (error) {
                 return errorCodes.addError(0x00002, `打开消息窗口失败：${error}`, errorCodes.ERROR_TYPES.ERROR, false);
@@ -560,14 +562,14 @@ const msgWin = {
     close() {
         window.document.getElementById(this.id).style.display = "none";
         pageBlur.setFalse(); // 关闭模糊
-        if (this.timeOutId !== null) clearTimeout(this.timeOutId);// 注销定时器
+        if (this.timeOutId !== null) clearTimeout(this.timeOutId); // 注销定时器
         return;
     },
 
     /**
      * 设置消息窗口的DOM id
      * @param {string} id id名称
-     * @param {null} class_name class名称，未使用
+     * @param {undefined} class_name class名称，未使用
      * @returns {null}
      */
     setDiv(id, class_name) {
@@ -577,20 +579,21 @@ const msgWin = {
     },
 
     initialize() {
-        window.document.getElementById(this.id).style.display = "none";
+        document.getElementById(this.id).style.display = "none";
         return;
     },
 };
 
 
 // 明亮/暗黑模式切换
-// -------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // 2024-12-28 解决了首次访问时,没有coockie时导致if执行失败,导致部分图片没有切换.
 // 2025-02-21 现在没有Cookie时，会根据时间自动切换模式。
 // 2025-03-04 修复了会导致一直是白天模式bug。
 // 2025-04-15 修复逻辑问题,统一将Cookies更换为sessionStorage
 // 2025-04-28 继续优化和修复一些小问题
 // 2025-05-04 重写了切换逻辑
+// 2025-07-06 修复了用户自定义切换 JavaScript 代码的代码问题
 
 const lightDarkTheme = (() => {
     const DATA_TYPE = {
@@ -647,13 +650,13 @@ const lightDarkTheme = (() => {
         theme = DATA_TYPE.LIGHT;
         document.documentElement.setAttribute(DATA_TYPE.HTML_KEY, DATA_TYPE.LIGHT);
         _setStorageItem(DATA_TYPE.LIGHT);
+        if (enableSnackbar) {
+            GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day);
+        }
         try {
             _lightUserPug();
         } catch (error) {
-            return errorCodes.addError(0x00023, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
-        }
-        if (enableSnackbar) {
-            GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day);
+            return errorCodes.addError(0x01010, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
         }
     };
 
@@ -665,13 +668,13 @@ const lightDarkTheme = (() => {
         theme = DATA_TYPE.DARK;
         document.documentElement.setAttribute(DATA_TYPE.HTML_KEY, DATA_TYPE.DARK);
         _setStorageItem(DATA_TYPE.DARK);
+        if (enableSnackbar) {
+            GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night);
+        }
         try {
             _darkUserPug();
         } catch (error) {
-            return errorCodes.addError(0x00023, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
-        }
-        if (enableSnackbar) {
-            GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night);
+            return errorCodes.addError(0x01011, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
         }
     };
 
@@ -741,12 +744,12 @@ const lightDarkTheme = (() => {
          * @param {boolean} enableSnackbar 是否显示切换提示，缺省值为 true
          */
         toggleTheme: (enableSnackbar = true) => {
-            if (isBoolean(enableSnackbar)) enableSnackbar = true;
+            if (!isBoolean(enableSnackbar)) enableSnackbar = true;
             switchTheme(enableSnackbar);
         },
 
         // 暴露常量
-        DATA_LIGHT_DARK_THEME_ITEM: DATA_TYPE,
+        DATA_TYPE
     };
 })();
 
@@ -758,110 +761,7 @@ function activateDarkMode() {
     lightDarkTheme.setTheme(DATA_THEME_DARK, true);
 }
 
-
-
-// /**
-//  * 内部函数
-//  * 写入本地存储的值
-//  * @param {string} value 欲存储值
-//  * @returns {boolean|null} 是否成功写入
-//  * 
-//  */
-// lightDarkTheme._setStorageItem = (value) => {
-//     try {
-//         localStorage.setItem(DATA_LOCAL_THEME_MODE_ITEM, value);
-//         sessionStorage.setItem(DATA_SESSION_THEME_MODE_ITEM, value);
-//         return true;
-//     } catch (error) {
-//         return setErrorCode(0x00001, `写入本地存储失败：${error}`, 1)
-//     }
-// }
-
-// /**
-// * 初始函数
-// * 读取本地存储的主题设置，并根据设置切换主题
-// */
-// lightDarkTheme.initalize = () => {
-//     // 初始化执行部分
-//     if (DATA_LOACL_THEME_MODE_ITEM_OBJECT == DATA_THEME_AUTO || null || undefined) {
-//         lightDarkTheme.autoTheme(false);
-//     } else if (DATA_LOACL_THEME_MODE_ITEM_OBJECT == DATA_THEME_DARK) {
-//         lightDarkTheme.darkTheme(false);
-//     } else if (DATA_LOACL_THEME_MODE_ITEM_OBJECT == DATA_THEME_LIGHT) {
-//         lightDarkTheme.lightTheme(false);
-//     } else {}
-
-// }
-// (() => {
-//     lightDarkTheme.initalize();
-//     return;
-// })();
-
-// ---------------------
-
-// function LigheMode() { // 暗黑模式
-//     document.documentElement.setAttribute(DATA_LOACL_THEME_MODE_ITEM, 'light')
-//     localStorage.setItem(DATA_LOACL_THEME_MODE_ITEM, "light");
-//     sessionStorage.setItem(DATA_SESSION_THEME_MODE_ITEM, "light");
-//     // if (document.querySelector('meta[name="theme-color"]') !== null) {
-//     //   document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-//     // }
-//     try {
-//         lightUserPug();
-//     } catch (error) {
-//         console.error("用户自定义切换 JavaScript 代码出现错误：", error)
-//     }
-//     // 将需要调整的元素修改代码扔在这里
-//     GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
-// }
-
-// function DarkMode() { // 调整至明亮模式
-//     document.documentElement.setAttribute(DATA_LOACL_THEME_MODE_ITEM, DATA_THEME_DARK);
-//     localStorage.setItem(DATA_LOACL_THEME_MODE_ITEM, DATA_THEME_DARK);
-//     // if (document.querySelector('meta[name="theme-color"]') !== null) {
-//     //   document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-//     // }
-//     // 将需要调整的元素修改代码扔在这里
-//     try {
-//         darkUserPug();
-//     } catch (error) {
-//         console.error("用户自定义切换 JavaScript 代码出现错误：", error);
-//     }
-//     GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night);
-// }
-
-// function switchDataThemeMode() { // 切换模式
-//     if (DATA_LOACL_THEME_MODE_ITEM_OBJECT == "auto") {
-//         if (document.documentElement.getAttribute("data-theme") == "light") {
-//             DarkMode();
-//         } else {
-//             LigheMode();
-//         }
-//         return;
-//     } else if (DATA_LOACL_THEME_MODE_ITEM_OBJECT == "light") {
-//         localStorage.setItem(DATA_LOCAL_THEME_MODE_ITEM, "dark");
-//         DarkMode();
-//     } else if (DATA_LOACL_THEME_MODE_ITEM_OBJECT == "dark") {
-//         localStorage.setItem(DATA_LOCAL_THEME_MODE_ITEM, "light");
-//         LigheMode();
-//     } else if (DATA_LOACL_THEME_MODE_ITEM_OBJECT == null) {
-//         localStorage.setItem(DATA_LOCAL_THEME_MODE_ITEM, "auto");
-//         if (now.getHours() < 6) {
-//             LigheMode();
-//         } else {
-//             DarkMode();
-//         }
-//     } else {
-//         return;
-//     }
-
-
-// }
-
-
-
 // End ---------------------------------------------------------------------------------------------
-
 
 /**
 * 判断是否是移动端
@@ -1000,7 +900,7 @@ function clearCookies(enableReturn = false) {
 
 /**
  * 取到当前页面的被选中文本
- * @returns { string | null } 当前选中的文本
+ * @returns { string | null } 当前选中的文本，如果没有选中则返回 null
  */
 function getSelectedText() {
     if (window.getSelection) {
@@ -1022,6 +922,7 @@ function getSelectedText() {
 /**
  * 将指定的文本复制到剪贴板
  * @param {string} copyText 欲写入剪贴板的文本
+ * @note 需要用户授权
  */
 function setCopyText(copyText) {
     navigator.clipboard.writeText(copyText);
@@ -1030,7 +931,7 @@ function setCopyText(copyText) {
 /**
  * 休眠线程
  * @param {number} ms 休眠时间，单位 ms
- * @returns 等他返回了程序不就继续了吗
+ * @returns {null} 等他返回了程序不就继续了吗
  */
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -1078,13 +979,17 @@ function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个
 
 }
 
-(() => {
-    // 初始化主题
-    updateVar();
-    lightDarkTheme.refreshTheme();
-    pageBlur.topWin();
-    msgWin.initialize();
-})();
+/**
+ * 空函数，用于占位
+ */
+function nullFunc() {}
+
+// 初始化主题
+updateVar();
+lightDarkTheme.refreshTheme();
+pageBlur.topWin();
+msgWin.initialize();
+void 0;
 
 // 主循环模块 ----------------------------------------------------
 
@@ -1097,19 +1002,21 @@ function updateVar() {
     }
 
 
-    /**
-     * 下面是处理流程
-     */
-    if (timer === 0) {
-        setInterval(times, 0, updateVar)
+    // 下面是处理流程
+    if (timer == 0) {
+        setInterval(times, 100, updateVar)
+        console.log("主循环启动")
+    } else if (timer % 1000 === 0) {
+
+    } else if (timer % 10000 === 0) {
+        nowTime = new Date(); // 更新当前时间
     }
     timer++; // 计时器
-
 }
 
 
 
-function timeWindow() {
+async function timeWindow() {
     // 欢迎语，cookie 提醒 --------------------------------------------
     // 首次访问，弹出Cookie提醒    
 
@@ -1120,9 +1027,9 @@ function timeWindow() {
          *  sun <= 阳历
          *  moon <= 农历
          *  {
-         *      month: 1-12} <= 月份
+         *      month: 1-12 <= 月份
          *      {
-         *          day: 1-31} <= 日期
+         *          day: 1-31 <= 日期
          *          {
          *              title: 标题
          *              text: 内容
@@ -1313,22 +1220,24 @@ function timeWindow() {
     }
     return true;
 }
-timeWindow();
+setTimeout(timeWindow, 10); // 延迟 1/100 秒执行
+
 // 以下是欢迎语
 // -----------------------------------------------------------------------------
 // 2024.12.21 修正了无法获取 KEY 的问题，将欢迎语显示合并，如果在武汉，那就是UP的老乡
 // 2025.2.23 修正了在没有 Cookie 的情况下，无法显示欢迎语的问题
+// 2025.6.28 重写逻辑
+// 2025.7.10 配置化处理
 
 //请求数据
-setTimeout(hhhhhhhhhhh, 10); // 新开一个线程，防止阻塞主线程
+setTimeout(hhhhhhhhhhh, 1); // 新开一个线程，防止阻塞主线程
 
-function hhhhhhhhhhh() {
-    const txkey = "ET6BZ-DDXEN-JRBFT-SZEUP-WBLXS-V7FGJ";
+async function hhhhhhhhhhh() {
     let ipLoacation = window.saveToLocal.get('ipLocation');
     if (!ipLoacation) {
         // 数据已过期或不存在
         var script = document.createElement('script');
-        var url = `https://apis.map.qq.com/ws/location/v1/ip?key=${txkey}&output=jsonp`;
+        var url = `https://apis.map.qq.com/ws/location/v1/ip?key=${_USER_CONFIG.WELCOME_MAP.API_KEY}&output=jsonp`;
         script.src = url;
         window.QQmap = function (data) {
             ipLoacation = data;
@@ -1344,7 +1253,6 @@ function hhhhhhhhhhh() {
     }
 }
 
-
 async function displayWelcomeMessage(ipLoacation) {
     while (!ipLoacation.result) {
         await sleep(100); // 等待数据加载完成
@@ -1352,86 +1260,29 @@ async function displayWelcomeMessage(ipLoacation) {
     }
 
     // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
-    let dist = getDistanceAMLS(114.305000, 30.592800, ipLoacation.result.location.lng, ipLoacation.result.location.lat);
+    let dist = getDistanceAMLS(
+        _USER_CONFIG.WELCOME_MAP.AUTHOR_LONGITUDE, 
+        _USER_CONFIG.WELCOME_MAP.AUTHOR_LATITUDE, 
+        ipLoacation.result.location.lng, 
+        ipLoacation.result.location.lat
+    ); // 计算距离
+
+    // 读取欢迎语数据
     let pos = ipLoacation.result.ad_info.nation;
     let ip = ipLoacation.result.ip;
     let ipDZ;
     let posdesc; //要显示的信息
-    let ass = "小伙伴";
-
-    const data_scb = {
-        日本: "よろしく、一緒に桜を見に行きますか？",
-        美国: "Make America Great Again!",
-        英国: "I'd like to ride the London Eye with you at night.",
-        俄罗斯: "До дна эту водку!",
-        法国: "C'est La Vie",
-        德国: "Die Zeit verging im Fluge.",
-        澳大利亚: "Let's go to the Great Barrier Reef together!",
-        加拿大: "Prenez une feuille de carte et vous la donnez.",
-        南极洲: "南极洲的风很大，你一定记得要带伞！",
-        中国: {
-            connectProvincesCities: true,
-            北京市: {municipalities: true, content: "北——京——欢迎您~~~" },
-            天津市: {municipalities: true, content: "讲段相声吧。" },
-            重庆市: "高德地图:已到达重庆，下面切换百度地图导航。百度地图：已到达重庆，下面切换高德地图导航。",
-            河北省: "山势巍巍成壁垒，天下雄关。铁马金戈由此向，无限江山。",
-            山西省: "展开坐具长三尺，已占山河五百余。",
-            内蒙古自治区: "天苍苍，野茫茫，风吹草低见牛羊。",
-            辽宁省: "我想吃烤鸡架！",
-            吉林省: "状元阁就是东北烧烤之王。",
-            黑龙江省: "哈尔滨红肠,东北饺子",
-            上海市: {
-                municipalities: true,
-                content: "众所周知，中国只有 3 个城市。"
-            },
-            江苏省: {
-                南京市: "欢迎来自安徽省南京市的小伙伴",
-                苏州市: "东方威尼斯",
-                default: "散装的必须是散装的"
-            },
-            浙江省: "东风渐绿西湖柳，雁已还人未南归。",
-            安徽省: "蚌埠住了，芜湖起飞。",
-            福建省: "井邑白云间，岩城远带山。",
-            江西省: "落霞与孤鹜齐飞，秋水共长天一色。",
-            山东省: "遥望齐州九点烟，一泓海水杯中泻。",
-            湖北省: {
-                武汉市: {
-                    authorLocations: true,
-                    汉阳区: "知音故里",
-                    江夏区: "楚天首县",
-                    default: "九省通衢"
-                },
-                咸宁市: "桂花之乡",
-                default: "荆楚门户"
-            },
-            河南省: "74751，长沙斯塔克。",
-            广东省: "老板来两斤福建人。",
-            广西壮族自治区: "桂林山水甲天下。",
-            海南省: "朝观日出逐白浪，夕看云起收霞光。",
-            四川省: "康康川妹子。",
-            贵州省: "茅台，学生，再塞200。",
-            云南省: "玉龙飞舞云缠绕，万仞冰川直耸天。",
-            西藏自治区: "躺在茫茫草原上，仰望蓝天。",
-            陕西省: "来份臊子面加馍。",
-            甘肃省: "羌笛何须怨杨柳，春风不度玉门关。",
-            青海省: "牛肉干和老酸奶都好好吃。",
-            宁夏回族自治区: "大漠孤烟直，长河落日圆。",
-            新疆维吾尔自治区: "驼铃古道丝绸路，胡马犹闻唐汉风。",
-            台湾省: "我在这头，大陆在那头。",
-            香港特别行政区: "永定贼有残留地鬼嚎，迎击光非岁玉。",
-            澳门特别行政区: "性感荷官，在线发牌。",
-            香港特别行政区: {specialAdministrativeRegion: true,content: "东方之珠"},
-            default: "社会主义大法好!"
-        },
-        default: "带我去你的国家看看吧。"
-    };
+    const defaultAddress = _USER_CONFIG.WELCOME_MAP.DEFAULT_ADDRESS;
+    const authorAddress = _USER_CONFIG.WELCOME_MAP.AUTHOR_ADDRESS;
+    const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH;
+    let address = defaultAddress;
+    
 
     // 根据国家、省份、城市信息自定义欢迎语
     // 海外地区不支持省份及城市信息
     if (data_scb[pos]) {
-        if (typeof data_scb[pos] === 'object') { // 检查是否位于国外
+        if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
             if (data_scb[pos].content) {
-                connectProvincesCities
                 posdesc = data_scb[pos].content;
             } else {
                 let province = ipLoacation.result.ad_info.province.replace(/市$/, ''); // 去掉市字
@@ -1451,36 +1302,36 @@ async function displayWelcomeMessage(ipLoacation) {
                                     } else {
                                         posdesc = data_scb[pos][province][city].default;
                                     } if (typeof entry === 'object' && data_scb[pos][province][city][district].authorLocations === true) {
-                                        ass = "老乡";
+                                        address = authorAddress;
                                     }
                                 } else {
                                     posdesc = data_scb[pos][province][city].default;
                                 } if (typeof entry === 'object' && [pos][province][city].authorLocations === true) {
-                                    ass = "老乡";
+                                    address = authorAddress;
                                 }
                             } else {
                                 posdesc = data_scb[pos][province].default;
                             } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
-                                ass = "老乡";
+                                address = authorAddress;
                             }
                         }
                     } else {
                         posdesc = data_scb[pos][province];
                     } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
-                        ass = "老乡";
+                        address = authorAddress;
                     }
                 } else {
                     posdesc = data_scb[pos].default; // 省份信息不存在，使用默认信息
                 } if (data_scb[pos].connectProvincesCities) { // 连接省份和城市信息
                     pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city;
                 } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
-                    ass = "老乡";
+                    address = authorAddress;
                 }
             }
         } else {
             posdesc = data_scb[pos];
         } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
-            ass = "老乡";
+            address = authorAddress;
         }
     } else {
         posdesc = data_scb.default;
@@ -1500,7 +1351,7 @@ async function displayWelcomeMessage(ipLoacation) {
     // 检查 welcome-info 是否存在
     const welcomeInfoElement = document.getElementById("welcome-info");
     if (welcomeInfoElement) {
-        welcomeInfoElement.innerHTML = `欢迎来自<span> ${pos} </span>的 ${ass}，${timeChange}<br />你距我约有<span> ${dist} </span>公里，${posdesc}，您的 IP 地址是 ${ip}`;
+        welcomeInfoElement.innerHTML = _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip);
     }
 
     if (sessionStorage.getItem("popCookieWindow") != "0") {

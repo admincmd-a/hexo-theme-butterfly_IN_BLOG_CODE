@@ -1,6 +1,38 @@
-include ./main-js.pug
+script.
+    // 用于给用户配置切换使用
+    function _lightUserPug() {
+        #{theme.lightDarkMode.light.js}
+    }
+    function _darkUserPug() {
+        #{theme.lightDarkMode.dark.js}
+    }
+    
+    const _ipLoacationKey = "#{theme.welcomemap.api.qq.key}";
 
-.messageWin#messageWin
+    function _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip) {
+        return `!{theme.welcomemap.welcome_posdesc.message}`; // 使用 \!{} 防止转义
+    }
+
+    const _USER_CONFIG = {
+        WELCOME_MAP: {
+            ENABLE: #{theme.welcomemap.enable},
+            API_URL: "#{theme.welcomemap.api.api_url}",
+            API_KEY: "#{theme.welcomemap.api.qq.key}",
+            AUTHOR_LONGITUDE: "#{theme.welcomemap.author_longitude}",
+            AUTHOR_LATITUDE: "#{theme.welcomemap.author_latitude}",
+            AUTHOR_ADDRESS: "#{theme.welcomemap.author_address}",
+            DEFAULT_ADDRESS: "#{theme.welcomemap.default_address}",
+            INFO_IP_ENABLE: #{theme.welcomemap.ip.enable},
+            INFO_DIST_ENABLE: #{theme.welcomemap.dist.enable},
+            INFO_TIME_CHANGE_ENABLE: #{theme.welcomemap.timeChange.enable},
+            POSDESC_ENABLE: #{theme.welcomemap.welcome_posdesc.enable},
+            POSDESC_SWITCH: #{theme.welcomemap.welcome_posdesc.switch},
+            ERROR_MESSAGE: "#{theme.welcomemap.error_message}",
+            MESSAGE: null
+        }
+    };
+
+.messageWin#messageWin(style="display:none;")
     p.messageWin-title#messageWin-title 
     p.messageWin-text#messageWin-text 
     br

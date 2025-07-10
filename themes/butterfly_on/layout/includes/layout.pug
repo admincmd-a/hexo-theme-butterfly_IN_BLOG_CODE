@@ -12,7 +12,9 @@ if theme.enable
       !=partial('includes/other_head',{}, {cache:true})
     body
       !=partial('includes/load',{}, {cache:true})
-      //- 在设置等'窗口'打开时，对#WED进行操作即可,任何需要作为网页基本元素都需要放在#WED中
+      !=partial('includes/other_boby',{}, {cache:true})
+      !=partial('includes/welcomemap',{}, {cache:true})
+      //- 在设置等'窗口'打开时，对#page-main 进行操作即可,任何需要作为网页基本元素都需要放在 #page-main 中
       #page-main.page-main(sytle="")
         if theme.preloader.enable
           !=partial('includes/loading/index', {}, {cache: true})
@@ -39,12 +41,6 @@ if theme.enable
           if (theme.footer.enable)
             footer#footer.footer()
               !=partial('includes/footer/footer', {}, {cache: true})
-          //- - var back_ground = isImgOrUrl(theme.footer.back_ground.img) ? `background-image: url('${url_for(footerBg)}')` : `background: ${back_ground.color}`
-          //- footer#footer(style=isImgOrUrl(theme.footer.background.img) ? `background-image: url('${url_for(back_ground.image)}')` : `background: ${back_ground.color}`)
-          //-   !=partial('includes/footer/footer', {}, {cache: true})
-
-
-
         else
           include ./404.pug
 
@@ -54,10 +50,10 @@ if theme.enable
       if page.type !== '404'
 
       div(id="sett" class="sett" style="display:none")
+      !=partial('includes/main-js',{}, {cache:true})
       !=partial('includes/rightmenu',{}, {cache:true})
       !=partial('includes/aaa',{}, {cache:true})
-      !=partial('includes/other_boby',{}, {cache:true})
-      !=partial('includes/welcomemap',{}, {cache:true})
+
       !=partial('includes/aplayer',{}, {cache:true})
 
       script(src="/js/LunarCalendar.js")
@@ -65,10 +61,9 @@ if theme.enable
 
 
       include ./additional-js.pug
-
       !=partial('includes/configwin/main',{}, {cache:true})
 else 
-  html(lang="zh-CN")
+  html(lang=config.language)
     head 
       meta(charset='UTF-8')
     body 
