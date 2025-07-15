@@ -29,15 +29,13 @@ nav:
         # 网站: /zy/www/ || fa-solid fa-globe
         # 软件与实用工具: /zy/app/ || fa-regular fa-window-restore
       留言板: /lyb_files/ || fas fa-comment
-
-
       杂项||fas fa-ellipsis-h:
         随便看看: javascript:justLookAround(); || fa-brands fa-stack-overflow
         太公钓鱼: /cnm.html || fas fa-fish
         # 测试页面: /favi/time.html || fa-solid fa-code
         # ATOM: /atom.xml || fa-solid fa-rss
         RSS: /atom.xml || fa-solid fa-rss
-        # 时光飞逝: /favi/ || fa-solid fa-clock
+        时光飞逝: /favi/ || fa-solid fa-clock
         声明 & Cookies: /license/ || fas fa-solid fa-file-contract
         隐私政策: /privacy/ || fas fa-solid fa-user-secret
         # 线路总览: /server/ || fas fa-link
@@ -49,6 +47,7 @@ nav:
       # 定义：
       # 无子菜单项目
       # [1]: [2] || [3]
+      # 配置项: html
       # 有子菜单项目
       # [1]||[3]: 
       #    [4]
@@ -162,6 +161,7 @@ error_404:
   subtitle: ''
   background: /img/404.gif
   description: '3S 后返回首页'
+  sleep: true # 在进入后跳转回主页页面
 
 post_meta:
   page: # Home Page
@@ -189,7 +189,7 @@ index_post_content:
 # anchor
 anchor:
   # when you scroll, the URL will update according to header id.
-  auto_update: false
+  auto_update: true
   # Click the headline to scroll and update the anchor
   click_to_scroll: false
 
@@ -653,6 +653,13 @@ color:
     #    choose:
     #    contrast:
 
+# 在页面取消焦点和获得焦点时修改窗口标题
+# -------------------------------------------
+focus_title:
+  enable: true
+  # 允许的常量 -> ${originalTitle}
+  lost_focus: "这都跑去干啥了，让我康康 | ${originalTitle}"
+  get_focus: "干啥去了，现在才回 | ${originalTitle}"
 
 # 右键菜单
 # ------------------------------

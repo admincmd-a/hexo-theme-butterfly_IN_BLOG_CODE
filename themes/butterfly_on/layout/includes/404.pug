@@ -2,25 +2,26 @@
 
 #body-wrap.error404
   include ./header/index.pug
-  meta(
-    content="3;url=/" 
-    http-equiv="refresh"
-    )
+  if theme.error_404.sleep
+    meta(
+      content="3;url=/" 
+      http-equiv="refresh"
+      )
   //- #error-wrap
     //- .error-content
       //- .error-img
         //- img(src=url_for(top_img_404) alt='Page not found')
-      //- .error-info
+      //- .error-info+-
         //- .error_h2= theme.error_404.h2 || h2('HTTP ERROR') 
         //- h1.error_title= '404'
         //- .error_subtitle= theme.error_404.subtitle || _p('error404')
         //- .error_description= theme.error_404.description || _p('error404_description')
-  #error-wrap
+  #error-wrap 
     .error-content
       .error-img
         img(src=url_for(top_img_404) alt='Page not found')
       .error-info
-        h2 HTTP ERROR
+        p HTTP ERROR
         h1.error_title= '404'
         .error_subtitle= theme.error_404.subtitle || _p('error404')
         .error_description= theme.error_404.description || _p('error404_description')

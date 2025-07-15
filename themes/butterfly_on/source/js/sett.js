@@ -325,7 +325,7 @@ const config_MAIN_HTML = `
 <span>    </span>
 <a href="javascript:configWin.user()" class="config-bottom" id="config-dir-user">
     <i class="fa-solid fa-user"></i>
-    <span>自定义</span>
+    <span>隐私管理</span>
 </a>
 <span>    </span>
 <a href="javascript:configWin.about()" class="config-bottom" id="config-dir">

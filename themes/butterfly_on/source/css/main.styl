@@ -1,4 +1,4 @@
-@import 'variables.styl'
+
 
 /* Setting WinDiv Home --------------------------------------------*/
 span.config-title {
@@ -330,21 +330,38 @@ body
   margin-bottom: 10px;
 }
 .progress-label {
-  margin-bottom: 5px;
+//   margin-bottom: 5px;
+}
+.year-progress-bar,.month-progress-bar,.day-progress-bar,.hour-progress-bar,.minute-progress-bar {
+//   width: 100%;
+//   color: hsla(0, 0%, 31%, 0.24); /* 进度条背景色 */
+//   border-radius: 5px;/*圆角*/
+//   overflow: hidden;
+  text-align: center;
+  line-height: 20px;
+  transition: width 1.5s;/*一次到目标位置的速度*/
+  height: 15px;/*进度条高度*/
+}
+.year-progress-bar {
+  background-color: #4caf50;/*进度条颜色*/
+}
+.month-progress-bar {
+  background-color: #4caf50;/*进度条颜色*/
+}
+.day-progress-bar {
+  background-color: #4caf50;/*进度条颜色*/
+}
+.hour-progress-bar {
+  background-color: #4caf50;/*进度条颜色*/
+}
+.minute-progress-bar {
+  background-color: #4caf50;/*进度条颜色*/
 }
 .progress-bar {
   width: 100%;
-  background-color: hsla(0, 0%, 31%, 0.24); /* 进度条背景色 */
+  background-color: #ddd;/*进度条背景色*/
   border-radius: 5px;/*圆角*/
   overflow: hidden;
-}
-.progress-bar-inner {
-  height: 15px;/*进度条高度*/
-  background-color: #4caf50;/*进度条颜色*/
-  text-align: center;
-  /* color: white;背景颜色 */
-  line-height: 20px;
-  transition: width 1.5s;/*一次到目标位置的速度*/
 }
 
 /* 时光飞逝 End -*/

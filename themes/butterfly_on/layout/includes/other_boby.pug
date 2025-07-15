@@ -7,10 +7,18 @@ script.
         #{theme.lightDarkMode.dark.js}
     }
     
-    const _ipLoacationKey = "#{theme.welcomemap.api.qq.key}";
+    const _ipLoacationKey = `#{theme.welcomemap.api.qq.key}`;
 
     function _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip) {
         return `!{theme.welcomemap.welcome_posdesc.message}`; // 使用 \!{} 防止转义
+    }
+
+    function getFocusTitle(type, originalTitle) {
+        switch (type) {
+            case FOCUS_TYPE.TYPE.LOST_TITLE:   return `!{theme.focus_title.lost_focus}`;
+            case FOCUS_TYPE.TYPE.GAINED_TITLE: return `!{theme.focus_title.get_focus}`;
+            default: return originalTitle;
+        }
     }
 
     const _USER_CONFIG = {

@@ -47,6 +47,9 @@ if theme.right_menu.enable
            a.rightMenu-item(href="javascript:rmf.copyWordsLink()")
                i.fa.fa-link
                span=__('rightmenu.copy_word_link')
+           a.rightMenu-item(href="javascript:rmf.switchReadMode();")
+                   i.fa.fa-book
+                   span='阅读模式切换'
        .rightMenu-group.rightMenu-line.hide#menu-to
            a.rightMenu-item(href="javascript:rmf.openWithNewTab()")
                i.fa.fa-window-restore
@@ -82,10 +85,7 @@ if theme.right_menu.enable
            //- a.rightMenu-item(href="javascript:rmf.translate();")
                //- i.iconfont.icon-fanti
                //- span='繁简转换'
-           if is_post()||is_page()
-               a.rightMenu-item(href="javascript:rmf.switchReadMode();")
-                   i.fa.fa-book
-                   span='阅读模式切换'
+            
            a.rightMenu-item(href="/license/")
                i.fa.fa-info-circle
                span='版权声明页面'

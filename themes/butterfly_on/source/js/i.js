@@ -79,7 +79,7 @@ var lunarDateChineseNY = `${lunarDate.lunarMonthName}${lunarDate.lunarDayName}`;
 const FOOTER = document.getElementById("footer");
 const WORKBOARD = document.getElementById("workboard");
 
-var PROGRESS_BAR = document.getElementById('year-progress-bar');
+var PROGRESS_BAR = document.getElementsByClassName('time-progress');
 var currentTimeHtml = "";
 var img = "";
 var description = "";
@@ -99,6 +99,13 @@ const phrases = [
 ];
 
 const CURRENT_URL = window.location.href;
+const FOCUS_TYPE = {
+    TYPE: {
+        UNEDFINED: 0,
+        LOST_TITLE: 1,
+        GAINED_TITLE: 2
+    }
+};
 
 var timeWinDivTitleText = "0";// 专用变量，请勿乱改
 var timeWinDivText = "---";
@@ -1004,7 +1011,7 @@ function updateVar() {
 
     // 下面是处理流程
     if (timer == 0) {
-        setInterval(times, 100, updateVar)
+        setInterval(updateVar, 100);
         console.log("主循环启动")
     } else if (timer % 1000 === 0) {
 
@@ -1171,11 +1178,11 @@ async function timeWindow() {
             if (typeof entry === 'object') {
                 timeWinDivTitleText = entry.title;
                 timeWinDivText = entry.text;
-            } if (typeof entry.title === 'Array []') {
+            } else if (typeof entry.title === 'Array []') {
                 const randomIndex = Math.floor(Math.random() * entry.length);
                 timeWinDivTitleText = entry[randomIndex];
                 timeWinDivText = entry.text;
-            } if (typeof entry.text === 'Array []') {
+            } else if (typeof entry.text === 'Array []') {
                 const randomIndex = Math.floor(Math.random() * entry.length);
                 timeWinDivTitleText = entry.title;
                 timeWinDivText = entry[randomIndex];
@@ -1193,11 +1200,11 @@ async function timeWindow() {
             if (typeof entry === 'object') {
                 timeWinDivTitleText = entry.title;
                 timeWinDivText = entry.text;
-            } if (typeof entry.title === 'string[]') {
+            } else if (typeof entry.title === 'string[]') {
                 const randomIndex = Math.floor(Math.random() * entry.length);
                 timeWinDivTitleText = entry[randomIndex];
                 timeWinDivText = entry.text;
-            } if (typeof entry.text === 'string[]') {
+            } else if (typeof entry.text === 'string[]') {
                 const randomIndex = Math.floor(Math.random() * entry.length);
                 timeWinDivTitleText = entry.title;
                 timeWinDivText = entry[randomIndex];
@@ -1358,50 +1365,47 @@ async function displayWelcomeMessage(ipLoacation) {
         // 这里可以添加弹窗逻辑
     }
 }
-        setTimeout(function () {
+setTimeout(function () {
+    Snackbar.show({
+        text: '本站使用 Cookie 和 本地会话存储 保证浏览体验和网站统计',
+        pos: 'top-right',
+        actionText: "查看博客声明",
+        onActionClick: function () {
+            window.open("/license");
+        },
+    });
+}, 4500);
+let referrer = document.referrer || '-';
+let domain = referrer ? referrer.split("://")[1] : '-';
+domain = domain ? domain.split("/")[0] : '-';
+setTimeout(function () {
+    switch (domain) {
+        case 'www.travellings.cn':
             Snackbar.show({
-                text: '本站使用 Cookie 和 本地会话存储 保证浏览体验和网站统计',
-                pos: 'top-right',
-                actionText: "查看博客声明",
-                onActionClick: function () {
-                    window.open("/license");
+                text: '欢迎来自开往的穿梭者！',
+                pos: 'top-center',
+            });
+            break;
+        case '-':
+            break;
+        default:
+            if (domain === window.location.hostname) {
+                break;
+            }
+            Snackbar.show({
+                text: `欢迎从来自 ${domain} 的访客访问本站！`,
+                pos: 'top-center',
+                actionText: "",
+                onActionClick: function (element) {
+                    window.open("");
                 },
             });
-        }, 4500);
-
-        let referrer = document.referrer || '-';
-        let domain = referrer ? referrer.split("://")[1] : '-';
-        domain = domain ? domain.split("/")[0] : '-';
-
-
-        setTimeout(function () {
-            switch (domain) {
-                case 'www.travellings.cn':
-                    Snackbar.show({
-                        text: '欢迎来自开往的穿梭者！',
-                        pos: 'top-center',
-                    });
-                    break;
-                case '-':
-                    break;
-                default:
-                    if (domain === window.location.hostname) {
-                        break;
-                    }
-                    Snackbar.show({
-                        text: `欢迎从来自 ${domain} 的访客访问本站！`,
-                        pos: 'top-center',
-                        actionText: "",
-                        onActionClick: function (element) {
-                            window.open("");
-                        },
-                    });
-                    break;
-            }
-        }, 2500);
+            break;
+    }
+}, 2500);
     
-    //不在弹出Cookie提醒
-    sessionStorage.setItem("popCookieWindow", "0");
+//不在弹出Cookie提醒
+sessionStorage.setItem("popCookieWindow", "0");
 
 
 // let referrer = document.referrer || ' ? ? ? ';
@@ -1543,118 +1547,6 @@ oscillator.start();
 // 设置声音持续时间，例如1秒后停止
 oscillator.stop(audioContext.currentTime + 1);
 */
-const DFHyd = [
-    // 高音
-    349.23, // 1       - 1
-    392, // 2       - 2
-    440, // 3       - 3
-    523.25, // 5       - 4
-    587.33, // 6       - 5
-    698.46, // 1 附点  - 6
-    // 低音
-    329.63, // 7       - 7
-    293.66, // 6 附下点 - 8 
-    261.63, // 5 附下点 - 9
-];
-
-const DFH = [ // 歌曲谱
-    5, 6, 2, 1, 6000, 2, 5, 6, 1000, 6, 5,
-    //  东 方 红，太 阳    升，中国  出      了 个
-    //  毛 主 席，爱 人    民，他是  我      们 的
-    // 
-    1, 6000, 2, 5, 2, 1, 7, 6000,//5000,5,2,3,2,
-    //  毛 泽   东，他为人民谋幸福，
-    //  带 路   人，
-    //    1,6000,2,3,2,1,2,1,7000,6000,5000,
-
-];
-
-function playDFH() {
-    console.log(`
-        东  方  红
-        1 = F 4 / 2
-        中速  庄严地
-    `);
-
-
-    let i = 0;
-    let time = 1250; // 延迟播放时间
-    function playDFH2() {
-        if (i >= DFH.length) {
-            clearInterval(intervalId);
-            return;
-        }
-
-        let audioCtx;
-        try {
-            audioCtx = new (window.AudioContext || window.AudioContext)();
-        } catch (e) {
-            console.error('无法创建 AudioContext', e);
-            return;
-        }
-
-        let oscillator = audioCtx.createOscillator();
-        let gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        oscillator.type = 'sine';
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.01);
-
-        let frequencyValue;
-        switch (DFH[i]) {// 音符和
-            case 0:
-                frequencyValue = DFHyd[DFH[i - 1]];
-                break;
-            case 1:
-                frequencyValue = DFHyd[0];
-                break;
-            case 2:
-                frequencyValue = DFHyd[1];
-                break;
-            case 3:
-                frequencyValue = DFHyd[2];
-                break;
-            case 5:
-                frequencyValue = DFHyd[3];
-                break;
-            case 6:
-                frequencyValue = DFHyd[4];
-                break;
-            case 7:
-                frequencyValue = DFHyd[7];
-                break;
-            case 1000:
-                frequencyValue = DFHyd[6];
-                break;
-            case 5000:
-                frequencyValue = DFHyd[9]; // 修正了这里的索引
-                break;
-            case 6000:
-                frequencyValue = DFHyd[8]; // 修正了这里的索引
-                break;
-            case 7000:
-                // 计算
-                break;
-            case 10000:
-                // 这里需要添加逻辑来处理 case 10000，即分符
-                break;
-            default:
-                console.log("未知的音符", DFH[i]);
-        }
-
-        oscillator.frequency.setValueAtTime(frequencyValue, audioCtx.currentTime);
-        oscillator.start(audioCtx.currentTime);
-
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
-        oscillator.stop(audioCtx.currentTime + 1);
-
-        console.log(DFH[i]);
-        i++;
-    }
-
-    const intervalId = setInterval(playDFH2, time);
-}
 
 
 function playMUS(frequency) {
@@ -1675,11 +1567,11 @@ function playMUS(frequency) {
 }
 
 // 用户跳过来弄过去改下标题
-// 修改标题
+// 在页面加载完成后，获取初始标题，并设置失去焦点和获得焦点时的标题
 document.addEventListener('DOMContentLoaded', (event) => {
     originalTitle = document.title; // 记录初始标题
-    lostFocusTitle = `这都跑去干啥了？ 让我康康 | ${originalTitle}`; // 页面失去焦点时的标题
-    gainedFocusTitle = `干啥去了，现在才回来……  | ${originalTitle}`; // 页面获得焦点时的标题
+    lostFocusTitle = getFocusTitle(FOCUS_TYPE.TYPE.LOST_TITLE, originalTitle); // 页面失去焦点时的标题
+    gainedFocusTitle = getFocusTitle(FOCUS_TYPE.TYPE.GAINED_TITLE, originalTitle); // 页面获得焦点时的标题
 
     // 监听页面失去焦点和获得焦点事件
     document.addEventListener('visibilitychange', () => {
@@ -1712,57 +1604,64 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 // 进度条模块 ------------------------------
 
-document.getElementsByClassName('time-progress').innerHTML = `
-<div class="progress-container">
-    <div class="progress-label">
-        本年过了 <span class="year-progress">0.00000%</span>
-    </div>
-    <div class="progress-bar">
-        <div  class="year-progress-bar"></div>
-    </div>
-</div>
-
-<div class="progress-container">
-    <div class="progress-label">
-        本月过了 <span class="month-progress">0.00000%</span>
-    </div>
-    <div class="progress-bar">
-        <div  class="month-progress-bar"></div>
-    </div>
-</div>
-
-<div class="progress-container">
-    <div class="progress-label">
-        本天过了 <span class="day-progress">0.00000%</span>
-    </div>
-    <div class="progress-bar">
-        <div class="day-progress-bar"></div>
-    </div>
-</div>
-
-<div class="progress-container">
-    <div class="progress-label">
-        本小时过了 <span class="hour-progress">0.00000%</span>
-    </div>
-    <div class="progress-bar">
-        <div class="hour-progress-bar"></div>
-    </div>
-</div>
-
-<div class="progress-container">
-    <div class="progress-label">
-        本分钟过了 <span class="minute-progress">0.00000%</span>
-    </div>
-    <div class="progress-bar">
-        <div class="minute-progress-bar"></div>
-    </div>
-</div>
-
-<p>珍惜时间，时光飞逝。</p>
-`;
 
 function updateProgressBars() {
     try {
+        let now = new Date();
+        if (timer === 0) {
+            for (let i = 0; i < document.getElementsByClassName('time-progress').length; i++) {
+                const length = document.getElementsByClassName('time-progress')[i];
+                document.getElementsByClassName('time-progress')[i].innerHTML = `
+                <div class="progress-container">
+                    <div class="progress-label">
+                        本年过了 <span class="year-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div  class="year-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        本月过了 <span class="month-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div  class="month-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        本天过了 <span class="day-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="day-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        本小时过了 <span class="hour-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="hour-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        本分钟过了 <span class="minute-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="minute-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <p>珍惜时间，时光飞逝。</p>
+                `;
+            }
+        }
+                
         const yearStart = new Date(now.getFullYear(), 0, 1).getTime();
         const yearEnd = new Date(now.getFullYear() + 1, 0, 1).getTime();
         const yearProgress = ((now.getTime() - yearStart) / (yearEnd - yearStart)) * 100;
@@ -1796,6 +1695,11 @@ function updateProgressBars() {
 // 更新显示函数
 function updateDisplay(period, progress, decimalPlaces) {
     // 进度条文本，值，精度
-    document.getElementsByClassName(`${period}-progress`).textContent = progress.toFixed(decimalPlaces) + '%';
-    document.getElementsByClassName(`${period}-progress-bar`).style.width = progress.toFixed(decimalPlaces) + '%';
+    let lengthDiv = document.getElementsByClassName('time-progress');
+    let lengthProgress = document.getElementsByClassName(`${period}-progress`);
+    let lengthProgressBar = document.getElementsByClassName(`${period}-progress-bar`);
+    for (let i = 0; i < lengthDiv.length; i++) {
+        lengthProgress[i].textContent = progress.toFixed(decimalPlaces) + '%';
+        lengthProgressBar[i].style.width = progress.toFixed(decimalPlaces) + '%';    
+    }
 }
