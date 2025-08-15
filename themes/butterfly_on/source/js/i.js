@@ -51,8 +51,6 @@ SOFTWARE.`;
 
 const debug = false//isDeBug(); // 开启调试模式
 
-
-
 var nowTime = new Date();// 获取当前日期、时间
 var now = {
     year: nowTime.getFullYear(),
@@ -78,12 +76,15 @@ var lunarDateChineseNY = `${lunarDate.lunarMonthName}${lunarDate.lunarDayName}`;
 
 const FOOTER = document.getElementById("footer");
 const WORKBOARD = document.getElementById("workboard");
+const systemLightMode = window.matchMedia("(prefers-color-scheme: light)");
+const urlParams = new URLSearchParams(window.location.search);
 
-var PROGRESS_BAR = document.getElementsByClassName('time-progress');
+var PROGRESS_BAR = document.getElementsByClassName('time-flies');
 var currentTimeHtml = "";
 var img = "";
 var description = "";
 var PAGE_MAIN_ID = "page-main";
+var ok = false;
 // var errorCode = undefined;
 // var errorMsg = "";
 
@@ -106,9 +107,19 @@ const FOCUS_TYPE = {
         GAINED_TITLE: 2
     }
 };
+const AUDIO_CONTEXT = {
+    TYPE: {
+        SINE: 'sine',
+        SQUARE:'square',
+        SAWTOOTH:'sawtooth',
+        TRIANGLE: 'triangle'
+    }
+};
 
 var timeWinDivTitleText = "0";// 专用变量，请勿乱改
 var timeWinDivText = "---";
+/** 设定等级，默认为0，即弹窗，1 为显示消息 */
+var timeWinLevel = 0;
 var timeChange;// 欢迎语
 
 var times = 100;// 主循环间隔时间
@@ -208,7 +219,7 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 //  ----------------------------------------------------------
 // JS 文件内需要公共调用的东西
 
-const errorCodesFunc = (
+const errorCodesFunction = (
     (oldErrorCodes = null) => 
         {
     // let errorCode = 0x00000;
@@ -282,7 +293,7 @@ const errorCodesFunc = (
          * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量,注：0x3 时会引发页面重载。
          * @param {boolean} returnID 是否返回错误ID，缺省值为 false
          * @returns {false | string} 返回 false，若 {@link returnID} 为true,则返回错误ID
-         * @example } catch (message) {return errorCodes.setErrorCode(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
+         * @example } catch (message) {return errorCodes.addError(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
          * @function {@link errorCodes.getErrorCode} 获取错误码和信息
          * @function {@link errorCodes.clearError} 清除错误信息
          */
@@ -381,7 +392,21 @@ const errorCodesFunc = (
          * 返回所有已被记录的错误码和信息
          * @returns {object}
          */
-        getAllErrorCodes: () => errors,
+        getAllErrorCodes: () => {
+            if (errors == {}) {
+                return {
+                    code: 201,
+                    message: "啥也木有 (　o=^•ェ•)o　┏━┓",
+                    items: {}
+                }
+            } else {
+                return {
+                    code: 200,
+                    message: "获取成功 (*≧︶≦))(￣▽￣* )ゞ",
+                    items: errors
+                }
+            }
+        },
 
         /**
          * 清除错误信息
@@ -400,10 +425,7 @@ const errorCodesFunc = (
     };
 });
 
-const errorCodes = errorCodesFunc(null);
-console.log(errorCodes.ERROR_TYPES.ERROR)
-
-
+const errorCodes = errorCodesFunction(null);
 
 /**
  * 对界面模糊化处理
@@ -601,6 +623,7 @@ const msgWin = {
 // 2025-04-28 继续优化和修复一些小问题
 // 2025-05-04 重写了切换逻辑
 // 2025-07-06 修复了用户自定义切换 JavaScript 代码的代码问题
+// 2025-07-21 添加了可以跟随系统模式切换的功能
 
 const lightDarkTheme = (() => {
     const DATA_TYPE = {
@@ -621,7 +644,7 @@ const lightDarkTheme = (() => {
             lightDarkTheme.setTheme(storedTheme, false);
         } else {
             theme = DATA_TYPE.AUTO;
-            autoTheme(false);
+            autoTheme(false, false);
         }
     };
 
@@ -629,22 +652,24 @@ const lightDarkTheme = (() => {
      * 切换当前页面 明亮/暗黑 主题状态
      * 若为 自动 | 未定义 则适应当前时间自动切换
      * @param {boolean} enableSnackbar 是否显示切换提示，缺省值为 true
+     * @param {boolean} setStorage 保存配置?
      */
-    const switchTheme = (enableSnackbar = true) => {
+    const switchTheme = (enableSnackbar = true, setStorage = false) => {
         if (theme === DATA_TYPE.AUTO) {
-            const currentTheme = document.documentElement.getAttribute(DATA_TYPE.HTML_KEY);
-            if (currentTheme === DATA_TYPE.DARK) {
-                lightTheme(enableSnackbar);
-            } else {
-                darkTheme(enableSnackbar);
-            }
+            autoTheme(enableSnackbar, setStorage);
+            // const currentTheme = document.documentElement.getAttribute(DATA_TYPE.HTML_KEY);
+            // if (currentTheme === DATA_TYPE.DARK) {
+            //     lightTheme(enableSnackbar);
+            // } else {
+            //     darkTheme(enableSnackbar);
+            // }
         } else {
             if (theme === DATA_TYPE.DARK) {
-                lightTheme(enableSnackbar);
+                lightTheme(enableSnackbar, setStorage);
             } else if (theme === DATA_TYPE.LIGHT) {
-                darkTheme(enableSnackbar);
+                darkTheme(enableSnackbar, setStorage);
             } else {
-                autoTheme(enableSnackbar);
+                autoTheme(enableSnackbar, setStorage);
             }
         }
     };
@@ -653,10 +678,12 @@ const lightDarkTheme = (() => {
      * 将当前主题设置为 明亮模式
      * @param {boolean} enableSnackbar 
      */
-    const lightTheme = (enableSnackbar = true) => {
+    const lightTheme = (enableSnackbar = true, setStorage = false) => {
         theme = DATA_TYPE.LIGHT;
         document.documentElement.setAttribute(DATA_TYPE.HTML_KEY, DATA_TYPE.LIGHT);
-        _setStorageItem(DATA_TYPE.LIGHT);
+        if (setStorage) {
+            _setStorageItem(DATA_TYPE.LIGHT);
+        }
         if (enableSnackbar) {
             GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day);
         }
@@ -670,11 +697,14 @@ const lightDarkTheme = (() => {
     /**
      * 将当前主题设置为 暗黑模式
      * @param {boolean} enableSnackbar  是否显示切换提示，缺省值为 true
+     * @param {boolean} setStorage 保存配置
      */
-    const darkTheme = (enableSnackbar = true) => {
+    const darkTheme = (enableSnackbar = true, setStorage = false) => {
         theme = DATA_TYPE.DARK;
         document.documentElement.setAttribute(DATA_TYPE.HTML_KEY, DATA_TYPE.DARK);
-        _setStorageItem(DATA_TYPE.DARK);
+        if (setStorage) {
+            _setStorageItem(DATA_TYPE.DARK);
+        }
         if (enableSnackbar) {
             GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night);
         }
@@ -688,15 +718,20 @@ const lightDarkTheme = (() => {
     /**
      * 自动模式切换
      * @param {boolean} enableSnackbar 是否显示切换提示，缺省值为 true
+     * @param {boolean} setStorage 保存配置
      */
-    const autoTheme = (enableSnackbar = true) => {
-        const currentHour = new Date().getHours();
-        const darkThemeThreshold = 18; // 18点之后切换为暗黑模式
+    const autoTheme = (enableSnackbar = true, setStorage = false) => {
+        let currentHour       ;
+        let darkThemeThreshold;
+        if (!systemLightMode) {
+            currentHour        = new Date().getHours();
+            darkThemeThreshold = 18; // 18点之后切换为暗黑模式
+        }
 
-        if (currentHour >= darkThemeThreshold) {
-            darkTheme(enableSnackbar);
+        if (systemLightMode || currentHour >= darkThemeThreshold) {
+            darkTheme(enableSnackbar, setStorage);
         } else {
-            lightTheme(enableSnackbar);
+            lightTheme(enableSnackbar, setStorage);
         }
     };
 
@@ -733,13 +768,13 @@ const lightDarkTheme = (() => {
          * @param {boolean} enableSnackbar 是否显示切换提示，缺省值为 true
          * @returns {boolean} 是否成功设置
          */
-        setTheme: (newTheme, enableSnackbar = true) => {
+        setTheme: (newTheme, enableSnackbar = true, setStorage = false) => {
             if (newTheme === DATA_TYPE.LIGHT) {
-                lightTheme(enableSnackbar);
+                lightTheme(enableSnackbar, setStorage);
             } else if (newTheme === DATA_TYPE.DARK) {
-                darkTheme(enableSnackbar);
+                darkTheme(enableSnackbar, setStorage);
             } else if (newTheme === DATA_TYPE.AUTO) {
-                autoTheme(enableSnackbar);
+                autoTheme(enableSnackbar, setStorage);
             } else {
                 return errorCodes.addError(0x00002, `无效的主题：${newTheme}`, errorCodes.ERROR_TYPES.ERROR);
             }
@@ -752,7 +787,7 @@ const lightDarkTheme = (() => {
          */
         toggleTheme: (enableSnackbar = true) => {
             if (!isBoolean(enableSnackbar)) enableSnackbar = true;
-            switchTheme(enableSnackbar);
+            switchTheme(enableSnackbar, true);
         },
 
         // 暴露常量
@@ -762,10 +797,10 @@ const lightDarkTheme = (() => {
 
 // 向下兼容
 function activateLightMode() {
-    lightDarkTheme.setTheme(DATA_THEME_LIGHT, true);
+    lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.LIGHT, true, true);
 }
 function activateDarkMode() {
-    lightDarkTheme.setTheme(DATA_THEME_DARK, true);
+    lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.DARK, true, true);
 }
 
 // End ---------------------------------------------------------------------------------------------
@@ -800,7 +835,7 @@ function setBarsTime(ontimes) {
 
 /**
  * 检查是否是url
- * @param {String} url 要判断的url
+ * @param {any} url 要判断的url
  * @returns {boolean} true: 是url false: 不是url
  */
 function isUrl(url) {
@@ -856,7 +891,7 @@ function getDistanceAMLS(e1, n1, e2, n2) {
 /**
  * 设置全局字体
  * @param {string} font 字体在 CSS 中的名称
- * @param {enable} enableReturn 返回值？
+ * @param {boolean} enableReturn 返回值？
  * @returns 是否设置成功
  * @example setFont('Arial'); // 设置字体为 Arial
  */
@@ -883,17 +918,17 @@ function setFont(font, enableReturn = false) {
 function clearCookies(enableReturn = false) {
     if (confirm("确定要清除所有 Cookie 和 localStorage 吗？\n\n 确定=清除 取消=取消")) {
         try {
-            localStorage.clear();
-            location.reload();
             var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
             if (keys) {
                 for (var i = keys.length; i--;) {
                     document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString();
                 }
             }
+            localStorage.clear();
+            location.reload();
             if (enableReturn) return true;
         } catch (error) {
-            if (enableReturn) return setErrorCode(0x00001, `清除 Cookie 失败: ${error}`, 1);
+            if (enableReturn) return errorCodes.addError(0x00001, `清除 Cookie 失败: ${error}`, 1);
         }
     } else {
         Snackbar.show({
@@ -929,7 +964,6 @@ function getSelectedText() {
 /**
  * 将指定的文本复制到剪贴板
  * @param {string} copyText 欲写入剪贴板的文本
- * @note 需要用户授权
  */
 function setCopyText(copyText) {
     navigator.clipboard.writeText(copyText);
@@ -972,7 +1006,9 @@ function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个
             const lines = data.split('\n'); // 将文件内容按行拆分
             const randomIndex = Math.floor(Math.random() * lines.length); // 随机生成索引
             const randomLine = lines[randomIndex].trim(); // 获取随机行并去除多余空格
-
+            if (randomLine === window.location.href) {// 避免跳转到当前页面
+                justLookAround();
+            }
             if (randomLine) {
                 window.location.href = randomLine; // 跳转到随机选择的链接
             } else {
@@ -986,10 +1022,18 @@ function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个
 
 }
 
+/** 空函数，用于占位 */
+function nullFunction() {}
+
 /**
- * 空函数，用于占位
+ * 通过参数键获取 URL 参数值
+ * @param {string} key 欲取参数
+ * @returns { string | null } 取到参数值，如果没有则返回 null
+ * @see https://developer.mozilla.org/docs/Web/API/URLSearchParams
  */
-function nullFunc() {}
+function getUrlParams(key) {
+    return urlParams.get(key);
+}
 
 // 初始化主题
 updateVar();
@@ -1001,7 +1045,7 @@ void 0;
 // 主循环模块 ----------------------------------------------------
 
 /**
- * 主循环执行函数
+ * 主循环执行函数，首次调用会加载初始化模块
  */
 function updateVar() {
     if (PROGRESS_BAR) {// 判断是否存在进度条元素, 防止重复执行，免得tm控制台里全是报错
@@ -1046,119 +1090,107 @@ async function timeWindow() {
          */
         const TIME_WINDOW_CONSOLE = {
             sun: {
-                "7-7": {
+                '7-7': {
                     title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
-                    text: "勿忘国耻，振兴中华"
+                    text: '勿忘国耻，振兴中华'
                 },
-                "9-18": {
+                '9-18': {
                     title: `今天是 1931 年 9 月 18 日九一八事变 ${now.year - 1931} 周年纪念日！`,
-                    text: "勿忘国耻，振兴中华"
+                    text: '勿忘国耻，振兴中华'
                 },
-                "12-13": {
-                    title: "对所有在南京大屠杀中被无辜杀害的同胞表示深切哀悼！",
-                    text: `勿忘国耻，振兴中华！\n <br /> 今天是南京大屠杀 ${now.year - 1937} 年纪念日、国家公祭日 \n <br /> 为在南京大屠杀中被杀害的平民默哀，铭记历史，珍视和平，绝不让这样的悲剧再次发生。`
+                '12-13': {
+                    title: '对所有在南京大屠杀中被无辜杀害的同胞表示深切哀悼！',
+                    text: `勿忘国耻，振兴中华！ <br /> 今天是南京大屠杀 ${now.year - 1937} 年纪念日、国家公祭日 <br /> 为在南京大屠杀中被杀害的平民默哀，铭记历史，珍视和平，绝不让这样的悲剧再次发生。`
                 },
-                "1-1": {
-                    title: "元旦快乐",
-                    text: `新年快乐！\n <br /> ${now.year} 年的进度条开始了！`
+                '1-1': {
+                    title: '元旦快乐',
+                    text: `新年快乐！ <br /> ${now.year} 年的进度条开始了！`
                 },
-                "12-31": {
-                    title: "元旦快乐",
-                    text: `新年快乐！\n <br /> ${now.year + 1} 年的进度条马上就要开始了！<br />`
+                '12-31': {
+                    title: '元旦快乐',
+                    text: `新年快乐！ <br /> ${now.year + 1} 年的进度条马上就要开始了！<br />`
                 },
-                "3-8": {
-                    title: "妇女节",
-                    text: "各位女神们，妇女节快乐！"
+                '3-8': {
+                    title: '妇女节',
+                    text: '各位女神们，妇女节快乐！'
                 },
-                "4-1": {
-                    title: "愚人节",
-                    title: [
-                        "<span>！！！Minecraft 免费了 ！！！</span><br /><br /><img scr=\"/img/mcmfl.jpeg\" clsss=\"img-fluid\" alt=\"Minecraft 免费了\"></img>",
-                        "最新消息：美国灭国了。",
-                        "突发新闻：日本岛沉没了！",
-                        "非常抱歉，因为不可控原因，博客将于明天停止运营，感谢您的陪伴，再见",
-                        "(? => ?)();",
-                    ],
-                    text: "今天是愚人节，祝祝祝祝祝 UP 生日快乐！"
+                '4-1': {
+                    title: '非常抱歉，因为不可控原因，博客将于明天停止运营，感谢您的陪伴，再见',       
+                    text: '今天是愚人节，祝祝祝祝祝 UP 生日快乐！'
                 },
-                "4-5": {
-                    title: "清明安康。",
-                    text: ""
+                '4-5': {
+                    title: '清明安康。',
+                    text: '' 
                 },
-                "5-1": {
-                    title: "劳动节快乐！",
-                    text: "为各行各业的辛勤工作劳动人民致敬！"
+                '5-1': {
+                    title: '劳动节快乐！',
+                    text: '为各行各业的辛勤工作劳动人民致敬！'
                 },
-                "5-4": {
-                    title: "五四青年节",
-                    text: "为百年前那些有思想政治觉悟，追求无产阶级、共产主义、马克思主义的青年们致敬！"
+                '5-4': {
+                    title: '五四青年节',
+                    text: '为百年前那些有思想政治觉悟，追求无产阶级、共产主义、马克思主义的青年们致敬！'
                 },
-                "6-1": {
-                    title: "各位小朋友们，儿童节快乐！",
-                    text: ""
+                '6-1': {
+                    title: '各位小朋友们，儿童节快乐！',
+                    text: ''
                 },
-                "7-1": {
+                '7-1': {
                     title: `中国共产党 ${now.year - 1921} 岁生日快乐`,
-                    text: "今天时建党节。"
+                    text: '今天时建党节。'
                 },
-                "8-15": {
+                '8-15': {
                     title: `日本鬼子已宣布无条件投降 ${now.year - 1945} 年了！`,
-                    text: "历史老师：标志着二战结束。"
+                    text: '历史老师：标志着二战结束。'
                 },
-                "10-1": {
+                '10-1': {
                     title: `中华人民共和国 ${now.year - 1949} 岁生日快乐！`,
-                    text: "祝祖国母亲生日快乐！"
+                    text: '祝祖国母亲生日快乐！'
                 },
-                "10-2": "10-1",
-                "10-3": "10-1",
-                "10-4": "10-1",
-                "10-5": "10-1",
-                "10-6": "10-1",
-                "10-7": "10-1",
-
-                "6-15": {
-                    title: [
-                        "sssssssss",
-                        "w335325325432"
-                    ],
-                    text: [
-                        "seeqeee    p[08937525235",
-                        "8675gd5u56658656480-9i-"
-                    ]
+                '10-2': '10-1',
+                '10-3': '10-1',
+                '10-4': '10-1',
+                '10-5': '10-1',
+                '10-6': '10-1',
+                '10-7': '10-1',
+      
+                '8-11': {
+                    title: 'sssssss', 
+                    text: 'seeqeee08937525235'
+                    
                 }
-            },
+              },
             moon: {
-                "腊月廿九": {
+                '腊月廿九': {
                     title: `${lunarDate.lunarYear + 1} 年新年快乐！`,
-                    text: ""
+                    text: ''
                 },
-                "腊月三十": "腊月廿九",
-                "正月初一": {
+                '腊月三十': '腊月廿九',
+                '正月初一': {
                     title: `${lunarDate.lunarYear} 新年快乐！`,
-                    text: ""
+                    text: ''
                 },
-                "正月初二": "正月初一",
-                "正月初三": "正月初一",
-                "正月初四": "正月初一",
-                "正月初五": "正月初一",
-                "正月初六": "正月初一",
-                "正月十五": {
-                    title: "元宵节快乐！",
-                    text: "您吃汤圆了吗?"
+                '正月初二': '正月初一',
+                '正月初三': '正月初一',
+                '正月初四': '正月初一',
+                '正月初五': '正月初一',
+                '正月初六': '正月初一',
+                '正月十五': {
+                    title: '元宵节快乐！',
+                    text: '您吃汤圆了吗?'
                 },
-                "五月初五": {
-                    title: "端午节快乐！",
-                    text: "您吃粽子了吗?"
+                '五月初五': {
+                    title: '端午节快乐！',
+                    text: '您吃粽子了吗?'
                 },
-                "八月十五": {
-                    title: "中秋节快乐！",
-                    text: "您吃月饼了吗? <br /><del>这是什么怪味月饼那!?</del>"
+                '八月十五': {
+                    title: '中秋节快乐！',
+                    text: '您吃月饼了吗? <br /><del>这是什么怪味月饼那!?</del>'
                 },
-                "九月初五": {
-                    title: "重阳安康",
-                    text: ""
+                '九月初五': {
+                    title: '重阳安康',
+                    text: ''
                 }
-            },
+            }
         };
 
         // 修复节日判断逻辑
@@ -1172,21 +1204,8 @@ async function timeWindow() {
                 depth++;
             }
 
-            console.log(typeof entry.title);
-            console.log(typeof entry.text);
 
-            if (typeof entry === 'object') {
-                timeWinDivTitleText = entry.title;
-                timeWinDivText = entry.text;
-            } else if (typeof entry.title === 'Array []') {
-                const randomIndex = Math.floor(Math.random() * entry.length);
-                timeWinDivTitleText = entry[randomIndex];
-                timeWinDivText = entry.text;
-            } else if (typeof entry.text === 'Array []') {
-                const randomIndex = Math.floor(Math.random() * entry.length);
-                timeWinDivTitleText = entry.title;
-                timeWinDivText = entry[randomIndex];
-            }
+            setDivVar(entry);
         } else if (TIME_WINDOW_CONSOLE.moon[lunarDateChineseNY]) {
             let entry = TIME_WINDOW_CONSOLE.moon[lunarDateChineseNY];
             let depth = 0;
@@ -1196,19 +1215,8 @@ async function timeWindow() {
                 entry = TIME_WINDOW_CONSOLE.moon[entry];
                 depth++;
             }
-
-            if (typeof entry === 'object') {
-                timeWinDivTitleText = entry.title;
-                timeWinDivText = entry.text;
-            } else if (typeof entry.title === 'string[]') {
-                const randomIndex = Math.floor(Math.random() * entry.length);
-                timeWinDivTitleText = entry[randomIndex];
-                timeWinDivText = entry.text;
-            } else if (typeof entry.text === 'string[]') {
-                const randomIndex = Math.floor(Math.random() * entry.length);
-                timeWinDivTitleText = entry.title;
-                timeWinDivText = entry[randomIndex];
-            }
+            
+            setDivVar(entry);
         }
 
         if (timeWinDivTitleText == "0") {// 其他不弹窗的情况放在这里
@@ -1226,6 +1234,22 @@ async function timeWindow() {
         return errorCodes.addError(0x00001, `创建节日窗口时出错:: ${error}`, 1);
     }
     return true;
+
+    function setDivVar(entry) {
+        if (typeof entry === 'object') {
+            timeWinDivTitleText = entry.title;
+            timeWinDivText = entry.text;
+            timeWinLevel = entry.level || 0;
+        } else if (typeof entry.title === 'Array []') {
+            const randomIndex = Math.floor(Math.random() * entry.length);
+            timeWinDivTitleText = entry[randomIndex];
+            timeWinDivText = entry.text;
+        } else if (typeof entry.text === 'Array []') {
+            const randomIndex = Math.floor(Math.random() * entry.length);
+            timeWinDivTitleText = entry.title;
+            timeWinDivText = entry[randomIndex];
+        }
+    }
 }
 setTimeout(timeWindow, 10); // 延迟 1/100 秒执行
 
@@ -1236,133 +1260,147 @@ setTimeout(timeWindow, 10); // 延迟 1/100 秒执行
 // 2025.6.28 重写逻辑
 // 2025.7.10 配置化处理
 
-//请求数据
-setTimeout(hhhhhhhhhhh, 1); // 新开一个线程，防止阻塞主线程
+// 请求数据
+setTimeout(displayWelcomeMessageInit, 1); // 新开一个线程，防止阻塞主线程
 
-async function hhhhhhhhhhh() {
-    let ipLoacation = window.saveToLocal.get('ipLocation');
-    if (!ipLoacation) {
-        // 数据已过期或不存在
-        var script = document.createElement('script');
-        var url = `https://apis.map.qq.com/ws/location/v1/ip?key=${_USER_CONFIG.WELCOME_MAP.API_KEY}&output=jsonp`;
-        script.src = url;
-        window.QQmap = function (data) {
-            ipLoacation = data;
-            // 将数据保存到 localStorage，过期时间设置为 1 天
-            window.saveToLocal.set('ipLocation', ipLoacation, 1);
-            document.body.removeChild(script);
-            delete window.QQmap;
-            displayWelcomeMessage(ipLoacation); // 在获取到数据后调用显示欢迎语的函数
-        };
-        document.body.appendChild(script);
-    } else {
-        displayWelcomeMessage(ipLoacation); // 直接调用显示欢迎语的函数
+async function displayWelcomeMessageInit() {
+    try {
+            let ipLoacation = window.saveToLocal.get('ipLocation');
+            if (!ipLoacation) {
+                // 数据已过期或不存在
+                var script = document.createElement('script');
+                var url = `https://apis.map.qq.com/ws/location/v1/ip?key=${_USER_CONFIG.WELCOME_MAP.API_KEY}&output=jsonp`;
+                script.src = url;
+                window.QQmap = function (data) {
+                    ipLoacation = data;
+                    // 将数据保存到 localStorage，过期时间设置为 1 天
+                    window.saveToLocal.set('ipLocation', ipLoacation, 1);
+                    document.body.removeChild(script);
+                    delete window.QQmap;
+                    displayWelcomeMessage(ipLoacation); // 在获取到数据后调用显示欢迎语的函数
+                };
+                document.body.appendChild(script);
+            } else {
+                displayWelcomeMessage(ipLoacation); // 直接调用显示欢迎语的函数
+            }
+    } catch (e) {
+        errorCodes.addError(0x00000000000000000000000002, "在请求欢迎语数据时，过程出错:" + e, errorCodes.ERROR_TYPES.ERROR, true);
     }
 }
 
 async function displayWelcomeMessage(ipLoacation) {
-    while (!ipLoacation.result) {
-        await sleep(100); // 等待数据加载完成
-        ipLoacation = window.saveToLocal.get('ipLocation');
-    }
+    try {
+            while (!ipLoacation.result) {
+                await sleep(100); // 等待数据加载完成
+                ipLoacation = window.saveToLocal.get('ipLocation');
+            }
+        
+            // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
+            let dist = getDistanceAMLS(
+                _USER_CONFIG.WELCOME_MAP.AUTHOR_LONGITUDE, 
+                _USER_CONFIG.WELCOME_MAP.AUTHOR_LATITUDE, 
+                ipLoacation.result.location.lng, 
+                ipLoacation.result.location.lat
+            ); // 计算距离
+        
+            // 读取欢迎语数据
+            let pos = ipLoacation.result.ad_info.nation;
+            let ip = ipLoacation.result.ip;
+            let ipDZ;
+            let posdesc; //要显示的信息
+            const defaultAddress = _USER_CONFIG.WELCOME_MAP.DEFAULT_ADDRESS;
+            const authorAddress = _USER_CONFIG.WELCOME_MAP.AUTHOR_ADDRESS;
+            const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH;
+            let address = defaultAddress;
 
-    // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
-    let dist = getDistanceAMLS(
-        _USER_CONFIG.WELCOME_MAP.AUTHOR_LONGITUDE, 
-        _USER_CONFIG.WELCOME_MAP.AUTHOR_LATITUDE, 
-        ipLoacation.result.location.lng, 
-        ipLoacation.result.location.lat
-    ); // 计算距离
-
-    // 读取欢迎语数据
-    let pos = ipLoacation.result.ad_info.nation;
-    let ip = ipLoacation.result.ip;
-    let ipDZ;
-    let posdesc; //要显示的信息
-    const defaultAddress = _USER_CONFIG.WELCOME_MAP.DEFAULT_ADDRESS;
-    const authorAddress = _USER_CONFIG.WELCOME_MAP.AUTHOR_ADDRESS;
-    const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH;
-    let address = defaultAddress;
-    
-
-    // 根据国家、省份、城市信息自定义欢迎语
-    // 海外地区不支持省份及城市信息
-    if (data_scb[pos]) {
-        if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
-            if (data_scb[pos].content) {
-                posdesc = data_scb[pos].content;
-            } else {
-                let province = ipLoacation.result.ad_info.province.replace(/市$/, ''); // 去掉市字
-                let city = ipLoacation.result.ad_info.city.replace(/市$/, ''); // 去掉市字
-                let district = ipLoacation.result.ad_info.district;
-                if (data_scb[pos][province]) { // 省份信息
-                    if (typeof data_scb[pos][province] === 'object') {
-                        if (data_scb[pos][province].specialAdministrativeRegion) { // 特别行政区
-                            posdesc = data_scb[pos][province].content;
-                        } else if (data_scb[pos][province].municipalities) { // 直辖市
-                            posdesc = data_scb[pos][province].content;
-                        } else { // 一般省份
-                            if (data_scb[pos][province][city]) {
-                                if (data_scb[pos][province][district]) {
-                                    if (data_scb[pos][province][city][district]) {
-                                        posdesc = data_scb[pos][province][city][district];
+        
+            // 根据国家、省份、城市信息自定义欢迎语
+            // 海外地区不支持省份及城市信息
+            if (data_scb[pos]) {
+                if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
+                    if (data_scb[pos].content) {
+                        posdesc = data_scb[pos].content;
+                    } else {
+                        let province = ipLoacation.result.ad_info.province.replace(/市$/, ''); // 去掉市字
+                        let city = ipLoacation.result.ad_info.city.replace(/市$/, ''); // 去掉市字
+                        let district = ipLoacation.result.ad_info.district;
+                        if (data_scb[pos][province]) { // 省份信息
+                            if (typeof data_scb[pos][province] === 'object') {
+                                if (data_scb[pos][province].specialAdministrativeRegion) { // 特别行政区
+                                    posdesc = data_scb[pos][province].content;
+                                } else if (data_scb[pos][province].municipalities) { // 直辖市
+                                    posdesc = data_scb[pos][province].content;
+                                } else { // 一般省份
+                                    if (data_scb[pos][province][city]) {
+                                        if (data_scb[pos][province][district]) {
+                                            if (data_scb[pos][province][city][district]) {
+                                                posdesc = data_scb[pos][province][city][district];
+                                            } else {
+                                                posdesc = data_scb[pos][province][city].default;
+                                            } if (typeof entry === 'object' && data_scb[pos][province][city][district].authorLocations === true) {
+                                                address = authorAddress;
+                                            }
+                                        } else {
+                                            posdesc = data_scb[pos][province][city].default;
+                                        } if (typeof entry === 'object' && [pos][province][city].authorLocations === true) {
+                                            address = authorAddress;
+                                        }
                                     } else {
-                                        posdesc = data_scb[pos][province][city].default;
-                                    } if (typeof entry === 'object' && data_scb[pos][province][city][district].authorLocations === true) {
+                                        posdesc = data_scb[pos][province].default;
+                                    } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
                                         address = authorAddress;
                                     }
-                                } else {
-                                    posdesc = data_scb[pos][province][city].default;
-                                } if (typeof entry === 'object' && [pos][province][city].authorLocations === true) {
-                                    address = authorAddress;
                                 }
                             } else {
-                                posdesc = data_scb[pos][province].default;
+                                posdesc = data_scb[pos][province];
                             } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
                                 address = authorAddress;
                             }
+                        } else {
+                            posdesc = data_scb[pos].default; // 省份信息不存在，使用默认信息
+                        } if (data_scb[pos].connectProvincesCities) { // 连接省份和城市信息
+                            pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city;
+                        } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
+                            address = authorAddress;
                         }
-                    } else {
-                        posdesc = data_scb[pos][province];
-                    } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
-                        address = authorAddress;
                     }
                 } else {
-                    posdesc = data_scb[pos].default; // 省份信息不存在，使用默认信息
-                } if (data_scb[pos].connectProvincesCities) { // 连接省份和城市信息
-                    pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city;
+                    posdesc = data_scb[pos];
                 } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
                     address = authorAddress;
                 }
+            } else {
+                posdesc = data_scb.default;
             }
-        } else {
-            posdesc = data_scb[pos];
-        } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
-            address = authorAddress;
+        
+            //判断时间
+            const now = new Date();
+            let timeChange = "";
+            if (now.getHours() >= 5 && now.getHours() < 11) timeChange = "<span>上午好</span>，一日之计在于晨";
+            else if (now.getHours() >= 11 && now.getHours() < 13) timeChange = "<span>中午好</span>，开——饭——了——";
+            else if (now.getHours() >= 13 && now.getHours() < 15) timeChange = "<span>下午好</span>，懒懒地睡个午觉吧！";
+            else if (now.getHours() >= 15 && now.getHours() < 16) timeChange = "<span>下午三点了</span>，上课摸鱼 ING...";
+            else if (now.getHours() >= 16 && now.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";
+            else if (now.getHours() >= 19 && now.getHours() < 24) timeChange = "<span>晚上好</span>，我要写作业了……";
+            else timeChange = "都几点了，还在熬夜？";
+        
+            // 检查 welcome-info 是否存在
+            const welcomeInfoElement = document.getElementById("welcome-info");
+            if (welcomeInfoElement) {
+                // 用户定义，如无法查找则使用缺省值
+                welcomeInfoElement.innerHTML = _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip)
+                || `欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}<hr>`;
+            }
+        
+            if (sessionStorage.getItem("popCookieWindow") != "0") {
+                // 这里可以添加弹窗逻辑
+            }
+    } catch (e) {
+        const welcomeInfoElement = document.getElementById("welcome-info");
+        if (welcomeInfoElement) {
+            welcomeInfoElement.innerHTML = "你好呀，欢迎来看我的博客！";
         }
-    } else {
-        posdesc = data_scb.default;
-    }
-
-    //判断时间
-    const now = new Date();
-    let timeChange = "";
-    if (now.getHours() >= 5 && now.getHours() < 11) timeChange = "<span>上午好</span>，一日之计在于晨";
-    else if (now.getHours() >= 11 && now.getHours() < 13) timeChange = "<span>中午好</span>，开——饭——了——";
-    else if (now.getHours() >= 13 && now.getHours() < 15) timeChange = "<span>下午好</span>，懒懒地睡个午觉吧！";
-    else if (now.getHours() >= 15 && now.getHours() < 16) timeChange = "<span>下午三点了</span>，上课摸鱼 ING...";
-    else if (now.getHours() >= 16 && now.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";
-    else if (now.getHours() >= 19 && now.getHours() < 24) timeChange = "<span>晚上好</span>，我要写作业了……";
-    else timeChange = "都几点了，还在熬夜？";
-
-    // 检查 welcome-info 是否存在
-    const welcomeInfoElement = document.getElementById("welcome-info");
-    if (welcomeInfoElement) {
-        welcomeInfoElement.innerHTML = _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip);
-    }
-
-    if (sessionStorage.getItem("popCookieWindow") != "0") {
-        // 这里可以添加弹窗逻辑
+        errorCodes.addError(0x00000000000000000000000000000001, "在显示欢迎语信息时，发生了一个错误" + e, errorCodes.ERROR_TYPES.ERROR, true);
     }
 }
 setTimeout(function () {
@@ -1514,6 +1552,7 @@ if (getCookie('browsertc') != 1) {
 
 window.addEventListener("load", function () {
     console.log("页面及所有资源加载完毕");
+    ok = true;
 
     // 这里可以执行相关的代码
 });
@@ -1549,21 +1588,25 @@ oscillator.stop(audioContext.currentTime + 1);
 */
 
 
-function playMUS(frequency) {
+function playMUS(frequency, currentTime, type, gain) {
     window.AudioContext = window.AudioContext || window.AudioContext;
     var audioCtx = new AudioContext();
     var oscillator = audioCtx.createOscillator();
     var gainNode = audioCtx.createGain();
     oscillator.connect(gainNode);
     gainNode.connect(audioCtx.destination);
-    oscillator.type = 'sine';
+    oscillator.type = type;
     oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
-    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(gain, audioCtx.currentTime);
     gainNode.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.01);
     oscillator.start(audioCtx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
-    oscillator.stop(audioCtx.currentTime + 1);
+    oscillator.stop(audioCtx.currentTime + currentTime);
     console.log(frequency);
+}
+
+function playButton() {
+    playMUS(440, 1, AUDIO_CONTEXT.TYPE.SINE, 0.5);
 }
 
 // 用户跳过来弄过去改下标题
@@ -1609,21 +1652,23 @@ function updateProgressBars() {
     try {
         let now = new Date();
         if (timer === 0) {
-            for (let i = 0; i < document.getElementsByClassName('time-progress').length; i++) {
-                const length = document.getElementsByClassName('time-progress')[i];
-                document.getElementsByClassName('time-progress')[i].innerHTML = `
+            for (let i = 0; i < document.getElementsByClassName('time-flies').length; i++) {
+                let length = document.getElementsByClassName('time-flies')[i];
+                length.innerHTML = `
                 <div class="progress-container">
                     <div class="progress-label">
-                        本年过了 <span class="year-progress">0.00000%</span>
+                        今年已经过了 <span class="year-progress">0.00000%</span>
                     </div>
                     <div class="progress-bar">
-                        <div  class="year-progress-bar"></div>
+                        <div  class="year-progress-bar">
+                            <span class="year-progress-bar-fill"></span>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="progress-container">
                     <div class="progress-label">
-                        本月过了 <span class="month-progress">0.00000%</span>
+                        这个月过去了 <span class="month-progress">0.00000%</span>
                     </div>
                     <div class="progress-bar">
                         <div  class="month-progress-bar"></div>
@@ -1632,7 +1677,7 @@ function updateProgressBars() {
                 
                 <div class="progress-container">
                     <div class="progress-label">
-                        本天过了 <span class="day-progress">0.00000%</span>
+                        今天过去了 <span class="day-progress">0.00000%</span>
                     </div>
                     <div class="progress-bar">
                         <div class="day-progress-bar"></div>
@@ -1641,7 +1686,7 @@ function updateProgressBars() {
                 
                 <div class="progress-container">
                     <div class="progress-label">
-                        本小时过了 <span class="hour-progress">0.00000%</span>
+                        这一个小时过了 <span class="hour-progress">0.00000%</span>
                     </div>
                     <div class="progress-bar">
                         <div class="hour-progress-bar"></div>
@@ -1662,9 +1707,9 @@ function updateProgressBars() {
             }
         }
                 
-        const yearStart = new Date(now.getFullYear(), 0, 1).getTime();
-        const yearEnd = new Date(now.getFullYear() + 1, 0, 1).getTime();
-        const yearProgress = ((now.getTime() - yearStart) / (yearEnd - yearStart)) * 100;
+        const yearStart = new Date(now.getFullYear(), 0, 1).getTime(); // 计算这个时间单位的起始位置
+        const yearEnd = new Date(now.getFullYear() + 1, 0, 1).getTime(); // 计算这个时间单位的终止位置
+        const yearProgress = ((now.getTime() - yearStart) / (yearEnd - yearStart)) * 100; // 然后将当前时间与起始位置的差值除以终止位置与起始位置的差值，得到百分比
 
         const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
         const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 1).getTime();
@@ -1676,9 +1721,12 @@ function updateProgressBars() {
 
         const hourStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()).getTime();
         const hourEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1).getTime();
-        const hourProgress = ((now.getTime() - hourStart) / (hourEnd - hourStart)) * 100;
+        const hourProgress = ((now.getTime() - hourStart) / (hourEnd - hourStart)) * 100; // 上面均通过计算当前时间与起始位置的差值除以起始位置与终止位置的差值得到百分比
 
-        const minuteProgress = ((now.getSeconds() / 60)) * 100; // 计算已过分钟百分比
+        const minuteProgress = (
+            now.getSeconds() * 1000 + 
+            now.getMilliseconds()
+        ) / 1000 / 60 * 100; // 计算一个分钟已过秒数，精确到毫秒，除以60，乘以100，得到百分比
 
         // 更新进度条和文本显示
         updateDisplay('year', yearProgress, 7);
@@ -1695,7 +1743,7 @@ function updateProgressBars() {
 // 更新显示函数
 function updateDisplay(period, progress, decimalPlaces) {
     // 进度条文本，值，精度
-    let lengthDiv = document.getElementsByClassName('time-progress');
+    let lengthDiv = document.getElementsByClassName('time-flies');
     let lengthProgress = document.getElementsByClassName(`${period}-progress`);
     let lengthProgressBar = document.getElementsByClassName(`${period}-progress-bar`);
     for (let i = 0; i < lengthDiv.length; i++) {
@@ -1703,3 +1751,7 @@ function updateDisplay(period, progress, decimalPlaces) {
         lengthProgressBar[i].style.width = progress.toFixed(decimalPlaces) + '%';    
     }
 }
+/*/ 1000 / 60)) * 100*/; // 计算已过分钟百分比    ;
+function ___() {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{return (((((((((((((((((((((((((nowTime.getMilliseconds())))))))))))))))))))))))))}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+// 浏览器格式化累死
+// 话说这括号彩灯挺好看的

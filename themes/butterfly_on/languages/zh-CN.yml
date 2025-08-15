@@ -117,6 +117,7 @@ rightmenu:
   open_new_tab: 在新窗口打开
   copy_word__link: 凃圣熙
 
+privacy_policy: 隐私政策
 
 
 
@@ -141,3 +142,9 @@ is300: "   "
 
 enable_false: "主题输出已被禁用。要启用输出，请将主题配置文件 '_config.yml' 中的配置键 'enable' 修改为 'true' ，然后重新生成文件。"
 close: 关闭
+
+config:
+  privacy:
+    cookis_or_localstorage: Cookie 和 localStorage
+    cookis_or_localstorage_desc: 清除 Cookie 和 localStorage，这将清除您在本站的记录。
+    clear_cookies_info: 按下此按钮将清除您的自定义设置，并标记为新访客，并将刷新页面。

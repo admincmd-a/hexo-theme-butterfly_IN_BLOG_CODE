@@ -5,6 +5,7 @@ hr.custom-hr
     .comment-headline
       i.fas.fa-comments.fa-fw
       span= ' ' + _p('comment')
+      a.comment-privacy-link(href="/privacy/")= _p('privacy_policy')
     
     if theme.comments.use.length > 1
       .comment-switch

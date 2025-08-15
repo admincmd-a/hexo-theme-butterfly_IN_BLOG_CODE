@@ -360,7 +360,7 @@ Hexo - Butterfly
 const config_USER_HTML = `
 <span class="h2">Cookis 与 localStorage</span>
 <br />
-<a id="config-bottom" href="javascript:clearCookies();">清除所有 Cookie 和 localStorage</a>
+<a id="config-buttom" href="javascript:clearCookies();">清除所有 Cookie 和 localStorage</a>
 <div class="note warning modern">
     <p>按下此按钮将清除您的自定义设置，并标记为新访客，并刷新页面。</p>
 </div>
@@ -426,7 +426,7 @@ var configWin = {
 
     pageDiv(ID) {
         (document.getElementById('configwin_page')).getElementById(ID);
-
+        playButton();
     },
     // 主面板
     main() {

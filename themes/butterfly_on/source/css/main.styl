@@ -9,7 +9,7 @@ span.config-title {
 }
 
 html[data-theme="light"] span.config-title {
-    color: $color-theme-light-maib;
+    color: $color-theme-light-main;
 }
 
 html[data-theme="dark"] span.config-title {
@@ -298,6 +298,10 @@ html[data-theme="dark"] a.messageWin-closeWin {
     background-color:#3946AF;
 }
 
+span.config_page_null {
+    width : 10px
+}
+
 /* 节日大窗口 End -------------------------------------------------*/
 
 
@@ -325,43 +329,137 @@ footer img {
 /* 底部时间计算 End -*/
 
 /* 时光飞逝 Home -*/
-body 
-.progress-container {
+.time-flies .progress-container {
   margin-bottom: 10px;
 }
-.progress-label {
+.time-flies .progress-label {
+    font-size: 14px;
 //   margin-bottom: 5px;
 }
-.year-progress-bar,.month-progress-bar,.day-progress-bar,.hour-progress-bar,.minute-progress-bar {
+.time-flies .year-progress-bar,.time-flies .month-progress-bar,.time-flies .day-progress-bar,.time-flies .hour-progress-bar,.time-flies .minute-progress-bar {
 //   width: 100%;
 //   color: hsla(0, 0%, 31%, 0.24); /* 进度条背景色 */
 //   border-radius: 5px;/*圆角*/
 //   overflow: hidden;
   text-align: center;
   line-height: 20px;
-  transition: width 1.5s;/*一次到目标位置的速度*/
-  height: 15px;/*进度条高度*/
+  transition: width 0.5s;/*一次到目标位置的速度*/
+  height: 12px;/*进度条高度*/
 }
-.year-progress-bar {
+.time-flies .year-progress-bar {
   background-color: #4caf50;/*进度条颜色*/
 }
-.month-progress-bar {
-  background-color: #4caf50;/*进度条颜色*/
+.time-flies .month-progress-bar {
+  background-color: #4caf50;
 }
-.day-progress-bar {
-  background-color: #4caf50;/*进度条颜色*/
+.time-flies .day-progress-bar {
+  background-color: #4caf50;
 }
-.hour-progress-bar {
-  background-color: #4caf50;/*进度条颜色*/
+.time-flies .hour-progress-bar {
+  background-color: #4caf50;
 }
-.minute-progress-bar {
-  background-color: #4caf50;/*进度条颜色*/
+.time-flies .minute-progress-bar {
+  background-color: #4caf50;
 }
-.progress-bar {
+
+.time-flies .year-progress-bar, .time-flies .month-progress-bar, .time-flies .day-progress-bar, .time-flies .hour-progress-bar, .time-flies .minute-progress-bar 
+{
+//   content: "";
+//   position: absolute;
+  background-image: linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
+  z-index: 1;
+  background-size: 50px 50px;
+  animation: move 5s linear infinite;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+//   overflow: hidden;
+}
+
+html[data-theme="dark"] .time-flies .year-progress-bar {
+  background-color: #2e8330;/*进度条颜色*/
+}
+html[data-theme="dark"] .time-flies .month-progress-bar {
+  background-color: #2e8330;
+}
+html[data-theme="dark"] .time-flies .day-progress-bar {
+  background-color: #2e8330;
+}
+html[data-theme="dark"] .time-flies .hour-progress-bar {
+  background-color: #2e8330;
+}
+html[data-theme="dark"] .time-flies .minute-progress-bar {
+  background-color: #2e8330; //#4caf50;
+}
+
+.time-flies .progress-bar {
   width: 100%;
-  background-color: #ddd;/*进度条背景色*/
+  background-color: $color-theme-light-2background;/*进度条背景色*/ //#ddd
   border-radius: 5px;/*圆角*/
   overflow: hidden;
 }
+html[data-theme="dark"] .time-flies .progress-bar {
+    background-color: $color-theme-dark-2background
+}
+
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+@-webkit-keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
 
 /* 时光飞逝 End -*/
+
+a.comment-privacy-link {
+    position: relative;
+    position: absolute;
+    right: 0px;
+    right: 0px;
+    font-size: 12px;
+    color: $color-theme-light-text;
+}
+
+/* 给侧边栏的时光飞逝图标加上一个不停旋转的动画 */
+div.item-headline>i[class="fa-solid fa-clock"] {
+    animation: fa-clock-rotate 3s linear infinite;
+}
+
+@keyframes fa-clock-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes fa-clock-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

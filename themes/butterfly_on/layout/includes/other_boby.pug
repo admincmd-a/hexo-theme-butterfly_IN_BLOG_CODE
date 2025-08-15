@@ -1,12 +1,15 @@
-script.
-    // 用于给用户配置切换使用
+script(type="text/javascript").
+    /* 用于给用户配置切换使用 */
     function _lightUserPug() {
         #{theme.lightDarkMode.light.js}
+        #{theme.lightDarkMode.light.function}();
     }
     function _darkUserPug() {
         #{theme.lightDarkMode.dark.js}
+        #{theme.lightDarkMode.dark.function}();
     }
     
+script.
     const _ipLoacationKey = `#{theme.welcomemap.api.qq.key}`;
 
     function _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip) {
@@ -37,6 +40,15 @@ script.
             POSDESC_SWITCH: #{theme.welcomemap.welcome_posdesc.switch},
             ERROR_MESSAGE: "#{theme.welcomemap.error_message}",
             MESSAGE: null
+        },
+        CONFIG_PAGE: {
+            ENABLE: #{theme.config_page.enable}
+        },
+        TIME_MSG_WINDOW: {
+            ENABLE: #{theme.time_msg_window.enable},
+             SUN:  #{theme.time_msg_window.sun},
+             MOON: #{theme.time_msg_window.moon}
+            
         }
     };
 

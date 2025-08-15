@@ -298,7 +298,7 @@ footer:
         text: Hexo
       主题:
         url: https://github.com/jerryc127/hexo-theme-butterfly
-        text: Butterfly
+        text: Butterfly (魔改)
       "":  # 空键名表示不需要前缀文字
         html: "
           <a href='https://icp.gov.moe/?keyword=20231986' target='_blank' rel='noopener' title='萌ICP备 20231986号'>
@@ -346,7 +346,7 @@ footer:
             <img id="travellings-logo" style="position:relative;top:4px" src="" alt="开往-友链接力" width="74" height="18">
           </a>'
 
-    #key:           # 前缀文字（留空则无前缀）
+    #[key]:           # 前缀文字（留空则无前缀）
     #  url:         # 链接地址
     #  text:        # 链接显示文字
     #  image:       # 图片 URL（可选）
@@ -364,10 +364,10 @@ footer:
 # ----------------------------------------------------------------------------------------------------------------------------
 aplayerDIV: 
   enable: true # 注：这是吸底播放器
-  # 自定义 JS 加载
+  # 自定义 JS 、CSS 加载，它们将替换原有文件
   js: 
-  # 自定义 CSS
   css: 
+
   lrcType: 3 # 歌词取值类型 [ 1 | 2 | 3 ],若空 为 3
   theme: "#F57F17" # 主题色
   # 音乐设置表，具体请参考 https://aplayer.js.org/#/home
@@ -494,6 +494,13 @@ aplayerDIV:
         lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/Lemon.lrc',
     },
     {
+        name: 'Grow Slowly',
+        artist: '井口裕香',
+        url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/Grow%20Slowly.mp3',
+        cover: 'https://npm.elemecdn.com/musiccdn-ariasaka/pic/Grow%20Slowly.jpg',
+        lrc: 'https://npm.elemecdn.com/musiccdn-ariasaka/lyric/Grow%20Slowly.lrc',
+    },
+    {
         name: '群青',
         artist: 'YOASOBI',
         url: 'https://npm.elemecdn.com/musiccdn-ariasaka/music/群青.mp3',
@@ -549,7 +556,7 @@ aplayerDIV:
         artist: '星ノ谷梓羽',
         url: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.3/星ノ谷梓羽 - 「カルバノグの兎」Theme 3.mp3',
         cover: 'https://unpkg.com/admincmd-a_blog-music-0@1.0.3/星ノ谷梓羽 - 「カルバノグの兎」Theme 3.jpg',
-    },
+    }
     "
   config: # 此项将覆盖以上的配置,将直接写入到 aplayer 的实例中，自带 container: document.getElementById('aplayer'),fixed: true,
     # 具体请参考 https://aplayer.js.org/#/home
@@ -625,11 +632,11 @@ color:
         text: "#0d0d0d"
         selection: "#00c4b6"
         background: "#f7f4ed"
-        2background: "#d7cfc2"
+        2background: "#393b43"
         contrast: "#12090e"
         2contrast: "#fbfcfe"
         hover: "#f9ce6c"
-        choose: "#83be52"
+        choose: "#225036"
         scrollbar: "#3dcefd"
         post:
           code:
@@ -667,12 +674,122 @@ right_menu:
   enable: true
   # 显示在右键菜单中的选项
 
+# 在节日、特殊纪念日时显示一个窗口，亦或弹出消息，支持公历和农历
+time_msg_window:
+  enable: true
+  # sun: "{
+  #         '7-7': {
+  #             title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
+  #             text: '勿忘国耻，振兴中华'
+  #         },
+  #         '9-18': {
+  #             title: `今天是 1931 年 9 月 18 日九一八事变 ${now.year - 1931} 周年纪念日！`,
+  #             text: '勿忘国耻，振兴中华'
+  #         },
+  #         '12-13': {
+  #             title: '对所有在南京大屠杀中被无辜杀害的同胞表示深切哀悼！',
+  #             text: `勿忘国耻，振兴中华！ <br /> 今天是南京大屠杀 ${now.year - 1937} 年纪念日、国家公祭日 <br /> 为在南京大屠杀中被杀害的平民默哀，铭记历史，珍视和平，绝不让这样的悲剧再次发生。`
+  #         },
+  #         '1-1': {
+  #             title: '元旦快乐',
+  #             text: `新年快乐！ <br /> ${now.year} 年的进度条开始了！`
+  #         },
+  #         '12-31': {
+  #             title: '元旦快乐',
+  #             text: `新年快乐！ <br /> ${now.year + 1} 年的进度条马上就要开始了！<br />`
+  #         },
+  #         '3-8': {
+  #             title: '妇女节',
+  #             text: '各位女神们，妇女节快乐！'
+  #         },
+  #         '4-1': {
+  #             title: '非常抱歉，因为不可控原因，博客将于明天停止运营，感谢您的陪伴，再见',       
+  #             text: '今天是愚人节，祝祝祝祝祝 UP 生日快乐！'
+  #         },
+  #         '4-5': {
+  #             title: '清明安康。',
+  #             text: '' 
+  #         },
+  #         '5-1': {
+  #             title: '劳动节快乐！',
+  #             text: '为各行各业的辛勤工作劳动人民致敬！'
+  #         },
+  #         '5-4': {
+  #             title: '五四青年节',
+  #             text: '为百年前那些有思想政治觉悟，追求无产阶级、共产主义、马克思主义的青年们致敬！'
+  #         },
+  #         '6-1': {
+  #             title: '各位小朋友们，儿童节快乐！',
+  #             text: ''
+  #         },
+  #         '7-1': {
+  #             title: `中国共产党 ${now.year - 1921} 岁生日快乐`,
+  #             text: '今天时建党节。'
+  #         },
+  #         '8-15': {
+  #             title: `日本鬼子已宣布无条件投降 ${now.year - 1945} 年了！`,
+  #             text: '历史老师：标志着二战结束。'
+  #         },
+  #         '10-1': {
+  #             title: `中华人民共和国 ${now.year - 1949} 岁生日快乐！`,
+  #             text: '祝祖国母亲生日快乐！'
+  #         },
+  #         '10-2': '10-1',
+  #         '10-3': '10-1',
+  #         '10-4': '10-1',
+  #         '10-5': '10-1',
+  #         '10-6': '10-1',
+  #         '10-7': '10-1',
+
+  #         '8-11': {
+  #             title: 'sssssss', 
+  #             text: 'seeqeee08937525235'
+              
+  #         }
+  #       }"
+
+  # moon: "{
+  #               '腊月廿九': {
+  #                   title: `${lunarDate.lunarYear + 1} 年新年快乐！`,
+  #                   text: ''
+  #               },
+  #               '腊月三十': '腊月廿九',
+  #               '正月初一': {
+  #                   title: `${lunarDate.lunarYear} 新年快乐！`,
+  #                   text: ''
+  #               },
+  #               '正月初二': '正月初一',
+  #               '正月初三': '正月初一',
+  #               '正月初四': '正月初一',
+  #               '正月初五': '正月初一',
+  #               '正月初六': '正月初一',
+  #               '正月十五': {
+  #                   title: '元宵节快乐！',
+  #                   text: '您吃汤圆了吗?'
+  #               },
+  #               '五月初五': {
+  #                   title: '端午节快乐！',
+  #                   text: '您吃粽子了吗?'
+  #               },
+  #               '八月十五': {
+  #                   title: '中秋节快乐！',
+  #                   text: '您吃月饼了吗? <br /><del>这是什么怪味月饼那!?</del>'
+  #               },
+  #               '九月初五': {
+  #                   title: '重阳安康',
+  #                   text: ''
+  #               }
+  #           }"
+
 welcomemap:
   enable: true
   api:
+    enable: qq
     qq:
       key: ET6BZ-DDXEN-JRBFT-SZEUP-WBLXS-V7FGJ # 腾讯key
     api_url:
+    div:
+      api_url:
 
   author_longitude: 114.305000 # UP所在经度
   author_latitude: 30.592800 # UP所在纬度
@@ -759,28 +876,34 @@ welcomemap:
         default: `带我去你的国家看看吧。`
     }"
     # 国家选择器
-    error_meesage: 你好呀，欢迎来看我的博客！
+    
     
     # 访客位置描述
     # 允许的参数 -> ${pos}, ${address}, ${timeChange}, ${dist}, ${posdesc}, ${ip}
-    message: "欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}"
-
+    message: "欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}<hr>"
+    error_meesage: 你好呀，欢迎来看我的博客！
 
 # 白天模式和黑夜模式切换时的 JavaScript 脚本
-# -------------------------------------
+# -----------------------------------------
 # 它将在切换和初始化时执行
 # 若你想在切换时执行一些操作，请在这里写下
 # 若不起效果，请在网页控制台中运行 
 # @code {errors.getErrors(0x01010)} (LIGHT) 或 @code {errors.getErrors(0x01011)} (DARK)
+# 以查找发生的异常，通常控制台里也会有
+# 注：FUNCTION 函数不得留空，否则会报错，如删除请填入 nullFunction
 lightDarkMode:
   light: # 亮色主题
     js: "document.getElementById('travellings-logo').src = '/img/travelling_b.svg';
       "
+    function: nullFunction
   dark: # 暗色主题
     js: "
       document.getElementById('travellings-logo').src = '/img/travelling_w.svg';
       "
+    function: nullFunction
 
+config_page:
+  enable: true
 
 
 # aside (側邊欄)
@@ -848,9 +971,9 @@ aside:
 # busuanzi count for PV / UV in site
 # 訪問人數
 busuanzi:
-  site_uv: true
-  site_pv: true
-  page_pv: true
+  site_uv: false
+  site_pv: false
+  page_pv: false
 
 # Time difference between publish date and now (網頁運行時間)
 # Formal: Month/Day/Year Time or Year/Month/Day Time
@@ -1503,12 +1626,13 @@ inject:
     - <script src="https://unpkg.com/docute@3.4.12/plugins/docsearch.js"></script>
     - <script src="https://unpkg.com/docute-evanyou/dist/evanyou.min.js"></script>
     - <script src="https://unpkg.com/docute@3.4.12/dist/docute.js"></script>
+    - <script src="/js/fps.js"></script>
     
     - <script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script>
     # - <script type="text/javascript" src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>
     - <script type="text/javascript" src="https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
     - <script src="/favi/qq.js"></script>
-    - <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    - <script src="//www.busuanzi.cc/static/3.6.9/busuanzi.min.js" defer></script>
 
     - <script id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
     - <script>LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>
@@ -1533,7 +1657,7 @@ CDN:
   # The CDN provider of third party scripts (第三方 js 的 cdn 配置)
   # option: local/jsdelivr/unpkg/cdnjs/custom
   # when set it to local, you need to install hexo-butterfly-extjs
-  third_party_provider: unpkg
+  third_party_provider: cdnjs
 
   # Add version number to url, true or false
   version: true

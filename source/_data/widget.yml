@@ -50,7 +50,7 @@ bottom:
     name: 时光飞逝
     icon: fa-solid fa-clock
     order: 5
-    html: <div class="time-progress"></div>
+    html: <div class="time-flies"></div><div id="fps"></div>
   #  - class_name:
     #  id_name:
     #  name: 51.LA 网站统计

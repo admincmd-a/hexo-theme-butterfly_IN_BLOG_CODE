@@ -282,7 +282,7 @@ localStorage 属性是只读的。
 
 有关如何查看、删除本地存储，请参见下链接
 
-[**Microsoft Edge**](http://blog.admincmd.xyz/url.html?urlhttps://learn.microsoft.com/zh-cn/microsoft-edge/devtools-guide-chromium/storage/localstorage)
+[**Microsoft Edge**](http://blog.admincmd.xyz/url.html?url=https://learn.microsoft.com/zh-cn/microsoft-edge/devtools-guide-chromium/storage/localstorage)
 [**Google Chrome**](http://blog.admincmd.xyz/url.html?url=https://developer.chrome.com/docs/devtools/storage/localstorage/?utm_source=devtools)（可能为英语）
 [**Firefox**](http://blog.admincmd.xyz/url.html?url=https://developer.chrome.com/docs/devtools/storage/localstorage/?utm_source=devtools)（可能为英语）
 
