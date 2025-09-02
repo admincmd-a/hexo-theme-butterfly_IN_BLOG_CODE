@@ -42,7 +42,7 @@ nav:
         # 服务器监视器: http://status.admincmd.xyz/ || fa-solid fa-chart-line
         设置: javascript:configWin.main(); || fa-solid fa-cog
       "": https://www.travellings.cn/go.html || fas fa-subway
-      "||fas fa-magnifying-glass": SEARCH_BUTTON
+      # "搜索||fas fa-magnifying-glass": SEARCH_BUTTON
 
       # 定义：
       # 无子菜单项目
@@ -273,6 +273,7 @@ footer:
   # URL : 图片 URL
   background:
     img:
+
   owner:
     enable: true
     since: 2022 #版权日期
@@ -296,9 +297,11 @@ footer:
       框架:
         url: https://hexo.io
         text: Hexo
+        rel: nofollow noreferrer external
       主题:
         url: https://github.com/jerryc127/hexo-theme-butterfly
         text: Butterfly (魔改)
+        rel: nofollow noreferrer external
       "":  # 空键名表示不需要前缀文字
         html: "
           <a href='https://icp.gov.moe/?keyword=20231986' target='_blank' rel='noopener' title='萌ICP备 20231986号'>
@@ -311,6 +314,13 @@ footer:
             <span id='travel-text'>异次元之旅</span>
           </a>
           "
+      " ": 
+        html: "
+          <a href='https://icp.redcha.cn/beian/ICP-2025080127.html' target='_blank' rel='noopener' title='茶ICP备2025080127号'><img src='https://icp.redcha.cn/static/picture/icplogoi.png' style='height: 20px;'>茶 ICP 备 2025080127 号</a>
+          "
+        text: 茶备案 462225 号
+        rel: nofollow noreferrer external
+        url: https://icp.redcha.cn/
       # "": # aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       #   url: https://travel.moe/go.html?travel=on
       #   text: " 异次元之旅"
@@ -321,6 +331,7 @@ footer:
       评论服务:
         url: https://twikoo.js.org/
         text: Twikoo
+        rel: nofollow noreferrer external
       统计服务:
         html: "
           <span>统计服务</span>
@@ -334,12 +345,15 @@ footer:
       托管于:
         url: https://github.com/
         text: GitHub
+        rel: nofollow noreferrer external
       CDN:
         url: https://cdnjs.com/
         text: Cdnjs
+        rel: nofollow noreferrer external
       许可协议:
         url: http://creativecommons.org/licenses/by-nc-sa/4.0/
         text: CC BY-NC-SA 4.0
+        rel: nofollow noreferrer external
       开往:
         html: '
           <a href="https://www.travellings.cn/go.html" target="_blank" rel="noopener" title="开往-友链接力">
@@ -666,7 +680,7 @@ focus_title:
   enable: true
   # 允许的常量 -> ${originalTitle}
   lost_focus: "这都跑去干啥了，让我康康 | ${originalTitle}"
-  get_focus: "干啥去了，现在才回 | ${originalTitle}"
+  get_focus: "干啥去了，现在才回来 | ${originalTitle}"
 
 # 右键菜单
 # ------------------------------
@@ -677,6 +691,8 @@ right_menu:
 # 在节日、特殊纪念日时显示一个窗口，亦或弹出消息，支持公历和农历
 time_msg_window:
   enable: true
+  sun:  "{}"
+  moon: "{}"
   # sun: "{
   #         '7-7': {
   #             title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
@@ -1057,16 +1073,16 @@ katex:
 # --------------------------------------
 
 # Algolia search
-algolia_search:
-  enable: false
-  hits:
-    per_page: 6
+# algolia_search:
+#   enable: false
+#   hits:
+#     per_page: 6
 
 # Local search
 local_search: 
   enable: true
   # Preload the search data when the page loads.
-  preload: false
+  preload: true
   # Show top n results per article, show all results by setting to -1
   top_n_per_article: 1
   # Unescape html strings to the readable one.
@@ -1628,7 +1644,7 @@ inject:
     - <script src="https://unpkg.com/docute@3.4.12/dist/docute.js"></script>
     - <script src="/js/fps.js"></script>
     
-    - <script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script>
+    # - <script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script>
     # - <script type="text/javascript" src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>
     - <script type="text/javascript" src="https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
     - <script src="/favi/qq.js"></script>

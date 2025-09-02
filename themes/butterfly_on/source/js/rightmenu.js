@@ -124,12 +124,22 @@
 
     //复制选中文字
     rmf.copySelect = function () {
-        document.execCommand('Copy', false, null);
-        Snackbar.show({
-            text: '已占领剪贴板！',
-            pos: 'top-right',
-            showAction: false
-        });
+        const selectText = getSelectedText();
+        if (selectText === null) {
+            setCopyText(selectText);
+            Snackbar.show({
+                text: '已占领剪贴板！',
+                pos: 'top-right',
+                showAction: false
+            });
+        } else {
+            document.execCommand('Copy', false, null);
+            Snackbar.show({
+                text: '已占领剪贴板！',
+                pos: 'top-right',
+                showAction: false
+            });
+        }        
     }
 
     //回到顶部

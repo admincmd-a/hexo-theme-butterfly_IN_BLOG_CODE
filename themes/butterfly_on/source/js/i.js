@@ -995,7 +995,7 @@ function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个
         .then(response => {
             if (!response.ok) {
                 Snackbar.show({
-                    text: '；；；；；；；；；；；；；；；；；；；；；；！',
+                    text: `Error`,
                     pos: 'top-right',
                     showAction: false
                 });
@@ -1006,7 +1006,7 @@ function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个
             const lines = data.split('\n'); // 将文件内容按行拆分
             const randomIndex = Math.floor(Math.random() * lines.length); // 随机生成索引
             const randomLine = lines[randomIndex].trim(); // 获取随机行并去除多余空格
-            if (randomLine === window.location.href) {// 避免跳转到当前页面
+            if (randomLine === window.location.href) { // 避免跳转到当前页面
                 justLookAround();
             }
             if (randomLine) {
@@ -1044,9 +1044,7 @@ void 0;
 
 // 主循环模块 ----------------------------------------------------
 
-/**
- * 主循环执行函数，首次调用会加载初始化模块
- */
+/** 主循环执行函数，首次调用会加载初始化模块 */
 function updateVar() {
     if (PROGRESS_BAR) {// 判断是否存在进度条元素, 防止重复执行，免得tm控制台里全是报错
         updateProgressBars();
@@ -1400,7 +1398,7 @@ async function displayWelcomeMessage(ipLoacation) {
         if (welcomeInfoElement) {
             welcomeInfoElement.innerHTML = "你好呀，欢迎来看我的博客！";
         }
-        errorCodes.addError(0x00000000000000000000000000000001, "在显示欢迎语信息时，发生了一个错误" + e, errorCodes.ERROR_TYPES.ERROR, true);
+        errorCodes.addError(0x00000000000000000000000000000001 , "在显示欢迎语信息时，发生了一个错误" + e, errorCodes.ERROR_TYPES.ERROR, true);
     }
 }
 setTimeout(function () {
@@ -1408,7 +1406,7 @@ setTimeout(function () {
         text: '本站使用 Cookie 和 本地会话存储 保证浏览体验和网站统计',
         pos: 'top-right',
         actionText: "查看博客声明",
-        onActionClick: function () {
+        onActionClick: function () {  
             window.open("/license");
         },
     });
@@ -1424,6 +1422,7 @@ setTimeout(function () {
                 pos: 'top-center',
             });
             break;
+
         case '-':
             break;
         default:
