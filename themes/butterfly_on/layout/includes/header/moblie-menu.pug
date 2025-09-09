@@ -15,7 +15,9 @@ if theme.nav.menu.enable
                   i.fa-fw(class=trim(valArray[1]))
                 else 
                   i.fas.fa-search.fa-fw
-                span=(' ' + valArray[0]) || (' ' + _p('search.title'))
+
+                
+                span(tag="pcEnable_false")=(' ' + valArray[0]) || (' ' + _p('search.title'))
             #toggle-menu
               a.site-page(href="javascript:void(0);")
                 i.fas.fa-bars.fa-fw
