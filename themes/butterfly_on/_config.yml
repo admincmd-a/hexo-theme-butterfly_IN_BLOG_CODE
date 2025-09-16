@@ -1646,7 +1646,7 @@ inject:
     
     # - <script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script>
     # - <script type="text/javascript" src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>
-    - <script type="text/javascript" src="https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+    # - <script type="text/javascript" src="https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
     - <script src="/favi/qq.js"></script>
     - <script src="//www.busuanzi.cc/static/3.6.9/busuanzi.min.js" defer></script>
 
