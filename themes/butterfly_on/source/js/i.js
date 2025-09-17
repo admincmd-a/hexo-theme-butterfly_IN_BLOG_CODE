@@ -1090,11 +1090,11 @@ async function timeWindow() {
             sun: {
                 '7-7': {
                     title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
-                    text: '勿忘国耻，振兴中华'
+                    text: '卢沟桥事变的发生标志着日本帝国主义发动全面侵华战争<br />\n勿忘国耻，振兴中华'
                 },
-                '9-18': {
+                '9-17': {
                     title: `今天是 1931 年 9 月 18 日九一八事变 ${now.year - 1931} 周年纪念日！`,
-                    text: '勿忘国耻，振兴中华'
+                    text: '九一八事变是日本帝国主义侵华的开端，标志着世界反法西斯战争的起点，揭开了第二次世界大战东方主战场的序幕。<br />\n勿忘国耻，振兴中华'
                 },
                 '12-13': {
                     title: '对所有在南京大屠杀中被无辜杀害的同胞表示深切哀悼！',
@@ -1288,114 +1288,114 @@ async function displayWelcomeMessageInit() {
 
 async function displayWelcomeMessage(ipLoacation) {
     try {
-            while (!ipLoacation.result) {
-                await sleep(100); // 等待数据加载完成
-                ipLoacation = window.saveToLocal.get('ipLocation');
-            }
-        
-            // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
-            let dist = getDistanceAMLS(
-                _USER_CONFIG.WELCOME_MAP.AUTHOR_LONGITUDE, 
-                _USER_CONFIG.WELCOME_MAP.AUTHOR_LATITUDE, 
-                ipLoacation.result.location.lng, 
-                ipLoacation.result.location.lat
-            ); // 计算距离
-        
-            // 读取欢迎语数据
-            let pos = ipLoacation.result.ad_info.nation;
-            let ip = ipLoacation.result.ip;
-            let ipDZ;
-            let posdesc; //要显示的信息
-            const defaultAddress = _USER_CONFIG.WELCOME_MAP.DEFAULT_ADDRESS;
-            const authorAddress = _USER_CONFIG.WELCOME_MAP.AUTHOR_ADDRESS;
-            const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH;
-            let address = defaultAddress;
+        while (!ipLoacation.result) {
+            await sleep(100); // 等待数据加载完成
+            ipLoacation = window.saveToLocal.get('ipLocation');
+        }
+    
+        // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
+        let dist = getDistanceAMLS(
+            _USER_CONFIG.WELCOME_MAP.AUTHOR_LONGITUDE, 
+            _USER_CONFIG.WELCOME_MAP.AUTHOR_LATITUDE, 
+            ipLoacation.result.location.lng, 
+            ipLoacation.result.location.lat
+        ); // 计算距离
+    
+        // 读取欢迎语数据
+        let pos = ipLoacation.result.ad_info.nation;
+        let ip = ipLoacation.result.ip;
+        let ipDZ;
+        let posdesc; //要显示的信息
+        const defaultAddress = _USER_CONFIG.WELCOME_MAP.DEFAULT_ADDRESS;
+        const authorAddress = _USER_CONFIG.WELCOME_MAP.AUTHOR_ADDRESS;
+        const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH;
+        let address = defaultAddress;
 
-        
-            // 根据国家、省份、城市信息自定义欢迎语
-            // 海外地区不支持省份及城市信息
-            if (data_scb[pos]) {
-                if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
-                    if (data_scb[pos].content) {
-                        posdesc = data_scb[pos].content;
-                    } else {
-                        let province = ipLoacation.result.ad_info.province.replace(/市$/, ''); // 去掉市字
-                        let city = ipLoacation.result.ad_info.city.replace(/市$/, ''); // 去掉市字
-                        let district = ipLoacation.result.ad_info.district;
-                        if (data_scb[pos][province]) { // 省份信息
-                            if (typeof data_scb[pos][province] === 'object') {
-                                if (data_scb[pos][province].specialAdministrativeRegion) { // 特别行政区
-                                    posdesc = data_scb[pos][province].content;
-                                } else if (data_scb[pos][province].municipalities) { // 直辖市
-                                    posdesc = data_scb[pos][province].content;
-                                } else { // 一般省份
-                                    if (data_scb[pos][province][city]) {
-                                        if (data_scb[pos][province][district]) {
-                                            if (data_scb[pos][province][city][district]) {
-                                                posdesc = data_scb[pos][province][city][district];
-                                            } else {
-                                                posdesc = data_scb[pos][province][city].default;
-                                            } if (typeof entry === 'object' && data_scb[pos][province][city][district].authorLocations === true) {
-                                                address = authorAddress;
-                                            }
+    
+        // 根据国家、省份、城市信息自定义欢迎语
+        // 海外地区不支持省份及城市信息
+        if (data_scb[pos]) {
+            if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
+                if (data_scb[pos].content) {
+                    posdesc = data_scb[pos].content;
+                } else {
+                    let province = ipLoacation.result.ad_info.province.replace(/市$/, ''); // 去掉市字
+                    let city = ipLoacation.result.ad_info.city.replace(/市$/, ''); // 去掉市字
+                    let district = ipLoacation.result.ad_info.district;
+                    if (data_scb[pos][province]) { // 省份信息
+                        if (typeof data_scb[pos][province] === 'object') {
+                            if (data_scb[pos][province].specialAdministrativeRegion) { // 特别行政区
+                                posdesc = data_scb[pos][province].content;
+                            } else if (data_scb[pos][province].municipalities) { // 直辖市
+                                posdesc = data_scb[pos][province].content;
+                            } else { // 一般省份
+                                if (data_scb[pos][province][city]) {
+                                    if (data_scb[pos][province][district]) {
+                                        if (data_scb[pos][province][city][district]) {
+                                            posdesc = data_scb[pos][province][city][district];
                                         } else {
                                             posdesc = data_scb[pos][province][city].default;
-                                        } if (typeof entry === 'object' && [pos][province][city].authorLocations === true) {
+                                        } if (typeof entry === 'object' && data_scb[pos][province][city][district].authorLocations === true) {
                                             address = authorAddress;
                                         }
                                     } else {
-                                        posdesc = data_scb[pos][province].default;
-                                    } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
+                                        posdesc = data_scb[pos][province][city].default;
+                                    } if (typeof entry === 'object' && [pos][province][city].authorLocations === true) {
                                         address = authorAddress;
                                     }
+                                } else {
+                                    posdesc = data_scb[pos][province].default;
+                                } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
+                                    address = authorAddress;
                                 }
-                            } else {
-                                posdesc = data_scb[pos][province];
-                            } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
-                                address = authorAddress;
                             }
                         } else {
-                            posdesc = data_scb[pos].default; // 省份信息不存在，使用默认信息
-                        } if (data_scb[pos].connectProvincesCities) { // 连接省份和城市信息
-                            pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city;
-                        } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
+                            posdesc = data_scb[pos][province];
+                        } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
                             address = authorAddress;
                         }
+                    } else {
+                        posdesc = data_scb[pos].default; // 省份信息不存在，使用默认信息
+                    } if (data_scb[pos].connectProvincesCities) { // 连接省份和城市信息
+                        pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city;
+                    } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
+                        address = authorAddress;
                     }
-                } else {
-                    posdesc = data_scb[pos];
-                } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
-                    address = authorAddress;
                 }
             } else {
-                posdesc = data_scb.default;
+                posdesc = data_scb[pos];
+            } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
+                address = authorAddress;
             }
-        
-            //判断时间
-            const now = new Date();
-            let timeChange = "";
-            if (now.getHours() >= 5 && now.getHours() < 11) timeChange = "<span>上午好</span>，一日之计在于晨";
-            else if (now.getHours() >= 11 && now.getHours() < 13) timeChange = "<span>中午好</span>，开——饭——了——";
-            else if (now.getHours() >= 13 && now.getHours() < 15) timeChange = "<span>下午好</span>，懒懒地睡个午觉吧！";
-            else if (now.getHours() >= 15 && now.getHours() < 16) timeChange = "<span>下午三点了</span>，上课摸鱼 ING...";
-            else if (now.getHours() >= 16 && now.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";
-            else if (now.getHours() >= 19 && now.getHours() < 24) timeChange = "<span>晚上好</span>，我要写作业了……";
-            else timeChange = "都几点了，还在熬夜？";
-        
-            // 检查 welcome-info 是否存在
-            const welcomeInfoElement = document.getElementById("welcome-info");
-            if (welcomeInfoElement) {
-                // 用户定义，如无法查找则使用缺省值
-                welcomeInfoElement.innerHTML = _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip)
-                || `欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}<hr>`;
-            }
-        
-            if (sessionStorage.getItem("popCookieWindow") != "0") {
-                // 这里可以添加弹窗逻辑
-            }
-    } catch (e) {
+        } else {
+            posdesc = data_scb.default;
+        }
+    
+        //判断时间
+        const now = new Date();
+        let timeChange = "";
+        if (now.getHours() >= 5 && now.getHours() < 11) timeChange = "<span>上午好</span>，一日之计在于晨";
+        else if (now.getHours() >= 11 && now.getHours() < 13) timeChange = "<span>中午好</span>，开——饭——了——";
+        else if (now.getHours() >= 13 && now.getHours() < 15) timeChange = "<span>下午好</span>，懒懒地睡个午觉吧！";
+        else if (now.getHours() >= 15 && now.getHours() < 16) timeChange = "<span>下午三点了</span>，上课摸鱼 ING...";
+        else if (now.getHours() >= 16 && now.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";
+        else if (now.getHours() >= 19 && now.getHours() < 24) timeChange = "<span>晚上好</span>，我要写作业了……";
+        else timeChange = "都几点了，还在熬夜？";
+    
+        // 检查 welcome-info 是否存在
         const welcomeInfoElement = document.getElementById("welcome-info");
         if (welcomeInfoElement) {
+            // 用户定义，如无法查找则使用缺省值
+            welcomeInfoElement.innerHTML = _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip)
+            || `欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}<hr>`;
+        }
+    
+        if (sessionStorage.getItem("popCookieWindow") != "0") {
+            // 这里可以添加弹窗逻辑
+        }
+    } catch (e) {
+        const welcomeInfoElement = document.getElementById("welcome-info");
+        if (welcomeInfoElement) { // 放一点默认信息，要不然一条分割线看的很别扭
             welcomeInfoElement.innerHTML = "你好呀，欢迎来看我的博客！";
         }
         errorCodes.addError(0x00000000000000000000000000000001 , "在显示欢迎语信息时，发生了一个错误" + e, errorCodes.ERROR_TYPES.ERROR, true);
@@ -1422,7 +1422,9 @@ setTimeout(function () {
                 pos: 'top-center',
             });
             break;
-
+        case 'admincmd.xyz':
+            console.log('由本站主站站点访问');
+            break;
         case '-':
             break;
         default:
