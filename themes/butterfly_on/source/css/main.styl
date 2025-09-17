@@ -463,3 +463,19 @@ div.item-headline>i[class="fa-solid fa-clock"] {
         transform: rotate(360deg);
     }
 }
+@media screen and (max-width:768px) {
+    [tag="pcEnable_false"] {
+        display: block !important
+    }
+
+    [tag="pcEnable_true"] {
+        display: none !important
+    }
+}
+[tag="pcEnable_false"] {
+    display: none !important
+}
+
+[tag="pcEnable_true"] {
+    display: block !important
+}
