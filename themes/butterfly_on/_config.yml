@@ -41,8 +41,11 @@ nav:
         # 线路总览: /server/ || fas fa-link
         # 服务器监视器: http://status.admincmd.xyz/ || fa-solid fa-chart-line
         设置: javascript:configWin.main(); || fa-solid fa-cog
-      "": https://www.travellings.cn/go.html || fas fa-subway
-      # "搜索||fas fa-magnifying-glass": SEARCH_BUTTON
+      # "开往": 
+      #   NoMenu: true
+      #   url: https://www.travellings.cn/go.html 
+      #   icon: fas fa-subway
+      "搜索||fas fa-magnifying-glass": SEARCH_BUTTON
 
       # 定义：
       # 无子菜单项目
@@ -66,7 +69,7 @@ nav:
 # Code Blocks (代碼相關)
 # --------------------------------------
 
-highlight_theme: light #  darker / pale night / light / ocean / mac / mac light / false
+highlight_theme: mac light #  darker / pale night / light / ocean / mac / mac light / false
 highlight_copy: true # copy button
 highlight_lang: true # show the code language
 highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
