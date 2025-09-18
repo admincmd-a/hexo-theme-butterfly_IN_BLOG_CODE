@@ -1092,7 +1092,7 @@ async function timeWindow() {
                     title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
                     text: '卢沟桥事变的发生标志着日本帝国主义发动全面侵华战争<br />\n勿忘国耻，振兴中华'
                 },
-                '9-17': {
+                '9-18': {
                     title: `今天是 1931 年 9 月 18 日九一八事变 ${now.year - 1931} 周年纪念日！`,
                     text: '九一八事变是日本帝国主义侵华的开端，标志着世界反法西斯战争的起点，揭开了第二次世界大战东方主战场的序幕。<br />\n勿忘国耻，振兴中华'
                 },
@@ -1443,7 +1443,7 @@ setTimeout(function () {
             break;
         
         default:
-            if (domain === window.location.hostname) {
+            if (referrer === window.location.hostname) {
                 break;
             }
             Snackbar.show({
