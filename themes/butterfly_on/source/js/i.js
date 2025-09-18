@@ -1092,7 +1092,7 @@ async function timeWindow() {
                     title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
                     text: '卢沟桥事变的发生标志着日本帝国主义发动全面侵华战争<br />\n勿忘国耻，振兴中华'
                 },
-                '9-17': {
+                '9-18': {
                     title: `今天是 1931 年 9 月 18 日九一八事变 ${now.year - 1931} 周年纪念日！`,
                     text: '九一八事变是日本帝国主义侵华的开端，标志着世界反法西斯战争的起点，揭开了第二次世界大战东方主战场的序幕。<br />\n勿忘国耻，振兴中华'
                 },
@@ -1224,6 +1224,11 @@ async function timeWindow() {
         } else {
             console.log(timeWinDivTitleText);
             console.log(timeWinDivText);
+
+            if (localStorage.getItem('shown', todayKey)) {
+                return true;
+            }
+
             msgWin.show(timeWinDivTitleText, timeWinDivText, true, 10000);
         }
         // 设置今天已显示
@@ -1402,14 +1407,19 @@ async function displayWelcomeMessage(ipLoacation) {
     }
 }
 setTimeout(function () {
-    Snackbar.show({
-        text: '本站使用 Cookie 和 本地会话存储 保证浏览体验和网站统计',
-        pos: 'top-right',
-        actionText: "查看博客声明",
-        onActionClick: function () {  
-            window.open("/license");
-        },
-    });
+    if (sessionStorage.getItem('popCookieWindow') === 0) {
+        
+    } else {
+        sessionStorage.setItem('popCookie')
+        Snackbar.show({
+            text: '本站使用 Cookie 和 本地会话存储 保证浏览体验和网站统计',
+            pos: 'top-right',
+            actionText: "查看博客声明",
+            onActionClick: function () {  
+                window.open("/license");
+            },
+        });
+    }
 }, 4500);
 let referrer = document.referrer || '-';
 let domain = referrer ? referrer.split("://")[1] : '-';
@@ -1428,7 +1438,7 @@ setTimeout(function () {
         case '-':
             break;
         default:
-            if (domain === window.location.hostname) {
+            if (referrer === window.location.hostname) {
                 break;
             }
             Snackbar.show({
