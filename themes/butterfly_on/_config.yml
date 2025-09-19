@@ -42,7 +42,7 @@ nav:
         # 服务器监视器: http://status.admincmd.xyz/ || fa-solid fa-chart-line
         设置: javascript:configWin.main(); || fa-solid fa-cog
       "": https://www.travellings.cn/go.html || fas fa-subway
-      # "搜索||fas fa-magnifying-glass": SEARCH_BUTTON
+      "搜索||fas fa-magnifying-glass": SEARCH_BUTTON
 
       # 定义：
       # 无子菜单项目
@@ -1645,7 +1645,7 @@ inject:
     - <script src="/js/fps.js"></script>
     
     # - <script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script>
-    # - <script type="text/javascript" src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>
+    - <script type="text/javascript" src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>
     # - <script type="text/javascript" src="https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
     - <script src="/favi/qq.js"></script>
     - <script src="//www.busuanzi.cc/static/3.6.9/busuanzi.min.js" defer></script>

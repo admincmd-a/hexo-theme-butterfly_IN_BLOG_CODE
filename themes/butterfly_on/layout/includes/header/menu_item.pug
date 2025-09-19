@@ -9,7 +9,7 @@ if theme.nav.menu.enable
             - const valArray = label.split('||')
             //- 搜索按钮
             #search-button
-              a.site-page.social-icon.search(href="javascript:void(0);")
+              a.site-page.social-icon.search(href="javascript:openSearch();")
                 if valArray[1]
                   i.fa-fw(class=trim(valArray[1]))
                 else 
