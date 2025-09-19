@@ -1225,8 +1225,8 @@ async function timeWindow() {
             console.log(timeWinDivTitleText);
             console.log(timeWinDivText);
 
-            if (localStorage.getItem('shown', todayKey)) {
-                return true;
+            if (localStorage.getItem('shown') === todayKey) {
+                return void 0; // 今天已经显示过了，不再显示
             }
 
             msgWin.show(timeWinDivTitleText, timeWinDivText, true, 10000);
@@ -1406,11 +1406,17 @@ async function displayWelcomeMessage(ipLoacation) {
         errorCodes.addError(0x00000000000000000000000000000001 , "在显示欢迎语信息时，发生了一个错误" + e, errorCodes.ERROR_TYPES.ERROR, true);
     }
 }
+
+let referrer = document.referrer || '-';
+let domain = referrer ? referrer.split("://")[1] : '-';
+domain = domain ? domain.split("/")[0] : '-';
+
+if (sessionStorage.getItem('popDNname')) {
+    sessionStorage.setItem('popDNname', domain);
+}
+
 setTimeout(function () {
-    if (sessionStorage.getItem('popCookieWindow') === 0) {
-        
-    } else {
-        sessionStorage.setItem('popCookie')
+    if (sessionStorage.getItem('popCookieWindow') != "0") {
         Snackbar.show({
             text: '本站使用 Cookie 和 本地会话存储 保证浏览体验和网站统计',
             pos: 'top-right',
@@ -1421,9 +1427,7 @@ setTimeout(function () {
         });
     }
 }, 4500);
-let referrer = document.referrer || '-';
-let domain = referrer ? referrer.split("://")[1] : '-';
-domain = domain ? domain.split("/")[0] : '-';
+
 setTimeout(function () {
     switch (domain) {
         case 'www.travellings.cn':
@@ -1437,6 +1441,7 @@ setTimeout(function () {
             break;
         case '-':
             break;
+        
         default:
             if (referrer === window.location.hostname) {
                 break;
