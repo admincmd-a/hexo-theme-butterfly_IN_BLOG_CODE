@@ -234,7 +234,15 @@ class LocalSearch {
   }
 }
 
-window.addEventListener('load', () => {
+while (ok) {
+  if (ok) {
+    break;// 等待加载完成
+  }
+}
+
+/* window.addEventListener('load', */ 
+// const localSearchFunc = 
+// () => {
 // Search
   const { path, top_n_per_article, unescape, languages } = GLOBAL_CONFIG.localSearch
   const localSearch = new LocalSearch({
@@ -361,4 +369,5 @@ window.addEventListener('load', () => {
     localSearch.highlightSearchWords(document.getElementById('article-container'))
     searchClickFn()
   })
-})
+// }
+// })

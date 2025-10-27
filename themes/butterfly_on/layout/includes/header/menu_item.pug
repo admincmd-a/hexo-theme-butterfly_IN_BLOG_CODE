@@ -1,6 +1,9 @@
 if theme.nav.menu.enable
   //- 此段主要提供：自定义菜单项的显示
   .menus_items
+    #toggle-menu
+              a.site-page(href="javascript:void(0);")
+                i.fas.fa-bars.fa-fw
     each value, label in theme.nav.menu.item 
       //- 遍历菜单项
       if typeof value !== 'object'
@@ -9,15 +12,13 @@ if theme.nav.menu.enable
             - const valArray = label.split('||')
             //- 搜索按钮
             #search-button
-              a.site-page.social-icon.search(href="javascript:void(0);")
+              a.site-page.social-icon.search(href="javascript:openSearch();")
                 if valArray[1]
                   i.fa-fw(class=trim(valArray[1]))
                 else 
                   i.fas.fa-search.fa-fw
                 span=(' ' + valArray[0]) || (' ' + _p('search.title'))
-            #toggle-menu
-              a.site-page(href="javascript:void(0);")
-                i.fas.fa-bars.fa-fw
+            
         else
           .menus_item
             - const valueArray = value.split('||')

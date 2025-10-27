@@ -41,6 +41,7 @@ nav:
         # 线路总览: /server/ || fas fa-link
         # 服务器监视器: http://status.admincmd.xyz/ || fa-solid fa-chart-line
         设置: javascript:configWin.main(); || fa-solid fa-cog
+      "": https://www.travellings.cn/go.html || fas fa-subway
       # "开往": 
       #   NoMenu: true
       #   url: https://www.travellings.cn/go.html 
@@ -1648,10 +1649,10 @@ inject:
     - <script src="/js/fps.js"></script>
     
     # - <script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script>
-    # - <script type="text/javascript" src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>
+    - <script type="text/javascript" src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>
     # - <script type="text/javascript" src="https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
     - <script src="/favi/qq.js"></script>
-    - <script src="//www.busuanzi.cc/static/3.6.9/busuanzi.min.js" defer></script>
+    # - <script src="//www.busuanzi.cc/static/3.6.9/busuanzi.min.js" defer></script>
 
     - <script id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
     - <script>LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>

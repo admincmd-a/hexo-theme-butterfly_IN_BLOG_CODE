@@ -539,9 +539,7 @@ var pageBlur = {
 
 // 消息窗口 
 
-/**
- * 消息窗口对象
- */
+/** 消息窗口对象 */
 const msgWin = {
     timeOutId: null,
     id: "messageWin",
@@ -585,9 +583,7 @@ const msgWin = {
         }
     },
 
-    /**
-     * 关闭消息窗口
-     */
+    /** 关闭消息窗口 */
     close() {
         window.document.getElementById(this.id).style.display = "none";
         pageBlur.setFalse(); // 关闭模糊
@@ -1256,7 +1252,7 @@ async function timeWindow() {
 }
 setTimeout(timeWindow, 10); // 延迟 1/100 秒执行
 
-// 以下是欢迎语
+// 以下是欢迎语的流程
 // -----------------------------------------------------------------------------
 // 2024.12.21 修正了无法获取 KEY 的问题，将欢迎语显示合并，如果在武汉，那就是UP的老乡
 // 2025.2.23 修正了在没有 Cookie 的情况下，无法显示欢迎语的问题
@@ -1266,6 +1262,7 @@ setTimeout(timeWindow, 10); // 延迟 1/100 秒执行
 // 请求数据
 setTimeout(displayWelcomeMessageInit, 1); // 新开一个线程，防止阻塞主线程
 
+/** 载入旧数据或请求新的数据 */
 async function displayWelcomeMessageInit() {
     try {
             let ipLoacation = window.saveToLocal.get('ipLocation');
@@ -1291,20 +1288,22 @@ async function displayWelcomeMessageInit() {
     }
 }
 
+/** 加载当前的位置，匹配欢迎语数据，显示欢迎语 */
 async function displayWelcomeMessage(ipLoacation) {
     try {
+        // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
         while (!ipLoacation.result) {
             await sleep(100); // 等待数据加载完成
             ipLoacation = window.saveToLocal.get('ipLocation');
         }
-    
-        // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
+        
+        // 初始化配置
         let dist = getDistanceAMLS(
             _USER_CONFIG.WELCOME_MAP.AUTHOR_LONGITUDE, 
             _USER_CONFIG.WELCOME_MAP.AUTHOR_LATITUDE, 
             ipLoacation.result.location.lng, 
             ipLoacation.result.location.lat
-        ); // 计算距离
+        );
     
         // 读取欢迎语数据
         let pos = ipLoacation.result.ad_info.nation;
@@ -1316,9 +1315,9 @@ async function displayWelcomeMessage(ipLoacation) {
         const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH;
         let address = defaultAddress;
 
-    
+        // 匹配数据
         // 根据国家、省份、城市信息自定义欢迎语
-        // 海外地区不支持省份及城市信息
+        // 腾讯海外地区不支持省份及城市信息
         if (data_scb[pos]) {
             if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
                 if (data_scb[pos].content) {
@@ -1376,7 +1375,7 @@ async function displayWelcomeMessage(ipLoacation) {
             posdesc = data_scb.default;
         }
     
-        //判断时间
+        // 判断时间
         const now = new Date();
         let timeChange = "";
         if (now.getHours() >= 5 && now.getHours() < 11) timeChange = "<span>上午好</span>，一日之计在于晨";
@@ -1403,7 +1402,8 @@ async function displayWelcomeMessage(ipLoacation) {
         if (welcomeInfoElement) { // 放一点默认信息，要不然一条分割线看的很别扭
             welcomeInfoElement.innerHTML = "你好呀，欢迎来看我的博客！";
         }
-        errorCodes.addError(0x00000000000000000000000000000001 , "在显示欢迎语信息时，发生了一个错误" + e, errorCodes.ERROR_TYPES.ERROR, true);
+        // 上报错误
+        errorCodes.addError(0x00000000000000000000000000000001 , "在显示欢迎语信息时，发生了一个错误：" + e, errorCodes.ERROR_TYPES.ERROR, true);
     }
 }
 

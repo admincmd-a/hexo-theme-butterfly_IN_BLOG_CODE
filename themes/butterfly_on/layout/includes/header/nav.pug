@@ -12,4 +12,5 @@ if theme.nav.enable
     #menus
       //- 菜单栏
       !=partial('includes/header/menu_item', {}, {cache: true})
-      !=partial('includes/header/moblie-menu', {}, {cache: true})
+      .moblie-menu#moblie-menu
+        !=partial('includes/header/moblie-menu', {}, {cache: true})

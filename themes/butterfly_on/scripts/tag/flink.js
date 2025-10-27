@@ -22,7 +22,7 @@ const flinkFn = (args, content) => {
         j.color="#383838"
       }
       listResult += `
-          <div class="flink-list-item" style="background-color:${j.color}">
+          <div class="flink-list-item" style="/*background-color:${j.color}*/">
             <a href="${j.link}" title="${j.name}" target="_blank">
               <div class="flink-item-icon">
                 <img class="no-lightbox" src="${j.avatar}" onerror='this.onerror=null;this.src="${urlFor(hexo.theme.config.error_img.flink)}"' alt="${j.name}" />
