@@ -461,7 +461,7 @@ var configWin = {
     setDiv(divHtml) {
         //return;
 
-        if (isMobile()) {
+        if (false) {//isMobile()) {
             Snackbar.show({
                 text: '移动端暂不支持此功能。',
                 pos: 'top-right',

@@ -390,7 +390,7 @@ const errorCodesFunction = (
 
         /**
          * 返回所有已被记录的错误码和信息
-         * @returns {object}
+         * @returns {{code: number, message: string, items: {}}}
          */
         getAllErrorCodes: () => {
             if (errors == {}) {
@@ -470,8 +470,10 @@ var pageBlur = {
     setTrue() {
         try {
 
-            document.getElementById(this.byId).style = `filter: blur(${this.px}px); pointerEvents: none; opacity: 0.7`;
-            document.getElementsByClassName(this.byClass).style = `filter: blur(${this.px}px); pointerEvents: none; opacity: 0.7`;
+            if (isPcOrNotNarrow()) {
+                document.getElementById(this.byId).style = `filter: blur(${this.px}px); pointerEvents: none; opacity: 0.7`;
+                document.getElementsByClassName(this.byClass).style = `filter: blur(${this.px}px); pointerEvents: none; opacity: 0.7`;
+            }
 
             this.Blur = true;
             return true;
@@ -533,6 +535,18 @@ var pageBlur = {
      */
     setConfigPx(px) {
         this.px = px;
+    },
+
+    up() {
+        if (!this.blur) {
+            return;
+        }
+
+        if (isPcOrNotNarrow()) {
+            this.setTrue()
+        } else {
+            this.setFalse()
+        }
     }
 }
 
@@ -554,7 +568,7 @@ const msgWin = {
      * @return {boolean} true = 已成功打开 false = 移动端，将打开Snackbar提示
      */
     show(title, content, timeOut = null, vague = true) {
-        if (isMobile()) {
+        if (isUAMobile()) {
             Snackbar.show({
                 text: content,
                 actionText: '',
@@ -792,9 +806,17 @@ const lightDarkTheme = (() => {
 })();
 
 // 向下兼容
+/**
+ * 调整到夜间模式
+ * @deprecated 已弃用，请使用 lightDarkTheme.setTheme(...)
+ */
 function activateLightMode() {
     lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.LIGHT, true, true);
 }
+/**
+ * 调整到明亮模式
+ * @deprecated 已弃用，请使用 lightDarkTheme.setTheme(...)
+ */
 function activateDarkMode() {
     lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.DARK, true, true);
 }
@@ -803,9 +825,10 @@ function activateDarkMode() {
 
 /**
 * 判断是否是移动端
+* @information 本函数使用 UA 解析，若要使用其他方式解析，请使用 isMobileOrNarrow()
 * @return {boolean} true: 移动端 false: PC端
 */
-function isMobile() {
+function isUAMobile() {
     if (window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
         return true; // 移动端
     } else {
@@ -817,8 +840,33 @@ function isMobile() {
  * 判断是否是PC端
  * @returns {boolean} true: 是PC端 false: 是移动端
  */
-function isPC() {
-    return !isMobile();
+function isUAPC() {
+    return !isUAMobile();
+}
+
+/**
+ * 使用当前页面宽度判断是否为移动端或页面过窄
+ * @returns {boolean} 是否页面过窄
+ * @information 若要使用 UA 解析，请使用 isUAMobile()
+ */
+function isMobileOrNarrow() {
+    // 获取当前页面的宽度
+    const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+    // 判断页面宽度是否小于等于768px
+    if (windowWidth <= 768) {
+        return true; // 移动端或页面过窄
+    } else {
+        return false; // 不是移动端，页面宽度足够
+    }
+}
+
+/**
+ * 使用当前页面宽度判断是否为PC端或页面宽度正常
+ * @returns {boolean} 是否页面为标准宽度
+ */
+function isPcOrNotNarrow() {
+    return !isMobileOrNarrow();
 }
 
 /**
@@ -861,7 +909,7 @@ function isDebug() {
 }
 
 /**
- * 计算地球两经纬度之间的地面距离
+ * 计算地球两经纬度之间的球面弧线距离
  * @param {number} e1 1 点经度
  * @param {number} n1 1 点纬度
  * @param {number} e2 2 点经度
@@ -908,6 +956,7 @@ function setFont(font, enableReturn = false) {
 
 /**
  * 清除 Cookies、localStorage，显示确认按钮。
+ * @warn 清除后将刷新页面
  * @param {boolean} enableReturn 是否返回清除结果
  * @returns {boolean} 是否清除成功
  */
@@ -1031,11 +1080,34 @@ function getUrlParams(key) {
     return urlParams.get(key);
 }
 
+function openMoblieMenu() {
+    if (isPcOrNotNarrow) {
+        return;
+    }
+    const menu = document.getElementById('mobile-menu');
+    menu.style.left = "100%";
+
+}
+
+function closeMoblieMenu() {
+    if (isPcOrNotNarrow()) {
+        return;
+    }
+    const menu = document.getElementById('mobile-menu');
+    menu.style.left = "-100%";
+
+}
+
 // 初始化主题
 updateVar();
 lightDarkTheme.refreshTheme();
 pageBlur.topWin();
 msgWin.initialize();
+
+if (isUAMobile()) {
+    document.getElementsByTagName("pcEnable_false").style = "";
+}
+
 void 0;
 
 // 主循环模块 ----------------------------------------------------
@@ -1051,15 +1123,30 @@ function updateVar() {
     if (timer == 0) {
         setInterval(updateVar, 100);
         console.log("主循环启动")
+    } else if (timer % 100 === 0) {
+        updateVar100(); // 刷新
     } else if (timer % 1000 === 0) {
-
+        updateVar1000();
     } else if (timer % 10000 === 0) {
-        nowTime = new Date(); // 更新当前时间
+        updateVar10000();
     }
     timer++; // 计时器
 }
 
+function updateVar100() {
+    pageBlur.up()
+}
+function updateVar1000() {}
+function updateVar10000() {
+    nowTime = new Date(); // 更新当前时间
+}
 
+/** 立即刷新所有 JavaScript 变量 */
+function startUpdateVar() {
+    updateVar100();
+    updateVar1000();
+    updateVar10000();
+}
 
 async function timeWindow() {
     // 欢迎语，cookie 提醒 --------------------------------------------
@@ -1293,7 +1380,7 @@ async function displayWelcomeMessage(ipLoacation) {
     try {
         // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
         while (!ipLoacation.result) {
-            await sleep(100); // 等待数据加载完成
+            await sleep(50); // 等待数据加载完成
             ipLoacation = window.saveToLocal.get('ipLocation');
         }
         
@@ -1317,7 +1404,7 @@ async function displayWelcomeMessage(ipLoacation) {
 
         // 匹配数据
         // 根据国家、省份、城市信息自定义欢迎语
-        // 腾讯海外地区不支持省份及城市信息
+        // 腾讯 API 的海外地区不支持省份及城市信息
         if (data_scb[pos]) {
             if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
                 if (data_scb[pos].content) {
@@ -1384,7 +1471,7 @@ async function displayWelcomeMessage(ipLoacation) {
         else if (now.getHours() >= 15 && now.getHours() < 16) timeChange = "<span>下午三点了</span>，上课摸鱼 ING...";
         else if (now.getHours() >= 16 && now.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";
         else if (now.getHours() >= 19 && now.getHours() < 24) timeChange = "<span>晚上好</span>，我要写作业了……";
-        else timeChange = "都几点了，还在熬夜？";
+        else timeChange = "Good night.";
     
         // 检查 welcome-info 是否存在
         const welcomeInfoElement = document.getElementById("welcome-info");
@@ -1441,11 +1528,9 @@ setTimeout(function () {
             break;
         case '-':
             break;
-        
+        case window.location.hostname:
+            break;  
         default:
-            if (referrer === window.location.hostname) {
-                break;
-            }
             Snackbar.show({
                 text: `欢迎从来自 ${domain} 的访客访问本站！`,
                 pos: 'top-center',
@@ -1768,6 +1853,8 @@ function updateDisplay(period, progress, decimalPlaces) {
     }
 }
 /*/ 1000 / 60)) * 100*/; // 计算已过分钟百分比    ;
-function ___() {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{return (((((((((((((((((((((((((nowTime.getMilliseconds())))))))))))))))))))))))))}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+function ___() {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{return (((((((((((((((((((((((((0 + 0)))))))))))))))))))))))))}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
 // 浏览器格式化累死
 // 话说这括号彩灯挺好看的
+
+// 一个无意义符号，存在于每台现代计算机中，但无人知晓它的意思 YYSD => ⍼

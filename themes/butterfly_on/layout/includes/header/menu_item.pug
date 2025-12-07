@@ -1,9 +1,9 @@
 if theme.nav.menu.enable
   //- 此段主要提供：自定义菜单项的显示
   .menus_items
-    #toggle-menu
-              a.site-page(href="javascript:void(0);")
-                i.fas.fa-bars.fa-fw
+    #toggle-menu(tag="pcEnable_false")
+      a.site-page(href="javascript:openMobileMenu();" )
+        i.fas.fa-bars.fa-fw
     each value, label in theme.nav.menu.item 
       //- 遍历菜单项
       if typeof value !== 'object'
@@ -48,6 +48,7 @@ if theme.nav.menu.enable
                     if valArray[1]
                       i.fa-fw(class=trim(valArray[1]))
                     span=' '+ lab
+    include ./moblie-menu.pug
 
 //- 此文件主要提供：自定义菜单项的显示
 //- .menus_items
