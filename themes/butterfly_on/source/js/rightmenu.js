@@ -171,7 +171,7 @@ document.body.addEventListener('touchmove', function (e) {
 }, { passive: false });
 function popupMenu() {
     //window.oncontextmenu=function(){return false;}
-    window.oncontextmenu = function (event) {
+    window.oncontextmenu = function (event) {// 右键菜单入口点
         if (event.ctrlKey || isMobileOrNarrow()/*document.body.clientWidth < 900*/) return true;// Ctrl 键被按下？或 屏幕过窄？则不显示右键菜单
         if (sessionStorage.getItem("showMenuMessage") != "1") {
             Snackbar.show({
