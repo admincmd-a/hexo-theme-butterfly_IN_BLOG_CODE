@@ -110,8 +110,8 @@ const FOCUS_TYPE = {
 const AUDIO_CONTEXT = {
     TYPE: {
         SINE: 'sine',
-        SQUARE:'square',
-        SAWTOOTH:'sawtooth',
+        SQUARE: 'square',
+        SAWTOOTH: 'sawtooth',
         TRIANGLE: 'triangle'
     }
 };
@@ -220,210 +220,209 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 // JS 文件内需要公共调用的东西
 
 const errorCodesFunction = (
-    (oldErrorCodes = null) => 
-        {
-    // let errorCode = 0x00000;
-    // let errorMsg = "";
-    let errors = {};
+    (oldErrorCodes = null) => {
+        // let errorCode = 0x00000;
+        // let errorMsg = "";
+        let errors = {};
 
-    const ERROR_TYPES = {
-        SILENT: 0x0,// 静默
-        WARN: 0x1,// 警告
-        ERROR: 0x2,// 错误
-        FATAL: 0x3,// 致命错误
-    };
+        const ERROR_TYPES = {
+            SILENT: 0x0,// 静默
+            WARN: 0x1,// 警告
+            ERROR: 0x2,// 错误
+            FATAL: 0x3,// 致命错误
+        };
 
-    const DATA_TYPE = {
-        STAORAGE: 'refresh',
-    };
+        const DATA_TYPE = {
+            STAORAGE: 'refresh',
+        };
 
-    const ERROR_CODE_MSG_ZH_CN = {
-        errorCodeNotNumber: "错误码必须是数字类型",
-        errorMsgNotString: "错误信息必须是字符串类型",
-        errorTypeNotValid: "错误类型不合法",
+        const ERROR_CODE_MSG_ZH_CN = {
+            errorCodeNotNumber: "错误码必须是数字类型",
+            errorMsgNotString: "错误信息必须是字符串类型",
+            errorTypeNotValid: "错误类型不合法",
 
-    };
+        };
 
-    const ERROR_CODE_MSG = ERROR_CODE_MSG_ZH_CN;
+        const ERROR_CODE_MSG = ERROR_CODE_MSG_ZH_CN;
 
-    if (sessionStorage.getItem(DATA_TYPE.STAORAGE)) {oldErrorCodes = sessionStorage.getItem(DATA_TYPE.STAORAGE);}
-    // 参数校验函数
-    const validateParams = (code, message, warn) => {
-        if (typeof code !== 'number') {
-            throw new TypeError(ERROR_CODE_MSG.errorCodeNotNumber);
-        }
-        // if (typeof message !== 'string') {
-        //     throw new TypeError(ERROR_CODE_MSG.errorMsgNotString);
-        // }
-        if (!Object.values(ERROR_TYPES).includes(warn)) {
-            throw new RangeError(ERROR_CODE_MSG.errorTypeNotValid);
-        }
-    };
-
-    // 显示 Snackbar 的封装（可替换 UI 库）
-    const showToast = (message) => {
-        try {
-            Snackbar.show({
-                text: message,
-                pos: 'top-right',
-                action: 4000,
-            });
-        } catch (e) {
-            console.error('Snackbar 显示失败:', e);
-        }
-    };
-
-    // 格式化错误码（补零处理）
-    const formatErrorCode = (code) => {
-        return '0x' + code.toString(16).toUpperCase().padStart(5, '0');
-    };
-
-    // 初始化
-    if (oldErrorCodes) {
-        oldErrorCodes = sessionStorage.getItem(DATA_TYPE.STAORAGE)
-    } if (oldErrorCodes) {
-        errors = oldErrorCodes; 
-    } else {}
-
-    return {
-        /**
-         * 记录一个新的错误码和信息
-         * @param {number} code 错误码
-         * @param {any} message 错误信息
-         * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量,注：0x3 时会引发页面重载。
-         * @param {boolean} returnID 是否返回错误ID，缺省值为 false
-         * @returns {false | string} 返回 false，若 {@link returnID} 为true,则返回错误ID
-         * @example } catch (message) {return errorCodes.addError(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
-         * @function {@link errorCodes.getErrorCode} 获取错误码和信息
-         * @function {@link errorCodes.clearError} 清除错误信息
-         */
-        addError: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false) => {
-            try {
-                let errorID;
-                if (crypto) {
-                    errorID = crypto.randomUUID();
-                } else {
-                    errorID = Date.now().toString(36)
-                        + Math.random().toString(36).slice(2, 10)
-                        + performance.now().toString(36).replace('.', '');
-                }
-
-                validateParams(code, message, warn);
-
-                errors[errorID] = {
-                    code: code,
-                    message: message,
-                    warn: warn,
-                    time: new Date().toLocaleString(),
-                };
-
-                const fullMessage = `运行时出错: (${formatErrorCode(code)})`;
-
-                console.error(fullMessage, message); // 抛出错误
-                debugger; // 尝试暂停程序
-
-                switch (warn) {
-                    case ERROR_TYPES.WARN:
-                        showToast(fullMessage);
-                        break;
-                    case ERROR_TYPES.ERROR:
-                        showToast(fullMessage);
-                        break;
-                    case ERROR_TYPES.FATAL:
-                        sessionStorage.setItem(DATA_TYPE.STAORAGE, JSON.stringify({
-                            error: errors,
-                        }));
-                        window.location.reload(); // 重载界面
-                        break;
-                    default:
-                        break;
-                };
-
-                if (returnID) return errorID;
-            } catch (e) {
-                console.error('错误处理失败:', e);
+        if (sessionStorage.getItem(DATA_TYPE.STAORAGE)) { oldErrorCodes = sessionStorage.getItem(DATA_TYPE.STAORAGE); }
+        // 参数校验函数
+        const validateParams = (code, message, warn) => {
+            if (typeof code !== 'number') {
+                throw new TypeError(ERROR_CODE_MSG.errorCodeNotNumber);
             }
-            return false;
-        },
+            // if (typeof message !== 'string') {
+            //     throw new TypeError(ERROR_CODE_MSG.errorMsgNotString);
+            // }
+            if (!Object.values(ERROR_TYPES).includes(warn)) {
+                throw new RangeError(ERROR_CODE_MSG.errorTypeNotValid);
+            }
+        };
 
-        /**
-         * 取得错误码和信息
-         * @param {string} id 错误ID
-         * @returns {object} 错误码和信息对象
-         * @function {@link errorCodes.addError} 设置错误码和信息
-         * @function {@link errorCodes.clearError} 清除错误信息
-         */
-        getErrorCode: (id) => ({
-            code: errors[id].code,
-            message: errors[id].message,
-            time: errors[id].time,
-        }),
+        // 显示 Snackbar 的封装（可替换 UI 库）
+        const showToast = (message) => {
+            try {
+                Snackbar.show({
+                    text: message,
+                    pos: 'top-right',
+                    action: 4000,
+                });
+            } catch (e) {
+                console.error('Snackbar 显示失败:', e);
+            }
+        };
 
-        /**
-         * 通过 错误码 取到错误信息
-         * @param {number} errorCode 错误码
-         * @returns {object} 错误码和信息对象
-         * @function {@link errorCodes.addError} 设置错误码和信息
-         * @function {@link errorCodes.clearError} 清除错误信息
-         */
-        getErrors: (errorCode) => {
-            let result = {
-                message: "让我康康有神马错误 (　o=^•ェ•)o　┏━┓",
-                code: 201,
-                items: {}
-            };
-            for (let errorID in errors) {
-                if (errors[errorID].code === errorCode) {
-                    result.items[errorID] = errors[errorID];
-                    if (result.code === 201) {
-                        result.code = 200;
+        // 格式化错误码（补零处理）
+        const formatErrorCode = (code) => {
+            return '0x' + code.toString(16).toUpperCase().padStart(5, '0');
+        };
+
+        // 初始化
+        if (oldErrorCodes) {
+            oldErrorCodes = sessionStorage.getItem(DATA_TYPE.STAORAGE)
+        } if (oldErrorCodes) {
+            errors = oldErrorCodes;
+        } else { }
+
+        return {
+            /**
+             * 记录一个新的错误码和信息
+             * @param {number} code 错误码
+             * @param {any} message 错误信息
+             * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量,注：0x3 时会引发页面重载。
+             * @param {boolean} returnID 是否返回错误ID，缺省值为 false
+             * @returns {false | string} 返回 false，若 {@link returnID} 为true,则返回错误ID
+             * @example } catch (message) {return errorCodes.addError(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
+             * @function {@link errorCodes.getErrorCode} 获取错误码和信息
+             * @function {@link errorCodes.clearError} 清除错误信息
+             */
+            addError: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false) => {
+                try {
+                    let errorID;
+                    if (crypto) {
+                        errorID = crypto.randomUUID();
+                    } else {
+                        errorID = Date.now().toString(36)
+                            + Math.random().toString(36).slice(2, 10)
+                            + performance.now().toString(36).replace('.', '');
+                    }
+
+                    validateParams(code, message, warn);
+
+                    errors[errorID] = {
+                        code: code,
+                        message: message,
+                        warn: warn,
+                        time: new Date().toLocaleString(),
+                    };
+
+                    const fullMessage = `运行时出错: (${formatErrorCode(code)})`;
+
+                    console.error(fullMessage, message); // 抛出错误
+                    debugger; // 尝试暂停程序
+
+                    switch (warn) {
+                        case ERROR_TYPES.WARN:
+                            showToast(fullMessage);
+                            break;
+                        case ERROR_TYPES.ERROR:
+                            showToast(fullMessage);
+                            break;
+                        case ERROR_TYPES.FATAL:
+                            sessionStorage.setItem(DATA_TYPE.STAORAGE, JSON.stringify({
+                                error: errors,
+                            }));
+                            window.location.reload(); // 重载界面
+                            break;
+                        default:
+                            break;
+                    };
+
+                    if (returnID) return errorID;
+                } catch (e) {
+                    console.error('错误处理失败:', e);
+                }
+                return false;
+            },
+
+            /**
+             * 取得错误码和信息
+             * @param {string} id 错误ID
+             * @returns {object} 错误码和信息对象
+             * @function {@link errorCodes.addError} 设置错误码和信息
+             * @function {@link errorCodes.clearError} 清除错误信息
+             */
+            getErrorCode: (id) => ({
+                code: errors[id].code,
+                message: errors[id].message,
+                time: errors[id].time,
+            }),
+
+            /**
+             * 通过 错误码 取到错误信息
+             * @param {number} errorCode 错误码
+             * @returns {object} 错误码和信息对象
+             * @function {@link errorCodes.addError} 设置错误码和信息
+             * @function {@link errorCodes.clearError} 清除错误信息
+             */
+            getErrors: (errorCode) => {
+                let result = {
+                    message: "让我康康有神马错误 (　o=^•ェ•)o　┏━┓",
+                    code: 201,
+                    items: {}
+                };
+                for (let errorID in errors) {
+                    if (errors[errorID].code === errorCode) {
+                        result.items[errorID] = errors[errorID];
+                        if (result.code === 201) {
+                            result.code = 200;
+                        }
+                    }
+                } if (result.code === 201) {
+                    result.message = "啥也木有 (　o=^•ェ•)o　┏━┓";
+                    result.code = 201;
+                    return result;
+                }
+                return result;
+            },
+
+
+            /**
+             * 返回所有已被记录的错误码和信息
+             * @returns {{code: number, message: string, items: {}}}
+             */
+            getAllErrorCodes: () => {
+                if (errors == {}) {
+                    return {
+                        code: 201,
+                        message: "啥也木有 (　o=^•ェ•)o　┏━┓",
+                        items: {}
+                    }
+                } else {
+                    return {
+                        code: 200,
+                        message: "获取成功 (*≧︶≦))(￣▽￣* )ゞ",
+                        items: errors
                     }
                 }
-            } if (result.code === 201) {
-                result.message = "啥也木有 (　o=^•ェ•)o　┏━┓";
-                result.code = 201;
-                return result;
-            }
-            return result;
-        },
-        
+            },
 
-        /**
-         * 返回所有已被记录的错误码和信息
-         * @returns {{code: number, message: string, items: {}}}
-         */
-        getAllErrorCodes: () => {
-            if (errors == {}) {
-                return {
-                    code: 201,
-                    message: "啥也木有 (　o=^•ェ•)o　┏━┓",
-                    items: {}
-                }
-            } else {
-                return {
-                    code: 200,
-                    message: "获取成功 (*≧︶≦))(￣▽￣* )ゞ",
-                    items: errors
-                }
-            }
-        },
+            /**
+             * 清除错误信息
+             * @returns {null}
+             * @function {@link errorCodes.addError} 设置错误码和信息
+             * @function {@link errorCodes.getErrorCode} 取得错误码和信息
+             */
+            clearError: () => {
+                errors = null;
+            },
 
-        /**
-         * 清除错误信息
-         * @returns {null}
-         * @function {@link errorCodes.addError} 设置错误码和信息
-         * @function {@link errorCodes.getErrorCode} 取得错误码和信息
-         */
-        clearError: () => {
-            errors = null;
-        },
-
-        // 暴露常量
-        ERROR_TYPES: ERROR_TYPES,
-        DATA_TYPE: DATA_TYPE,
-        errors: errors
-    };
-});
+            // 暴露常量
+            ERROR_TYPES: ERROR_TYPES,
+            DATA_TYPE: DATA_TYPE,
+            errors: errors
+        };
+    });
 
 const errorCodes = errorCodesFunction(null);
 
@@ -582,7 +581,7 @@ const msgWin = {
                 this.timeOutId = setTimeout(msgWin.close(), timeOut);
             }
             try {
-                if (vague) pageBlur.setTrue(); /* 开启模糊 */ 
+                if (vague) pageBlur.setTrue(); /* 开启模糊 */
                 document.getElementById(this.id).style.display = null;
                 document.getElementById(this.id).innerHTML = `
                 <p id="messageWin-title" class="messageWin-title">${title}</p>
@@ -731,10 +730,10 @@ const lightDarkTheme = (() => {
      * @param {boolean} setStorage 保存配置
      */
     const autoTheme = (enableSnackbar = true, setStorage = false) => {
-        let currentHour       ;
+        let currentHour;
         let darkThemeThreshold;
         if (!systemLightMode) {
-            currentHour        = new Date().getHours();
+            currentHour = new Date().getHours();
             darkThemeThreshold = 18; // 18点之后切换为暗黑模式
         }
 
@@ -808,14 +807,14 @@ const lightDarkTheme = (() => {
 // 向下兼容
 /**
  * 调整到夜间模式
- * @deprecated 已弃用，请使用 lightDarkTheme.setTheme(...)
+ * @deprecated 已弃用，请使用 {@link lightDarkTheme.setTheme()}
  */
 function activateLightMode() {
     lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.LIGHT, true, true);
 }
 /**
  * 调整到明亮模式
- * @deprecated 已弃用，请使用 lightDarkTheme.setTheme(...)
+ * @deprecated 已弃用，请使用 {@link lightDarkTheme.setTheme()}
  */
 function activateDarkMode() {
     lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.DARK, true, true);
@@ -825,7 +824,7 @@ function activateDarkMode() {
 
 /**
 * 判断是否是移动端
-* @information 本函数使用 UA 解析，若要使用其他方式解析，请使用 isMobileOrNarrow()
+* @information 本函数使用 UA 解析，若要使用其他方式解析，请使用 {@link isMobileOrNarrow()}
 * @return {boolean} true: 移动端 false: PC端
 */
 function isUAMobile() {
@@ -839,6 +838,7 @@ function isUAMobile() {
 /**
  * 判断是否是PC端
  * @returns {boolean} true: 是PC端 false: 是移动端
+ * @information 本函数使用 UA 解析，若要使用其他方式解析，请使用 {@link isPcOrNotNarrow()}
  */
 function isUAPC() {
     return !isUAMobile();
@@ -847,7 +847,8 @@ function isUAPC() {
 /**
  * 使用当前页面宽度判断是否为移动端或页面过窄
  * @returns {boolean} 是否页面过窄
- * @information 若要使用 UA 解析，请使用 isUAMobile()
+ * @function {@link isUAMobile()} 使用 UserAgent 解析
+ * @function {@link isPcOrNotNarrow} 反式
  */
 function isMobileOrNarrow() {
     // 获取当前页面的宽度
@@ -864,6 +865,8 @@ function isMobileOrNarrow() {
 /**
  * 使用当前页面宽度判断是否为PC端或页面宽度正常
  * @returns {boolean} 是否页面为标准宽度
+ * @function {@link isUAPC} 使用 UserAgent 解析
+ * @function {@link isMobileOrNarrow} 反式
  */
 function isPcOrNotNarrow() {
     return !isMobileOrNarrow();
@@ -935,8 +938,8 @@ function getDistanceAMLS(e1, n1, e2, n2) {
 /**
  * 设置全局字体
  * @param {string} font 字体在 CSS 中的名称
- * @param {boolean} enableReturn 返回值？
- * @returns 是否设置成功
+ * @param {boolean} enableReturn 返回？
+ * @returns { boolean | null } 是否设置成功
  * @example setFont('Arial'); // 设置字体为 Arial
  */
 function setFont(font, enableReturn = false) {
@@ -1010,8 +1013,30 @@ function getSelectedText() {
  * 将指定的文本复制到剪贴板
  * @param {string} copyText 欲写入剪贴板的文本
  */
-function setCopyText(copyText) {
+function setClipboardText(copyText) {
     navigator.clipboard.writeText(copyText);
+}
+
+/**
+ * 取剪贴板内容
+ * @returns { Promise<string> } 剪贴板的内容
+ * @information 异步函数，需要使用 await 关键字调用
+ * @example const clipboardText = await getClipboardText();
+ */
+function getClipboardText() {
+    return new Promise(resolve => {
+        navigator.clipboard.readText().then(resolve);
+    });
+}
+
+/**
+ * 获取当前时间的毫秒数
+ * @returns {number} 当前时间的毫秒数,自 UNIX 纪元开始
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/now
+ */
+function getNowTimeMills() {
+    const now = Date.now();
+    return now;
 }
 
 /**
@@ -1023,9 +1048,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-/**
- * 随机跳转
- */
+/** 随机跳转 */
 function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个链接,用于随便转转模块
     // 解决了原有 HTML 无法后退的问题
     fetch('/sitemap.txt')
@@ -1068,7 +1091,7 @@ function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个
 }
 
 /** 空函数，用于占位 */
-function nullFunction() {}
+function nullFunction() { }
 
 /**
  * 通过参数键获取 URL 参数值
@@ -1080,23 +1103,7 @@ function getUrlParams(key) {
     return urlParams.get(key);
 }
 
-function openMoblieMenu() {
-    if (isPcOrNotNarrow) {
-        return;
-    }
-    const menu = document.getElementById('mobile-menu');
-    menu.style.left = "100%";
 
-}
-
-function closeMoblieMenu() {
-    if (isPcOrNotNarrow()) {
-        return;
-    }
-    const menu = document.getElementById('mobile-menu');
-    menu.style.left = "-100%";
-
-}
 
 // 初始化主题
 updateVar();
@@ -1136,7 +1143,7 @@ function updateVar() {
 function updateVar100() {
     pageBlur.up()
 }
-function updateVar1000() {}
+function updateVar1000() { }
 function updateVar10000() {
     nowTime = new Date(); // 更新当前时间
 }
@@ -1196,12 +1203,12 @@ async function timeWindow() {
                     text: '各位女神们，妇女节快乐！'
                 },
                 '4-1': {
-                    title: '非常抱歉，因为不可控原因，博客将于明天停止运营，感谢您的陪伴，再见',       
+                    title: '非常抱歉，因为不可控原因，博客将于明天停止运营，感谢您的陪伴，再见',
                     text: '今天是愚人节，祝祝祝祝祝 UP 生日快乐！'
                 },
                 '4-5': {
                     title: '清明安康。',
-                    text: '' 
+                    text: ''
                 },
                 '5-1': {
                     title: '劳动节快乐！',
@@ -1233,13 +1240,13 @@ async function timeWindow() {
                 '10-5': '10-1',
                 '10-6': '10-1',
                 '10-7': '10-1',
-      
+
                 '8-11': {
-                    title: 'sssssss', 
+                    title: 'sssssss',
                     text: 'seeqeee08937525235'
-                    
+
                 }
-              },
+            },
             moon: {
                 '腊月廿九': {
                     title: `${lunarDate.lunarYear + 1} 年新年快乐！`,
@@ -1296,7 +1303,7 @@ async function timeWindow() {
                 entry = TIME_WINDOW_CONSOLE.moon[entry];
                 depth++;
             }
-            
+
             setDivVar(entry);
         }
 
@@ -1352,24 +1359,24 @@ setTimeout(displayWelcomeMessageInit, 1); // 新开一个线程，防止阻塞�
 /** 载入旧数据或请求新的数据 */
 async function displayWelcomeMessageInit() {
     try {
-            let ipLoacation = window.saveToLocal.get('ipLocation');
-            if (!ipLoacation) {
-                // 数据已过期或不存在
-                var script = document.createElement('script');
-                var url = `https://apis.map.qq.com/ws/location/v1/ip?key=${_USER_CONFIG.WELCOME_MAP.API_KEY}&output=jsonp`;
-                script.src = url;
-                window.QQmap = function (data) {
-                    ipLoacation = data;
-                    // 将数据保存到 localStorage，过期时间设置为 1 天
-                    window.saveToLocal.set('ipLocation', ipLoacation, 1);
-                    document.body.removeChild(script);
-                    delete window.QQmap;
-                    displayWelcomeMessage(ipLoacation); // 在获取到数据后调用显示欢迎语的函数
-                };
-                document.body.appendChild(script);
-            } else {
-                displayWelcomeMessage(ipLoacation); // 直接调用显示欢迎语的函数
-            }
+        let ipLoacation = window.saveToLocal.get('ipLocation');
+        if (!ipLoacation) {
+            // 数据已过期或不存在
+            var script = document.createElement('script');
+            var url = `https://apis.map.qq.com/ws/location/v1/ip?key=${_USER_CONFIG.WELCOME_MAP.API_KEY}&output=jsonp`;
+            script.src = url;
+            window.QQmap = function (data) {
+                ipLoacation = data;
+                // 将数据保存到 localStorage，过期时间设置为 1 天
+                window.saveToLocal.set('ipLocation', ipLoacation, 1);
+                document.body.removeChild(script);
+                delete window.QQmap;
+                displayWelcomeMessage(ipLoacation); // 在获取到数据后调用显示欢迎语的函数
+            };
+            document.body.appendChild(script);
+        } else {
+            displayWelcomeMessage(ipLoacation); // 直接调用显示欢迎语的函数
+        }
     } catch (e) {
         errorCodes.addError(0x00000000000000000000000002, "在请求欢迎语数据时，过程出错:" + e, errorCodes.ERROR_TYPES.ERROR, true);
     }
@@ -1383,15 +1390,15 @@ async function displayWelcomeMessage(ipLoacation) {
             await sleep(50); // 等待数据加载完成
             ipLoacation = window.saveToLocal.get('ipLocation');
         }
-        
+
         // 初始化配置
         let dist = getDistanceAMLS(
-            _USER_CONFIG.WELCOME_MAP.AUTHOR_LONGITUDE, 
-            _USER_CONFIG.WELCOME_MAP.AUTHOR_LATITUDE, 
-            ipLoacation.result.location.lng, 
+            _USER_CONFIG.WELCOME_MAP.AUTHOR_LONGITUDE,
+            _USER_CONFIG.WELCOME_MAP.AUTHOR_LATITUDE,
+            ipLoacation.result.location.lng,
             ipLoacation.result.location.lat
         );
-    
+
         // 读取欢迎语数据
         let pos = ipLoacation.result.ad_info.nation;
         let ip = ipLoacation.result.ip;
@@ -1461,7 +1468,7 @@ async function displayWelcomeMessage(ipLoacation) {
         } else {
             posdesc = data_scb.default;
         }
-    
+
         // 判断时间
         const now = new Date();
         let timeChange = "";
@@ -1472,15 +1479,15 @@ async function displayWelcomeMessage(ipLoacation) {
         else if (now.getHours() >= 16 && now.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";
         else if (now.getHours() >= 19 && now.getHours() < 24) timeChange = "<span>晚上好</span>，我要写作业了……";
         else timeChange = "Good night.";
-    
+
         // 检查 welcome-info 是否存在
         const welcomeInfoElement = document.getElementById("welcome-info");
         if (welcomeInfoElement) {
             // 用户定义，如无法查找则使用缺省值
             welcomeInfoElement.innerHTML = _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip)
-            || `欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}<hr>`;
+                || `欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}<hr>`;
         }
-    
+
         if (sessionStorage.getItem("popCookieWindow") != "0") {
             // 这里可以添加弹窗逻辑
         }
@@ -1490,7 +1497,7 @@ async function displayWelcomeMessage(ipLoacation) {
             welcomeInfoElement.innerHTML = "你好呀，欢迎来看我的博客！";
         }
         // 上报错误
-        errorCodes.addError(0x00000000000000000000000000000001 , "在显示欢迎语信息时，发生了一个错误：" + e, errorCodes.ERROR_TYPES.ERROR, true);
+        errorCodes.addError(0x00000000000000000000000000000001, "在显示欢迎语信息时，发生了一个错误：" + e, errorCodes.ERROR_TYPES.ERROR, true);
     }
 }
 
@@ -1508,7 +1515,7 @@ setTimeout(function () {
             text: '本站使用 Cookie 和 本地会话存储 保证浏览体验和网站统计',
             pos: 'top-right',
             actionText: "查看博客声明",
-            onActionClick: function () {  
+            onActionClick: function () {
                 window.open("/license");
             },
         });
@@ -1529,7 +1536,7 @@ setTimeout(function () {
         case '-':
             break;
         case window.location.hostname:
-            break;  
+            break;
         default:
             Snackbar.show({
                 text: `欢迎从来自 ${domain} 的访客访问本站！`,
@@ -1542,7 +1549,7 @@ setTimeout(function () {
             break;
     }
 }, 2500);
-    
+
 //不在弹出Cookie提醒
 sessionStorage.setItem("popCookieWindow", "0");
 
@@ -1713,6 +1720,7 @@ function playButton() {
 // 用户跳过来弄过去改下标题
 // 在页面加载完成后，获取初始标题，并设置失去焦点和获得焦点时的标题
 document.addEventListener('DOMContentLoaded', (event) => {
+    return;
     originalTitle = document.title; // 记录初始标题
     lostFocusTitle = getFocusTitle(FOCUS_TYPE.TYPE.LOST_TITLE, originalTitle); // 页面失去焦点时的标题
     gainedFocusTitle = getFocusTitle(FOCUS_TYPE.TYPE.GAINED_TITLE, originalTitle); // 页面获得焦点时的标题
@@ -1807,7 +1815,7 @@ function updateProgressBars() {
                 `;
             }
         }
-                
+
         const yearStart = new Date(now.getFullYear(), 0, 1).getTime(); // 计算这个时间单位的起始位置
         const yearEnd = new Date(now.getFullYear() + 1, 0, 1).getTime(); // 计算这个时间单位的终止位置
         const yearProgress = ((now.getTime() - yearStart) / (yearEnd - yearStart)) * 100; // 然后将当前时间与起始位置的差值除以终止位置与起始位置的差值，得到百分比
@@ -1825,7 +1833,7 @@ function updateProgressBars() {
         const hourProgress = ((now.getTime() - hourStart) / (hourEnd - hourStart)) * 100; // 上面均通过计算当前时间与起始位置的差值除以起始位置与终止位置的差值得到百分比
 
         const minuteProgress = (
-            now.getSeconds() * 1000 + 
+            now.getSeconds() * 1000 +
             now.getMilliseconds()
         ) / 1000 / 60 * 100; // 计算一个分钟已过秒数，精确到毫秒，除以60，乘以100，得到百分比
 
@@ -1849,11 +1857,11 @@ function updateDisplay(period, progress, decimalPlaces) {
     let lengthProgressBar = document.getElementsByClassName(`${period}-progress-bar`);
     for (let i = 0; i < lengthDiv.length; i++) {
         lengthProgress[i].textContent = progress.toFixed(decimalPlaces) + '%';
-        lengthProgressBar[i].style.width = progress.toFixed(decimalPlaces) + '%';    
+        lengthProgressBar[i].style.width = progress.toFixed(decimalPlaces) + '%';
     }
 }
 /*/ 1000 / 60)) * 100*/; // 计算已过分钟百分比    ;
-function ___() {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{return (((((((((((((((((((((((((0 + 0)))))))))))))))))))))))))}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+function ___() { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { return (((((((((((((((((((((((((0 + 0))))))))))))))))))))))))) } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } }
 // 浏览器格式化累死
 // 话说这括号彩灯挺好看的
 

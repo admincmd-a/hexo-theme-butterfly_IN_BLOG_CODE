@@ -43,6 +43,8 @@ nav:
         设置: javascript:configWin.main(); || fa-solid fa-cog
       "": https://www.travellings.cn/go.html || fas fa-subway
       # "开往": 
+      #   advanced: true
+      #   label: 开往
       #   NoMenu: true
       #   url: https://www.travellings.cn/go.html 
       #   icon: fas fa-subway
@@ -320,7 +322,7 @@ footer:
           "
       " ": 
         html: "
-          <a href='https://icp.redcha.cn/beian/ICP-2025080127.html' target='_blank' rel='noopener' title='茶ICP备2025080127号'><img src='https://icp.redcha.cn/static/picture/icplogoi.png' style='height: 20px;'>茶 ICP 备 2025080127 号</a>
+          <a href='https://icp.redcha.cn/beian/ICP-2025080127.html' target='_blank' rel='noopener' title='茶ICP备2025080127号'><!--<img src='https://icp.redcha.cn/static/picture/icplogoi.png' style='height: 20px;'>-->茶 ICP 备 2025080127 号</a>
           "
         text: 茶备案 462225 号
         rel: nofollow noreferrer external
@@ -1557,7 +1559,7 @@ note:
 # It may contain bugs and unstable, give feedback when you find the bugs.
 # https://github.com/MoOx/pjax
 pjax:
-  enable: false
+  enable: true
   exclude:
     # - xxxx
     # - xxxx

@@ -1,8 +1,10 @@
 if theme.nav.menu.enable
   //- 此段主要提供：自定义菜单项的显示
-  a(href="javascript:closeMoblieMenu();" class="open-button-menu")
+  
   #moblie-menu.moblie-menu(style="none" tag="pcEnable_false")
-    
+    .menu_item
+      a.site-page(href="javascript:closeMoblieMenu();")
+        i.fa-solid.fa-angle-left
     each value, label in theme.nav.menu.item 
       //- 遍历菜单项
       if typeof value !== 'object'
