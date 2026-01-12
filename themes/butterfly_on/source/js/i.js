@@ -51,6 +51,9 @@ SOFTWARE.`;
 
 const debug = false//isDeBug(); // 开启调试模式
 
+var oldUrl = window.location.pathname;
+var ocsTime = 0;
+
 var nowTime = new Date();// 获取当前日期、时间
 var now = {
     year: nowTime.getFullYear(),
@@ -1036,8 +1039,7 @@ function getClipboardText() {
  * @see https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/now
  */
 function getNowTimeMills() {
-    const now = Date.now();
-    return now;
+    return Date.now();
 }
 
 /**
@@ -1107,30 +1109,44 @@ function getUrlParams(key) {
 
 
 // 初始化主题
-updateVar();
-lightDarkTheme.refreshTheme();
-pageBlur.topWin();
-msgWin.initialize();
+async function start() {
+    lightDarkTheme.refreshTheme();
+    pageBlur.topWin();
+    msgWin.initialize();
+    await timeWindow();
+    await displayWelcomeMessageInit();
 
-if (isUAMobile()) {
-    document.getElementsByTagName("pcEnable_false").style = "";
+    if (isUAMobile()) {
+        document.getElementsByTagName("pcEnable_false").style = "";
+    }
+    
 }
-
+updateVar();
 void 0;
 
 // 主循环模块 ----------------------------------------------------
 
 /** 主循环执行函数，首次调用会加载初始化模块 */
 function updateVar() {
-    if (PROGRESS_BAR) {// 判断是否存在进度条元素, 防止重复执行，免得tm控制台里全是报错
-        updateProgressBars();
-    }
-
-
     // 下面是处理流程
-    if (timer == 0) {
-        setInterval(updateVar, 100);
-        console.log("主循环启动")
+    if (oldUrl === window.location.pathname) {// 防止页面切换时页面不重置
+
+    } else {
+        console.info(`页面切换至 ${window.location.pathname}。`)
+        clearInterval(updateVarIntervalID); // 停止循环
+        console.log(`系统已在系统时间 ${Date.now().toString()} 停止主循环函数。`)
+        oldUrl = window.location.pathname;
+        timer = 0; // 计时器归零
+        updateVar(); // 重新启动循环
+        return;
+    }
+    if (timer === 0) {
+        oldUrl = window.location.pathname
+        updateVarIntervalID = setInterval(updateVar, 100);// 单次循环间隔
+        console.log(`系统已在系统时间 ${Date.now().toString()} 启动主循环函数。`)
+        start(); // 启动初始化模块
+    } else if (timer % 10 === 0) {
+        updateVar10(); // 刷新
     } else if (timer % 100 === 0) {
         updateVar100(); // 刷新
     } else if (timer % 1000 === 0) {
@@ -1138,18 +1154,30 @@ function updateVar() {
     } else if (timer % 10000 === 0) {
         updateVar10000();
     }
+
+    if (PROGRESS_BAR) {// 判断是否存在进度条元素, 防止重复执行，免得tm控制台里全是报错
+        updateProgressBars();
+    }
+
+    console.debug(`系统已在系统时间 ${Date.now().toString()} 进行第 ${ocsTime} 次主循环运行，距离上次重置是第 ${timer} 次主循环运行。`)
     timer++; // 计时器
+    ocsTime++;
+}
+
+function updateVar10() {
+    
 }
 
 function updateVar100() {
     pageBlur.up()
+    
 }
 function updateVar1000() { }
 function updateVar10000() {
     nowTime = new Date(); // 更新当前时间
 }
 
-/** 立即刷新所有 JavaScript 变量 */
+/** 立即刷新 */
 function startUpdateVar() {
     updateVar100();
     updateVar1000();
@@ -1345,7 +1373,6 @@ async function timeWindow() {
         }
     }
 }
-setTimeout(timeWindow, 10); // 延迟 1/100 秒执行
 
 // 以下是欢迎语的流程
 // -----------------------------------------------------------------------------
@@ -1355,7 +1382,6 @@ setTimeout(timeWindow, 10); // 延迟 1/100 秒执行
 // 2025.7.10 配置化处理
 
 // 请求数据
-setTimeout(displayWelcomeMessageInit, 1); // 新开一个线程，防止阻塞主线程
 
 /** 载入旧数据或请求新的数据 */
 async function displayWelcomeMessageInit() {
@@ -1407,7 +1433,7 @@ async function displayWelcomeMessage(ipLoacation) {
         let posdesc; //要显示的信息
         const defaultAddress = _USER_CONFIG.WELCOME_MAP.DEFAULT_ADDRESS;
         const authorAddress = _USER_CONFIG.WELCOME_MAP.AUTHOR_ADDRESS;
-        const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH;
+        const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH | {default: "欢迎来到我的博客！"};
         let address = defaultAddress;
 
         // 匹配数据
@@ -1760,59 +1786,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 function updateProgressBars() {
     try {
+
         let now = new Date();
-        if (timer === 0) {
+        if (timer === 0) {// 初始化
             for (let i = 0; i < document.getElementsByClassName('time-flies').length; i++) {
                 let length = document.getElementsByClassName('time-flies')[i];
-                length.innerHTML = `
-                <div class="progress-container">
-                    <div class="progress-label">
-                        今年已经过了 <span class="year-progress">0.00000%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div  class="year-progress-bar">
-                            <span class="year-progress-bar-fill"></span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="progress-container">
-                    <div class="progress-label">
-                        这个月过去了 <span class="month-progress">0.00000%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div  class="month-progress-bar"></div>
-                    </div>
-                </div>
-                
-                <div class="progress-container">
-                    <div class="progress-label">
-                        今天过去了 <span class="day-progress">0.00000%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="day-progress-bar"></div>
-                    </div>
-                </div>
-                
-                <div class="progress-container">
-                    <div class="progress-label">
-                        这一个小时过了 <span class="hour-progress">0.00000%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="hour-progress-bar"></div>
-                    </div>
-                </div>
-                
-                <div class="progress-container">
-                    <div class="progress-label">
-                        本分钟过了 <span class="minute-progress">0.00000%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="minute-progress-bar"></div>
-                    </div>
-                </div>
-                
-                <p>珍惜时间，时光飞逝。</p>
+                length.innerHTML = `<div class="progress-container"><div class="progress-label">今年已经过了 <span class="year-progress">0.00000%</span></div><div class="progress-bar"><div  class="year-progress-bar"><span class="year-progress-bar-fill"></span></div></div></div><div class="progress-container"><div class="progress-label">这个月过去了 <span class="month-progress">0.00000%</span>    </div>    <div class="progress-bar">        <div  class="month-progress-bar"></div>    </div></div><div class="progress-container">    <div class="progress-label">        今天过去了 <span class="day-progress">0.00000%</span>    </div>    <div class="progress-bar">        <div class="day-progress-bar"></div>    </div></div><div class="progress-container">    <div class="progress-label">        这一个小时过了 <span class="hour-progress">0.00000%</span>    </div>    <div class="progress-bar">        <div class="hour-progress-bar"></div>    </div></div><div class="progress-container">    <div class="progress-label">本分钟过了 <span class="minute-progress">0.00000%</span></div><div class="progress-bar"><div class="minute-progress-bar"></div></div></div><p>珍惜时间，时光飞逝。</p>
                 `;
             }
         }
@@ -1847,22 +1826,25 @@ function updateProgressBars() {
 
     } catch (error) {
         console.error('更新模块：时光飞逝 时发生错误:', error);
+        timer = 0; // 重置定时器，以便为整个页面重启
+    }
+
+    // 更新显示函数
+    function updateDisplay(period, progress, decimalPlaces) {
+        // 进度条文本，值，精度
+        let lengthDiv = document.getElementsByClassName('time-flies');
+        let lengthProgress = document.getElementsByClassName(`${period}-progress`);
+        let lengthProgressBar = document.getElementsByClassName(`${period}-progress-bar`);
+        for (let i = 0; i < lengthDiv.length; i++) {
+            lengthProgress[i].textContent = progress.toFixed(decimalPlaces) + '%';
+            lengthProgressBar[i].style.width = progress.toFixed(decimalPlaces) + '%';
+        }
     }
 }
 
-// 更新显示函数
-function updateDisplay(period, progress, decimalPlaces) {
-    // 进度条文本，值，精度
-    let lengthDiv = document.getElementsByClassName('time-flies');
-    let lengthProgress = document.getElementsByClassName(`${period}-progress`);
-    let lengthProgressBar = document.getElementsByClassName(`${period}-progress-bar`);
-    for (let i = 0; i < lengthDiv.length; i++) {
-        lengthProgress[i].textContent = progress.toFixed(decimalPlaces) + '%';
-        lengthProgressBar[i].style.width = progress.toFixed(decimalPlaces) + '%';
-    }
-}
+
 /*/ 1000 / 60)) * 100*/; // 计算已过分钟百分比    ;
-function ___() { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { { return (((((((((((((((((((((((((0 + 0))))))))))))))))))))))))) } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } } }
+function ___() {return null}
 // 浏览器格式化累死
 // 话说这括号彩灯挺好看的
 

@@ -1,0 +1,48 @@
+<div class="progress-container">
+                    <div class="progress-label">
+                        今年已经过了 <span class="year-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div  class="year-progress-bar">
+                            <span class="year-progress-bar-fill"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        这个月过去了 <span class="month-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div  class="month-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        今天过去了 <span class="day-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="day-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        这一个小时过了 <span class="hour-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="hour-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        本分钟过了 <span class="minute-progress">0.00000%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="minute-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <p>珍惜时间，时光飞逝。</p>
