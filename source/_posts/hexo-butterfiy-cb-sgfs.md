@@ -49,6 +49,12 @@ tags:
 
 Gitee 页面
 [https://gitee.com/administrator-command-prompt/Time-flies](https://blog.admincmd.xyz/url.html?url=https://gitee.com/administrator-command-prompt/Time-flies) -->
+
+### 特性
+
+- 支持夜间模式，需要 HTML 标签
+- 支持自定义每行精度
+
 ## 引入
 <style>
   div#opst-info {
@@ -64,31 +70,31 @@ Gitee 页面
        obj.style.backgroundImage = "" ;
        obj.style.backgroundColor = "white";
        obj.innerHTML = obj.innerHTML + `<div class="time-flies" id="post-info-div"><div class="progress-container">
-                	<div class="progress-label">今年已经过了 <span class="year-progress">0.00000%</span></div>
+                	<div class="progress-label">今年已经过了 <span class="year-progress"></span></div>
                 	<div class="progress-bar">
                 		<div class="year-progress-bar"><span class="year-progress-bar-fill"></span></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label">这个月过去了 <span class="month-progress">0.00000%</span> </div>
+                	<div class="progress-label">这个月过去了 <span class="month-progress"></span> </div>
                 	<div class="progress-bar">
                 		<div class="month-progress-bar"></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label"> 今天过去了 <span class="day-progress">0.00000%</span> </div>
+                	<div class="progress-label"> 今天过去了 <span class="day-progress"></span> </div>
                 	<div class="progress-bar">
                 		<div class="day-progress-bar"></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label"> 这一个小时过了 <span class="hour-progress">0.00000%</span> </div>
+                	<div class="progress-label"> 这一个小时过了 <span class="hour-progress"></span> </div>
                 	<div class="progress-bar">
                 		<div class="hour-progress-bar"></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label">本分钟过了 <span class="minute-progress">0.00000%</span></div>
+                	<div class="progress-label">本分钟过了 <span class="minute-progress"></span></div>
                 	<div class="progress-bar">
                 		<div class="minute-progress-bar"></div>
                 	</div>
@@ -117,7 +123,7 @@ Gitee 页面
 这个代码随便找个能在页面加载时运行的位置扔着就行，不过建议找个地方放好，以后别忘了(￣y▽,￣)╭ 
 
 ```JavaScript
-let UPDATE_PROGRESS_BARS_INIT=false;function updateProgressBars(){try{let now=new Date();if(UPDATE_PROGRESS_BARS_INIT===false){for(let i=0;i<document.getElementsByClassName('time-flies').length;i++){let length=document.getElementsByClassName('time-flies')[i];length.innerHTML=`<div class="progress-container"><div class="progress-label">今年已经过了<span class="year-progress">0.00000%</span></div><div class="progress-bar"><div class="year-progress-bar"><span class="year-progress-bar-fill"></span></div></div></div><div class="progress-container"><div class="progress-label">这个月过去了<span class="month-progress">0.00000%</span></div><div class="progress-bar"><div class="month-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">今天过去了<span class="day-progress">0.00000%</span></div><div class="progress-bar">div class="day-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">这一个小时过了<span class="hour-progress">0.00000%</span></div><div class="progress-bar"><div class="hour-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">本分钟过了<span class="minute-progress">0.00000%</span></div><div class="progress-bar"><div class="minute-progress-bar"></div></div></div><p>珍惜时间，时光飞逝。</p>`}UPDATE_PROGRESS_BARS_INIT=false}const yearStart=new Date(now.getFullYear(),0,1).getTime();const yearEnd=new Date(now.getFullYear()+1,0,1).getTime();const yearProgress=((now.getTime()-yearStart)/(yearEnd-yearStart))*100;const monthStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();const monthEnd=new Date(now.getFullYear(),now.getMonth()+1,1).getTime();const monthProgress=((now.getTime()-monthStart)/(monthEnd-monthStart))*100;const dayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();const dayEnd=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1).getTime();const dayProgress=((now.getTime()-dayStart)/(dayEnd-dayStart))*100;const hourStart=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours()).getTime();const hourEnd=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours()+1).getTime();const hourProgress=((now.getTime()-hourStart)/(hourEnd-hourStart))*100;const minuteProgress=(now.getSeconds()*1000+now.getMilliseconds())/1000/60*100;updateDisplay('year',yearProgress,7);updateDisplay('month',monthProgress,6);updateDisplay('day',dayProgress,5);updateDisplay('hour',hourProgress,3);updateDisplay('minute',minuteProgress,2)}catch(error){console.error('更新模块：时光飞逝 时发生错误:',error)}function updateDisplay(period,progress,decimalPlaces){let lengthDiv=document.getElementsByClassName('time-flies');let lengthProgress=document.getElementsByClassName(`${period}-progress`);let lengthProgressBar=document.getElementsByClassName(`${period}-progress-bar`);for(let i=0;i<lengthDiv.length;i++){lengthProgress[i].textContent=progress.toFixed(decimalPlaces)+'%';lengthProgressBar[i].style.width=progress.toFixed(decimalPlaces)+'%'}}}setInterval(updateProgressBars,1000);
+let UPDATE_PROGRESS_BARS_INIT=false;function updateProgressBars(){try{let now=new Date();if(UPDATE_PROGRESS_BARS_INIT===false){for(let i=0;i<document.getElementsByClassName('time-flies').length;i++){let length=document.getElementsByClassName('time-flies')[i];length.innerHTML=`<div class="progress-container"><div class="progress-label">今年已经过了<span class="year-progress"></span></div><div class="progress-bar"><div class="year-progress-bar"><span class="year-progress-bar-fill"></span></div></div></div><div class="progress-container"><div class="progress-label">这个月过去了<span class="month-progress"></span></div><div class="progress-bar"><div class="month-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">今天过去了<span class="day-progress"></span></div><div class="progress-bar">div class="day-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">这一个小时过了<span class="hour-progress"></span></div><div class="progress-bar"><div class="hour-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">本分钟过了<span class="minute-progress"></span></div><div class="progress-bar"><div class="minute-progress-bar"></div></div></div><p>珍惜时间，时光飞逝。</p>`}UPDATE_PROGRESS_BARS_INIT=false}const yearStart=new Date(now.getFullYear(),0,1).getTime();const yearEnd=new Date(now.getFullYear()+1,0,1).getTime();const yearProgress=((now.getTime()-yearStart)/(yearEnd-yearStart))*100;const monthStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();const monthEnd=new Date(now.getFullYear(),now.getMonth()+1,1).getTime();const monthProgress=((now.getTime()-monthStart)/(monthEnd-monthStart))*100;const dayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();const dayEnd=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1).getTime();const dayProgress=((now.getTime()-dayStart)/(dayEnd-dayStart))*100;const hourStart=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours()).getTime();const hourEnd=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours()+1).getTime();const hourProgress=((now.getTime()-hourStart)/(hourEnd-hourStart))*100;const minuteProgress=(now.getSeconds()*1000+now.getMilliseconds())/1000/60*100;updateDisplay('year',yearProgress,7);updateDisplay('month',monthProgress,6);updateDisplay('day',dayProgress,5);updateDisplay('hour',hourProgress,3);updateDisplay('minute',minuteProgress,2)}catch(error){console.error('更新模块：时光飞逝 时发生错误:',error)}function updateDisplay(period,progress,decimalPlaces){let lengthDiv=document.getElementsByClassName('time-flies');let lengthProgress=document.getElementsByClassName(`${period}-progress`);let lengthProgressBar=document.getElementsByClassName(`${period}-progress-bar`);for(let i=0;i<lengthDiv.length;i++){lengthProgress[i].textContent=progress.toFixed(decimalPlaces)+'%';lengthProgressBar[i].style.width=progress.toFixed(decimalPlaces)+'%'}}}setInterval(updateProgressBars,1000);
 ```
 ``` JavaScript
 let UPDATE_PROGRESS_BARS_INIT = false;
@@ -129,31 +135,31 @@ function updateProgressBars() {
                 let length = document.getElementsByClassName('time-flies')[i];
                 length.innerHTML = `
                 <div class="progress-container">
-                	<div class="progress-label">今年已经过了 <span class="year-progress">0.00000%</span></div>
+                	<div class="progress-label">今年已经过了 <span class="year-progress"></span></div>
                 	<div class="progress-bar">
                 		<div class="year-progress-bar"><span class="year-progress-bar-fill"></span></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label">这个月过去了 <span class="month-progress">0.00000%</span> </div>
+                	<div class="progress-label">这个月过去了 <span class="month-progress"></span> </div>
                 	<div class="progress-bar">
                 		<div class="month-progress-bar"></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label"> 今天过去了 <span class="day-progress">0.00000%</span> </div>
+                	<div class="progress-label"> 今天过去了 <span class="day-progress"></span> </div>
                 	<div class="progress-bar">
                 		<div class="day-progress-bar"></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label"> 这一个小时过了 <span class="hour-progress">0.00000%</span> </div>
+                	<div class="progress-label"> 这一个小时过了 <span class="hour-progress"></span> </div>
                 	<div class="progress-bar">
                 		<div class="hour-progress-bar"></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label">本分钟过了 <span class="minute-progress">0.00000%</span></div>
+                	<div class="progress-label">本分钟过了 <span class="minute-progress"></span></div>
                 	<div class="progress-bar">
                 		<div class="minute-progress-bar"></div>
                 	</div>
@@ -197,7 +203,7 @@ function updateProgressBars() {
 
     // 更新显示函数
     function updateDisplay(period, progress, decimalPlaces) {
-        // 进度条文本，值，精度
+        // 进度条文本，值，精度(小数点后 x 位)
         let lengthDiv = document.getElementsByClassName('time-flies');
         let lengthProgress = document.getElementsByClassName(`${period}-progress`);
         let lengthProgressBar = document.getElementsByClassName(`${period}-progress-bar`);
@@ -218,7 +224,7 @@ setInterval(updateProgressBars, 1000);// 每秒更新一次
 {% endhideToggle %}
 
 ```JavaScript
-let UPDATE_PROGRESS_BARS_INIT=false;function updateProgressBars(){try{let now=new Date();if(UPDATE_PROGRESS_BARS_INIT===false){for(let i=0;i<document.getElementsByClassName('time-flies').length;i++){let length=document.getElementsByClassName('time-flies')[i];length.innerHTML=`<div class="progress-container"><div class="progress-label">今年已经过了<span class="year-progress">0.00000%</span></div><div class="progress-bar"><div class="year-progress-bar"><span class="year-progress-bar-fill"></span></div></div></div><div class="progress-container"><div class="progress-label">这个月过去了<span class="month-progress">0.00000%</span></div><div class="progress-bar"><div class="month-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">今天过去了<span class="day-progress">0.00000%</span></div><div class="progress-bar"><div class="day-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">这一个小时过了<span class="hour-progress">0.00000%</span></div><div class="progress-bar"><div class="hour-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">本分钟过了<span class="minute-progress">0.00000%</span></div><div class="progress-bar"><div class="minute-progress-bar"></div></div></div><p>珍惜时间，时光飞逝。</p>`}UPDATE_PROGRESS_BARS_INIT=false}const yearStart=new Date(now.getFullYear(),0,1).getTime();const yearEnd=new Date(now.getFullYear()+1,0,1).getTime();const yearProgress=((now.getTime()-yearStart)/(yearEnd-yearStart))*100;const monthStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();const monthEnd=new Date(now.getFullYear(),now.getMonth()+1,1).getTime();const monthProgress=((now.getTime()-monthStart)/(monthEnd-monthStart))*100;const dayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();const dayEnd=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1).getTime();const dayProgress=((now.getTime()-dayStart)/(dayEnd-dayStart))*100;const hourStart=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours()).getTime();const hourEnd=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours()+1).getTime();const hourProgress=((now.getTime()-hourStart)/(hourEnd-hourStart))*100;const minuteProgress=(now.getSeconds()*1000+now.getMilliseconds())/1000/60*100;a('year',yearProgress,7);a('month',monthProgress,6);a('day',dayProgress,5);a('hour',hourProgress,3);a('minute',minuteProgress,2)}catch(error){console.error('更新模块：时光飞逝 时发生错误:',error)}function a(c,b,d){let lengthDiv=document.getElementsByClassName('time-flies');let lengthProgress=document.getElementsByClassName(`${c}-b`);let lengthProgressBar=document.getElementsByClassName(`${c}-b-bar`);for(let i=0;i<lengthDiv.length;i++){lengthProgress[i].textContent=b.toFixed(d)+'%';lengthProgressBar[i].style.width=b.toFixed(d)+'%'}}}
+let UPDATE_PROGRESS_BARS_INIT=false;function updateProgressBars(){try{let now=new Date();if(UPDATE_PROGRESS_BARS_INIT===false){for(let i=0;i<document.getElementsByClassName('time-flies').length;i++){let length=document.getElementsByClassName('time-flies')[i];length.innerHTML=`<div class="progress-container"><div class="progress-label">今年已经过了<span class="year-progress"></span></div><div class="progress-bar"><div class="year-progress-bar"><span class="year-progress-bar-fill"></span></div></div></div><div class="progress-container"><div class="progress-label">这个月过去了<span class="month-progress"></span></div><div class="progress-bar"><div class="month-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">今天过去了<span class="day-progress"></span></div><div class="progress-bar"><div class="day-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">这一个小时过了<span class="hour-progress"></span></div><div class="progress-bar"><div class="hour-progress-bar"></div></div></div><div class="progress-container"><div class="progress-label">本分钟过了<span class="minute-progress"></span></div><div class="progress-bar"><div class="minute-progress-bar"></div></div></div><p>珍惜时间，时光飞逝。</p>`}UPDATE_PROGRESS_BARS_INIT=false}const yearStart=new Date(now.getFullYear(),0,1).getTime();const yearEnd=new Date(now.getFullYear()+1,0,1).getTime();const yearProgress=((now.getTime()-yearStart)/(yearEnd-yearStart))*100;const monthStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();const monthEnd=new Date(now.getFullYear(),now.getMonth()+1,1).getTime();const monthProgress=((now.getTime()-monthStart)/(monthEnd-monthStart))*100;const dayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();const dayEnd=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1).getTime();const dayProgress=((now.getTime()-dayStart)/(dayEnd-dayStart))*100;const hourStart=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours()).getTime();const hourEnd=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours()+1).getTime();const hourProgress=((now.getTime()-hourStart)/(hourEnd-hourStart))*100;const minuteProgress=(now.getSeconds()*1000+now.getMilliseconds())/1000/60*100;a('year',yearProgress,7);a('month',monthProgress,6);a('day',dayProgress,5);a('hour',hourProgress,3);a('minute',minuteProgress,2)}catch(error){console.error('更新模块：时光飞逝 时发生错误:',error)}function a(c,b,d){let lengthDiv=document.getElementsByClassName('time-flies');let lengthProgress=document.getElementsByClassName(`${c}-b`);let lengthProgressBar=document.getElementsByClassName(`${c}-b-bar`);for(let i=0;i<lengthDiv.length;i++){lengthProgress[i].textContent=b.toFixed(d)+'%';lengthProgressBar[i].style.width=b.toFixed(d)+'%'}}}
 ```
 
 ```JavaScript
@@ -231,31 +237,31 @@ function updateProgressBars() {
                 let length = document.getElementsByClassName('time-flies')[i];
                 length.innerHTML = `
                 <div class="progress-container">
-                	<div class="progress-label">今年已经过了 <span class="year-progress">0.00000%</span></div>
+                	<div class="progress-label">今年已经过了 <span class="year-progress"></span></div>
                 	<div class="progress-bar">
                 		<div class="year-progress-bar"><span class="year-progress-bar-fill"></span></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label">这个月过去了 <span class="month-progress">0.00000%</span> </div>
+                	<div class="progress-label">这个月过去了 <span class="month-progress"></span> </div>
                 	<div class="progress-bar">
                 		<div class="month-progress-bar"></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label"> 今天过去了 <span class="day-progress">0.00000%</span> </div>
+                	<div class="progress-label"> 今天过去了 <span class="day-progress"></span> </div>
                 	<div class="progress-bar">
                 		<div class="day-progress-bar"></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label"> 这一个小时过了 <span class="hour-progress">0.00000%</span> </div>
+                	<div class="progress-label"> 这一个小时过了 <span class="hour-progress"></span> </div>
                 	<div class="progress-bar">
                 		<div class="hour-progress-bar"></div>
                 	</div>
                 </div>
                 <div class="progress-container">
-                	<div class="progress-label">本分钟过了 <span class="minute-progress">0.00000%</span></div>
+                	<div class="progress-label">本分钟过了 <span class="minute-progress"></span></div>
                 	<div class="progress-bar">
                 		<div class="minute-progress-bar"></div>
                 	</div>
@@ -300,7 +306,7 @@ function updateProgressBars() {
 
     // 更新显示函数
     function updateDisplay(period, progress, decimalPlaces) {
-        // 进度条文本，值，精度
+        // 进度条文本，值，精度(小时点后 x 位)
         let lengthDiv = document.getElementsByClassName('time-flies');
         let lengthProgress = document.getElementsByClassName(`${period}-progress`);
         let lengthProgressBar = document.getElementsByClassName(`${period}-progress-bar`);
@@ -457,7 +463,7 @@ extends includes/layout.pug
 
 创建`%Source%\time\index.md`
 放入以下内容
-```md
+```markdown
 ---
 title: 时光飞逝
 date: 2021-03-30 15:57:51
@@ -476,3 +482,20 @@ hexo g + s 即可看到效果
 ```HTML
 <div class="time-flies"></div>
 ```
+
+<!-- ## 调整和适应
+其实大部分在没有压缩的 CSS 和 JS 的部分用注释写了出来
+部分没有提到的在此处提一下 -->
+## License
+(仅包括文中的 JavaScript 和 CSS 代码块)
+
+>The MIT License (MIT)
+>
+>Copyright © 2026 AdminCmd(http://admincmd.xyz)
+>
+>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+>
+>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+>
+>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+

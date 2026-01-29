@@ -62,6 +62,7 @@ if theme.enable
 
       include ./additional-js.pug
       !=partial('includes/configwin/main',{}, {cache:true})
+      span#dom_ok
 else 
   html(lang=config.language)
     head 

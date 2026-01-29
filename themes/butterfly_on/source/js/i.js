@@ -51,6 +51,7 @@ SOFTWARE.`;
 
 const debug = false//isDeBug(); // 开启调试模式
 
+var updateVarIntervalID = 0;
 var oldUrl = window.location.pathname;
 var ocsTime = 0;
 
@@ -87,7 +88,10 @@ var currentTimeHtml = "";
 var img = "";
 var description = "";
 var PAGE_MAIN_ID = "page-main";
-var ok = false;
+/** DOM 树加载完成？ */
+var OK = false;
+/** JavaScript 主循环初始化完成？ */
+var DOM_OK = false;
 // var errorCode = undefined;
 // var errorMsg = "";
 
@@ -1108,6 +1112,9 @@ function getUrlParams(key) {
 
 
 
+
+
+
 // 初始化主题
 async function start() {
     lightDarkTheme.refreshTheme();
@@ -1120,6 +1127,7 @@ async function start() {
         document.getElementsByTagName("pcEnable_false").style = "";
     }
     
+    UPDATE_PROGRESS_BARS_INIT = false;
 }
 updateVar();
 void 0;
@@ -1128,24 +1136,66 @@ void 0;
 
 /** 主循环执行函数，首次调用会加载初始化模块 */
 function updateVar() {
-    // 下面是处理流程
-    if (oldUrl === window.location.pathname) {// 防止页面切换时页面不重置
+    // 增加页面可见性检查
+    if (document.hidden) return;
+    
 
-    } else {
-        console.info(`页面切换至 ${window.location.pathname}。`)
-        clearInterval(updateVarIntervalID); // 停止循环
-        console.log(`系统已在系统时间 ${Date.now().toString()} 停止主循环函数。`)
+    if (oldUrl !== window.location.pathname) {
+        console.info(`页面切换至 ${window.location.pathname}。`);
+        clearInterval(updateVarIntervalID);
+        
+        // 增加完整的清理流程
+        if (typeof pageBlur?.cleanup === 'function') {
+            pageBlur.cleanup();
+        }
+        
+        console.log(`系统已在系统时间 ${Date.now().toString()} 停止主循环函数。`);
         oldUrl = window.location.pathname;
-        timer = 0; // 计时器归零
-        updateVar(); // 重新启动循环
-        return;
+        timer = 0;
+        OK = false;
+        DOM_OK = false;
+        // ocsTime = 0; // 重置全局计数器
+        
+        // 使用立即执行函数重启循环
+        (function init() {
+            clearInterval(updateVarIntervalID);
+            updateVarIntervalID = setInterval(updateVar, 100);
+            // updateVar(); // 立即执行一次
+        })();
+        // return;
     }
-    if (timer === 0) {
-        oldUrl = window.location.pathname
-        updateVarIntervalID = setInterval(updateVar, 100);// 单次循环间隔
-        console.log(`系统已在系统时间 ${Date.now().toString()} 启动主循环函数。`)
-        start(); // 启动初始化模块
-    } else if (timer % 10 === 0) {
+    // 增加初始化状态锁
+    if ((timer === 0 && !window.__cycleLock) ||// 第 1 次在（可能）页面未加载完全情况下执行初始化
+       (OK && !DOM_OK)) // 在页面 DOM 树加载完毕但未初始化完毕的情况下执行主循环初始化
+    {
+        window.__cycleLock = true;
+        try {
+            updateVarIntervalID = setInterval(updateVar, 100);
+            console.log(`系统已在系统时间 ${Date.now().toString()} 启动主循环函数。`);
+            start();
+        } finally {
+            window.__cycleLock = false;
+            if (OK) {// 如果 DOM 树已加载完毕，则表示这是不在 timer = 0 的 JAVASCRIPT 加载运行时所执行的
+                DOM_OK = true;// 初始化完毕
+            }
+        }
+    }
+    if (!OK && !DOM_OK) {// 检查 DOM 树是否已加载完毕，且从未初始化
+        try {
+            document.getElementById("dom_ok").style = "";// 检查 DOM 树的最后一个元素是否已加载入page
+            OK = true;// 如果取值成功，则表示 DOM 树已加载完毕
+            // console.dir
+        } catch (e) {
+            OK = false;
+            timer++;
+            ocsTime++;
+            console.warn(`系统尝试在系统时间 ${Date.now().toString()} 尝试启动第 ${timer}/${ocsTime} 次主循环运行时失败。\n原因： DOM 树未加载完毕\n\n如果本警告位于页面切换或页面加载时发出，是正常现象。`)
+            return;// 如若取值失败，则继续等待
+        }
+    }
+    
+    
+    if (timer % 10 === 0) {
         updateVar10(); // 刷新
     } else if (timer % 100 === 0) {
         updateVar100(); // 刷新
@@ -1182,6 +1232,24 @@ function startUpdateVar() {
     updateVar100();
     updateVar1000();
     updateVar10000();
+}
+
+// 增加页面可见性监听
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+        oldUrl = '';
+        timer = -1;
+        updateVar();
+    }
+});
+// 适配Instantpage的事件监听
+if (window.InstantClick) {
+    InstantClick.on('change', () => {
+        clearInterval(updateVarIntervalID);
+        oldUrl = '';
+        timer = -1;
+        setTimeout(updateVar, 50); // 延迟确保DOM更新完成
+    });
 }
 
 async function timeWindow() {
@@ -1687,7 +1755,7 @@ if (getCookie('browsertc') != 1) {
 
 window.addEventListener("load", function () {
     console.log("页面及所有资源加载完毕");
-    ok = true;
+    OK = true;
 
     // 这里可以执行相关的代码
 });
@@ -1784,16 +1852,48 @@ document.addEventListener('DOMContentLoaded', (event) => {
 // 进度条模块 ------------------------------
 
 
+let UPDATE_PROGRESS_BARS_INIT = false;
 function updateProgressBars() {
     try {
-
         let now = new Date();
-        if (timer === 0) {// 初始化
+        if (UPDATE_PROGRESS_BARS_INIT === false) {// 初始化
             for (let i = 0; i < document.getElementsByClassName('time-flies').length; i++) {
                 let length = document.getElementsByClassName('time-flies')[i];
-                length.innerHTML = `<div class="progress-container"><div class="progress-label">今年已经过了 <span class="year-progress">0.00000%</span></div><div class="progress-bar"><div  class="year-progress-bar"><span class="year-progress-bar-fill"></span></div></div></div><div class="progress-container"><div class="progress-label">这个月过去了 <span class="month-progress">0.00000%</span>    </div>    <div class="progress-bar">        <div  class="month-progress-bar"></div>    </div></div><div class="progress-container">    <div class="progress-label">        今天过去了 <span class="day-progress">0.00000%</span>    </div>    <div class="progress-bar">        <div class="day-progress-bar"></div>    </div></div><div class="progress-container">    <div class="progress-label">        这一个小时过了 <span class="hour-progress">0.00000%</span>    </div>    <div class="progress-bar">        <div class="hour-progress-bar"></div>    </div></div><div class="progress-container">    <div class="progress-label">本分钟过了 <span class="minute-progress">0.00000%</span></div><div class="progress-bar"><div class="minute-progress-bar"></div></div></div><p>珍惜时间，时光飞逝。</p>
+                length.innerHTML = `
+                <div class="progress-container">
+                	<div class="progress-label">今年已经过了 <span class="year-progress"></span></div>
+                	<div class="progress-bar">
+                		<div class="year-progress-bar"><span class="year-progress-bar-fill"></span></div>
+                	</div>
+                </div>
+                <div class="progress-container">
+                	<div class="progress-label">这个月过去了 <span class="month-progress"></span> </div>
+                	<div class="progress-bar">
+                		<div class="month-progress-bar"></div>
+                	</div>
+                </div>
+                <div class="progress-container">
+                	<div class="progress-label"> 今天过去了 <span class="day-progress"></span> </div>
+                	<div class="progress-bar">
+                		<div class="day-progress-bar"></div>
+                	</div>
+                </div>
+                <div class="progress-container">
+                	<div class="progress-label"> 这一个小时过了 <span class="hour-progress"></span> </div>
+                	<div class="progress-bar">
+                		<div class="hour-progress-bar"></div>
+                	</div>
+                </div>
+                <div class="progress-container">
+                	<div class="progress-label">本分钟过了 <span class="minute-progress"></span></div>
+                	<div class="progress-bar">
+                		<div class="minute-progress-bar"></div>
+                	</div>
+                </div>
+                <p>珍惜时间，时光飞逝。</p>
                 `;
             }
+            UPDATE_PROGRESS_BARS_INIT = true;
         }
 
         const yearStart = new Date(now.getFullYear(), 0, 1).getTime(); // 计算这个时间单位的起始位置
@@ -1815,7 +1915,7 @@ function updateProgressBars() {
         const minuteProgress = (
             now.getSeconds() * 1000 +
             now.getMilliseconds()
-        ) / 1000 / 60 * 100; // 计算一个分钟已过秒数，精确到毫秒，除以60，乘以100，得到百分比
+        ) / 1000 / 60 * 100; // 计算一个分钟已过秒数，精确到毫秒，除以60，乘100，得到百分比
 
         // 更新进度条和文本显示
         updateDisplay('year', yearProgress, 7);
@@ -1826,12 +1926,11 @@ function updateProgressBars() {
 
     } catch (error) {
         console.error('更新模块：时光飞逝 时发生错误:', error);
-        timer = 0; // 重置定时器，以便为整个页面重启
     }
 
     // 更新显示函数
     function updateDisplay(period, progress, decimalPlaces) {
-        // 进度条文本，值，精度
+        // 进度条文本，值，精度(小时点后 x 位)
         let lengthDiv = document.getElementsByClassName('time-flies');
         let lengthProgress = document.getElementsByClassName(`${period}-progress`);
         let lengthProgressBar = document.getElementsByClassName(`${period}-progress-bar`);
