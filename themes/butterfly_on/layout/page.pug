@@ -8,23 +8,18 @@ block content
     case page.type
       when 'tags'
         include includes/page/tags.pug
-        meta(name='description' content='这里是 管理员 - 命令提示符(Admincmd) 博客 的 标签页，我认为你可以在这里找到你想要的或是感兴趣的文章，（欢迎进站访问|´・ω・) ノ）')
       when 'link'
         include includes/page/flink.pug
-        
       when 'categories'
         include includes/page/categories.pug
-        meta(name='description' content='这里是 管理员 - 命令提示符(Admincmd) 博客 的 分类页，我认为你可以在这里找到你想要的或是感兴趣的文章，毕竟每篇文章都会有被分类，（欢迎进站访问|´・ω・) ノ）')
       default
         include includes/page/default-page.pug
-      when 'about'
-        include includes/page/about.pug
-        meta(name='description' content='这里是 管理员 - 命令提示符(Admincmd) 博客 的 关于页，你可以找到一大堆的个人信息，和网站的乱七八糟的鬼信息（欢迎进站访问|´・ω・) ノ）')
+      //- when 'about'
+      //-   include includes/page/about.pug
       when 'url'
         include includes/page/url.pug
       when 'time-sg'
         include includes/page/time-sg.pug
-        meta(name='description' content='这里是 管理员 - 命令提示符(Admincmd) 博客 的 时间页，请进来看看 今年/月/日/时/分 已经过去了多久了，（欢迎进站访问|´・ω・) ノ）')
       //- when 'hexo-butterfiy-cb-sgfs'
         //- include includes/page/hexo-butterfiy-cb-sgfs.pug
     if page.comments !== false && theme.comments && theme.comments.use

@@ -21,7 +21,7 @@ nav:
         标签: /tags/ || fas fa-tags
         分类: /categories/ || fas fa-folder-open
         链接: /bd_link/ || fas fa-link
-        关于: /about/ || fa-solid fa-circle-info
+        # 关于: /about/ || fa-solid fa-circle-info
         日志: /log/ || fa-solid fa-list
         友链: /link/ || fas fa-solid fa-user-group
       资源||fas fa-images:
@@ -363,7 +363,7 @@ footer:
       开往:
         html: '
           <a href="https://www.travellings.cn/go.html" target="_blank" rel="noopener" title="开往-友链接力">
-            <img id="travellings-logo" style="position:relative;top:4px" src="" alt="开往-友链接力" width="74" height="18">
+            <img id="travellings-logo" style="position:relative;top:4px" src="/img/travelling_b.svg" alt="开往-友链接力" width="74" height="18">
           </a>'
 
     #[key]:           # 前缀文字（留空则无前缀）
@@ -683,7 +683,7 @@ color:
 # 在页面取消焦点和获得焦点时修改窗口标题
 # -------------------------------------------
 focus_title:
-  enable: true
+  enable: false
   # 允许的常量 -> ${originalTitle}
   lost_focus: "这都跑去干啥了，让我康康 | ${originalTitle}"
   get_focus: "干啥去了，现在才回来 | ${originalTitle}"

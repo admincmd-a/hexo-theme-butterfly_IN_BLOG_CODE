@@ -49,7 +49,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.`;
 
-const debug = false//isDeBug(); // 开启调试模式
+const debug = localStorage.getItem("debug") === "true";// 检查网页是否有调试参数
 
 var updateVarIntervalID = 0;
 var oldUrl = window.location.pathname;
@@ -88,8 +88,9 @@ var currentTimeHtml = "";
 var img = "";
 var description = "";
 var PAGE_MAIN_ID = "page-main";
+var OK;
 /** DOM 树加载完成？ */
-var OK = false;
+var OK_DOM = false;
 /** JavaScript 主循环初始化完成？ */
 var DOM_OK = false;
 // var errorCode = undefined;
@@ -222,7 +223,6 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 
 // 许是个大傻逼，他居然把自己的名字写成了tushengxi，这简直就是个笑话。(AI 生成)
 // 钟景岑天天看Bilibili，这简直就是个笑话。(AI 生成)
-
 
 //  ----------------------------------------------------------
 // JS 文件内需要公共调用的东西
@@ -377,11 +377,13 @@ const errorCodesFunction = (
                 let result = {
                     message: "让我康康有神马错误 (　o=^•ェ•)o　┏━┓",
                     code: 201,
-                    items: {}
+                    items: {},
+                    length: 0
                 };
                 for (let errorID in errors) {
                     if (errors[errorID].code === errorCode) {
                         result.items[errorID] = errors[errorID];
+                        result.length++;
                         if (result.code === 201) {
                             result.code = 200;
                         }
@@ -1110,13 +1112,27 @@ function getUrlParams(key) {
     return urlParams.get(key);
 }
 
-
+// /**
+//  * 输出调试文本
+//  * @param {any} text 要输出的文本
+//  * @returns {undefined}
+//  */
+// function console.debug(text) {
+//     if (debug) {
+//         return undefined;
+//     } else {
+//         console.debug(text);
+//     }
+// }
 
 
 
 
 // 初始化主题
 async function start() {
+    if (window.__cycleLock) {
+        return;
+    }
     lightDarkTheme.refreshTheme();
     pageBlur.topWin();
     msgWin.initialize();
@@ -1126,9 +1142,18 @@ async function start() {
     if (isUAMobile()) {
         document.getElementsByTagName("pcEnable_false").style = "";
     }
+    if (debug) {
+        Snackbar.show({
+            text: '调试模式已开启。',
+            pos: 'top-right',
+            showAction: false
+        });
+    }
     
     UPDATE_PROGRESS_BARS_INIT = false;
+    console.info(`系统已在系统时钟 ${Date.now().toString()} 初始化完毕。`)
 }
+console.info(`系统已在系统时钟 ${Date.now().toString()} 启动。`);
 updateVar();
 void 0;
 
@@ -1146,13 +1171,13 @@ function updateVar() {
         
         // 增加完整的清理流程
         if (typeof pageBlur?.cleanup === 'function') {
-            pageBlur.cleanup();
+            // pageBlur.cleanup();
         }
         
-        console.log(`系统已在系统时间 ${Date.now().toString()} 停止主循环函数。`);
+        console.log(`系统已在系统时间 ${Date.now().toString()} 停止主循环函数。(${timer}/${ocsTime})`);
         oldUrl = window.location.pathname;
         timer = 0;
-        OK = false;
+        OK_DOM = false;
         DOM_OK = false;
         // ocsTime = 0; // 重置全局计数器
         
@@ -1166,33 +1191,36 @@ function updateVar() {
     }
     // 增加初始化状态锁
     if ((timer === 0 && !window.__cycleLock) ||// 第 1 次在（可能）页面未加载完全情况下执行初始化
-       (OK && !DOM_OK)) // 在页面 DOM 树加载完毕但未初始化完毕的情况下执行主循环初始化
+       (OK_DOM && !DOM_OK)) // 在页面 DOM 树加载完毕但未初始化完毕的情况下执行主循环初始化
     {
-        window.__cycleLock = true;
         try {
-            updateVarIntervalID = setInterval(updateVar, 100);
-            console.log(`系统已在系统时间 ${Date.now().toString()} 启动主循环函数。`);
+            console.log(`系统已在系统时间 ${Date.now().toString()} 启动主循环函数。(${timer}/${ocsTime})`);
             start();
+        } catch (e) {
+            errorCodes.addError(0x00001, `初始化过程中出错: ${e}`, errorCodes.ERROR_TYPES.SILENT);
         } finally {
-            window.__cycleLock = false;
-            if (OK) {// 如果 DOM 树已加载完毕，则表示这是不在 timer = 0 的 JAVASCRIPT 加载运行时所执行的
+            window.__cycleLock = true; // 锁定初始化状态
+            if (OK_DOM) {// 如果 DOM 树已加载完毕，则表示这是不在 timer = 0 的 JAVASCRIPT 加载运行时所执行的
                 DOM_OK = true;// 初始化完毕
             }
         }
+
     }
-    if (!OK && !DOM_OK) {// 检查 DOM 树是否已加载完毕，且从未初始化
+    if (!OK_DOM && !DOM_OK) {// 检查 DOM 树是否已加载完毕，且从未初始化
         try {
             document.getElementById("dom_ok").style = "";// 检查 DOM 树的最后一个元素是否已加载入page
-            OK = true;// 如果取值成功，则表示 DOM 树已加载完毕
+            OK_DOM = true;// 如果取值成功，则表示 DOM 树已加载完毕
             // console.dir
-        } catch (e) {
-            OK = false;
+        } catch {
+            updateVarIntervalID = setInterval(updateVar, 100);
+            OK_DOM = false;
             timer++;
             ocsTime++;
             console.warn(`系统尝试在系统时间 ${Date.now().toString()} 尝试启动第 ${timer}/${ocsTime} 次主循环运行时失败。\n原因： DOM 树未加载完毕\n\n如果本警告位于页面切换或页面加载时发出，是正常现象。`)
-            return;// 如若取值失败，则继续等待
+            return;
         }
     }
+    
     
     
     if (timer % 10 === 0) {
@@ -1209,7 +1237,7 @@ function updateVar() {
         updateProgressBars();
     }
 
-    console.debug(`系统已在系统时间 ${Date.now().toString()} 进行第 ${ocsTime} 次主循环运行，距离上次重置是第 ${timer} 次主循环运行。`)
+    // console.debug(`系统已在系统时间 ${Date.now().toString()} 进行第 ${timer}/${ocsTime} 次主循环运行。`);
     timer++; // 计时器
     ocsTime++;
 }
@@ -1237,7 +1265,7 @@ function startUpdateVar() {
 // 增加页面可见性监听
 document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
-        oldUrl = '';
+        // oldUrl = '';
         timer = -1;
         updateVar();
     }
@@ -1246,11 +1274,19 @@ document.addEventListener('visibilitychange', () => {
 if (window.InstantClick) {
     InstantClick.on('change', () => {
         clearInterval(updateVarIntervalID);
-        oldUrl = '';
+        // oldUrl = '';
         timer = -1;
         setTimeout(updateVar, 50); // 延迟确保DOM更新完成
     });
 }
+
+// class mainCycle {
+//     cycleSleep = 100; // 主循环休眠时间
+//     cycleIntervalID = null; // 主循环定时器
+
+//     constructor(cycleSleep, ) {}
+// }
+
 
 async function timeWindow() {
     // 欢迎语，cookie 提醒 --------------------------------------------
@@ -1453,9 +1489,11 @@ async function timeWindow() {
 
 /** 载入旧数据或请求新的数据 */
 async function displayWelcomeMessageInit() {
+    console.group(`系统已在系统时钟 ${Date.now().toString()} 启动线程 ${displayWelcomeMessageInit.name} 以加载欢迎语信息。`);
     try {
         let ipLoacation = window.saveToLocal.get('ipLocation');
         if (!ipLoacation) {
+            console.debug("无缓存数据，正在请求数据...");
             // 数据已过期或不存在
             var script = document.createElement('script');
             var url = `https://apis.map.qq.com/ws/location/v1/ip?key=${_USER_CONFIG.WELCOME_MAP.API_KEY}&output=jsonp`;
@@ -1470,6 +1508,7 @@ async function displayWelcomeMessageInit() {
             };
             document.body.appendChild(script);
         } else {
+            console.debug("已获取缓存数据，正在执行后续逻辑...");
             displayWelcomeMessage(ipLoacation); // 直接调用显示欢迎语的函数
         }
     } catch (e) {
@@ -1484,7 +1523,9 @@ async function displayWelcomeMessage(ipLoacation) {
         while (!ipLoacation.result) {
             await sleep(50); // 等待数据加载完成
             ipLoacation = window.saveToLocal.get('ipLocation');
+            console.debug("等待数据加载完成...");
         }
+        console.debug("已获取到传输数据，耗时请去网络页面查看（如果有）：", ipLoacation);
 
         // 初始化配置
         let dist = getDistanceAMLS(
@@ -1493,6 +1534,7 @@ async function displayWelcomeMessage(ipLoacation) {
             ipLoacation.result.location.lng,
             ipLoacation.result.location.lat
         );
+        console.debug(`已获取 HTML 请求数据有关文本：`,_USER_CONFIG.WELCOME_MAP);
 
         // 读取欢迎语数据
         let pos = ipLoacation.result.ad_info.nation;
@@ -1504,10 +1546,12 @@ async function displayWelcomeMessage(ipLoacation) {
         const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH | {default: "欢迎来到我的博客！"};
         let address = defaultAddress;
 
+        console.debug(`已获取 IP 地址：${ip}，位置：${pos}`);
+
         // 匹配数据
         // 根据国家、省份、城市信息自定义欢迎语
         // 腾讯 API 的海外地区不支持省份及城市信息
-        if (data_scb[pos]) {
+        if (data_scb[pos] || data_scb.default !== undefined) {
             if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
                 if (data_scb[pos].content) {
                     posdesc = data_scb[pos].content;
@@ -1515,6 +1559,7 @@ async function displayWelcomeMessage(ipLoacation) {
                     let province = ipLoacation.result.ad_info.province.replace(/市$/, ''); // 去掉市字
                     let city = ipLoacation.result.ad_info.city.replace(/市$/, ''); // 去掉市字
                     let district = ipLoacation.result.ad_info.district;
+                    console.debug(`已处理的信息：省份：${province}，城市：${city}，区县：${district}`);
                     if (data_scb[pos][province]) { // 省份信息
                         if (typeof data_scb[pos][province] === 'object') {
                             if (data_scb[pos][province].specialAdministrativeRegion) { // 特别行政区
@@ -1573,7 +1618,7 @@ async function displayWelcomeMessage(ipLoacation) {
         else if (now.getHours() >= 15 && now.getHours() < 16) timeChange = "<span>下午三点了</span>，上课摸鱼 ING...";
         else if (now.getHours() >= 16 && now.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";
         else if (now.getHours() >= 19 && now.getHours() < 24) timeChange = "<span>晚上好</span>，我要写作业了……";
-        else timeChange = "Good night.";
+        else timeChange = "<span>Good night.</span>";
 
         // 检查 welcome-info 是否存在
         const welcomeInfoElement = document.getElementById("welcome-info");
@@ -1594,7 +1639,10 @@ async function displayWelcomeMessage(ipLoacation) {
         // 上报错误
         errorCodes.addError(0x00000000000000000000000000000001, "在显示欢迎语信息时，发生了一个错误：" + e, errorCodes.ERROR_TYPES.ERROR, true);
     }
+    console.log(`系统在系统时钟 ${Date.now().toString()} 完成线程 ${displayWelcomeMessage.name} 的工作。`)
+    console.groupEnd();
 }
+
 
 let referrer = document.referrer || '-';
 let domain = referrer ? referrer.split("://")[1] : '-';
@@ -1925,7 +1973,14 @@ function updateProgressBars() {
         updateDisplay('minute', minuteProgress, 2);
 
     } catch (error) {
-        console.error('更新模块：时光飞逝 时发生错误:', error);
+        errorCodes.addError(0x1443B001, '更新模块：时光飞逝 时发生错误' + error, errorCodes.ERROR_TYPES.SILENT, false);
+        if (errorCodes.getErrors(0x1443B001).length > 10) // 若如发现错误出现 10 个以上，重新初始化
+        {
+            UPDATE_PROGRESS_BARS_INIT = false;
+        } else if (errorCodes.getErrors(0x1443B001).length > 1000) {
+            errorCodes.addError(0x1443B001, '更新模块：时光飞逝 时发生错误' + error, errorCodes.ERROR_TYPES.FATAL, true);
+            // 页面重载
+        }
     }
 
     // 更新显示函数
@@ -1948,3 +2003,4 @@ function ___() {return null}
 // 话说这括号彩灯挺好看的
 
 // 一个无意义符号，存在于每台现代计算机中，但无人知晓它的意思 YYSD => ⍼
+console.info(`系统已在系统时钟 ${new Date().toLocaleString()} 将主 JS 执行完毕。`);

@@ -234,11 +234,12 @@ class LocalSearch {
   }
 }
 
-while (ok) {
-  if (ok) {
-    break;// 等待加载完成
-  }
+
+while (OK) {
+  sleep(500)
 }
+
+function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
 
 /* window.addEventListener('load', */ 
 // const localSearchFunc = 
@@ -267,10 +268,11 @@ while (ok) {
     if (searchText.length > 0) {
     // Perform local searching
       resultItems = localSearch.getResultItems(keywords)
+      
     }
     if (keywords.length === 1 && keywords[0] === '') {
       container.textContent = ''
-      statsItem.textContent = ''
+      statsItem.textContent = '输入即搜索'
     } else if (resultItems.length === 0) {
       container.textContent = ''
       const statsDiv = document.createElement('div')

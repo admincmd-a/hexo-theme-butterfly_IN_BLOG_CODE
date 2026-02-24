@@ -15,7 +15,7 @@ if theme.enable
       !=partial('includes/other_boby',{}, {cache:true})
       !=partial('includes/welcomemap',{}, {cache:true})
       //- 在设置等'窗口'打开时，对#page-main 进行操作即可,任何需要作为网页基本元素都需要放在 #page-main 中
-      #page-main.page-main(sytle="")
+      #page-main.page-main
         if theme.preloader.enable
           !=partial('includes/loading/index', {}, {cache: true})
 
@@ -55,14 +55,14 @@ if theme.enable
       !=partial('includes/aaa',{}, {cache:true})
 
       !=partial('includes/aplayer',{}, {cache:true})
-
+      !=partial('includes/configwin/main',{}, {cache:true})
       script(src="/js/LunarCalendar.js")
       script(src="/js/i.js")
 
 
       include ./additional-js.pug
-      !=partial('includes/configwin/main',{}, {cache:true})
       span#dom_ok
+
 else 
   html(lang=config.language)
     head 
