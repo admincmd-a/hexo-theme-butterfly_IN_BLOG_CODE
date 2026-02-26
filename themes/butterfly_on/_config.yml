@@ -20,7 +20,7 @@ nav:
         归档: /archives/ || fas fa-archive
         标签: /tags/ || fas fa-tags
         分类: /categories/ || fas fa-folder-open
-        链接: /bd_link/ || fas fa-link
+        # 链接: /bd_link/ || fas fa-link
         # 关于: /about/ || fa-solid fa-circle-info
         日志: /log/ || fa-solid fa-list
         友链: /link/ || fas fa-solid fa-user-group
@@ -260,7 +260,7 @@ related_post:
 # 1: The 'next post' will link to old post
 # 2: The 'next post' will link to new post
 # false: disable pagination
-post_pagination: 1
+post_pagination: 2
 
 # Displays outdated notice for a post (文章過期提醒)
 noticeOutdate: 
@@ -697,8 +697,8 @@ right_menu:
 # 在节日、特殊纪念日时显示一个窗口，亦或弹出消息，支持公历和农历
 time_msg_window:
   enable: true
-  sun:  "{}"
-  moon: "{}"
+  solar:  "{}"
+  lunar: "{}"
   # sun: "{
   #         '7-7': {
   #             title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
@@ -828,7 +828,7 @@ welcomemap:
   welcome_posdesc:
     enable: true
     # 根据国家、省份、城市信息自定义欢迎语
-    # 为防止你改引号改累死，请把字符串设置为``
+    # 为防止你改引号改累死，请把字符串设置为`
     # 允许的常量 -> ${nowYear} 
     # 有效参数 -> connectProvincesCities, municipalities, authorLocations, specialAdministrativeRegion, content, default
     switch: "{
@@ -910,7 +910,7 @@ welcomemap:
 # 它将在切换和初始化时执行
 # 若你想在切换时执行一些操作，请在这里写下
 # 若不起效果，请在网页控制台中运行 
-# @code {errors.getErrors(0x01010)} (LIGHT) 或 @code {errors.getErrors(0x01011)} (DARK)
+# @code {errorCodes.getErrors(0x01010)} (LIGHT) 或 @code {errorCodes.getErrors(0x01011)} (DARK)
 # 以查找发生的异常，通常控制台里也会有
 # 注：FUNCTION 函数不得留空，否则会报错，如删除请填入 nullFunction
 lightDarkMode:
@@ -953,7 +953,7 @@ aside:
     # 头像下的按钮
   card_announcement: 
     enable: true
-    content: 没有公告，特此公告。
+    content: 没有公告，特此公告。(2025-07-10)
   # 公告内容
   card_recent_post: 
     enable: true
@@ -1292,7 +1292,7 @@ cloudflare_analytics: # 2a7a83f3929841a7b9b10884fe9425a8
 
 # Microsoft Clarity
 # https://clarity.microsoft.com/
-microsoft_clarity: mphqk9dm7j
+microsoft_clarity: # mphqk9dm7j
 
 # Advertisement
 # --------------------------------------
@@ -1489,7 +1489,7 @@ preloader:
   # source
   # 1. fullpage-loading
   # 2. pace (progress bar)
-  source: 2
+  source: 1
   # pace theme (see https://codebyzach.github.io/pace/)
   pace_css_url: 
 
@@ -1640,7 +1640,7 @@ inject:
     - <style id="css"></style>
     - <style id="themeColor"></style>  
     - <link rel="stylesheet" href="/css/sett.css">
-    - <!-- Clarity tracking code for https://blog.admincmd.xyz/ --><script>    (function(c,l,a,r,i,t,y){        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);    })(window, document, "clarity", "script", "o9t7maiihp");</script>
+    # - <!-- Clarity tracking code for https://blog.admincmd.xyz/ --><script>    (function(c,l,a,r,i,t,y){        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);    })(window, document, "clarity", "script", "o9t7maiihp");</script>
     # - <link rel="stylesheet" href="/xxx.css">
   bottom:
 
@@ -1656,14 +1656,14 @@ inject:
     - <script src="/favi/qq.js"></script>
     # - <script src="//www.busuanzi.cc/static/3.6.9/busuanzi.min.js" defer></script>
 
-    - <script id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-    - <script>LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>
-    - <script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
-    - <script>
-    -  new LingQue.Monitor().init({id:"3IbLHrZmKVcxsyEK"});
-    - </script>
-    - <script> LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>
-    - <script>new LingQue.Monitor().init({id:"3IbL4ePOvrsha6YV",sendSuspicious:true});</script>
+    # - <script id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    # - <script>LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>
+    # - <script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
+    # - <script>
+    # -  new LingQue.Monitor().init({id:"3IbLHrZmKVcxsyEK"});
+    # - </script>
+    # - <script> LA.init({id:"3IbL4ePOvrsha6YV",ck:"3IbL4ePOvrsha6YV"})</script>
+    # - <script>new LingQue.Monitor().init({id:"3IbL4ePOvrsha6YV",sendSuspicious:true});</script>
     # - <script scr="/xxx.js"></script>
     
 

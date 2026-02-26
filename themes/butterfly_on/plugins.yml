@@ -37,7 +37,7 @@ disqusjs_css:
 twikoo:
   name: twikoo
   file: dist/twikoo.min.js # 腾讯云需使用 twikoo.all.min.js
-  version: 1.6.44 # Twikoo 版本
+  version: 1.6.45 # Twikoo 版本
 waline_js:
   name: '@waline/client'
   file: dist/waline.js

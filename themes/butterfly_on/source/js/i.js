@@ -1,7 +1,7 @@
 /**
 MIT License
 
-Copyright (c) 2025 AdminCmd
+Copyright (c) 2026 AdminCmd(http://admincmd.xyz) <admi_ncmd@outlook.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ SOFTWARE.
 const LICENSE = () => `
 MIT License
 
-Copyright (c) 2025 AdminCmd
+Copyright (c) 2026 AdminCmd(http://admincmd.xyz) <admi_ncmd@outlook.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,6 +48,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.`;
+const information = `
+Github: https://github.com/admincmd-a/blog-code
+`;
 
 const debug = localStorage.getItem("debug") === "true";// 检查网页是否有调试参数
 
@@ -1163,8 +1166,6 @@ void 0;
 function updateVar() {
     // 增加页面可见性检查
     if (document.hidden) return;
-    
-
     if (oldUrl !== window.location.pathname) {
         console.info(`页面切换至 ${window.location.pathname}。`);
         clearInterval(updateVarIntervalID);
@@ -1184,7 +1185,7 @@ function updateVar() {
         // 使用立即执行函数重启循环
         (function init() {
             clearInterval(updateVarIntervalID);
-            updateVarIntervalID = setInterval(updateVar, 100);
+            updateVarIntervalID = setInterval(updateVar, 50);
             // updateVar(); // 立即执行一次
         })();
         // return;
@@ -1212,11 +1213,13 @@ function updateVar() {
             OK_DOM = true;// 如果取值成功，则表示 DOM 树已加载完毕
             // console.dir
         } catch {
-            updateVarIntervalID = setInterval(updateVar, 100);
+            if (!updateVarIntervalID) {
+                updateVarIntervalID = setInterval(updateVar, 50);
+            }
             OK_DOM = false;
             timer++;
-            ocsTime++;
-            console.warn(`系统尝试在系统时间 ${Date.now().toString()} 尝试启动第 ${timer}/${ocsTime} 次主循环运行时失败。\n原因： DOM 树未加载完毕\n\n如果本警告位于页面切换或页面加载时发出，是正常现象。`)
+            ocsTime++;/*在系统时间 ${Date.now().toString()} 第 ${timer}/${ocsTime} 次*/
+            console.warn(`系统尝试尝试启动主循环运行时失败。\n原因： DOM 树未加载完毕\n\n如果本警告位于页面切换或页面加载时发出，是正常现象。`)
             return;
         }
     }
@@ -1551,7 +1554,7 @@ async function displayWelcomeMessage(ipLoacation) {
         // 匹配数据
         // 根据国家、省份、城市信息自定义欢迎语
         // 腾讯 API 的海外地区不支持省份及城市信息
-        if (data_scb[pos] || data_scb.default !== undefined) {
+        if (data_scb[pos] || data_scb.default === undefined) {
             if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
                 if (data_scb[pos].content) {
                     posdesc = data_scb[pos].content;
@@ -1863,7 +1866,6 @@ function playButton() {
 // 用户跳过来弄过去改下标题
 // 在页面加载完成后，获取初始标题，并设置失去焦点和获得焦点时的标题
 document.addEventListener('DOMContentLoaded', (event) => {
-    return;
     originalTitle = document.title; // 记录初始标题
     lostFocusTitle = getFocusTitle(FOCUS_TYPE.TYPE.LOST_TITLE, originalTitle); // 页面失去焦点时的标题
     gainedFocusTitle = getFocusTitle(FOCUS_TYPE.TYPE.GAINED_TITLE, originalTitle); // 页面获得焦点时的标题
