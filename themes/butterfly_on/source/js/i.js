@@ -1180,12 +1180,11 @@ function updateVar() {
         timer = 0;
         OK_DOM = false;
         DOM_OK = false;
-        // ocsTime = 0; // 重置全局计数器
         
         // 使用立即执行函数重启循环
         (function init() {
             clearInterval(updateVarIntervalID);
-            updateVarIntervalID = setInterval(updateVar, 50);
+            updateVarIntervalID = setInterval(updateVar, 100);
             // updateVar(); // 立即执行一次
         })();
         // return;
@@ -1214,7 +1213,7 @@ function updateVar() {
             // console.dir
         } catch {
             if (!updateVarIntervalID) {
-                updateVarIntervalID = setInterval(updateVar, 50);
+                updateVarIntervalID = setInterval(updateVar, 100);
             }
             OK_DOM = false;
             timer++;
@@ -1282,6 +1281,12 @@ if (window.InstantClick) {
         setTimeout(updateVar, 50); // 延迟确保DOM更新完成
     });
 }
+window.addEventListener("load", function () {
+    console.log("页面及所有资源加载完毕");
+    OK = true;
+    start();
+    // 这里可以执行相关的代码
+});
 
 // class mainCycle {
 //     cycleSleep = 100; // 主循环休眠时间
@@ -1804,12 +1809,7 @@ if (getCookie('browsertc') != 1) {
 
 
 
-window.addEventListener("load", function () {
-    console.log("页面及所有资源加载完毕");
-    OK = true;
 
-    // 这里可以执行相关的代码
-});
 /*
 // 创建一个新的AudioContext
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();

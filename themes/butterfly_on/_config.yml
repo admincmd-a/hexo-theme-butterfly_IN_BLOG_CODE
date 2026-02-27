@@ -1485,11 +1485,11 @@ subtitle:
 
 # Loading Animation (加載動畫)
 preloader: 
-  enable: true
+  enable: false
   # source
   # 1. fullpage-loading
   # 2. pace (progress bar)
-  source: 1
+  source: 2
   # pace theme (see https://codebyzach.github.io/pace/)
   pace_css_url: 
 
@@ -1592,7 +1592,7 @@ pangu:
 # Lazyload (圖片懶加載)
 # https://github.com/verlok/vanilla-lazyload
 lazyload: 
-  enable: false
+  enable: true
   field: site # site/post
   placeholder:
   blur: false

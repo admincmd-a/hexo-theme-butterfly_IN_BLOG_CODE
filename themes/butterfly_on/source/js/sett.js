@@ -313,10 +313,10 @@ const DEFAULT_FONT = "HYTMR";
 const DEFAULT_THEME = "pink";
 const DEFAULT_BLOG_THEME = "simple";
 const config_MAIN_HTML = `
-<a href="javascript:configWin.font()" class="config-bottom" id="config-dir">
+<!--<a href="javascript:configWin.font()" class="config-bottom" id="config-dir">
     <i class="fa-brands fa-itunes-note"></i>
     <span>字体</span>
-</a>
+</a>-->
 <span>    </span>
 <!--<a href="javascript:configWin.aplayer()" class="config-bottom" id="config-dir-aplayer">
     <i class="fa-brands fa-itunes-note"></i>
@@ -435,10 +435,10 @@ var configWin = {
     },
 
     // 字体设置
-    font() {
-        this.setDiv(config_FONT_HTML);  // 统一使用this调用
-        this.setTitle("字体", "该设置即时生效，设置针对所有显示文本(代码块等特殊位置除外)。");
-    },
+    // font() {
+    //     this.setDiv(config_FONT_HTML);  // 统一使用this调用
+    //     this.setTitle("字体", "该设置即时生效，设置针对所有显示文本(代码块等特殊位置除外)。");
+    // },
     // APlayer设置
     aplayer() {
         this.setDiv(config_APLAYER_HTML);
