@@ -1,5 +1,4 @@
 /**
-MIT License
 
 Copyright (c) 2026 AdminCmd(http://admincmd.xyz) <admi_ncmd@outlook.com>
 
@@ -27,7 +26,6 @@ SOFTWARE.
 */
 // debugger;
 const LICENSE = () => `
-MIT License
 
 Copyright (c) 2026 AdminCmd(http://admincmd.xyz) <admi_ncmd@outlook.com>
 
