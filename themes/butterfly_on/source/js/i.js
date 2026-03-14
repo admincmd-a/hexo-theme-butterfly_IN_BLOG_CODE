@@ -1,5 +1,5 @@
 /**
-
+@copyright
 Copyright (c) 2026 AdminCmd(http://admincmd.xyz) <admi_ncmd@outlook.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -300,7 +300,7 @@ const errorCodesFunction = (
              * @param {any} message 错误信息
              * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量,注：0x3 时会引发页面重载。
              * @param {boolean} returnID 是否返回错误ID，缺省值为 false
-             * @returns {false | string} 返回 false，若 {@link returnID} 为true,则返回错误ID
+             * @returns {false | string} 返回 {@linkcode false}，若 {@link returnID} 为true,则返回错误ID
              * @example } catch (message) {return errorCodes.addError(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
              * @function {@link errorCodes.getErrorCode} 获取错误码和信息
              * @function {@link errorCodes.clearError} 清除错误信息
@@ -308,12 +308,14 @@ const errorCodesFunction = (
             addError: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false) => {
                 try {
                     let errorID;
-                    if (crypto) {
-                        errorID = crypto.randomUUID();
+                    if (crypto) {// 通过合适的算法生成随机ID
+                        try {
+                            errorID = crypto.randomUUID();
+                        } catch (error) {
+                            getErrorIDtoMD5String();
+                        }
                     } else {
-                        errorID = Date.now().toString(36)
-                            + Math.random().toString(36).slice(2, 10)
-                            + performance.now().toString(36).replace('.', '');
+                        getErrorIDtoMD5String();
                     }
 
                     validateParams(code, message, warn);
@@ -352,6 +354,12 @@ const errorCodesFunction = (
                     console.error('错误处理失败:', e);
                 }
                 return false;
+
+                function getErrorIDtoMD5String() {
+                    errorID = Date.now().toString(36)
+                            + Math.random().toString(36).slice(2, 10)
+                            + performance.now().toString(36).replace('.', '');
+                }
             },
 
             /**
@@ -400,18 +408,22 @@ const errorCodesFunction = (
 
             /**
              * 返回所有已被记录的错误码和信息
-             * @returns {{code: number, message: string, items: {}}}
+             * @returns {{code: number, message: string, items: {code: number, message: string, warn: number, time: Date}[...], length: number}}
+             * @function {@link errorCodes.addError} 设置错误码和信息
+             * @function {@link errorCodes.getErrorCode} 取得错误码和信息
              */
             getAllErrorCodes: () => {
                 if (errors == {}) {
                     return {
-                        code: 201,
+                        items: {},
+                        length: 0,
                         message: "啥也木有 (　o=^•ェ•)o　┏━┓",
                         items: {}
-                    }
+                    }   
                 } else {
                     return {
                         code: 200,
+                        length: Object.keys(errors).length,
                         message: "获取成功 (*≧︶≦))(￣▽￣* )ゞ",
                         items: errors
                     }
@@ -701,12 +713,8 @@ const lightDarkTheme = (() => {
     const lightTheme = (enableSnackbar = true, setStorage = false) => {
         theme = DATA_TYPE.LIGHT;
         document.documentElement.setAttribute(DATA_TYPE.HTML_KEY, DATA_TYPE.LIGHT);
-        if (setStorage) {
-            _setStorageItem(DATA_TYPE.LIGHT);
-        }
-        if (enableSnackbar) {
-            GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day);
-        }
+        if (setStorage)  _setStorageItem(DATA_TYPE.LIGHT); // 存储配置
+        if (enableSnackbar) GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day);
         try {
             _lightUserPug();
         } catch (error) {
@@ -722,12 +730,8 @@ const lightDarkTheme = (() => {
     const darkTheme = (enableSnackbar = true, setStorage = false) => {
         theme = DATA_TYPE.DARK;
         document.documentElement.setAttribute(DATA_TYPE.HTML_KEY, DATA_TYPE.DARK);
-        if (setStorage) {
-            _setStorageItem(DATA_TYPE.DARK);
-        }
-        if (enableSnackbar) {
-            GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night);
-        }
+        if (setStorage) _setStorageItem(DATA_TYPE.DARK);
+        if (enableSnackbar) GLOBAL_CONFIG.Snackbar && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night);
         try {
             _darkUserPug();
         } catch (error) {
@@ -820,16 +824,13 @@ const lightDarkTheme = (() => {
  * 调整到夜间模式
  * @deprecated 已弃用，请使用 {@link lightDarkTheme.setTheme()}
  */
-function activateLightMode() {
-    lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.LIGHT, true, true);
-}
+function activateLightMode() { lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.LIGHT, true, true); }
+
 /**
  * 调整到明亮模式
  * @deprecated 已弃用，请使用 {@link lightDarkTheme.setTheme()}
  */
-function activateDarkMode() {
-    lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.DARK, true, true);
-}
+function activateDarkMode() { lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.DARK, true, true); }
 
 // End ---------------------------------------------------------------------------------------------
 
@@ -839,7 +840,11 @@ function activateDarkMode() {
 * @return {boolean} true: 移动端 false: PC端
 */
 function isUAMobile() {
-    if (window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+    if (window.navigator.userAgent.match
+        (
+            /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+        )
+    ) {
         return true; // 移动端
     } else {
         return false; // PC端
@@ -849,11 +854,9 @@ function isUAMobile() {
 /**
  * 判断是否是PC端
  * @returns {boolean} true: 是PC端 false: 是移动端
- * @information 本函数使用 UA 解析，若要使用其他方式解析，请使用 {@link isPcOrNotNarrow()}
+ * @information 本函数使用 UA 解析，若要使用页面宽度判断解析，请使用 {@link isPcOrNotNarrow()}
  */
-function isUAPC() {
-    return !isUAMobile();
-}
+function isUAPC() { return !isUAMobile(); }
 
 /**
  * 使用当前页面宽度判断是否为移动端或页面过窄
@@ -864,9 +867,10 @@ function isUAPC() {
 function isMobileOrNarrow() {
     // 获取当前页面的宽度
     const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    const MAX = 768; // 移动端或页面过窄的最大宽度
 
     // 判断页面宽度是否小于等于768px
-    if (windowWidth <= 768) {
+    if (windowWidth <= MAX) {
         return true; // 移动端或页面过窄
     } else {
         return false; // 不是移动端，页面宽度足够
@@ -879,9 +883,7 @@ function isMobileOrNarrow() {
  * @function {@link isUAPC} 使用 UserAgent 解析
  * @function {@link isMobileOrNarrow} 反式
  */
-function isPcOrNotNarrow() {
-    return !isMobileOrNarrow();
-}
+function isPcOrNotNarrow() { return !isMobileOrNarrow(); }
 
 /**
  * 更改主循环的间隔时间
@@ -924,10 +926,10 @@ function isDebug() {
 
 /**
  * 计算地球两经纬度之间的球面弧线距离
- * @param {number} e1 1 点经度
- * @param {number} n1 1 点纬度
- * @param {number} e2 2 点经度
- * @param {number} n2 2 点纬度
+ * @param {number} e1 A 点经度
+ * @param {number} n1 A 点纬度
+ * @param {number} e2 B 点经度
+ * @param {number} n2 B 点纬度
  * @returns 2 点之间的地面直线距离，单位 KM
  */
 function getDistanceAMLS(e1, n1, e2, n2) {
@@ -1001,19 +1003,19 @@ function clearCookies(enableReturn = false) {
 
 /**
  * 取到当前页面的被选中文本
- * @returns { string | null } 当前选中的文本，如果没有选中则返回 null
+ * @returns { string | null } 当前选中的文本，如果没有选中返回 “”，如果失败则返回 null
  */
 function getSelectedText() {
     if (window.getSelection) {
         var selection = window.getSelection().toString();
         if (selection === '') {
-            return null;
+            return '';
         }
         return selection;
     } else if (document.selection) { // IE < 9
         var range = document.selection.createRange();
         if (range.text.trim() === '') {
-            return null;
+            return '';
         }
         return document.selection.createRange().text.trim();
     }
@@ -1024,9 +1026,7 @@ function getSelectedText() {
  * 将指定的文本复制到剪贴板
  * @param {string} copyText 欲写入剪贴板的文本
  */
-function setClipboardText(copyText) {
-    navigator.clipboard.writeText(copyText);
-}
+function setClipboardText(copyText) { navigator.clipboard.writeText(copyText); }
 
 /**
  * 取剪贴板内容
@@ -1131,9 +1131,8 @@ function getUrlParams(key) {
 
 // 初始化主题
 async function start() {
-    if (window.__cycleLock) {
-        return;
-    }
+    if (window.__cycleLock) return; // 检查循环锁🔒，避免重复初始化
+    
     lightDarkTheme.refreshTheme();
     pageBlur.topWin();
     msgWin.initialize();
@@ -1454,9 +1453,8 @@ async function timeWindow() {
             console.log(timeWinDivTitleText);
             console.log(timeWinDivText);
 
-            if (localStorage.getItem('shown') === todayKey) {
-                return void 0; // 今天已经显示过了，不再显示
-            }
+            if (localStorage.getItem('shown') === todayKey) return void 0; // 今天已经显示过了，不再显示
+            
 
             msgWin.show(timeWinDivTitleText, timeWinDivText, true, 10000);
         }
@@ -1464,9 +1462,10 @@ async function timeWindow() {
         localStorage.setItem('shown', todayKey);
     } catch (error) {
         return errorCodes.addError(0x00001, `创建节日窗口时出错:: ${error}`, 1);
+    } finally {
+        return true;
     }
-    return true;
-
+    
     function setDivVar(entry) {
         if (typeof entry === 'object') {
             timeWinDivTitleText = entry.title;
@@ -1552,7 +1551,7 @@ async function displayWelcomeMessage(ipLoacation) {
         const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH | {default: "欢迎来到我的博客！"};
         let address = defaultAddress;
 
-        console.debug(`已获取 IP 地址：${ip}，位置：${pos}`);
+        console.debug(`已获取 IP 地址：${ip}，位置：${ipLoacation.result.ad_info}`);
 
         // 匹配数据
         // 根据国家、省份、城市信息自定义欢迎语
@@ -1631,7 +1630,8 @@ async function displayWelcomeMessage(ipLoacation) {
         if (welcomeInfoElement) {
             // 用户定义，如无法查找则使用缺省值
             welcomeInfoElement.innerHTML = _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip)
-                || `欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}<hr>`;
+                || `欢迎来自 <span>${pos}</span> 的 ${address}，${timeChange}<br />你距我约有 <span>${dist}</span> 公里，${posdesc}，你的 IP 地址是 ${ip}<hr>`
+                || "Welcome!";
         }
 
         if (sessionStorage.getItem("popCookieWindow") != "0") {
@@ -1644,8 +1644,10 @@ async function displayWelcomeMessage(ipLoacation) {
         }
         // 上报错误
         errorCodes.addError(0x00000000000000000000000000000001, "在显示欢迎语信息时，发生了一个错误：" + e, errorCodes.ERROR_TYPES.ERROR, true);
+    } finally {
+        console.log(`系统在系统时钟 ${Date.now().toString()} 完成线程 ${displayWelcomeMessage.name} 的工作。`)
+
     }
-    console.log(`系统在系统时钟 ${Date.now().toString()} 完成线程 ${displayWelcomeMessage.name} 的工作。`)
     console.groupEnd();
 }
 
@@ -1840,6 +1842,13 @@ oscillator.stop(audioContext.currentTime + 1);
 */
 
 
+/**
+ * 使用震荡器播放音频
+ * @param {number} frequency 频率，单位 Hz
+ * @param {number} currentTime 持续时间，单位秒
+ * @param {string} type 波形类型，可选 'sine', 'square', 'sawtooth', 'triangle'
+ * @param {number} gain 音量，取值范围 0-1
+ */
 function playMUS(frequency, currentTime, type, gain) {
     window.AudioContext = window.AudioContext || window.AudioContext;
     var audioCtx = new AudioContext();
@@ -1974,7 +1983,7 @@ function updateProgressBars() {
 
     } catch (error) {
         errorCodes.addError(0x1443B001, '更新模块：时光飞逝 时发生错误' + error, errorCodes.ERROR_TYPES.SILENT, false);
-        if (errorCodes.getErrors(0x1443B001).length > 10) // 若如发现错误出现 10 个以上，重新初始化
+        if (errorCodes.getErrors(0x1443B001).length > 1) // 若如发现错误出现 1 个以上，重新初始化
         {
             UPDATE_PROGRESS_BARS_INIT = false;
         } else if (errorCodes.getErrors(0x1443B001).length > 1000) {
