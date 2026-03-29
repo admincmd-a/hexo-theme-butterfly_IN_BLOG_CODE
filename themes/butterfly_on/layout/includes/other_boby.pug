@@ -14,14 +14,21 @@ script.
 
     function _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip) {
         return `!{theme.welcomemap.welcome_posdesc.message}`; /* 使用 \!{} 防止转义 */
-    }
+    };
 
     function getFocusTitle(type, originalTitle) {
         switch (type) {
             case FOCUS_TYPE.TYPE.LOST_TITLE:   return `!{theme.focus_title.lost_focus}`;
             case FOCUS_TYPE.TYPE.GAINED_TITLE: return `!{theme.focus_title.get_focus}`;
             default: return originalTitle;
-        }
+        };
+    };
+
+    function _getTimeWindowConsole(now, lunarDate) {
+        return {
+            solar:  #{theme.time_msg_window.solar},
+            lunar: #{theme.time_msg_window.lunar}
+        };
     }
 
     const _USER_CONFIG = {
@@ -46,10 +53,10 @@ script.
         },
         TIME_MSG_WINDOW: {
             ENABLE: #{theme.time_msg_window.enable},
-             SUN:  !{theme.time_msg_window.sun},
-             MOON: !{theme.time_msg_window.moon}
             
         }
+
+
     };
 
 .messageWin#messageWin(style="display:none;")

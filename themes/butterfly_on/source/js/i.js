@@ -228,6 +228,11 @@ JSDoc 注释以 \/** 开始，以 *\/ 结束，每行以 * 开头。注释中可
 //  ----------------------------------------------------------
 // JS 文件内需要公共调用的东西
 
+/**
+ * 错误处理程序
+ * @param {object} oldErrorCodes 重载前的错误数据
+ * @returns {function} Runtimes
+ */
 const errorCodesFunction = (
     (oldErrorCodes = null) => {
         // let errorCode = 0x00000;
@@ -300,7 +305,7 @@ const errorCodesFunction = (
              * @param {any} message 错误信息
              * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量,注：0x3 时会引发页面重载。
              * @param {boolean} returnID 是否返回错误ID，缺省值为 false
-             * @returns {false | string} 返回 {@linkcode false}，若 {@link returnID} 为true,则返回错误ID
+             * @returns {(false | string)} 返回 {@linkcode false}，若 {@link returnID} 为true,则返回错误ID
              * @example } catch (message) {return errorCodes.addError(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
              * @function {@link errorCodes.getErrorCode} 获取错误码和信息
              * @function {@link errorCodes.clearError} 清除错误信息
@@ -607,12 +612,11 @@ const msgWin = {
                 if (vague) pageBlur.setTrue(); /* 开启模糊 */
                 document.getElementById(this.id).style.display = null;
                 document.getElementById(this.id).innerHTML = `
-                <p id="messageWin-title" class="messageWin-title">${title}</p>
-                <p id="messageWin-text" class="messageWin-text">${content}</p>
-                <br />
-                <a class="messageWin-closeWin" href="javascript:msgWin.close()" id="messageWin-closeWin">关闭</a>
-                <br />
-                `;
+                <p id="messageWin-title" class="messageWin-title"></p>
+                <p id="messageWin-text" class="messageWin-text"></p><br />
+                <a class="messageWin-closeWin" href="javascript:msgWin.close()" id="messageWin-closeWin">确定</a><br />`;
+                document.getElementById("messageWin-title").innerHTML = title;
+                document.getElementById("messageWin-text").innerHTML = content;
             } catch (error) {
                 return errorCodes.addError(0x00002, `打开消息窗口失败：${error}`, errorCodes.ERROR_TYPES.ERROR, false);
             }
@@ -646,17 +650,17 @@ const msgWin = {
 };
 
 
-// 明亮/暗黑模式切换
-// ----------------------------------------------------------------------------
-// 2024-12-28 解决了首次访问时,没有coockie时导致if执行失败,导致部分图片没有切换.
-// 2025-02-21 现在没有Cookie时，会根据时间自动切换模式。
-// 2025-03-04 修复了会导致一直是白天模式bug。
-// 2025-04-15 修复逻辑问题,统一将Cookies更换为sessionStorage
-// 2025-04-28 继续优化和修复一些小问题
-// 2025-05-04 重写了切换逻辑
-// 2025-07-06 修复了用户自定义切换 JavaScript 代码的代码问题
-// 2025-07-21 添加了可以跟随系统模式切换的功能
-
+/** 明亮/暗黑模式切换
+ * ----------------------------------------------------------------------------
+ * - 2024-12-28 解决了首次访问时,没有coockie时导致if执行失败,导致部分图片没有切换.
+ * - 2025-02-21 现在没有Cookie时，会根据时间自动切换模式。
+ * - 2025-03-04 修复了会导致一直是白天模式bug。
+ * - 2025-04-15 修复逻辑问题,统一将Cookies更换为sessionStorage
+ * - 2025-04-28 继续优化和修复一些小问题
+ * - 2025-05-04 重写了切换逻辑
+ * - 2025-07-06 修复了用户自定义切换 JavaScript 代码的代码问题
+ * - 2025-07-21 添加了可以跟随系统模式切换的功能
+ */
 const lightDarkTheme = (() => {
     const DATA_TYPE = {
         LIGHT: "light",
@@ -840,15 +844,9 @@ function activateDarkMode() { lightDarkTheme.setTheme(lightDarkTheme.DATA_TYPE.D
 * @return {boolean} true: 移动端 false: PC端
 */
 function isUAMobile() {
-    if (window.navigator.userAgent.match
-        (
-            /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-        )
-    ) {
-        return true; // 移动端
-    } else {
-        return false; // PC端
-    }
+    return (window.navigator.userAgent.match(
+        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+    ));
 }
 
 /**
@@ -870,11 +868,7 @@ function isMobileOrNarrow() {
     const MAX = 768; // 移动端或页面过窄的最大宽度
 
     // 判断页面宽度是否小于等于768px
-    if (windowWidth <= MAX) {
-        return true; // 移动端或页面过窄
-    } else {
-        return false; // 不是移动端，页面宽度足够
-    }
+    return windowWidth <= MAX;
 }
 
 /**
@@ -896,7 +890,7 @@ function setBarsTime(ontimes) {
 /**
  * 检查是否是url
  * @param {any} url 要判断的url
- * @returns {boolean} true: 是url false: 不是url
+ * @returns {boolean} 若参数 {@link url} 为可以被解析为 URL 的字符串，则返回 true，否则返回 false
  */
 function isUrl(url) {
     try {
@@ -926,11 +920,12 @@ function isDebug() {
 
 /**
  * 计算地球两经纬度之间的球面弧线距离
+ * R = 6371
  * @param {number} e1 A 点经度
  * @param {number} n1 A 点纬度
  * @param {number} e2 B 点经度
  * @param {number} n2 B 点纬度
- * @returns 2 点之间的地面直线距离，单位 KM
+ * @return {number} 2 点之间的地面直线距离，单位 KM
  */
 function getDistanceAMLS(e1, n1, e2, n2) {
     const R = 6371 // km 地球半径
@@ -1034,29 +1029,21 @@ function setClipboardText(copyText) { navigator.clipboard.writeText(copyText); }
  * @information 异步函数，需要使用 await 关键字调用
  * @example const clipboardText = await getClipboardText();
  */
-function getClipboardText() {
-    return new Promise(resolve => {
-        navigator.clipboard.readText().then(resolve);
-    });
-}
+function getClipboardText() {return new Promise(resolve => {navigator.clipboard.readText().then(resolve);});}
 
 /**
  * 获取当前时间的毫秒数
  * @returns {number} 当前时间的毫秒数,自 UNIX 纪元开始
  * @see https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/now
  */
-function getNowTimeMills() {
-    return Date.now();
-}
+function getNowTimeMills() {return Date.now();}
 
 /**
  * 休眠线程
  * @param {number} ms 休眠时间，单位 ms
  * @returns {null} 等他返回了程序不就继续了吗
  */
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
 
 /** 随机跳转 */
 function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个链接,用于随便转转模块
@@ -1301,8 +1288,8 @@ async function timeWindow() {
     try {
         /**
          * {
-         *  sun <= 阳历
-         *  moon <= 农历
+         *  solar <= 阳历
+         *  lunar <= 农历
          *  {
          *      month: 1-12 <= 月份
          *      {
@@ -1314,136 +1301,140 @@ async function timeWindow() {
          *      }
          * }
          */
-        const TIME_WINDOW_CONSOLE = {
-            sun: {
-                '7-7': {
-                    title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
-                    text: '卢沟桥事变的发生标志着日本帝国主义发动全面侵华战争<br />\n勿忘国耻，振兴中华'
-                },
-                '9-18': {
-                    title: `今天是 1931 年 9 月 18 日九一八事变 ${now.year - 1931} 周年纪念日！`,
-                    text: '九一八事变是日本帝国主义侵华的开端，标志着世界反法西斯战争的起点，揭开了第二次世界大战东方主战场的序幕。<br />\n勿忘国耻，振兴中华'
-                },
-                '12-13': {
-                    title: '对所有在南京大屠杀中被无辜杀害的同胞表示深切哀悼！',
-                    text: `勿忘国耻，振兴中华！ <br /> 今天是南京大屠杀 ${now.year - 1937} 年纪念日、国家公祭日 <br /> 为在南京大屠杀中被杀害的平民默哀，铭记历史，珍视和平，绝不让这样的悲剧再次发生。`
-                },
-                '1-1': {
-                    title: '元旦快乐',
-                    text: `新年快乐！ <br /> ${now.year} 年的进度条开始了！`
-                },
-                '12-31': {
-                    title: '元旦快乐',
-                    text: `新年快乐！ <br /> ${now.year + 1} 年的进度条马上就要开始了！<br />`
-                },
-                '3-8': {
-                    title: '妇女节',
-                    text: '各位女神们，妇女节快乐！'
-                },
-                '4-1': {
-                    title: '非常抱歉，因为不可控原因，博客将于明天停止运营，感谢您的陪伴，再见',
-                    text: '今天是愚人节，祝祝祝祝祝 UP 生日快乐！'
-                },
-                '4-5': {
-                    title: '清明安康。',
-                    text: ''
-                },
-                '5-1': {
-                    title: '劳动节快乐！',
-                    text: '为各行各业的辛勤工作劳动人民致敬！'
-                },
-                '5-4': {
-                    title: '五四青年节',
-                    text: '为百年前那些有思想政治觉悟，追求无产阶级、共产主义、马克思主义的青年们致敬！'
-                },
-                '6-1': {
-                    title: '各位小朋友们，儿童节快乐！',
-                    text: ''
-                },
-                '7-1': {
-                    title: `中国共产党 ${now.year - 1921} 岁生日快乐`,
-                    text: '今天时建党节。'
-                },
-                '8-15': {
-                    title: `日本鬼子已宣布无条件投降 ${now.year - 1945} 年了！`,
-                    text: '历史老师：标志着二战结束。'
-                },
-                '10-1': {
-                    title: `中华人民共和国 ${now.year - 1949} 岁生日快乐！`,
-                    text: '祝祖国母亲生日快乐！'
-                },
-                '10-2': '10-1',
-                '10-3': '10-1',
-                '10-4': '10-1',
-                '10-5': '10-1',
-                '10-6': '10-1',
-                '10-7': '10-1',
+        // const TIME_WINDOW_CONSOLE = {
+        //     solar: {
+        //         '7-7': {
+        //             title: `今天是 1937 年 7 月 7 日卢沟桥事变 ${now.year - 1937} 周年纪念日！`,
+        //             text: '卢沟桥事变的发生标志着日本帝国主义发动全面侵华战争<br />\n勿忘国耻，振兴中华'
+        //         },
+        //         '9-18': {
+        //             title: `今天是 1931 年 9 月 18 日九一八事变 ${now.year - 1931} 周年纪念日！`,
+        //             text: '九一八事变是日本帝国主义侵华的开端，标志着世界反法西斯战争的起点，揭开了第二次世界大战东方主战场的序幕。<br />\n勿忘国耻，振兴中华'
+        //         },
+        //         '12-13': {
+        //             title: '对所有在南京大屠杀中被无辜杀害的同胞表示深切哀悼！',
+        //             text: `勿忘国耻，振兴中华！ <br /> 今天是南京大屠杀 ${now.year - 1937} 年纪念日、国家公祭日 <br /> 为在南京大屠杀中被杀害的平民默哀，铭记历史，珍视和平，绝不让这样的悲剧再次发生。`
+        //         },
+        //         '1-1': {
+        //             title: '元旦快乐',
+        //             text: `新年快乐！ <br /> ${now.year} 年的进度条开始了！`
+        //         },
+        //         '12-31': {
+        //             title: '元旦快乐',
+        //             text: `新年快乐！ <br /> ${now.year + 1} 年的进度条马上就要开始了！<br />`
+        //         },
+        //         '3-8': {
+        //             title: '妇女节',
+        //             text: '各位女神们，妇女节快乐！'
+        //         },
+        //         '4-1': {
+        //             title: '非常抱歉，因为不可控原因，博客将于明天停止运营，感谢您的陪伴，再见',
+        //             text: '今天是愚人节，祝祝祝祝祝 UP 生日快乐！'
+        //         },
+        //         '4-5': {
+        //             title: '清明安康。',
+        //             text: ''
+        //         },
+        //         '5-1': {
+        //             title: '劳动节快乐！',
+        //             text: '为各行各业的辛勤工作劳动人民致敬！'
+        //         },
+        //         '5-4': {
+        //             title: '五四青年节',
+        //             text: '为百年前那些有思想政治觉悟，追求无产阶级、共产主义、马克思主义的青年们致敬！'
+        //         },
+        //         '6-1': {
+        //             title: '各位小朋友们，儿童节快乐！',
+        //             text: ''
+        //         },
+        //         '7-1': {
+        //             title: `中国共产党 ${now.year - 1921} 岁生日快乐`,
+        //             text: '今天时建党节。'
+        //         },
+        //         '8-15': {
+        //             title: `日本鬼子已宣布无条件投降 ${now.year - 1945} 年了！`,
+        //             text: '历史老师：标志着二战结束。'
+        //         },
+        //         '10-1': {
+        //             title: `中华人民共和国 ${now.year - 1949} 岁生日快乐！`,
+        //             text: '祝祖国母亲生日快乐！'
+        //         },
+        //         '10-2': '10-1',
+        //         '10-3': '10-1',
+        //         '10-4': '10-1',
+        //         '10-5': '10-1',
+        //         '10-6': '10-1',
+        //         '10-7': '10-1',
 
-                '8-11': {
-                    title: 'sssssss',
-                    text: 'seeqeee08937525235'
+        //         '8-11': {
+        //             title: 'sssssss',
+        //             text: 'seeqeee08937525235'
 
-                }
-            },
-            moon: {
-                '腊月廿九': {
-                    title: `${lunarDate.lunarYear + 1} 年新年快乐！`,
-                    text: ''
-                },
-                '腊月三十': '腊月廿九',
-                '正月初一': {
-                    title: `${lunarDate.lunarYear} 新年快乐！`,
-                    text: ''
-                },
-                '正月初二': '正月初一',
-                '正月初三': '正月初一',
-                '正月初四': '正月初一',
-                '正月初五': '正月初一',
-                '正月初六': '正月初一',
-                '正月十五': {
-                    title: '元宵节快乐！',
-                    text: '您吃汤圆了吗?'
-                },
-                '五月初五': {
-                    title: '端午节快乐！',
-                    text: '您吃粽子了吗?'
-                },
-                '八月十五': {
-                    title: '中秋节快乐！',
-                    text: '您吃月饼了吗? <br /><del>这是什么怪味月饼那!?</del>'
-                },
-                '九月初五': {
-                    title: '重阳安康',
-                    text: ''
-                }
-            }
-        };
+        //         }
+        //     },
+        //     lunar: {
+        //         '腊月廿九': {
+        //             title: `${lunarDate.lunarYear + 1} 年新年快乐！`,
+        //             text: ''
+        //         },
+        //         '腊月三十': '腊月廿九',
+        //         '正月初一': {
+        //             title: `${lunarDate.lunarYear} 新年快乐！`,
+        //             text: ''
+        //         },
+        //         '正月初二': '正月初一',
+        //         '正月初三': '正月初一',
+        //         '正月初四': '正月初一',
+        //         '正月初五': '正月初一',
+        //         '正月初六': '正月初一',
+        //         '正月十五': {
+        //             title: '元宵节快乐！',
+        //             text: '您吃汤圆了吗?'
+        //         },
+        //         '五月初五': {
+        //             title: '端午节快乐！',
+        //             text: '您吃粽子了吗?'
+        //         },
+        //         '八月十五': {
+        //             title: '中秋节快乐！',
+        //             text: '您吃月饼了吗? <br /><del>这是什么怪味月饼那!?</del>'
+        //         },
+        //         '九月初五': {
+        //             title: '重阳安康',
+        //             text: ''
+        //         }
+        //     }
+        // };
+
+        const TIME_WINDOW_CONSOLE = _getTimeWindowConsole(now, lunarDate);
 
         // 修复节日判断逻辑
-        if (TIME_WINDOW_CONSOLE.sun[nowMonthDay]) {
-            let entry = TIME_WINDOW_CONSOLE.sun[nowMonthDay];
+        if (TIME_WINDOW_CONSOLE.solar[nowMonthDay]) {
+            let entry = TIME_WINDOW_CONSOLE.solar[nowMonthDay];
             let depth = 0;
 
             // 递归解析引用直到找到对象或达到最大深度
             while (typeof entry === 'string' && depth < 5) {
-                entry = TIME_WINDOW_CONSOLE.sun[entry];
+                entry = TIME_WINDOW_CONSOLE.solar[entry];
                 depth++;
             }
 
 
             setDivVar(entry);
-        } else if (TIME_WINDOW_CONSOLE.moon[lunarDateChineseNY]) {
-            let entry = TIME_WINDOW_CONSOLE.moon[lunarDateChineseNY];
+        } else if (TIME_WINDOW_CONSOLE.lunar[lunarDateChineseNY]) {
+            let entry = TIME_WINDOW_CONSOLE.lunar[lunarDateChineseNY];
             let depth = 0;
 
             // 递归解析引用直到找到对象或达到最大深度
             while (typeof entry === 'string' && depth < 5) {
-                entry = TIME_WINDOW_CONSOLE.moon[entry];
+                entry = TIME_WINDOW_CONSOLE.lunar[entry];
                 depth++;
             }
 
             setDivVar(entry);
         }
+
+        
 
         if (timeWinDivTitleText == "0") {// 其他不弹窗的情况放在这里
             // 如果没有匹配的节日，直接返回
@@ -1460,27 +1451,41 @@ async function timeWindow() {
         }
         // 设置今天已显示
         localStorage.setItem('shown', todayKey);
+
+        function setDivVar(entry) {
+            if (typeof entry === 'object') {
+                timeWinDivTitleText = entry.title;
+                timeWinDivText = entry.text;
+                timeWinLevel = entry.level || 0;
+            } else if (typeof entry.title === 'Array []') {
+                const randomIndex = Math.floor(Math.random() * entry.length);
+                timeWinDivTitleText = entry[randomIndex];
+                timeWinDivText = entry.text;
+            } else if (typeof entry.text === 'Array []') {
+                const randomIndex = Math.floor(Math.random() * entry.length);
+                timeWinDivTitleText = entry.title;
+                timeWinDivText = entry[randomIndex];
+            }
+
+            if (entry.black === true) {
+                try {
+                    window.document.body.style.filter = 
+                    window.document.body.style.webkitFilter = 
+                    window.document.body.style.mozFilter = 
+                    window.document.body.style.oFilter = "grayscale(100%);";
+                    window.document.body.style = "filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -o-filter: grayscale(100%);";
+                } catch (error) {
+                    console.error(new Error("无法设置黑白滤镜: "+error))
+                }
+            }
+        }
     } catch (error) {
         return errorCodes.addError(0x00001, `创建节日窗口时出错:: ${error}`, 1);
-    } finally {
-        return true;
     }
+    return true;
     
-    function setDivVar(entry) {
-        if (typeof entry === 'object') {
-            timeWinDivTitleText = entry.title;
-            timeWinDivText = entry.text;
-            timeWinLevel = entry.level || 0;
-        } else if (typeof entry.title === 'Array []') {
-            const randomIndex = Math.floor(Math.random() * entry.length);
-            timeWinDivTitleText = entry[randomIndex];
-            timeWinDivText = entry.text;
-        } else if (typeof entry.text === 'Array []') {
-            const randomIndex = Math.floor(Math.random() * entry.length);
-            timeWinDivTitleText = entry.title;
-            timeWinDivText = entry[randomIndex];
-        }
-    }
+    
+    
 }
 
 // 以下是欢迎语的流程
@@ -1526,7 +1531,7 @@ async function displayWelcomeMessage(ipLoacation) {
     try {
         // 此处必须等待数据加载完成，否则 ipLoacation 为 NULL 导致报错
         while (!ipLoacation.result) {
-            await sleep(50); // 等待数据加载完成
+            sleep(50); // 等待数据加载完成
             ipLoacation = window.saveToLocal.get('ipLocation');
             console.debug("等待数据加载完成...");
         }
@@ -1551,13 +1556,16 @@ async function displayWelcomeMessage(ipLoacation) {
         const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH | {default: "欢迎来到我的博客！"};
         let address = defaultAddress;
 
+        
+
         console.debug(`已获取 IP 地址：${ip}，位置：${ipLoacation.result.ad_info}`);
 
         // 匹配数据
         // 根据国家、省份、城市信息自定义欢迎语
         // 腾讯 API 的海外地区不支持省份及城市信息
-        if (data_scb[pos] || data_scb.default === undefined) {
+        if (data_scb[pos] || typeof data_scb[pos] === 'object') { // 检查国家，如果
             if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
+                //////// 国 ////////
                 if (data_scb[pos].content) {
                     posdesc = data_scb[pos].content;
                 } else {
@@ -1565,6 +1573,7 @@ async function displayWelcomeMessage(ipLoacation) {
                     let city = ipLoacation.result.ad_info.city.replace(/市$/, ''); // 去掉市字
                     let district = ipLoacation.result.ad_info.district;
                     console.debug(`已处理的信息：省份：${province}，城市：${city}，区县：${district}`);
+                    //////// 省份 ////////
                     if (data_scb[pos][province]) { // 省份信息
                         if (typeof data_scb[pos][province] === 'object') {
                             if (data_scb[pos][province].specialAdministrativeRegion) { // 特别行政区
@@ -1572,47 +1581,54 @@ async function displayWelcomeMessage(ipLoacation) {
                             } else if (data_scb[pos][province].municipalities) { // 直辖市
                                 posdesc = data_scb[pos][province].content;
                             } else { // 一般省份
-                                if (data_scb[pos][province][city]) {
+                                //////// 市 ////////
+                                if (data_scb[pos][province][city]) {// 城市，排除直辖市、特别行政区
                                     if (data_scb[pos][province][district]) {
+                                        //////// 区 ////////
                                         if (data_scb[pos][province][city][district]) {
                                             posdesc = data_scb[pos][province][city][district];
                                         } else {
                                             posdesc = data_scb[pos][province][city].default;
                                         } if (typeof entry === 'object' && data_scb[pos][province][city][district].authorLocations === true) {
-                                            address = authorAddress;
+                                            setAuthorAddress();
                                         }
+                                        //////// 区 End ////////
                                     } else {
                                         posdesc = data_scb[pos][province][city].default;
                                     } if (typeof entry === 'object' && [pos][province][city].authorLocations === true) {
-                                        address = authorAddress;
+                                        setAuthorAddress();
                                     }
                                 } else {
                                     posdesc = data_scb[pos][province].default;
                                 } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
-                                    address = authorAddress;
+                                    setAuthorAddress();
                                 }
+                                //////// 市 End ////////
                             }
                         } else {
                             posdesc = data_scb[pos][province];
                         } if (typeof entry === 'object' && data_scb[pos][province].authorLocations === true) {
-                            address = authorAddress;
+                            setAuthorAddress();
                         }
                     } else {
                         posdesc = data_scb[pos].default; // 省份信息不存在，使用默认信息
                     } if (data_scb[pos].connectProvincesCities) { // 连接省份和城市信息
                         pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city;
                     } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
-                        address = authorAddress;
+                        setAuthorAddress();
                     }
+                    //////// 省份 End ////////
                 }
             } else {
                 posdesc = data_scb[pos];
             } if (typeof entry === 'object' && data_scb[pos].authorLocations === true) {
-                address = authorAddress;
+                setAuthorAddress();
             }
+            //////// 国 End ////////
         } else {
             posdesc = data_scb.default;
         }
+        //////// 位置 End ////////
 
         // 判断时间
         const now = new Date();
@@ -1637,6 +1653,8 @@ async function displayWelcomeMessage(ipLoacation) {
         if (sessionStorage.getItem("popCookieWindow") != "0") {
             // 这里可以添加弹窗逻辑
         }
+        
+        function setAuthorAddress() {address = authorAddress;}
     } catch (e) {
         const welcomeInfoElement = document.getElementById("welcome-info");
         if (welcomeInfoElement) { // 放一点默认信息，要不然一条分割线看的很别扭
@@ -1646,9 +1664,12 @@ async function displayWelcomeMessage(ipLoacation) {
         errorCodes.addError(0x00000000000000000000000000000001, "在显示欢迎语信息时，发生了一个错误：" + e, errorCodes.ERROR_TYPES.ERROR, true);
     } finally {
         console.log(`系统在系统时钟 ${Date.now().toString()} 完成线程 ${displayWelcomeMessage.name} 的工作。`)
-
+        console.groupEnd();
+        return;
     }
-    console.groupEnd();
+
+    
+    
 }
 
 
@@ -2011,5 +2032,5 @@ function ___() {return null}
 // 浏览器格式化累死
 // 话说这括号彩灯挺好看的
 
-// 一个无意义符号，存在于每台现代计算机中，但无人知晓它的意思 YYSD => ⍼
+// 一个无意义符号，存在于每台现代计算机中，但无人知晓它的意思 YYDS => ⍼
 console.info(`系统已在系统时钟 ${new Date().toLocaleString()} 将主 JS 执行完毕。`);

@@ -14,10 +14,10 @@ if theme.right_menu.enable
                //- 四个图标 
        .rightMenu-group.rightMenu-line.hide#menu-text
            //- 选中文本时
-           a.rightMenu-item(href="javascript:rmf.copySelect();")
+           a.rightMenu-item(href="javascript:setClipboardText(getSelectedText());")
                i.fa.fa-copy
                span=__('rightmenu.copy_select')
-           a.rightMenu-item(href="javascript:window.open(\"https://www.baidu.com/s?wd=\"+window.getSelection().toString());window.location.reload();")
+           a.rightMenu-item(href="javascript:window.open(\"https://www.baidu.com/s?wd=\"+window.getSelection().toString());")
                i.iconfont.icon-baidu
                span=__('rightmenu.search_in_baidu')
            //- a.rightMenu-item(href="javascript:rmf.searchinThisPage();")
@@ -27,14 +27,14 @@ if theme.right_menu.enable
            //-     i.fa-solid.fa-message
            //-     span='引用文本评论'
        .rightMenu-group.rightMenu-line.hide#menu-too
-           a.rightMenu-item(href="javascript:window.open(window.getSelection().toString());window.location.reload();")
+           a.rightMenu-item(href="javascript:window.open(window.getSelection().toString());")
                i.fa.fa-link
                span=__('rightmenu.copy_link')
        .rightMenu-group.rightMenu-line.hide#menu-paste
            a.rightMenu-item(href='javascript:rmf.paste()')
                i.fa.fa-copy
                span=__('rightmenu.paste_text')
-           a.rightMenu-item#menu-s(href="javascript:setCopyText(getSelectedText());")
+           a.rightMenu-item#menu-s(href="window.open(window.getSelection().toString());")
               i.fa.fa-link
               span='转到引用链接'
        .rightMenu-group.rightMenu-line.hide#menu-post
