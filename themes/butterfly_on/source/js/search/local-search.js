@@ -235,9 +235,11 @@ class LocalSearch {
 }
 
 
-while (OK) {
-  sleep(500)
+for (let i = 0; i < 100; i++) {
+  sleep(50);
+  if (OK) break;
 }
+sleep(500);
 
 function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
 

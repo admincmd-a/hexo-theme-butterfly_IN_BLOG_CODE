@@ -316,7 +316,7 @@ footer:
           </a>
           <span>    </span>
           <a href='https://travel.moe/go.html?travel=on' target='_blank' rel='noopener' title='异次元之旅'>
-            <img id='travel-img' style='position:relative;top:4px' src='https://travel.moe/images/icon/icon64.png' alt='异次元之旅' width='16' height='16'>
+            <img id='travel-img' style='position:relative;top:4px' src='https://travel.moe/images/icon/icon64.png' alt='异次元之旅的图标，有一个幻想风的星球，她有星环。' width='16' height='16'>
             <span id='travel-text'>异次元之旅</span>
           </a>
           "

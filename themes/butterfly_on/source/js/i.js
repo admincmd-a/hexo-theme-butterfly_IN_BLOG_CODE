@@ -1437,17 +1437,18 @@ async function displayWelcomeMessage(ipLoacation) {
         let posdesc; //要显示的信息
         const defaultAddress = _USER_CONFIG.WELCOME_MAP.DEFAULT_ADDRESS;
         const authorAddress = _USER_CONFIG.WELCOME_MAP.AUTHOR_ADDRESS;
-        const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH | {default: "欢迎来到我的博客！"};
+        const data_scb = _USER_CONFIG.WELCOME_MAP.POSDESC_SWITCH || {default: "欢迎来到我的博客！"};
         let address = defaultAddress;
 
         
 
-        console.debug(`已获取 IP 地址：${ip}，位置：${ipLoacation.result.ad_info}`);
+        console.debug(`已获取 IP 地址：${ip}，位置：`+ ipLoacation.result.ad_info);
 
         // 匹配数据
         // 根据国家、省份、城市信息自定义欢迎语
         // 腾讯 API 的海外地区不支持省份及城市信息
-        if (data_scb[pos] || typeof data_scb[pos] === 'object') { // 检查国家，如果
+        if (data_scb[pos]) { // 检查国家，如果
+            console.debug(`正在匹配欢迎语数据...\nFor 位置：${pos}`);
             if (typeof data_scb[pos] === 'object') { // 检查是否位于国外.实际上如果 API 支持国外，也可以检查
                 //////// 国 ////////
                 if (data_scb[pos].content) {
@@ -1912,7 +1913,8 @@ function updateProgressBars() {
 
 
 /*/ 1000 / 60)) * 100*/; // 计算已过分钟百分比    ;
-function ___() {return null}
+/** 空函数 */
+function ___() {}
 // 浏览器格式化累死
 // 话说这括号彩灯挺好看的
 
