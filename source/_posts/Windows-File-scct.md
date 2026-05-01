@@ -13,7 +13,7 @@ top_img:
 cover: 
 ---
 
-<meta name='description' content='（水）本文介绍了如何让一个文件夹里有多个“同名”文件。（欢迎进站访问|´・ω・) ノ）'>
+<!-- <meta name='description' content='（水）本文介绍了如何让一个文件夹里有多个“同名”文件。（欢迎进站访问|´・ω・) ノ）'> -->
 （水）
 
 ## 预览图

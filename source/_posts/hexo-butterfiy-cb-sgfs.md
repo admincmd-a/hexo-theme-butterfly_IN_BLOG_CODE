@@ -13,7 +13,7 @@ tags:
 - hexo
 - Butterfly
 ---
-<meta name='description' content='在Butterfly主题的基础上添加一个时光飞逝的页面，显示现在的年度、月度、日度、小时的过度情况。（欢迎进站访问|´・ω・) ノ）'>
+<!-- <meta name='description' content='在Butterfly主题的基础上添加一个时光飞逝的页面，显示现在的年度、月度、日度、小时的过度情况。（欢迎进站访问|´・ω・) ノ）'> -->
 
 
 ## 前序

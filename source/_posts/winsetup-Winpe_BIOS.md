@@ -14,7 +14,6 @@ categories:
 top_img: https://s2.loli.net/2024/05/21/9UmV3oMvZtqShwH.png
 cover: https://s2.loli.net/2024/05/21/5HLnBTrvqwsaVgm.png
 ---
-<meta name='description' content='本文将介绍在 Legacy 启动方式下，如何使用 Windows PE (Windows 预安装环境) 安装 Windows 操作系统,包括分区、添加引导文件（欢迎进站访问|´・ω・) ノ）'>
 
 本文中所使用的系统为 Windows PE(Windows 预安装环境)，安装系统为 Windows 10
 

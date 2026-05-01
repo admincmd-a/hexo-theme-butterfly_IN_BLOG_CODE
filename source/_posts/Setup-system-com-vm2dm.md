@@ -14,7 +14,7 @@ tags:
 - 物理机
 ---
 
-<meta name='description' content='本文将介绍如何使用 VMware Workstation 虚拟机安装 Windows 操作系统。并将其应用到实体机上。（欢迎进站访问|´・ω・) ノ）'>
+<!-- <meta name='description' content='本文将介绍如何使用 VMware Workstation 虚拟机安装 Windows 操作系统。并将其应用到实体机上。（欢迎进站访问|´・ω・) ノ）'> -->
 
 {% note primary modern %}
 本文需使用以下材料

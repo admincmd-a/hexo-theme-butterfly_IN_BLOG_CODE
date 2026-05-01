@@ -17,7 +17,7 @@ categories:
 top_img: https://s2.loli.net/2024/09/17/joPQcpGB8W7MmSK.png
 cover: https://s2.loli.net/2024/09/17/9oK34tJSZMXVHDi.png
 ---
-<meta name='description' content='本文介绍如何修改 EFI 启动的 Windows 10 系统的 BOOTX64.EFI、BOOTMGR.EFI 所使用 BCD 文件位置（欢迎进站访问|´・ω・) ノ）'>
+<!-- <meta name='description' content='本文介绍如何修改 EFI 启动的 Windows 10 系统的 BOOTX64.EFI、BOOTMGR.EFI 所使用 BCD 文件位置（欢迎进站访问|´・ω・) ノ）'> -->
 
 ## 前言
 

@@ -15,7 +15,6 @@ categories:
 top_img: https://s2.loli.net/2024/05/21/adhfQRIHCmUM6k9.png
 cover: https://s2.loli.net/2024/05/21/KsPGE6JX2x4L3Mq.png
 ---
-<meta name='description' content='本文将介绍在 EFI 启动方式下，如何使用 Windows PE (Windows 预安装环境) 安装操作系统（欢迎进站访问|´・ω・) ノ）'>
 
 ## 前言
 

@@ -12,7 +12,7 @@ layout:
 top_img: https://unpkg.com/admincmd-blog-img-0@1.0.4/19bd6d8ad52f_TOP1_cic.webp
 cover: https://unpkg.com/admincmd-blog-img-0@1.0.4/19bd6d8ad52f_TOP0_cic.webp
 ---
-<meta name='description' content='该页讲述了使用power shell删除、添加UWP应用，并说明了如何用两种方式查看应用程序包名称。（欢迎进站访问|´・ω・) ノ）'>
+<!-- <meta name='description' content='该页讲述了使用power shell删除、添加UWP应用，并说明了如何用两种方式查看应用程序包名称。（欢迎进站访问|´・ω・) ノ）'> -->
 
 {% note warning modern %}
 注意备份，尤其是列表。

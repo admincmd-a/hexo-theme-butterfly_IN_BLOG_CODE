@@ -8,7 +8,7 @@ tags:
 - windows
 - 胡改
 ---
-<meta name='description' content='（水文）有关将系统盘强制当 U 盘弹出的方式。（欢迎进站访问|´・ω・) ノ）'>
+<!-- <meta name='description' content='（水文）有关将系统盘强制当 U 盘弹出的方式。（欢迎进站访问|´・ω・) ノ）'> -->
 *C:\Windows\System32>_*
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=550 height=86 src="//music.163.com/outchain/player?type=2&id=33166666&auto=1&height=66"></iframe>
 
