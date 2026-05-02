@@ -1,0 +1,135 @@
+<<<<<<< HEAD
+//- 主体内容
+if theme.enable
+  - var htmlClassHideAside = theme.aside.enable && theme.aside.hide ? 'hide-aside' : ''
+  - page.aside = is_archive() ? theme.aside.display.archive: is_category() ? theme.aside.display.category : is_tag() ? theme.aside.display.tag : page.aside
+  - var hideAside = !theme.aside.enable || page.aside === false ? 'hide-aside' : ''
+  - var pageType = is_post() ? 'post' : 'page'
+
+  doctype html
+  html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside color-theme=theme.color.main)
+    head
+      include ./head.pug
+      !=partial('includes/other_head',{}, {cache:true})
+    body
+      !=partial('includes/load',{}, {cache:true})
+      !=partial('includes/other_boby',{}, {cache:true})
+      !=partial('includes/welcomemap',{}, {cache:true})
+      //- 在设置等'窗口'打开时，对#page-main 进行操作即可,任何需要作为网页基本元素都需要放在 #page-main 中
+      #page-main.page-main
+        if theme.preloader.enable
+          !=partial('includes/loading/index', {}, {cache: true})
+
+        if theme.background
+          #web_bg
+
+        !=partial('includes/sidebar', {}, {cache: true})
+
+        if page.type !== '404'
+          //- 不在404页面所加载的
+          #body-wrap(class=pageType)
+            include ./header/index.pug
+
+            main#content-inner.layout(class=hideAside)
+              if body
+                div!= body
+              else
+                block content
+                if theme.aside.enable && page.aside !== false
+                  include widget/index.pug
+
+          - var back_ground = theme.footer.background
+          if (theme.footer.enable)
+            footer#footer.footer()
+              !=partial('includes/footer/footer', {}, {cache: true})
+        else
+          include ./404.pug
+
+        include ./rightside.pug
+
+
+      if page.type !== '404'
+
+      div(id="sett" class="sett" style="display:none")
+      !=partial('includes/main-js',{}, {cache:true})
+      !=partial('includes/rightmenu',{}, {cache:true})
+      !=partial('includes/aaa',{}, {cache:true})
+
+      !=partial('includes/aplayer',{}, {cache:true})
+      !=partial('includes/configwin/main',{}, {cache:true})
+      script(src="/js/LunarCalendar.js")
+      script(src="/js/i.js")
+
+
+      include ./additional-js.pug
+      span#dom_ok
+
+else 
+  html(lang=config.language)
+    head 
+      meta(charset='UTF-8')
+    body 
+      p=__('enable_false')
+
+  
+=======
+- var globalPageType = getPageType(page, is_home)
+- var htmlClassHideAside = theme.aside.enable && theme.aside.hide ? 'hide-aside' : ''
+- page.aside = globalPageType === 'archive' ? theme.aside.display.archive: globalPageType === 'category' ? theme.aside.display.category : globalPageType === 'tag' ? theme.aside.display.tag : page.aside
+- var hideAside = !theme.aside.enable || page.aside === false ? 'hide-aside' : ''
+- var pageType = globalPageType === 'post' ? 'post' : 'page'
+- pageType = page.type ? pageType + ' type-' + page.type : pageType
+
+doctype html
+html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside)
+  head
+    include ./head.pug
+  body
+    !=partial('includes/loading/index', {}, {cache: true})
+
+    if theme.background
+      if !Array.isArray(theme.background)
+        #web_bg.bg-animation(style=getBgPath(theme.background))
+      else
+        #web_bg.bg-animation
+        - const bgStyleArr = theme.background.map(getBgPath)
+        script.
+          (() => {
+            const arr = !{JSON.stringify(bgStyleArr)}
+            const webBgDiv = document.getElementById('web_bg')
+
+            const setRandomBg = () => {
+              webBgDiv.style = arr[Math.floor(Math.random() * arr.length)]
+              requestAnimationFrame(() => webBgDiv.classList.add('bg-animation'))
+            }
+
+            document.addEventListener('pjax:send', () => {
+              webBgDiv.style = ''
+              webBgDiv.classList.remove('bg-animation')
+            })
+
+            document.addEventListener('pjax:complete', setRandomBg)
+            document.addEventListener('DOMContentLoaded', setRandomBg)
+          })()
+
+    !=partial('includes/sidebar', {}, {cache: true})
+
+    #body-wrap(class=pageType)
+      include ./header/index.pug
+
+      main#content-inner.layout(class=hideAside)
+        if body
+          div!= body
+        else
+          block content
+          if theme.aside.enable && page.aside !== false
+            include widget/index.pug
+
+      - const footerBg = theme.footer_img
+      - const footer_bg = footerBg ? footerBg === true ? bg_img : getBgPath(footerBg) : ''
+      footer#footer(style=footer_bg)
+        !=partial('includes/footer', {}, {cache: true})
+
+    include ./rightside.pug
+    include ./additional-js.pug
+>>>>>>> 13315f6710e965b8ab0992c2b6b78125c6fa9fff

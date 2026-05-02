@@ -1,0 +1,114 @@
+//- div(class="loadDiv" id="loadDiv")
+
+//-     style(type="text/css").
+//-         div#loadDiv {
+//-             position:fixed;
+//-             height:100%;
+//-             width:100%;
+//-             top:0px;
+//-             left:0px;
+//-             background-color: #000000;
+//-             z-index:255;
+//-         }
+//-         p#loadT {
+//-             position:absolute;
+//-             top:45%;
+//-             left:45%;
+//-             font-size: 24px;
+//-             color: #fff;
+//-         } p.load {
+//-             position:absolute;
+//-             top:45%;
+//-             left:45%;
+//-             font-size: 24px;
+//-             color: #fff;
+//-         }
+
+//-     p(class="loadT" id="loadT") ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+//-     br
+
+//-     script(type="text/javascript").
+        
+//-         let a = 0; // 文字加载条最右的位置，0 - 60
+//-         let b = 20; // 
+//-         let c = 0; 
+//-         let cd = 10;
+//-         const qz = "█";
+//-         const yz = "░";
+//-         var text = "";
+//-         setInterval(setLoadText(), 200)
+//-         function setLoadText() {
+//-             a = a + 1;
+//-             if (a == b) a = 0;
+//-             switch (a) {
+//-                 case 0:
+//-                     text = `░░░░░░░░░░`;
+//-                     break;
+//-                 case 1:
+//-                     text = `█░░░░░░░░░`;
+//-                     break;
+//-                 case 2:
+//-                     text = `██░░░░░░░░`;
+//-                     break;
+//-                 case 3:
+//-                     text = `███░░░░░░░`;
+//-                     break;
+//-                 case 4:
+//-                     text = `████░░░░░░`;
+//-                     break;
+//-                 case 5:
+//-                     text = `█████░░░░░`;
+//-                     break;
+//-                 case 6:
+//-                     text = `██████░░░░`;
+//-                     break;
+//-                 case 7:
+//-                     text = `███████░░░`;
+//-                     break;
+//-                 case 8:
+//-                     text = `████████░░`;
+//-                     break;
+//-                 case 9:
+//-                     text = `█████████░`;
+//-                     break;
+//-                 case 10:
+//-                     text = `██████████`;
+//-                     break;
+//-                 case 11:
+//-                     text = `░█████████`;
+//-                     break;
+//-                 case 12:
+//-                     text = `░░████████`;
+//-                     break;
+//-                 case 13:
+//-                     text = `░░░███████`;
+//-                     break;
+//-                 case 14:
+//-                     text = `░░░░██████`;
+//-                     break;
+//-                 case 15:
+//-                     text = `░░░░░█████`;
+//-                     break;
+//-                 case 16:
+//-                     text = `░░░░░░████`;
+//-                     break;
+//-                 case 17:
+//-                     text = `░░░░░░░███`;
+//-                     break;
+//-                 case 18:
+//-                     text = `░░░░░░░░██`;
+//-                     break;
+//-                 case 19:
+//-                     text = `░░░░░░░░░█`;
+//-                     break;
+//-                 case 20:
+//-                     text = `░░░░░░░░░░`;
+//-                     break;
+//-                 default:
+//-                     text = `Loading...`;
+//-             }
+//-             document.getElementById("loadT").textContent = text;
+//-             }
+        
+    
+    

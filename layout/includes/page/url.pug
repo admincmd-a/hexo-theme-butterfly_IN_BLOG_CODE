@@ -1,0 +1,57 @@
+
+style.
+  a.padding {
+    background-color: #49B1F5;
+  }
+  a.padding {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  a:link { color: #000000; }      /* 未访问链接 */
+  a:visited { color: #122000; }   /* 已访问链接 */
+  a:hover { color: #000000; }      /* 鼠标移动到链接上 */
+  a:active { color: #000000; }     /* 鼠标点击时 */
+div
+  h2 您即将跳转到下页面
+  p 本链接引用至外部网站，我们无法保证其安全性，请注意您的财产及账号安全！
+  p 如有问题请联系 admin@admincmd.xyz 。 V 单击此处跳转 V
+  a#link(href="#" class="padding") [ 点击跳转 ]
+  br
+  br
+  br
+  a(href="javascript:window.history.back();" class="padding") 返回
+  #sssss
+script.
+  function getParameterByName(name) {
+    name = name.replace(/[$$]/g, '\\$&');
+    let url = window.location.href;
+    let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    let results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  } // 巴拉巴拉一堆东西定义函数,取页面
+  /*
+  这个东东
+  https://admincmd.xyz/url.html?url=[url]
+  显示这个页面
+  https://admincmd.xyz/url.html?url=[url]&yes=true
+  显示这个页面并直接打开指定的 URL，yes 后面写true。
+  */
+  document.addEventListener('DOMContentLoaded', () => {
+    let urlParam = getParameterByName('url'); // 获取 URL 参数
+    let secnurl = getParameterByName('yes'); // 获取 URL 是否安全
+    if (urlParam) {
+      let Link = document.getElementById('link');
+      Link.href = urlParam;
+      Link.textContent = '' + urlParam;
+    } else {
+      document.getElementById('link').textContent = 'ERROR: URL 参数未找到(0x00)';
+      // 冇得参数时显示报错信息
+    }
+    if (secnurl) { // 若有参数，则打开指定的 URL
+      document.getElementById('sssss') = '<meta http-equiv="refresh" content="0;url=https://blog.admincmd.xyz">';
+    }
+  });

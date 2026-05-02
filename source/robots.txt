@@ -1,0 +1,5 @@
+User-agent: *
+
+Disallow: /url
+
+Sitemap: https://blog.admincmd.xyz/sitemap.xml

@@ -1,0 +1,66 @@
+script(type="text/javascript").
+    /* 用于给用户配置切换使用 */
+    function _lightUserPug() {
+        #{theme.lightDarkMode.light.js}
+        #{theme.lightDarkMode.light.function}();
+    }
+    function _darkUserPug() {
+        #{theme.lightDarkMode.dark.js}
+        #{theme.lightDarkMode.dark.function}();
+    }
+    
+script.
+    const _ipLoacationKey = `#{theme.welcomemap.api.qq.key}`;
+
+    function _welcomeInfoElement(pos, address, dist, timeChange, posdesc, ip) {
+        return `!{theme.welcomemap.welcome_posdesc.message}`; /* 使用 \!{} 防止转义 */
+    };
+
+    function getFocusTitle(type, originalTitle) {
+        switch (type) {
+            case FOCUS_TYPE.TYPE.LOST_TITLE:   return `!{theme.focus_title.lost_focus}`;
+            case FOCUS_TYPE.TYPE.GAINED_TITLE: return `!{theme.focus_title.get_focus}`;
+            default: return originalTitle;
+        };
+    };
+
+    function _getTimeWindowConsole(now, lunarDate) {
+        return {
+            solar:  #{theme.time_msg_window.solar},
+            lunar: #{theme.time_msg_window.lunar}
+        };
+    }
+
+    const _USER_CONFIG = {
+        WELCOME_MAP: {
+            ENABLE: #{theme.welcomemap.enable},
+            API_URL: "#{theme.welcomemap.api.api_url}",
+            API_KEY: "#{theme.welcomemap.api.qq.key}",
+            AUTHOR_LONGITUDE: "#{theme.welcomemap.author_longitude}",
+            AUTHOR_LATITUDE: "#{theme.welcomemap.author_latitude}",
+            AUTHOR_ADDRESS: "#{theme.welcomemap.author_address}",
+            DEFAULT_ADDRESS: "#{theme.welcomemap.default_address}",
+            INFO_IP_ENABLE: #{theme.welcomemap.ip.enable},
+            INFO_DIST_ENABLE: #{theme.welcomemap.dist.enable},
+            INFO_TIME_CHANGE_ENABLE: #{theme.welcomemap.timeChange.enable},
+            POSDESC_ENABLE: #{theme.welcomemap.welcome_posdesc.enable},
+            POSDESC_SWITCH: #{theme.welcomemap.welcome_posdesc.switch},
+            ERROR_MESSAGE: "#{theme.welcomemap.error_message}",
+            MESSAGE: null
+        },
+        CONFIG_PAGE: {
+            ENABLE: #{theme.config_page.enable}
+        },
+        TIME_MSG_WINDOW: {
+            ENABLE: #{theme.time_msg_window.enable},
+            
+        }
+
+
+    };
+
+.messageWin#messageWin(style="display:none;")
+    p.messageWin-title#messageWin-title 
+    p.messageWin-text#messageWin-text 
+    br
+    a.messageWin-closeWin#messageWin-close(href="javascript:messageWin.close();" title=__('close'))=__('close')

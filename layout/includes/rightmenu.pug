@@ -1,0 +1,104 @@
+if theme.right_menu.enable
+  .rightmenuDiv
+   link(rel="stylesheet", href="/css/rightmenu.css")
+   #rightMenu.js-pjax
+       .rightMenu-group.rightMenu-small
+           a.rightMenu-item(href="javascript:window.history.back();")
+               i.fa.fa-arrow-left
+           a.rightMenu-item(href="javascript:window.history.forward();")
+               i.fa.fa-arrow-right
+           a.rightMenu-item(href="javascript:window.location.reload();")
+               i.fa.fa-refresh
+           a.rightMenu-item(href="javascript:window.scrollTo(0, 0)")
+               i.fa.fa-arrow-up
+               //- 四个图标 
+       .rightMenu-group.rightMenu-line.hide#menu-text
+           //- 选中文本时
+           a.rightMenu-item(href="javascript:setClipboardText(getSelectedText());")
+               i.fa.fa-copy
+               span=__('rightmenu.copy_select')
+           a.rightMenu-item(href="javascript:window.open(\"https://www.baidu.com/s?wd=\"+window.getSelection().toString());")
+               i.iconfont.icon-baidu
+               span=__('rightmenu.search_in_baidu')
+           //- a.rightMenu-item(href="javascript:rmf.searchinThisPage();")
+           //-     i.fas.fa-search
+           //-     span='站内进行搜索'
+           //- a.rightMenu-item(href="#post-comment" onclick="rmf.yinyong()")
+           //-     i.fa-solid.fa-message
+           //-     span='引用文本评论'
+       .rightMenu-group.rightMenu-line.hide#menu-too
+           a.rightMenu-item(href="javascript:window.open(window.getSelection().toString());")
+               i.fa.fa-link
+               span=__('rightmenu.copy_link')
+       .rightMenu-group.rightMenu-line.hide#menu-paste
+           a.rightMenu-item(href='javascript:rmf.paste()')
+               i.fa.fa-copy
+               span=__('rightmenu.paste_text')
+           a.rightMenu-item#menu-s(href="window.open(window.getSelection().toString());")
+              i.fa.fa-link
+              span='转到引用链接'
+       .rightMenu-group.rightMenu-line.hide#menu-post
+           a.rightMenu-item(href="#post-comment")
+               i.fas.fa-comment
+               span=__('rightmenu.post_comment')
+           //- a.rightMenu-item(href="javascript:switchCommentBarrage()")
+               //- i.iconfont.icon-danmu
+               //- span='开/关评论弹幕'
+           a.rightMenu-item(href="javascript:rmf.copyWordsLink()")
+               i.fa.fa-link
+               span=__('rightmenu.copy_word_link')
+           a.rightMenu-item(href="javascript:rmf.switchReadMode();")
+                   i.fa.fa-book
+                   span='阅读模式切换'
+       .rightMenu-group.rightMenu-line.hide#menu-to
+           a.rightMenu-item(href="javascript:rmf.openWithNewTab()")
+               i.fa.fa-window-restore
+               span=__('rightmenu.open_new_tab')
+           //- a.rightMenu-item#menu-toos(href="javascript:rmf.open()")
+           a.rightMenu-item#menu-toos(href="javascript:rmf.open()")
+               i.fa.fa-link
+               span='转到引用链接'
+           
+           a.rightMenu-item(href="javascript:rmf.copyLink()")
+               i.fa.fa-copy
+               span='复制引用链接'
+       .rightMenu-group.rightMenu-line.hide#menu-img
+           a.rightMenu-item(href="javascript:rmf.saveAs()")
+               i.fa.fa-download
+               span='保存这张图片'
+           a.rightMenu-item(href="javascript:rmf.openWithNewTab()")
+               i.fa.fa-window-restore
+               span='从新窗口打开'
+           a.rightMenu-item(href="javascript:rmf.click()")
+               i.fa.fa-arrows-alt
+               span='切换全屏显示'
+           a.rightMenu-item(href="javascript:rmf.copyLink()")
+               i.fa.fa-copy
+               span='复制图片链接'
+       .rightMenu-group.rightMenu-line
+           //- a.rightMenu-item(href="javascript:pjax.loadUrl(\"/license/\");")
+               //- i.fa.fa-paper-plane
+               //- span='随便看看'
+           a.rightMenu-item(href="javascript:lightDarkTheme.toggleTheme(true);")
+               i.fa.fa-moon
+               span='深浅主题切换'
+           //- a.rightMenu-item(href="javascript:rmf.translate();")
+               //- i.iconfont.icon-fanti
+               //- span='繁简转换'
+            
+           a.rightMenu-item(href="/license/")
+               i.fa.fa-info-circle
+               span='版权声明页面'
+           a.rightMenu-item(href="javascript:configWin.main();")
+               i.fas.fa-cog
+               span='站点控制面板'
+           //- a.rightMenu-item(href="javascript:fullScreen();")
+           //-     i.fas.fa-expand
+           //-     span='全屏模式切换'
+           a.rightMenu-item(href="/help/")
+               i.fa.fa-info-circle
+               span='网页帮助页面'
+           //- a.rightMenu-item(href="javascript:pjax.loadUrl(\"/help/\");")
+           //-     i.fa.fa-info-circle
+           //-     span='网页帮助页面'
+   script(src="/js/rightmenu.js")
