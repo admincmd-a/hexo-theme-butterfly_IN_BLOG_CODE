@@ -9,7 +9,8 @@ doctype html
 html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside)
   head
     include ./head.pug
-  body
+    !=partial('includes/other_head', {}, {cache: true})
+  body(onload="startInit();")
     !=partial('includes/loading/index', {}, {cache: true})
 
     if theme.background
@@ -57,3 +58,5 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
 
     include ./rightside.pug
     include ./additional-js.pug
+    !=partial('includes/other_body', {}, {cache: true})
+    span#dom_ok

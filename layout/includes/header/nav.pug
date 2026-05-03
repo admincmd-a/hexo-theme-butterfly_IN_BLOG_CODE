@@ -18,9 +18,5 @@ nav#nav
         span.site-page.social-icon.search
           i.fas.fa-search.fa-fw
           span= ' ' + _p('search.title')
-    if theme.menu
-      != partial('includes/header/menu_item', {}, {cache: true})
-
-      #toggle-menu
-        span.site-page
-          i.fas.fa-bars.fa-fw
+    
+    != partial('includes/header/menu_item', {}, {cache: true})

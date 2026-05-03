@@ -37,3 +37,155 @@ if nav
         a(href='https://github.com/jerryc127/hexo-theme-butterfly')= `Butterfly${ v ? ' ' + v.theme : '' }`
   if theme.footer.custom_text
     .footer_custom_text!= theme.footer.custom_text
+
+#footer-wrap
+  if theme.footer.owner.enable
+    - var now = new Date()
+    - var nowYear = now.getFullYear()
+    if theme.footer.owner.since && theme.footer.owner.since != nowYear
+      .copyright!= `&copy;${theme.footer.owner.since} - ${nowYear} By ${config.author}`
+    else
+      .copyright!= `&copy;${nowYear} By ${config.author}`
+  if theme.footer.copyright
+    .framework-info
+      //- 动态生成标签
+      each key in Object.keys(theme.footer.tage.item)
+        if theme.footer.tage.enable 
+          - var item = theme.footer.tage.item[key]
+          if item.html
+            //- 自定义 HTML 模式
+            != item.html
+            span.footer-separator |
+          else
+            //- 常规标签模式
+            if key && key.trim() !== ''
+              span= _p(key) + ' '
+            a(
+              href=item.url || 'javascript:void(0)'
+              title=item.title
+              target=item.target
+              rel=item.rel
+            )&attributes(item.attrs || {})
+              //- 图标和图片处理
+              if item.ico
+                i(class=item.ico)
+              if item.image
+                img(
+                  src=item.image
+                  alt=item.alt || ' '
+                  style=item.imageStyle
+                )&attributes(item.imgAttrs || {})
+              = item.text
+            //- 分隔符（最后一个标签不需要在此处理）
+            if key !== Object.keys(theme.footer.tage.item)[Object.keys(theme.footer.tage.item).length]
+              span.footer-separator |
+        else 
+          //- 无标签模式
+      if theme.footer.c51la.enable && theme.footer.c51la.ld != ``
+        br
+        //- 统计脚本
+        script#LA-DATA-WIDGET(
+          src=`https://v6-widget.51.la/v6/${theme.footer.c51la.id}/quote.js?${theme.footer.c51la.theme}`
+          crossorigin="anonymous"
+        )
+  if theme.footer.custom_text
+    .footer_custom_text!=`${theme.footer.custom_text}`
+
+
+  if theme.footer.time_line.enable
+    time-line
+      //-【【航天史填词】东方红的心脏【乐正绫x洛天依】】 【精准空降到 00:00】 
+      .workboard#workboard
+      .runtimeLXZ1#runtimeLXZ1
+        //-【茫茫星海中，旅行者一号与人类文明《百分之一的长旅》【航天史填词】（历史替歌投稿祭）】 【精准空降到 00:01】
+      script.
+        var ct = 0;
+        var rzRunTimr = "LXZ";
+        var grt = new Date('#{theme.footer.time_line.start_time}');
+        var dnum, hnum, mnum, snum, nowHour, t, n;
+        var qTime;
+        var stopTime;
+        function updateFooterTime() {
+          ct++;
+          now = new Date();
+          nowHour = now.getHours();
+          var days = (now - grt) / 1000 / 60 / 60 / 24;
+          dnum = Math.floor(days);
+          var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+          hnum = Math.floor(hours);
+          hnum = String(hnum).padStart(2, '0');
+          var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+          mnum = Math.floor(minutes);
+          mnum = String(mnum).padStart(2, '0');
+          var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+          snum = Math.round(seconds);
+          snum = String(snum).padStart(2, '0');
+          tLXZ = Math.trunc(234e8 + (now - grt) / 1e3 * 17);
+          nLXZ = (tLXZ / 1496e5).toFixed(6);
+
+          const launchDate = new Date(Date.UTC(1970, 3, 24, 21, 53, 24));  // 4月24日
+          const stopDate = new Date(Date.UTC(1970, 4, 14, 3, 0, 0));    // 5月14日
+
+          // 计算时间差（单位：毫秒）
+          const qTimeDiff = now.getTime() - launchDate.getTime();
+          const stopTimeDiff = now.getTime() - stopDate.getTime();
+
+          // 转换为天数（向下取整）
+          qTime = Math.floor(qTimeDiff / (1000));
+          stopTime = Math.floor((qTimeDiff / (1000)) - 28 * 60 * 60 * 24);//Math.floor(stopTimeDiff / (1000 * 60 * 60 * 24));
+
+          if (ct % 5 == 0) {
+            if (rzRunTimr == "LXZ") {
+              rzRunTimr = "DFH";
+            } else if (rzRunTimr = "DFH") {
+              rzRunTimr = "LXZ";
+            } else {}
+          }
+
+        }
+        function updateFooterHtml() {
+          const footer = document.getElementById("footer");
+
+          if (!footer) return;
+          let currentTimeHtml = `
+            
+            <span id="runtimeDiv">
+              #{theme.footer.time_line.message_prev} ${dnum} #{theme.footer.time_line.message_next}
+              <span id='runtime'>${hnum} 小时 ${mnum} 分 ${snum} 秒</span>
+            </span>
+            <!--<i class='haofont hao-icon-heartbeat' style='color:red'></i>-->
+            <br />`;
+          if (document.getElementById("workboard")) {
+              document.getElementById("workboard").innerHTML = currentTimeHtml;
+          }
+          if (rzRunTimr == "LXZ") {
+            let currentTimeHtmlLXZ = `
+            <a title="【茫茫星海中，旅行者一号与人类文明《百分之一的长旅》【航天史填词】（历史替歌投稿祭）】" href="https://www.bilibili.com/video/BV12N4y1f7QT/?t=1&yes=true" target="_blank" rel="noopener">
+              <span>
+                旅行者 1 号现在距离地球 ${tLXZ} 千米了，差不多是 ${nLXZ} 个地球到太阳的距离 (天文单位)
+              </span>
+            </a>
+            `;
+            if (document.getElementById("runtimeLXZ1")) {
+              document.getElementById("runtimeLXZ1").innerHTML = currentTimeHtmlLXZ;
+            }
+          } else if (rzRunTimr == "DFH") {
+            let currentTimeHtmlDFH = `
+            <a title="【【航天史填词】东方红的心脏【乐正绫x洛天依】】" href="https://www.bilibili.com/video/BV129mGY3Efe/?t=1&yes=true" target="_blank" rel="noopener">
+              <span>
+                东方红 1 号现在在轨稳定飞行，距离她从地面起飞已经过去 ${qTime} 秒了，距离她最后一次在宇宙中高歌东方红已经过去 ${stopTime} 秒了。
+              </span>
+            </a>
+            `;
+            if (document.getElementById("runtimeLXZ1")) {
+              document.getElementById("runtimeLXZ1").innerHTML = currentTimeHtmlDFH;
+            }
+          } else {}
+            
+          
+          
+        }
+        setInterval(() => {
+          updateFooterTime();
+          updateFooterHtml();
+        }, 1000);

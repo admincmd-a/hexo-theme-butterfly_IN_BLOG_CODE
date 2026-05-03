@@ -105,6 +105,20 @@ rightside:
   setting: 设置
   aside: 单栏和双栏切换
   chat: 聊天
+  config: 设置
+
+rightmenu:
+  copy_select: 复制到剪贴板
+  search_in_baidu: 站外进行搜索
+  copy_link: 转到引用链接
+  paste_text: 从剪贴板粘贴
+  post_comment: 直接跳楼评论
+  copy_word_link: 复制本文地址
+  open_new_tab: 在新窗口打开
+  copy_word__link: 凃圣熙
+
+privacy_policy: 隐私政策
+
 
 copy_copyright:
   author: 作者
@@ -122,3 +136,14 @@ loading: 加载中...
 load_more: 加载更多
 
 error404: 页面未找到
+is300: "   "
+
+enable_false: "主题输出已被禁用。要启用输出，请将主题配置文件 '_config.yml' 中的配置键 'enable' 修改为 'true' ，然后重新生成文件。"
+close: 关闭
+
+config:
+  privacy:
+    cookis_or_localstorage: Cookie 和 localStorage
+    cookis_or_localstorage_desc: 清除 Cookie 和 localStorage，这将清除您在本站的记录。
+    clear_cookies_info: 按下此按钮将清除您的自定义设置，并标记为新访客，并将刷新页面。
+

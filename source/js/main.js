@@ -662,16 +662,19 @@ document.addEventListener('DOMContentLoaded', () => {
       $body.appendChild(newEle)
     },
     darkmode: () => { // switch between light and dark mode
-      const willChangeMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
-      if (willChangeMode === 'dark') {
-        btf.activateDarkMode()
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
-      } else {
-        btf.activateLightMode()
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
-      }
-      btf.saveToLocal.set('theme', willChangeMode, 2)
-      handleThemeChange(willChangeMode)
+      // const willChangeMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+      // if (willChangeMode === 'dark') {
+        // lightDarkTheme.toggleTheme(true);
+        // btf.activateDarkMode()
+        // GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
+      // } else {
+        // lightDarkTheme.toggleTheme(true);
+        // btf.activateLightMode()
+        // GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
+      // }
+      // btf.saveToLocal.set('theme', willChangeMode, 2)
+      // handleThemeChange(willChangeMode)
+      lightDarkTheme.toggleTheme(true);
     },
     'rightside-config': item => { // Show or hide rightside-hide-btn
       const hideLayout = item.firstElementChild

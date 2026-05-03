@@ -1,0 +1,15 @@
+if theme.font.del
+  //- 删除线文本设置黑色遮罩
+  style.
+    del {
+        border-radius: 2px;
+        background-color: black;
+        color: rgb(0, 0, 0); /*文本颜色*/
+        text-decoration: none; /* 去除删除线 */
+    }
+    
+    del:hover {
+        background-color: white;
+        color: rgb(0, 0, 0); /*恢复默认的文本颜色*/
+    }
+  |

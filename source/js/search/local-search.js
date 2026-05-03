@@ -234,7 +234,16 @@ class LocalSearch {
   }
 }
 
-window.addEventListener('load', () => {
+for (let i = 0; i < 100; i++) {
+  sleep(50);
+  if (OK) break;
+}
+sleep(500);
+
+function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
+
+
+// window.addEventListener('load', () => {
 // Search
   const { path, top_n_per_article, unescape, languages, pagination } = GLOBAL_CONFIG.localSearch
   const enablePagination = pagination && pagination.enable
@@ -564,4 +573,4 @@ window.addEventListener('load', () => {
     localSearch.highlightSearchWords(document.getElementById('article-container'))
     searchClickFn()
   })
-})
+// })
