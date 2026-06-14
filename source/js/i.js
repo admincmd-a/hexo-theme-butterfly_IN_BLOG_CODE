@@ -89,11 +89,11 @@ var currentTimeHtml = "";
 var img = "";
 var description = "";
 var PAGE_MAIN_ID = "page-main";
-var OK;
+window.OK;
 /** DOM 树加载完成？ */
-var OK_DOM = false;
+window.OK_DOM = false;
 /** JavaScript 主循环初始化完成？ */
-var DOM_OK = false;
+window.DOM_OK = false;
 // var errorCode = undefined;
 // var errorMsg = "";
 
@@ -267,10 +267,10 @@ const errorCodesFunction = (
         let errors = {};
 
         const ERROR_TYPES = {
-            SILENT: 0x0,// 静默
-            WARN: 0x1,// 警告
-            ERROR: 0x2,// 错误
-            FATAL: 0x3,// 致命错误
+            SILENT: 0,// 静默
+            WARN: 1,// 警告
+            ERROR: 2,// 错误
+            FATAL: 3,// 致命错误
         };
 
         const DATA_TYPE = {
@@ -288,7 +288,7 @@ const errorCodesFunction = (
 
         if (sessionStorage.getItem(DATA_TYPE.STAORAGE)) { oldErrorCodes = sessionStorage.getItem(DATA_TYPE.STAORAGE); }
         // 参数校验函数
-        const validateParams = (code, message, warn) => {
+        const validateParams = (code, message, warn, errorClass) => {
             if (typeof code !== 'number') {
                 throw new TypeError(ERROR_CODE_MSG.errorCodeNotNumber);
             }
@@ -330,14 +330,15 @@ const errorCodesFunction = (
              * 记录一个新的错误码和信息
              * @param {number} code 错误码
              * @param {any} message 错误信息
-             * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorCodes.ERROR_TYPES} 常量,注：0x3 时会引发页面重载。
+             * @param {number} warn 【0x0=静默，0x1=警告，0x2=错误，0x3=致命错误】实际应使用 {@link errorManagers.ERROR_TYPES} 常量,注：0x3 时会引发页面重载。
              * @param {boolean} returnID 是否返回错误ID，缺省值为 false
+             * @param {string} errorClass 错误分类
              * @returns {(false | string)} 返回 {@linkcode false}，若 {@link returnID} 为true,则返回错误ID
              * @example } catch (message) {return errorCodes.addError(code, message, errorCodes.ERROR_TYPES.ERROR, false);} // 返回 false，减少了单独的返回语句（反正它也不需要处理这个函数的错误）
-             * @function {@link errorCodes.getErrorCode} 获取错误码和信息
-             * @function {@link errorCodes.clearError} 清除错误信息
+             * @function {@link errorManagers.getErrorCode} 获取错误码和信息
+             * @function {@link errorManagers.clearError} 清除错误信息
              */
-            addError: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false) => {
+            addError: (code = 0x00000, message = "未知错误", warn = ERROR_TYPES.WARN, returnID = false, errorClass = "Null") => {
                 try {
                     let errorID;
                     if (crypto) {// 通过合适的算法生成随机ID
@@ -350,13 +351,14 @@ const errorCodesFunction = (
                         getErrorIDtoMD5String();
                     }
 
-                    validateParams(code, message, warn);
+                    validateParams(code, message, warn, errorClass);
 
                     errors[errorID] = {
                         code: code,
                         message: message,
                         warn: warn,
                         time: new Date().toLocaleString(),
+                        class: errorClass,
                     };
 
                     const fullMessage = `运行时出错: (${formatErrorCode(code)})`;
@@ -384,9 +386,10 @@ const errorCodesFunction = (
                     if (returnID) return errorID;
                 } catch (e) {
                     console.error('错误处理失败:', e);
+                } finally {
+                    return false;
                 }
-                return false;
-
+                
                 function getErrorIDtoMD5String() {
                     errorID = Date.now().toString(36)
                             + Math.random().toString(36).slice(2, 10)
@@ -394,16 +397,16 @@ const errorCodesFunction = (
                 }
             },
 
-            addError: (errorObject, warn = ERROR_TYPES.WARN, returnID = false) => {
-
+            addError: (message, warn = ERROR_TYPES.WARN, returnID = false, errorClass) => {
+                return this.addError(0x00000, message, warn, returnID, errorClass);
             },
 
             /**
              * 取得错误码和信息
              * @param {string} id 错误ID
              * @returns {object} 错误码和信息对象
-             * @function {@link errorCodes.addError} 设置错误码和信息
-             * @function {@link errorCodes.clearError} 清除错误信息
+             * @function {@link errorManagers.addError} 设置错误码和信息
+             * @function {@link errorManagers.clearError} 清除错误信息
              */
             getErrorCode: (id) => ({
                 code: errors[id].code,
@@ -415,8 +418,8 @@ const errorCodesFunction = (
              * 通过 错误码 取到错误信息
              * @param {number} errorCode 错误码
              * @returns {object} 错误码和信息对象
-             * @function {@link errorCodes.addError} 设置错误码和信息
-             * @function {@link errorCodes.clearError} 清除错误信息
+             * @function {@link errorManagers.addError} 设置错误码和信息
+             * @function {@link errorManagers.clearError} 清除错误信息
              */
             getErrors: (errorCode) => {
                 let result = {
@@ -441,12 +444,40 @@ const errorCodesFunction = (
                 return result;
             },
 
+            /**
+             * 通过 错误类 取到错误信息
+             * @param {string} errorClass 错误类
+             * @returns ({code: number, message: string, items: {code: number, message: string, warn: number, time: Date}[...], length: number}|false)
+             */
+            getErrors: (errorClass) => {
+                let result = {
+                    message: "让我康康有神马错误 (　o=^•ェ•)o　┏━┓",
+                    code: 201,
+                    items: {},
+                    length: 0
+                };
+                for (let errorID in errors) {
+                    if (errors[errorID].class === errorClass) {
+                        result.items[errorID] = errors[errorID];
+                        result.length++;
+                        if (result.code === 201) {
+                            result.code = 200;
+                        }
+                    }
+                } if (result.code === 201) {
+                    result.message = "啥也木有 (　o=^•ェ•)o　┏━┓";
+                    result.code = 201;
+                    return result;
+                }
+                return result;
+            },
+
 
             /**
              * 返回所有已被记录的错误码和信息
              * @returns {{code: number, message: string, items: {code: number, message: string, warn: number, time: Date}[...], length: number}}
-             * @function {@link errorCodes.addError} 设置错误码和信息
-             * @function {@link errorCodes.getErrorCode} 取得错误码和信息
+             * @function {@link errorManagers.addError} 设置错误码和信息
+             * @function {@link errorManagers.getErrorCode} 取得错误码和信息
              */
             getAllErrorCodes: () => {
                 if (errors == {}) {
@@ -469,11 +500,11 @@ const errorCodesFunction = (
             /**
              * 清除错误信息
              * @returns {null}
-             * @function {@link errorCodes.addError} 设置错误码和信息
-             * @function {@link errorCodes.getErrorCode} 取得错误码和信息
+             * @function {@link errorManagers.addError} 设置错误码和信息
+             * @function {@link errorManagers.getErrorCode} 取得错误码和信息
              */
             clearError: () => {
-                errors = null;
+                errors = {};
             },
 
             // 暴露常量
@@ -483,7 +514,7 @@ const errorCodesFunction = (
         };
     });
 
-const errorCodes = errorCodesFunction(null);
+const errorManagers = errorCodesFunction(null);
 
 /**
  * 对界面模糊化处理
@@ -555,7 +586,7 @@ var pageBlur = {
             this.Blur = false;
             return true;
         } catch (error) {
-            return errorCodes.addError(0x00001, "关闭模糊失败", errorCodes.ERROR_TYPES.SILENT, false);
+            return errorManagers.addError(0x00001, "关闭模糊失败", errorManagers.ERROR_TYPES.SILENT, false);
         }
     },
 
@@ -649,7 +680,7 @@ const msgWin = {
                 document.getElementById("messageWin-title").innerHTML = title;
                 document.getElementById("messageWin-text").innerHTML = content;
             } catch (error) {
-                return errorCodes.addError(0x00002, `打开消息窗口失败：${error}`, errorCodes.ERROR_TYPES.ERROR, false);
+                return errorManagers.addError(0x00002, `打开消息窗口失败：${error}`, errorManagers.ERROR_TYPES.ERROR, false);
             }
         }
     },
@@ -753,7 +784,7 @@ const lightDarkTheme = (() => {
         try {
             _lightUserPug();
         } catch (error) {
-            return errorCodes.addError(0x01010, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
+            return errorManagers.addError(0x01010, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorManagers.ERROR_TYPES.ERROR)
         }
     };
 
@@ -770,7 +801,7 @@ const lightDarkTheme = (() => {
         try {
             _darkUserPug();
         } catch (error) {
-            return errorCodes.addError(0x01011, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorCodes.ERROR_TYPES.ERROR)
+            return errorManagers.addError(0x01011, `用户自定义切换 JavaScript 代码出现错误：${error}`, errorManagers.ERROR_TYPES.ERROR)
         }
     };
 
@@ -804,7 +835,7 @@ const lightDarkTheme = (() => {
             sessionStorage.setItem(DATA_TYPE.STORAGE_KEY, value);
             return true;
         } catch (error) {
-            return errorCodes.addError(0x00001, `写入本地存储失败：${error}`, errorCodes.ERROR_TYPES.ERROR);
+            return errorManagers.addError(0x00001, `写入本地存储失败：${error}`, errorManagers.ERROR_TYPES.ERROR);
         }
     };
 
@@ -835,7 +866,7 @@ const lightDarkTheme = (() => {
             } else if (newTheme === DATA_TYPE.AUTO) {
                 autoTheme(enableSnackbar, setStorage);
             } else {
-                return errorCodes.addError(0x00002, `无效的主题：${newTheme}`, errorCodes.ERROR_TYPES.ERROR);
+                return errorManagers.addError(0x00002, `无效的主题：${newTheme}`, errorManagers.ERROR_TYPES.ERROR);
             }
             return true;
         },
@@ -1016,7 +1047,7 @@ function clearCookies(enableReturn = false) {
             location.reload();
             if (enableReturn) return true;
         } catch (error) {
-            if (enableReturn) return errorCodes.addError(0x00001, `清除 Cookie 失败: ${error}`, 1);
+            if (enableReturn) return errorManagers.addError(0x00001, `清除 Cookie 失败: ${error}`, 1);
         }
     } else {
         Snackbar.show({
@@ -1113,7 +1144,7 @@ function justLookAround() { // 读取 sitemap.txt 并随机跳转到其中一个
             }
         })
         .catch(error => {
-            errorCodes.addError(0x00001, `读取 sitemap.txt 失败: ${error}`, errorCodes.ERROR_TYPES.SILENT);
+            errorManagers.addError(0x00001, `读取 sitemap.txt 失败: ${error}`, errorManagers.ERROR_TYPES.SILENT);
             window.location.href = '/'
         });
 
@@ -1195,7 +1226,7 @@ function updateVar() {
         console.log(`系统已在系统时间 ${Date.now().toString()} 停止主循环函数。(${timer}/${ocsTime})`);
         oldUrl = window.location.pathname;
         timer = 0;
-        DOM_OK, OK_DOM = false;
+        window.DOM_OK, window.OK_DOM = false;
         // DOM_OK = false;
         
         // 使用立即执行函数重启循环
@@ -1208,31 +1239,31 @@ function updateVar() {
     }
     // 增加初始化状态锁
     if ((timer === 0 && !window.__cycleLock) // 第 1 次在（可能）页面未加载完全情况下执行初始化
-       || (OK_DOM && !DOM_OK)) // 在页面 DOM 树加载完毕但未初始化完毕的情况下执行主循环初始化
+       || (window.OK_DOM && !window.DOM_OK)) // 在页面 DOM 树加载完毕但未初始化完毕的情况下执行主循环初始化
     {
         try {
             console.log(`系统已在系统时间 ${Date.now().toString()} 启动主循环函数。(${timer}/${ocsTime})`);
             (async function () {startInit();})();
         } catch (e) {
-            errorCodes.addError(0x00001, `初始化过程中出错: ${e}`, errorCodes.ERROR_TYPES.SILENT);
+            errorManagers.addError(0x00001, `初始化过程中出错: ${e}`, errorManagers.ERROR_TYPES.SILENT);
         } finally {
             window.__cycleLock = true; // 锁定初始化状态
-            if (OK_DOM) {// 如果 DOM 树已加载完毕，则表示这是不在 timer = 0 的 JAVASCRIPT 加载运行时所执行的
-                DOM_OK = true;// 初始化完毕
+            if (window.OK_DOM) {// 如果 DOM 树已加载完毕，则表示这是不在 timer = 0 的 JAVASCRIPT 加载运行时所执行的
+                window.DOM_OK = true;// 初始化完毕
             }
         }
 
     }
-    if (!OK_DOM && !DOM_OK) {// 检查 DOM 树是否已加载完毕，且从未初始化
+    if (!window.OK_DOM && !window.DOM_OK) {// 检查 DOM 树是否已加载完毕，且从未初始化
         try {
             document.getElementById("dom_ok").style = "";// 检查 DOM 树的最后一个元素是否已加载入page
-            OK_DOM = true;// 如果取值成功，则表示 DOM 树已加载完毕
+            window.OK_DOM = true;// 如果取值成功，则表示 DOM 树已加载完毕
             // console.dir
         } catch {
             if (!updateVarIntervalID) {
                 updateVarIntervalID = setInterval(updateVar, 100);
             }
-            OK_DOM = false;
+            window.OK_DOM = false;
             timer++;
             ocsTime++;/*在系统时间 ${Date.now().toString()} 第 ${timer}/${ocsTime} 次*/
             console.warn(`系统尝试尝试启动主循环运行时失败。\n原因： DOM 树未加载完毕\n\n如果本警告位于页面切换或页面加载时发出，是正常现象。`)
@@ -1300,7 +1331,7 @@ if (window.InstantClick) {
 }
 window.addEventListener("load", function () {
     console.log("页面及所有资源加载完毕");
-    OK = true;
+    window.OK = true;
     startInit();
     // 这里可以执行相关的代码
 });
@@ -1393,7 +1424,7 @@ async function timeWindow() {
             }
         }
     } catch (error) {
-        return errorCodes.addError(0x00001, `创建节日窗口时出错:: ${error}`, 1);
+        return errorManagers.addError(0x00001, `创建节日窗口时出错:: ${error}`, 1);
     }
     return true;
     
@@ -1435,7 +1466,7 @@ async function displayWelcomeMessageInit() {
             displayWelcomeMessage(ipLoacation); // 直接调用显示欢迎语的函数
         }
     } catch (e) {
-        errorCodes.addError(0x00000000000000000000000002, "在请求欢迎语数据时，过程出错:" + e, errorCodes.ERROR_TYPES.ERROR, true);
+        errorManagers.addError(0x00000000000000000000000002, "在请求欢迎语数据时，过程出错:" + e, errorManagers.ERROR_TYPES.ERROR, true);
     }
 }
 
@@ -1575,7 +1606,7 @@ async function displayWelcomeMessage(ipLoacation) {
             welcomeInfoElement.innerHTML = "你好呀，欢迎来看我的博客！";
         }
         // 上报错误
-        errorCodes.addError(0x00000000000000000000000000000001, "在显示欢迎语信息时，发生了一个错误：" + e, errorCodes.ERROR_TYPES.ERROR, true);
+        errorManagers.addError(0x00000000000000000000000000000001, "在显示欢迎语信息时，发生了一个错误：" + e, errorManagers.ERROR_TYPES.ERROR, true);
     } finally {
         console.log(`系统在系统时钟 ${Date.now().toString()} 完成线程 ${displayWelcomeMessage.name} 的工作。`)
         console.groupEnd();
@@ -1917,12 +1948,12 @@ function updateProgressBars() {
         updateDisplay('minute', minuteProgress, 2);
 
     } catch (error) {
-        errorCodes.addError(0x1443B001, '更新模块：时光飞逝 时发生错误' + error, errorCodes.ERROR_TYPES.SILENT, false);
-        if (errorCodes.getErrors(0x1443B001).length > 1) // 若如发现错误出现 1 个以上，重新初始化
+        errorManagers.addError(0x1443B001, '更新模块：时光飞逝 时发生错误' + error, errorManagers.ERROR_TYPES.SILENT, false);
+        if (errorManagers.getErrors(0x1443B001).length > 1) // 若如发现错误出现 1 个以上，重新初始化
         {
             UPDATE_PROGRESS_BARS_INIT = false;
-        } else if (errorCodes.getErrors(0x1443B001).length > 1000) {
-            errorCodes.addError(0x1443B001, '更新模块：时光飞逝 时发生错误' + error, errorCodes.ERROR_TYPES.FATAL, true);
+        } else if (errorManagers.getErrors(0x1443B001).length > 1000) {
+            errorManagers.addError(0x1443B001, '更新模块：时光飞逝 时发生错误' + error, errorManagers.ERROR_TYPES.FATAL, true);
             // 页面重载
         }
     }

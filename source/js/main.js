@@ -1,3 +1,7 @@
+const mainFunc = {};
+
+// ^(\s*)const\s+(\w+)\s*=\s*(async\s*)?(\([^)]*\)|\w+)\s*=>
+// $1mainFunc.$2 = $3$4 =>
 document.addEventListener('DOMContentLoaded', () => {
   let headerContentWidth, $nav
   let mobileSidebarOpen = false
